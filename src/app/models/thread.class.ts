@@ -1,7 +1,9 @@
+import { Timestamp } from "@angular/fire/firestore";
+
 export class Thread {
   src: string;
   name: string;
-  timestamp: number;
+  timestamp: Timestamp;
   message: string;
   comments: object;
 
@@ -10,7 +12,7 @@ export class Thread {
     this.name = obj ? obj.name : '';
     this.timestamp = obj ? obj.timestamp : '';
     this.message = obj ? obj.message : '';
-    this.comments = obj ? obj.comments : '';
+    this.comments = [new Comment,new Comment];
   }
 
   toJSON() {
