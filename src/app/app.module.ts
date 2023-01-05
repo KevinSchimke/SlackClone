@@ -1,28 +1,35 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
+// Firebase
 import { environment } from 'src/environment/environment';
-
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainComponent } from './components/main/main.component';
 
-// Ng Material
-import { MatSidenavModule } from '@angular/material/sidenav';
+// Compontens
+import { ImprintComponent } from './components/imprint/imprint.component';
+import { DataprotectionComponent } from './components/dataprotection/dataprotection.component';
+
+// Authentication Components
 import { LoginComponent } from './components/authentication/login/login.component';
 import { ForgotpasswordComponent } from './components/authentication/forgotpassword/forgotpassword.component';
 import { RegistrationComponent } from './components/authentication/registration/registration.component';
 import { SetnewpasswordComponent } from './components/authentication/setnewpassword/setnewpassword.component';
 import { VerifyuserComponent } from './components/authentication/verifyuser/verifyuser.component';
-import { ImprintComponent } from './components/imprint/imprint.component';
-import { DataprotectionComponent } from './components/dataprotection/dataprotection.component';
+
+// Main Components
+import { MainComponent } from './components/main/main.component';
 import { DialoginputComponent } from './components/main/dialoginput/dialoginput.component';
 import { DashboardComponent } from './components/main/dashboard/dashboard.component';
+
+// Ng Material
+import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [
@@ -45,6 +52,7 @@ import { DashboardComponent } from './components/main/dashboard/dashboard.compon
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
     BrowserAnimationsModule,
+    MatCardModule,
     MatSidenavModule
   ],
   providers: [],
