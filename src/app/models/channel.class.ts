@@ -7,6 +7,7 @@ export class Channel {
     description: string;
     creationDate: Timestamp;
     creator: string;
+    locked: boolean;
 
     constructor(obj?: any) {
         this.name = obj ? obj.name : '';
@@ -15,5 +16,6 @@ export class Channel {
         this.description = obj ? obj.description : '';
         this.creationDate = obj ? obj.creationDate : null;
         this.creator = obj ? obj.creator : '';
+        this.locked = obj ? obj.locked : false;
     }
 }
