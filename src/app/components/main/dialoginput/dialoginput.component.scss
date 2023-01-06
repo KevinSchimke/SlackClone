@@ -1,0 +1,32 @@
+  
+  .header{
+    background-color: gray;
+  }
+  
+  textarea{
+    margin-top: 10px;
+    border: none;
+    outline: none;
+    resize: none;
+    width: 100%;
+  }
+  
+  #chatcard{
+    position: absolute;
+    bottom: 50px;
+    width: 90%;
+    left: 5%;
+  }
+  
+  .material-icons{
+    cursor: pointer;
+  }
+
+  mat-card-content{
+    background-color: white;
+  }
+
+  .card{
+    margin-left: 30px;
+  }
+  

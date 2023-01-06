@@ -7,4 +7,12 @@ import { Component } from '@angular/core';
 })
 export class DialoginputComponent {
 
+  message: string = '';
+  chat: string[] = [];
+
+  getMessage() {
+    this.chat.push(this.message);
+    this.message = '';
+  }
+
 }

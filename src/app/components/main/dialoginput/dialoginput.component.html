@@ -1,1 +1,27 @@
 <!-- Valer Input area -->
+
+<div class="card" *ngFor="let card of chat">
+  <p>{{ card }}</p>
+</div>
+<mat-card id="chatcard">
+  <mat-card-header class="header">
+    <mat-card-subtitle>
+      <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content>
+    <textarea
+      placeholder="leave a message"
+      rows="3"
+      [(ngModel)]="message"
+    ></textarea>
+  </mat-card-content>
+  <button (click)="getMessage()">
+    <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
+  </button>
+
+  <mat-menu #emoij="matMenu">
+    <span class="material-icons">mood</span>
+    <a>&#128561;</a>
+  </mat-menu>
+</mat-card>
