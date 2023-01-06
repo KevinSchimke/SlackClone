@@ -1,7 +1,8 @@
 <!-- Valer Input area -->
 
-<div class="card" *ngFor="let card of chat">
-  <p>{{ card }}</p>
+<div class="card" *ngFor="let card of comments">
+  <p><strong>{{ card.userid }}</strong></p>
+  <p>{{ card.message }}</p>
 </div>
 <mat-card id="chatcard">
   <mat-card-header class="header">
