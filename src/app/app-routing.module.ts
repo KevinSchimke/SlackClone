@@ -17,7 +17,7 @@ import { MainComponent } from './components/main/main.component';
 
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'main', pathMatch: 'full' },
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprotection', component: DataprotectionComponent },
   { path: 'login', component: LoginComponent },
@@ -26,7 +26,7 @@ const routes: Routes = [
   { path: 'reset', component: ForgotpasswordComponent },
   { path: 'newpassword', component: SetnewpasswordComponent },
   { path: 'main', component: MainComponent },
-  // { path: '**', redirectTo: 'login', pathMatch: 'full' }
+  { path: '**', redirectTo: 'main', pathMatch: 'full' }
 ];
 
 @NgModule({

@@ -1,1 +1,40 @@
-<div class="authMain"></div>
+<div class="authMain">
+    <img class="backgroundLoginImg" src="./../../../../assets/img/background_login.jpg">
+    <mat-card>
+        <mat-card-header>
+            <img class="placeholderIcon" src="./../../../../assets/icons/placeholder_48.png">
+            <h1>Slack Login</h1>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="headerButtons">
+                <button class="actionButton disable" mat-raised-button routerLink="/login">Login</button>
+                <button class="actionButton enable" mat-raised-button>SignUp</button>
+            </div>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your username</mat-label>
+                <input matInput placeholder="Enter your Username" [formControl]="username" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage('username')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your email</mat-label>
+                <input matInput placeholder="pat@example.com" [formControl]="email" required>
+                <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Enter your password</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
+                <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <a routerLink="/reset">Forgot Password</a>
+            <button class="actionButton enable submit" mat-raised-button>SignUp</button>
+        </mat-card-content>
+    </mat-card>
+    <div class="legalNotice">
+        <a routerLink="/imprint">Imprint</a>
+        <a routerLink="/dataprotection">Dataprotection</a>
+    </div>
+</div>
