@@ -3,8 +3,11 @@
     <mat-card>
         <mat-card-header>
             <img class="placeholderIcon" src="./../../../../assets/icons/placeholder_48.png">
-            <h1>Slack Login</h1>
+            <h1>Slack</h1>
         </mat-card-header>
+        <mat-card-subtitle>
+            SignUp
+        </mat-card-subtitle>
         <mat-card-content>
             <div class="headerButtons">
                 <button class="actionButton disable" mat-raised-button routerLink="/login">Login</button>
@@ -27,6 +30,15 @@
                 <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">
                     <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Re enter your password</mat-label>
+                <input matInput [type]="hide2 ? 'password' : 'text'" [formControl]="rePassword" required>
+                <mat-error *ngIf="password.value !== rePassword.value">Your passwords do not match</mat-error>
+                <button mat-icon-button matSuffix (click)="hide2 = !hide2" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide2">
+                    <mat-icon>{{hide2 ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
             </mat-form-field>
             <a routerLink="/reset">Forgot Password</a>
