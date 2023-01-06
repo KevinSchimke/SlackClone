@@ -1,10 +1,24 @@
 <!-- main component for content / import dialog input component -->
 <mat-drawer-container class="main-container">
-    <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">Start content</mat-drawer>
-    <mat-drawer opened mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>End content</mat-drawer>
+    <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">
+        <header class="bar-header">
+            <h2>Workspace-Header</h2>
+        </header>Workspace content</mat-drawer>
+    <mat-drawer opened mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>
+        <header class="bar-header">
+            <h2>Workspace-Header</h2>
+        </header>Thread content</mat-drawer>
     <mat-drawer-content>
-        <button (click)="workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
+        <header class="bar-header">
+            <div class="d-flex"><button (click)="workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
+                <h2>Workspace-Header</h2>
+            </div>
+        </header>
+
         <p>Implicit main content</p>
         <app-dialoginput></app-dialoginput>
     </mat-drawer-content>
 </mat-drawer-container>
+
+
+<!-- <a target="_blank" href="https://icons8.com/icon/12636/navigation-toolbar-left">Navigation Toolbar Left-Icon</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->

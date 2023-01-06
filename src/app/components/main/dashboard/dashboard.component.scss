@@ -7,10 +7,12 @@
 
 .workspace-bar {
     width: 15%;
+    background-color: #19171D;
 }
 
 .thread-bar {
     width: 35%;
+    background-color: $bg-color;
 }
 
 .workspace-btn {
@@ -25,5 +27,18 @@
     }
     &:hover {
         background-color: $bg-color-hover;
+    }
+}
+
+.bar-header {
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    h2 {
+        margin: 0;
+    }
+    .d-flex {
+        gap: .5rem;
     }
 }

@@ -1,5 +1,4 @@
 @import "./colors.scss";
-
 * {
     margin: 0;
     // outline: 1px solid green;
@@ -23,4 +22,8 @@ h1 {
     line-height: 32px !important;
     letter-spacing: 5px !important;
     margin: 0 !important;
+}
+
+.d-flex {
+    display: flex;
 }
