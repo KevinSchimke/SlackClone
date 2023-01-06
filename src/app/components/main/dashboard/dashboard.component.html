@@ -1,7 +1,10 @@
 <!-- main component for content / import dialog input component -->
-<mat-sidenav-container class="main-container">
-    <mat-sidenav opened mode="side">Start content</mat-sidenav>
-    <app-dialoginput></app-dialoginput>
-    <mat-sidenav opened mode="side" position="end">End content</mat-sidenav>
-    Implicit main content
-</mat-sidenav-container>
+<mat-drawer-container class="main-container">
+    <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">Start content</mat-drawer>
+    <mat-drawer opened mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>End content</mat-drawer>
+    <mat-drawer-content>
+        <button (click)="workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
+        <p>Implicit main content</p>
+        <app-dialoginput></app-dialoginput>
+    </mat-drawer-content>
+</mat-drawer-container>

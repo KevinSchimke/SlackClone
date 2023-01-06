@@ -1,5 +1,29 @@
 @import "./../../../../colors.scss";
-
+@import "../../../../assets/scss/company-colors.scss";
 .main-container {
     height: 100vh;
+    background-color: $bg-color;
+}
+
+.workspace-bar {
+    width: 15%;
+}
+
+.thread-bar {
+    width: 35%;
+}
+
+.workspace-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    img {
+        display: block;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    &:hover {
+        background-color: $bg-color-hover;
+    }
 }
