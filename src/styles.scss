@@ -10,6 +10,11 @@ body {
     color: $textcolor-white;
 }
 
+a {
+    text-decoration: none !important;
+    cursor: pointer !important;
+}
+
 h1 {
     color: $textcolor-white;
     font-size: clamp(2rem, 1.704rem + 1.48vw, 3rem) !important;
