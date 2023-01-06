@@ -4,9 +4,13 @@
         <header class="bar-header">
             <h2>Workspace-Header</h2>
         </header>Workspace content</mat-drawer>
-    <mat-drawer opened mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>
+    <mat-drawer closed mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>
         <header class="bar-header">
-            <h2>Workspace-Header</h2>
+            <div class="d-flex">
+                <h2>Thread</h2>
+                <span># Channelname</span>
+            </div>
+            <button (click)="threadBar.close()" class="btn-unset close-thread-btn">X</button>
         </header>Thread content</mat-drawer>
     <mat-drawer-content>
         <header class="bar-header">
@@ -14,8 +18,27 @@
                 <h2>Workspace-Header</h2>
             </div>
         </header>
-
-        <p>Implicit main content</p>
+        <div class="channel-thread">
+            <img src="assets/img/user0.png" class="channel-thread-img">
+            <div class="channel-thread-content">
+                <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
+                <p><span>Raphael </span><span>19:30Uhr</span></p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Libero repellat necessitatibus, deserunt, ad voluptates eos, repudiandae omnis vel sapiente maiores fugiat totam porro laborum ipsum id aliquam qui nihil iste!</p>
+                <p class="d-flex">
+                    <button>:-)</button>
+                    <button>:) +</button>
+                </p>
+                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="threadBar.open()">
+                    <div class="d-flex first-comments">
+                        <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+                        <img src="assets/img/user0.png">
+                    </div>
+                    <span class="channel-thread-comments">X Antwort(en)</span>
+                    <span *ngIf="!isGoToThreadHovered">Letzte Antwort vor X Tagen</span>
+                    <span *ngIf="isGoToThreadHovered">Thread ansehen</span>
+                </button>
+            </div>
+        </div>
         <app-dialoginput></app-dialoginput>
     </mat-drawer-content>
 </mat-drawer-container>

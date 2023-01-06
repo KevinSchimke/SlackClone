@@ -27,3 +27,13 @@ h1 {
 .d-flex {
     display: flex;
 }
+
+.align-items-center {
+    align-items: center;
+}
+
+.btn-unset {
+    border: unset;
+    background: none;
+    padding: 0;
+}
