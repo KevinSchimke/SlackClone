@@ -4,4 +4,44 @@
     background-color: $background-auth-compontens;
     height: 100vh;
     width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .backgroundLoginImg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        overflow: hidden;
+        object-fit: cover;
+        opacity: 0.2;
+    }
+
+    .placeholderIcon {
+        height: 48px;
+        width: 48px;
+        object-fit: cover;
+        padding-right: 16px;
+    }
+
+    mat-card {
+        padding: 40px;
+        gap: 40px;
+
+        mat-card-header {
+            align-items: center;
+            padding-bottom: 16px;
+        }
+
+        mat-form-field {
+            display: block !important;
+
+            button {
+                background-color: transparent;
+                border: none;
+            }
+        }
+    }
 }
