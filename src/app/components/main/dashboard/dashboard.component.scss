@@ -49,7 +49,7 @@ $gap_channel_thread: .5rem;
 
 .channel-thread {
     display: grid;
-    grid-template-columns: 5% calc(95% - $gap_channel_thread);
+    grid-template-columns: 4rem 1fr;
     gap: $gap_channel_thread;
     padding: .5rem 1.5rem;
     &:hover {
