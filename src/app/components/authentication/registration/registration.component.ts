@@ -10,9 +10,7 @@ export class RegistrationComponent {
   username = new FormControl('', [Validators.required, Validators.minLength(6)]);
   email = new FormControl('', [Validators.required, Validators.email]);
   password = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  rePassword = new FormControl('', [Validators.required, Validators.minLength(6)]);
   hide = true;
-  hide2 = true;
 
   getErrorMessage(formControl: string) {
     if (formControl == 'username') {
