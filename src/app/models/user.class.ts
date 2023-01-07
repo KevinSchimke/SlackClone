@@ -1,5 +1,3 @@
-import { Timestamp } from "@angular/fire/firestore";
-
 export class User {
     id: string;
     name: string;
@@ -8,7 +6,7 @@ export class User {
     src: string;
     state: boolean; //active or inactive
     status: string; //e.g. "In Holidays"
-    lastLogin: Timestamp; //Timestamp
+    lastLogin: Date;
 
 
     constructor(obj?: any) {

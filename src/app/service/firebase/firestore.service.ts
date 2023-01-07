@@ -15,7 +15,7 @@ export class FirestoreService {
   constructor(private firestore: Firestore) { }
 
 
-  async createChannel(){
+  async createChannel() {
     let newChannel = new Channel();
     newChannel.name = 'Angular';
     newChannel.description = 'Toller Channel';
@@ -25,20 +25,20 @@ export class FirestoreService {
     console.log('created Channel');
   }
 
-    async saveChannel(){
-      // let coll = collection(this.firestore);
-    }
+  async saveChannel() {
+    // let coll = collection(this.firestore);
+  }
 
 
-    async saveThread(){
-      let coll = collection(this.firestore, 'channels','Angular','ThreadCollection');
-      await setDoc(doc(coll), {thread: 'laeuft'});
-      console.log('created Channel');
-    }
+  async saveThread() {
+    let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
+    await setDoc(doc(coll), { thread: 'laeuft' });
+    console.log('created Channel');
+  }
 
-    async saveComment(){
-      let coll = collection(this.firestore, 'channels','Angular','ThreadCollection','ThreadID','Thread-Comments');
-      await setDoc(doc(coll), {comment: 'laeuft'});
-      console.log('created comment');
-    }
+  async saveComment() {
+    let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection', 'ThreadID', 'Thread-Comments');
+    await setDoc(doc(coll), { comment: 'laeuft' });
+    console.log('created comment');
+  }
 }

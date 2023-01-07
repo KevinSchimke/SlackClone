@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from '@angular/fire/auth';
+import { User } from 'src/app/models/user.class';
+import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+
 
 @Component({
   selector: 'app-registration',
@@ -10,13 +13,14 @@ import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCreden
 })
 export class RegistrationComponent {
   user = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
   hide = true;
+  userData = new User();
 
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(private auth: Auth, private router: Router, private firestore: Firestore) { }
 
   register() {
     if (this.user.valid) {
@@ -25,11 +29,22 @@ export class RegistrationComponent {
       const password = this.user.value.password;
       createUserWithEmailAndPassword(this.auth, email!, password!)
         .then((user: UserCredential) => {
+          this.saveNewUser(user);
           this.verify(user);
-        }).catch((error) => {
+        })
+        .catch((error) => {
           console.log(error);
         });
     }
+  }
+
+  saveNewUser(user: UserCredential) {
+    this.userData.id = user.user.uid;
+    this.userData.mail = user.user.email!;
+    this.userData.name = this.user.value.username!;
+    this.userData.lastLogin = new Date();
+    let coll = collection(this.firestore, 'users');
+    setDoc(doc(coll, user.user.uid), this.userData.toJSON());
   }
 
   verify(user: UserCredential) {
