@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 
@@ -15,7 +16,7 @@ export class RegistrationComponent {
   });
   hide = true;
 
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private router: Router) { }
 
   register() {
     if (this.user.valid) {
@@ -34,7 +35,7 @@ export class RegistrationComponent {
   verify(user: UserCredential) {
     sendEmailVerification(user.user)
       .then(() => {
-        console.log('gesendet');
+        this.router.navigate(['/verification']);
       });
   }
 
