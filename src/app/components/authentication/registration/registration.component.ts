@@ -25,8 +25,6 @@ export class RegistrationComponent {
       createUserWithEmailAndPassword(this.auth, email!, password!)
         .then((user: UserCredential) => {
           this.verify(user);
-          console.log('mail abgeschlossen');
-          console.log(user);
         }).catch((error) => {
           console.log(error);
         });

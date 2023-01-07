@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -22,7 +22,7 @@ export class LoginComponent {
       const email = this.user.value.email;
       const password = this.user.value.password;
       signInWithEmailAndPassword(this.auth, email!, password!)
-        .then((user) => {
+        .then((user: UserCredential) => {
           console.log(user);
         }).catch((error) => {
           console.log(error);
