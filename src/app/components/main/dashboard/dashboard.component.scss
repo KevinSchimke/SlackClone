@@ -1,9 +1,11 @@
-@import "./../../../../colors.scss";
+@import "../../../../assets/scss/colors.scss";
 @import "../../../../assets/scss/company-colors.scss";
 $gap_channel_thread: .5rem;
+
 .main-container {
     height: 100vh;
     background-color: $bg-color;
+
     header {
         padding: .5rem 1.5rem;
     }
@@ -24,11 +26,13 @@ $gap_channel_thread: .5rem;
     border: none;
     padding: 0;
     cursor: pointer;
+
     img {
         display: block;
         height: 1.5rem;
         width: 1.5rem;
     }
+
     &:hover {
         background-color: $bg-color-hover;
     }
@@ -39,9 +43,11 @@ $gap_channel_thread: .5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
     h2 {
         margin: 0;
     }
+
     .d-flex {
         gap: .5rem;
     }
@@ -52,6 +58,7 @@ $gap_channel_thread: .5rem;
     grid-template-columns: 4rem 1fr;
     gap: $gap_channel_thread;
     padding: .5rem 1.5rem;
+
     &:hover {
         background-color: $bg-color-hover;
     }
@@ -79,10 +86,12 @@ $gap_channel_thread: .5rem;
     border: 1px solid transparent;
     border-radius: .5rem;
     color: $main-color;
+
     img {
         height: 1.5rem;
         width: 1.5rem;
     }
+
     &:hover {
         background-color: $bg-color;
         border: 1px solid rgba(255, 255, 255, .12);
@@ -98,6 +107,7 @@ $gap_channel_thread: .5rem;
     width: 2rem;
     height: 2rem;
     cursor: pointer;
+
     &:hover {
         background-color: $bg-color-hover;
     }
