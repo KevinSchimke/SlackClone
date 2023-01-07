@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -8,6 +9,13 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 })
 export class DashboardComponent {
 
-  constructor(public createChannelService: FirestoreService){
+  @ViewChild('threadBar') threadBar: any;
+  @ViewChild('workspaceBar') workspaceBar: any;
+
+  constructor(public createChannelService: FirestoreService, public sidenavToggler: SidenavToggleService){
+  }
+
+  ngAfterViewInit(){
+    this.sidenavToggler.getChildById(this.threadBar, this.workspaceBar);
   }
 }

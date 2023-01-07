@@ -21,9 +21,6 @@ export class FirestoreService {
     newChannel.description = 'Toller Channel';
     newChannel.creationDate = new Date();
     let coll = collection(this.firestore, 'channels');
-    // await addDoc(coll,'Angular',(newChannel.toJSON()))
-    // await setDoc(doc(coll), channel.toJson());
-    // addDoc(coll, 'Angular', newChannel.toJSON());
     await setDoc(doc(coll, 'Angular'), newChannel.toJSON());
     console.log('created Channel');
   }

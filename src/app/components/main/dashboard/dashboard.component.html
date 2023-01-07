@@ -1,31 +1,12 @@
 <!-- main component for content / import dialog input component -->
 <mat-drawer-container class="main-container">
     <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">
-        <header class="bar-header">
-            <h2>Workspace-Header</h2>
-        </header>
         <app-workspace-bar></app-workspace-bar>
-        Workspace content
-        <button (click)="createChannelService.createChannel()">Clicken</button>
-        <button (click)="createChannelService.saveThread()">Create Thread</button>
-        <button (click)="createChannelService.saveComment()">Create Comment</button>
     </mat-drawer>
-    <mat-drawer closed mode="side" #threadBar position="end" class="thread-bar" #ThreadBar>
-        <header class="bar-header">
-            <div class="d-flex">
-                <h2>Thread</h2>
-                <span># Channelname</span>
-            </div>
-            <button (click)="threadBar.close()" class="btn-unset close-thread-btn">X</button>
-        </header>
+    <mat-drawer closed mode="side" position="end" class="thread-bar" #threadBar>
         <app-thread-bar></app-thread-bar>
     </mat-drawer>
     <mat-drawer-content>
-        <header class="bar-header">
-            <div class="d-flex"><button (click)="workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
-                <h2>Workspace-Header</h2>
-            </div>
-        </header>
         <app-channel-bar></app-channel-bar>
         <app-dialoginput></app-dialoginput>
     </mat-drawer-content>

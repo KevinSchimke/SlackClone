@@ -1,0 +1,59 @@
+@import "../../../../../assets/scss/colors.scss";
+@import "../../../../../assets/scss/company-colors.scss";
+@import "../dashboard.component.scss";
+$gap_channel_thread: .5rem;
+.channel-thread {
+    display: grid;
+    grid-template-columns: 4rem 1fr;
+    gap: $gap_channel_thread;
+    padding: .5rem 1.5rem;
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+}
+
+.channel-thread-img {
+    height: 2.6rem;
+    width: 2.6rem;
+}
+
+.channel-thread-comments {
+    color: #1D9BD1;
+    font-weight: 700;
+}
+
+.go-to-thread {
+    width: 100%;
+    cursor: pointer;
+    gap: .5rem;
+    align-items: center;
+    padding: 0;
+    background: unset;
+    border: unset;
+    padding-block: .2rem;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    color: $main-color;
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    &:hover {
+        background-color: $bg-color;
+        border: 1px solid rgba(255, 255, 255, .12);
+    }
+}
+
+.close-thread-btn {
+    color: $main-color;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+}

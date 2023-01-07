@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
 @Component({
   selector: 'app-thread-bar',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./thread-bar.component.scss']
 })
 export class ThreadBarComponent {
-
+  constructor(public sidenavToggler: SidenavToggleService){}
 }

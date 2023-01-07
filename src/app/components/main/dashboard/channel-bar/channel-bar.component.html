@@ -1,3 +1,8 @@
+<header class="bar-header">
+    <div class="d-flex"><button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
+        <h2>Workspace-Header</h2>
+    </div>
+</header>
 <div class="channel-thread">
     <img src="assets/img/user0.png" class="channel-thread-img">
     <div class="channel-thread-content">
@@ -8,7 +13,7 @@
             <button>:-)</button>
             <button>:) +</button>
         </p>
-        <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;">
+        <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="sidenavToggler.threadBar.open()">
             <div class="d-flex first-comments">
                 <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                 <img src="assets/img/user0.png">
