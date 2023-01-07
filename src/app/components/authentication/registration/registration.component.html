@@ -34,7 +34,7 @@
                     </button>
                 </mat-form-field>
                 <a routerLink="/reset">Forgot Password</a>
-                <button class="actionButton enable submit" mat-raised-button>SignUp</button>
+                <button [disabled]="!user.valid" class="actionButton enable submit" mat-raised-button>SignUp</button>
             </mat-card-content>
         </form>
     </mat-card>

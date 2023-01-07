@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
+import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-registration',
@@ -23,12 +23,21 @@ export class RegistrationComponent {
       const email = this.user.value.email;
       const password = this.user.value.password;
       createUserWithEmailAndPassword(this.auth, email!, password!)
-        .then((user) => {
+        .then((user: UserCredential) => {
+          this.verify(user);
+          console.log('mail abgeschlossen');
           console.log(user);
         }).catch((error) => {
           console.log(error);
         });
     }
+  }
+
+  verify(user: UserCredential) {
+    sendEmailVerification(user.user)
+      .then(() => {
+        console.log('gesendet');
+      });
   }
 
   getErrorMessage(formControl: string) {
