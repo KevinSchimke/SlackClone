@@ -1,11 +1,11 @@
 export class Comment {
     userid: string;
-    timestamp: number;
+    timestamp: Date;
     message: string;
   
     constructor(obj?: any) {
       this.userid = obj ? obj.userid : '';
-      this.timestamp = obj ? obj.timestamp : '';
+      this.timestamp = obj ? obj.timestamp : 0;
       this.message = obj ? obj.message : '';
     //   Reactions (Emojis)
     }

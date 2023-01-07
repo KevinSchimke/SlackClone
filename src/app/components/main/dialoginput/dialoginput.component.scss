@@ -34,7 +34,24 @@ mat-card-content {
   margin-left: 30px;
 }
 
-emoji-mart{
-    height: 300px;
-    width: 150px;
+.editor-menuebar{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+
+    &button {
+      color: #ffffff;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.1);
+      cursor: pointer;
+      transition: all 230ms;
+      border: none;
+
+      &hover{
+        background-color: aqua;
+      }
+      &focus{
+        outline: none;
+      }
+    }
 }

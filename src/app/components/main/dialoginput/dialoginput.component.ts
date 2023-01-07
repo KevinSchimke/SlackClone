@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 
 const CUSTOM_EMOJIS = [
   {
@@ -35,16 +36,28 @@ export class DialoginputComponent {
   chat: string[] = [];
   comments: any[] = [];
 
+  constructor(private firestore: Firestore) { }
+
+ 
+
+  async saveThread(thread: Comment){
+    let coll = collection(this.firestore, 'channels','Angular','ThreadCollection');
+    await setDoc(doc(coll), thread.toJSON());
+    console.log('created Channel');
+  }
+
   getMessage() {
-    let comment: Comment = Object();
+    let comment: Comment = new Comment();
 
     this.user.id = 'testuser';
     comment.userid = this.user.id + this.comments.length;
     comment.message = this.message;
-    this.comments.push(comment);
+    comment.timestamp = new Date();
+    this.comments.push(this.message);
     this.chat.push(this.message);
     this.message = '';
     console.log(this.comments);
+    this.saveThread(comment);
   }
 
   themes = [
