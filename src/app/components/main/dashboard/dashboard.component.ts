@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -6,5 +7,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  isGoToThreadHovered = false;
+
+  constructor(public createChannelService: FirestoreService){
+  }
 }

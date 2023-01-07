@@ -1,11 +1,9 @@
-import { Timestamp } from "@angular/fire/firestore";
-
 export class Channel {
     name: string;
     users: string[];
     topic: string;
     description: string;
-    creationDate: Timestamp;
+    creationDate: Date;
     creator: string;
     locked: boolean;
 
@@ -18,4 +16,16 @@ export class Channel {
         this.creator = obj ? obj.creator : '';
         this.locked = obj ? obj.locked : false;
     }
+
+    toJSON() {
+        return {
+            name: this.name,
+            users: this.users,
+            topic: this.topic,
+            description: this.description,
+            creationDate: this.creationDate,
+            creator: this.creator,
+            locked: this.locked
+        };
+      }
 }

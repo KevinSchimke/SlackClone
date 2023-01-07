@@ -37,7 +37,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
 //Emoijs
-import { PickerModule } from '@ctrl/ngx-emoji-mart'
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { WorkspaceBarComponent } from './components/main/dashboard/workspace-bar/workspace-bar.component';
+import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
+import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component'
 
 @NgModule({
   declarations: [
@@ -51,7 +54,10 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart'
     ImprintComponent,
     DataprotectionComponent,
     DialoginputComponent,
-    DashboardComponent
+    DashboardComponent,
+    WorkspaceBarComponent,
+    ThreadBarComponent,
+    ChannelBarComponent
   ],
   imports: [
     BrowserModule,
