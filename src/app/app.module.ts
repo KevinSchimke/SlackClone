@@ -36,6 +36,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 
+//Emoijs
+import { PickerModule } from '@ctrl/ngx-emoji-mart'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,7 +67,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatInputModule,
     MatIconModule,
     FormsModule,
-    MatMenuModule
+    MatMenuModule,
+    PickerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
