@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, confirmPasswordReset } from '@angular/fire/auth';
-import { ActivatedRoute } from '@angular/router';
+import { Auth, confirmPasswordReset, applyActionCode } from '@angular/fire/auth';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-setnewpassword',
@@ -15,11 +15,17 @@ export class SetnewpasswordComponent {
   hide = true;
   routeData: any;
 
-  constructor(private auth: Auth, private route: ActivatedRoute,) { }
+  constructor(private auth: Auth, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      this.routeData = params;
+      if (params['mode'] === 'resetPassword') {
+        this.routeData = params;
+      }
+      if (params['mode'] === 'verifyEmail') {
+        applyActionCode(this.auth, params['oobCode'])
+        this.router.navigate(['/login']);
+      }
     });
   }
 
@@ -28,7 +34,7 @@ export class SetnewpasswordComponent {
       const password = this.user.value.password;
       confirmPasswordReset(this.auth, this.routeData['oobCode'], password!)
         .then(() => {
-          console.log('running');
+          this.router.navigate(['/login']);
         }).catch((error) => {
           console.log(error);
         });

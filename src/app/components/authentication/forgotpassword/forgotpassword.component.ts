@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 
@@ -12,14 +13,14 @@ export class ForgotpasswordComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private auth: Auth) { }
+  constructor(private auth: Auth, private router: Router) { }
 
   reset() {
     if (this.user.valid) {
       const email = this.user.value.email;
       sendPasswordResetEmail(this.auth, email!)
         .then(() => {
-          console.log('gesendet');
+          this.router.navigate(['/login']);
         })
         .catch((error) => {
           console.log(error);

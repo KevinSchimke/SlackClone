@@ -35,12 +35,17 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
+import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
+import {MatDialogModule} from '@angular/material/dialog';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
 import { WorkspaceBarComponent } from './components/main/dashboard/workspace-bar/workspace-bar.component';
 import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
-import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component'
+import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
+import { DialogAddChannelComponent } from './components/main/dashboard/dialog-add-channel/dialog-add-channel.component';
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive'
 
 @NgModule({
   declarations: [
@@ -57,7 +62,9 @@ import { ChannelBarComponent } from './components/main/dashboard/channel-bar/cha
     DashboardComponent,
     WorkspaceBarComponent,
     ThreadBarComponent,
-    ChannelBarComponent
+    ChannelBarComponent,
+    DialogAddChannelComponent,
+    ClickStopPropagationDirective
   ],
   imports: [
     BrowserModule,
@@ -74,7 +81,10 @@ import { ChannelBarComponent } from './components/main/dashboard/channel-bar/cha
     MatIconModule,
     FormsModule,
     MatMenuModule,
-    PickerModule
+    PickerModule,
+    MatDividerModule,
+    MatExpansionModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,33 @@
 <header class="bar-header">
     <h2>Workspace-Header</h2>
 </header>
-Workspace content
+
+<ul>
+    <li>Threads</li>
+    <li>Direktnachrichten</li>
+    <li>Erwähnungen und Reaktionen</li>
+    <li>Lesezeichen</li>
+</ul>
+
+<mat-divider></mat-divider>
+
+<ul>
+    <li>
+        <mat-accordion>
+            <mat-expansion-panel hideToggle class="channels-accordion">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="d-flex channels-header-title">
+                            <span>Channels</span>
+                            <button appClickStopPropagation (click)="openDialog()">+</button>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <p>This is the primary content of the panel.</p>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </li>
+</ul>
 <button (click)="createChannelService.createChannel()">Clicken</button>
 <button (click)="createChannelService.saveThread()">Create Thread</button>
 <button (click)="createChannelService.saveComment()">Create Comment</button>
