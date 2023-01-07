@@ -36,6 +36,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatExpansionModule} from '@angular/material/expansion';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -76,7 +77,8 @@ import { ChannelBarComponent } from './components/main/dashboard/channel-bar/cha
     FormsModule,
     MatMenuModule,
     PickerModule,
-    MatDividerModule
+    MatDividerModule,
+    MatExpansionModule
   ],
   providers: [],
   bootstrap: [AppComponent]
