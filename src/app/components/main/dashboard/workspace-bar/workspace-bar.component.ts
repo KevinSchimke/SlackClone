@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -7,5 +9,15 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
   styleUrls: ['./workspace-bar.component.scss']
 })
 export class WorkspaceBarComponent {
-constructor(public createChannelService: FirestoreService){}
+constructor(public dialog: MatDialog, public createChannelService: FirestoreService){}
+
+
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogAddChannelComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed with result '+result);
+    });
+  }
 }
