@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Auth, createUserWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-registration',
@@ -7,23 +8,41 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./../authentication.component.scss']
 })
 export class RegistrationComponent {
-  username = new FormControl('', [Validators.required, Validators.minLength(6)]);
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+  user = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
   hide = true;
+
+  constructor(private auth: Auth) { }
+
+  register() {
+    if (this.user.valid) {
+      const username = this.user.value.username;
+      const email = this.user.value.email;
+      const password = this.user.value.password;
+      createUserWithEmailAndPassword(this.auth, email!, password!)
+        .then((user) => {
+          console.log(user);
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 
   getErrorMessage(formControl: string) {
     if (formControl == 'username') {
-      if (this.username.hasError('required')) return 'You must enter a username';
-      if (!this.username.valid) return 'Your username is short';
+      if (this.user.get('username')?.hasError('required')) return 'You must enter a username';
+      if (this.user.get('username')?.hasError('minlength')) return 'Your username is short';
     }
     if (formControl == 'email') {
-      if (this.email.hasError('required')) return 'You must enter a value';
-      if (this.email.hasError('email')) return 'Not a valid email';
+      if (this.user.get('email')?.hasError('required')) return 'You must enter a value';
+      if (this.user.get('email')?.hasError('valid')) return 'Not a valid email';
     }
     if (formControl == 'password') {
-      if (this.password.hasError('required')) return 'You must enter a password';
-      if (!this.password.valid) return 'Your password is short';
+      if (this.user.get('password')?.hasError('required')) return 'You must enter a password';
+      if (this.user.get('password')?.hasError('minlength')) return 'Your password is short';
     }
     return '';
   }

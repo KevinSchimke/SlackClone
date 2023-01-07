@@ -11,11 +11,7 @@
     </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
-    <textarea
-      placeholder="leave a message"
-      rows="3"
-      [(ngModel)]="message"
-    ></textarea>
+    <textarea placeholder="leave a message" rows="3" [(ngModel)]="message"></textarea>
   </mat-card-content>
   <button (click)="getMessage()">
     <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
@@ -35,10 +31,9 @@
 
 
 
-<!-- <emoji-mart set="emojione"></emoji-mart> -->
-<!-- <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart> -->
-<!-- <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart> -->
-<emoji-mart (emojiSelect)="handleClick($event)" 
-  [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"
-></emoji-mart>
+  <!-- <emoji-mart set="emojione"></emoji-mart> -->
+  <!-- <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart> -->
+  <!-- <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart> -->
+  <emoji-mart (emojiSelect)="handleClick($event)"
+    [i18n]="{ search: 'Recherche', categories: { search: 'Résultats de recherche', recent: 'Récents' } }"></emoji-mart>
 </mat-card>
