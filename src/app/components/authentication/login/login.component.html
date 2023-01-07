@@ -8,28 +8,30 @@
         <mat-card-subtitle>
             Login
         </mat-card-subtitle>
-        <mat-card-content>
-            <div class="headerButtons">
-                <button class="actionButton enable" mat-raised-button routerLink="/login">Login</button>
-                <button class="actionButton disable" mat-raised-button routerLink="/registration">SignUp</button>
-            </div>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your email</mat-label>
-                <input matInput placeholder="pat@example.com" [formControl]="email" required>
-                <mat-error *ngIf="email.invalid">{{getErrorMessage('email')}}</mat-error>
-            </mat-form-field>
-            <mat-form-field appearance="fill">
-                <mat-label>Enter your password</mat-label>
-                <input matInput [type]="hide ? 'password' : 'text'" [formControl]="password" required>
-                <mat-error *ngIf="password.invalid">{{getErrorMessage('password')}}</mat-error>
-                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                    [attr.aria-pressed]="hide">
-                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
-            <a routerLink="/reset">Forgot Password</a>
-            <button class="actionButton enable submit" mat-raised-button>Login</button>
-        </mat-card-content>
+        <form (ngSubmit)="login()" [formGroup]="user">
+            <mat-card-content>
+                <div class="headerButtons">
+                    <button class="actionButton enable" mat-raised-button routerLink="/login">Login</button>
+                    <button class="actionButton disable" mat-raised-button routerLink="/registration">SignUp</button>
+                </div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email" required>
+                    <mat-error *ngIf="user.invalid">{{getErrorMessage('email')}}</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                    <mat-error *ngIf="user.invalid">{{getErrorMessage('password')}}</mat-error>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+                <a routerLink="/reset">Forgot Password</a>
+                <button [disabled]="!user.valid" class="actionButton enable submit" mat-raised-button>Login</button>
+            </mat-card-content>
+        </form>
     </mat-card>
     <div class="legalNotice">
         <a routerLink="/imprint">Imprint</a>

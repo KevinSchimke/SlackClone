@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Auth, signInWithEmailAndPassword } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -7,18 +8,36 @@ import { FormControl, Validators } from '@angular/forms';
   styleUrls: ['./../authentication.component.scss']
 })
 export class LoginComponent {
-  email = new FormControl('', [Validators.required, Validators.email]);
-  password = new FormControl('', [Validators.required, Validators.minLength(6)]);
+
   hide = true;
+  user = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
+
+  constructor(private auth: Auth) { }
+
+  login() {
+    if (this.user.valid) {
+      const email = this.user.value.email;
+      const password = this.user.value.password;
+      signInWithEmailAndPassword(this.auth, email!, password!)
+        .then((user) => {
+          console.log(user);
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
+  }
 
   getErrorMessage(formControl: string) {
     if (formControl == 'email') {
-      if (this.email.hasError('required')) return 'You must enter a value';
-      if (this.email.hasError('email')) return 'Not a valid email';
+      if (this.user.get('email')?.hasError('required')) return 'You must enter a value';
+      if (this.user.get('email')?.hasError('valid')) return 'Not a valid email';
     }
     if (formControl == 'password') {
-      if (this.password.hasError('required')) return 'You must enter a password';
-      if (!this.password.valid) return 'Your password is short';
+      if (this.user.get('password')?.hasError('required')) return 'You must enter a password';
+      if (this.user.get('password')?.hasError('minlength')) return 'Your password is short';
     }
     return '';
   }
