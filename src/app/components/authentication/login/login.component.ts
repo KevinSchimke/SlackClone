@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
+import { AuthService } from 'src/app/service/firebase/auth.service';
+import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +17,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router) { }
 
   login() {
     if (this.user.valid) {
@@ -36,15 +38,7 @@ export class LoginComponent {
     }
   }
 
-  getErrorMessage(formControl: string) {
-    if (formControl == 'email') {
-      if (this.user.get('email')?.hasError('required')) return 'You must enter a value';
-      if (this.user.get('email')?.hasError('valid')) return 'Not a valid email';
-    }
-    if (formControl == 'password') {
-      if (this.user.get('password')?.hasError('required')) return 'You must enter a password';
-      if (this.user.get('password')?.hasError('minlength')) return 'Your password is short';
-    }
-    return '';
+  getErrorMessage(formControlName: string) {
+    return this.authError.getErrorMessage(this.user, formControlName)
   }
 }

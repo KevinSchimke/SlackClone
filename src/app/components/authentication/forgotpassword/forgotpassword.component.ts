@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
+import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -13,7 +14,7 @@ export class ForgotpasswordComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private auth: Auth, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router) { }
 
   reset() {
     if (this.user.valid) {
@@ -28,11 +29,7 @@ export class ForgotpasswordComponent {
     }
   }
 
-  getErrorMessage(formControl: string) {
-    if (formControl == 'email') {
-      if (this.user.get('email')?.hasError('required')) return 'You must enter a value';
-      if (this.user.get('email')?.hasError('email')) return 'Not a valid email';
-    }
-    return '';
+  getErrorMessage(formControlName: string) {
+    return this.authError.getErrorMessage(this.user, formControlName)
   }
 }

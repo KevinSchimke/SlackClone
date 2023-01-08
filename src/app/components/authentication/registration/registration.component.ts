@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 
 
 @Component({
@@ -20,7 +21,7 @@ export class RegistrationComponent {
   hide = true;
   userData = new User();
 
-  constructor(private auth: Auth, private router: Router, private firestore: Firestore) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router, private firestore: Firestore) { }
 
   register() {
     if (this.user.valid) {
@@ -54,19 +55,7 @@ export class RegistrationComponent {
       });
   }
 
-  getErrorMessage(formControl: string) {
-    if (formControl == 'username') {
-      if (this.user.get('username')?.hasError('required')) return 'You must enter a username';
-      if (this.user.get('username')?.hasError('minlength')) return 'Your username is short';
-    }
-    if (formControl == 'email') {
-      if (this.user.get('email')?.hasError('required')) return 'You must enter a value';
-      if (this.user.get('email')?.hasError('valid')) return 'Not a valid email';
-    }
-    if (formControl == 'password') {
-      if (this.user.get('password')?.hasError('required')) return 'You must enter a password';
-      if (this.user.get('password')?.hasError('minlength')) return 'Your password is short';
-    }
-    return '';
+  getErrorMessage(formControlName: string) {
+    return this.authError.getErrorMessage(this.user, formControlName)
   }
 }

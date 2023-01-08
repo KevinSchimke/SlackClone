@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, confirmPasswordReset, applyActionCode } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 
 @Component({
   selector: 'app-setnewpassword',
@@ -15,7 +16,7 @@ export class SetnewpasswordComponent {
   hide = true;
   routeData: any;
 
-  constructor(private auth: Auth, private route: ActivatedRoute, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -41,11 +42,7 @@ export class SetnewpasswordComponent {
     }
   }
 
-  getErrorMessage(formControl: string) {
-    if (formControl == 'password') {
-      if (this.user.get('password')?.hasError('required')) return 'You must enter a password';
-      if (this.user.get('password')?.hasError('minlength')) return 'Your password is short';
-    }
-    return '';
+  getErrorMessage(formControlName: string) {
+    return this.authError.getErrorMessage(this.user, formControlName)
   }
 }
