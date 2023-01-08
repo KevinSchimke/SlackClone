@@ -53,6 +53,7 @@ export class RegistrationComponent {
     sendEmailVerification(user.user)
       .then(() => {
         this.router.navigate(['/verification']);
+        this.pushupMessage.openPushupMessage('info', 'Check your E-Mail Account')
       });
   }
 

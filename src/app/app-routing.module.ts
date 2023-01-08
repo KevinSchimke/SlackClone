@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'registration', component: RegistrationComponent },
   { path: 'verification', component: VerifyuserComponent },
   { path: 'reset', component: ForgotpasswordComponent },
-  { path: 'newpassword', component: SetnewpasswordComponent },
+  { path: 'response', component: SetnewpasswordComponent },
   { path: 'main', component: MainComponent },
   { path: '**', redirectTo: 'main', pathMatch: 'full' }
 ];

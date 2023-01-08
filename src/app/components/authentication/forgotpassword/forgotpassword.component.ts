@@ -23,6 +23,7 @@ export class ForgotpasswordComponent {
       sendPasswordResetEmail(this.auth, email!)
         .then(() => {
           this.router.navigate(['/login']);
+          this.pushupMessage.openPushupMessage('success', 'Check your E-Mail Account');
         })
         .catch((error) => {
           this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))

@@ -27,6 +27,7 @@ export class SetnewpasswordComponent {
       if (params['mode'] === 'verifyEmail') {
         applyActionCode(this.auth, params['oobCode'])
         this.router.navigate(['/login']);
+        this.pushupMessage.openPushupMessage('success', 'Verification successful')
       }
     });
   }
@@ -37,6 +38,7 @@ export class SetnewpasswordComponent {
       confirmPasswordReset(this.auth, this.routeData['oobCode'], password!)
         .then(() => {
           this.router.navigate(['/login']);
+          this.pushupMessage.openPushupMessage('success', 'Password change successful')
         }).catch((error) => {
           this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
