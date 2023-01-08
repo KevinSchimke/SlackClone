@@ -45,7 +45,11 @@ import { WorkspaceBarComponent } from './components/main/dashboard/workspace-bar
 import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
 import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
 import { DialogAddChannelComponent } from './components/main/dashboard/dialog-add-channel/dialog-add-channel.component';
-import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive'
+import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive';
+
+///Richtexteditor
+import { HttpClientModule} from '@angular/common/http';
+import { AngularEditorModule } from '@kolkov/angular-editor';
 
 @NgModule({
   declarations: [
@@ -84,7 +88,9 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
     PickerModule,
     MatDividerModule,
     MatExpansionModule,
-    MatDialogModule
+    MatDialogModule,
+    HttpClientModule,
+    AngularEditorModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

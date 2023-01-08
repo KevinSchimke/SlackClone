@@ -6,10 +6,10 @@
   </p>
   <p>{{ card.message }}</p>
 </div>
-<mat-card id="chatcard">
-  <mat-card-header class="header">
+ <mat-card id="chatcard">
+ <!-- <mat-card-header class="header">
     <mat-card-subtitle>
-      <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
+      
       <div class="editor-menubar">
         <button class="editor-btn" data-attribute="bold">Bold</button>
         <button class="editor-btn" data-attribute="italic">Italic</button>
@@ -24,10 +24,16 @@
       [(ngModel)]="message"
       id="textarea"
     ></textarea>
-  </mat-card-content>
+  </mat-card-content> -->
+  <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="message" ></angular-editor>
+
+  <div class="under">
+  <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
+
   <button (click)="getMessage()">
     <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
   </button>
+</div>
 
   <mat-menu #emoij="matMenu">
     <emoji-mart
@@ -38,6 +44,9 @@
       }"
     ></emoji-mart>
   </mat-menu>
+
+<!-- https://github.com/kolkov/angular-editor -->
+
 
   <!-- <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>  -->
 
