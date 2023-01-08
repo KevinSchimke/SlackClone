@@ -46,7 +46,10 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
-
+import { WorkspaceBarComponent } from './components/main/dashboard/workspace-bar/workspace-bar.component';
+import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
+import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
+import { DialogAddChannelComponent } from './components/main/dashboard/dialog-add-channel/dialog-add-channel.component';
 import { ClickStopPropagationDirective } from './directives/click-stop-propagation/click-stop-propagation.directive'
 
 @NgModule({
@@ -86,8 +89,7 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
     PickerModule,
     MatDividerModule,
     MatExpansionModule,
-    MatDialogModule,
-    MatSnackBarModule
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

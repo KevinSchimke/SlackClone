@@ -3,6 +3,8 @@ import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+
 
 const CUSTOM_EMOJIS = [
   {
@@ -38,6 +40,54 @@ export class DialoginputComponent {
 
   constructor(private firestore: Firestore) { }
 
+
+
+editorConfig: AngularEditorConfig = {
+    editable: true,
+      spellcheck: true,
+      height: 'auto',
+      minHeight: '0',
+      maxHeight: 'auto',
+      width: 'auto',
+      minWidth: '0',
+      translate: 'yes',
+      enableToolbar: true,
+      showToolbar: true,
+      placeholder: 'Enter text here...',
+      defaultParagraphSeparator: '',
+      defaultFontName: '',
+      defaultFontSize: '',
+      fonts: [
+        {class: 'arial', name: 'Arial'},
+        {class: 'times-new-roman', name: 'Times New Roman'},
+        {class: 'calibri', name: 'Calibri'},
+        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      ],
+      customClasses: [
+      {
+        name: 'quote',
+        class: 'quote',
+      },
+      {
+        name: 'redText',
+        class: 'redText'
+      },
+      {
+        name: 'titleText',
+        class: 'titleText',
+        tag: 'h1',
+      },
+    ],
+    uploadUrl: 'v1/image',
+    // upload: (file: File) => { ... }
+    uploadWithCredentials: false,
+    sanitize: true,
+    toolbarPosition: 'top',
+    toolbarHiddenButtons: [
+      ['bold', 'italic'],
+      ['fontSize']
+    ]
+};
  
 
   async saveThread(thread: Comment){
@@ -95,7 +145,7 @@ export class DialoginputComponent {
     }
   }
   handleClick($event: EmojiEvent) {
-    console.log($event.emoji);
+    // console.log($event.emoji);
     this.message += $event.emoji.native;
   }
   emojiFilter(e: string): boolean {

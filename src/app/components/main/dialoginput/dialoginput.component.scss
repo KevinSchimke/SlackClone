@@ -16,6 +16,8 @@ textarea {
 }
 
 #chatcard {
+  background-color: white;
+  color: #000;
   position: absolute;
   bottom: 50px;
   width: 90%;
@@ -23,6 +25,7 @@ textarea {
 }
 
 .material-icons {
+  background-color: lightgray;
   cursor: pointer;
 }
 
@@ -34,24 +37,7 @@ mat-card-content {
   margin-left: 30px;
 }
 
-.editor-menuebar{
+.under{
   display: flex;
-  justify-content: flex-start;
-  align-items: center;
-
-    &button {
-      color: #ffffff;
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.1);
-      cursor: pointer;
-      transition: all 230ms;
-      border: none;
-
-      &hover{
-        background-color: aqua;
-      }
-      &focus{
-        outline: none;
-      }
-    }
+  justify-content: space-between;
 }
