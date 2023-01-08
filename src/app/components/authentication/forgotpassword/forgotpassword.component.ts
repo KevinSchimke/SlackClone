@@ -24,7 +24,7 @@ export class ForgotpasswordComponent {
           this.router.navigate(['/login']);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(this.authError.errorCode(error.code));
         });
     }
   }

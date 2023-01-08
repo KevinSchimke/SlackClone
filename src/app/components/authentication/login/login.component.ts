@@ -33,7 +33,7 @@ export class LoginComponent {
             this.router.navigate(['/verification']);
           }
         }).catch((error) => {
-          console.log(error);
+          console.log(this.authError.errorCode(error.code));
         });
     }
   }

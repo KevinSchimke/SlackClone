@@ -23,4 +23,13 @@ export class AuthErrorService {
     }
     return '';
   }
+
+  errorCode(code: string) {
+    if (code == 'auth/email-already-in-use') return 'E-Mail adress already exists'
+    if (code == 'auth/weak-password') return 'Short Password lenght'
+    if (code == 'auth/invalid-email') return 'E-Mail adress isn`t valid'
+    if (code == 'auth/user-not-found') return 'User not found'
+    if (code == 'auth/wrong-password') return 'Password incorrect'
+    return 'Error unknow'
+  }
 }

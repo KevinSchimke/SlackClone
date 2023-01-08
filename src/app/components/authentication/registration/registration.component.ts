@@ -34,7 +34,7 @@ export class RegistrationComponent {
           this.verify(user);
         })
         .catch((error) => {
-          console.log(error);
+          console.log(this.authError.errorCode(error.code));
         });
     }
   }
