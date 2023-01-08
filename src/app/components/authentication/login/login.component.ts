@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
 import { AuthService } from 'src/app/service/firebase/auth.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router) { }
 
   login() {
     if (this.user.valid) {
@@ -29,11 +30,13 @@ export class LoginComponent {
 
           if (user.user?.emailVerified) {
             this.router.navigate(['/main']);
+            this.pushupMessage.openPushupMessage('success', 'Login Successfully')
           } else {
             this.router.navigate(['/verification']);
+            this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Adress')
           }
         }).catch((error) => {
-          console.log(this.authError.errorCode(error.code));
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }

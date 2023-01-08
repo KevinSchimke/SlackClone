@@ -40,3 +40,17 @@ h1 {
     background: none;
     padding: 0;
 }
+
+// Color Themes for PushUp Components
+
+.success .mdc-snackbar__surface {
+    background-color: green !important;
+}
+
+.error .mdc-snackbar__surface {
+    background-color: red !important;
+}
+
+.info .mdc-snackbar__surface {
+    background-color: rgb(226, 226, 0) !important;
+}

@@ -5,6 +5,7 @@ import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCreden
 import { User } from 'src/app/models/user.class';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class RegistrationComponent {
   hide = true;
   userData = new User();
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router, private firestore: Firestore) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router, private firestore: Firestore) { }
 
   register() {
     if (this.user.valid) {
@@ -34,7 +35,7 @@ export class RegistrationComponent {
           this.verify(user);
         })
         .catch((error) => {
-          console.log(this.authError.errorCode(error.code));
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -14,7 +15,7 @@ export class ForgotpasswordComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router) { }
 
   reset() {
     if (this.user.valid) {
@@ -24,7 +25,7 @@ export class ForgotpasswordComponent {
           this.router.navigate(['/login']);
         })
         .catch((error) => {
-          console.log(this.authError.errorCode(error.code));
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }

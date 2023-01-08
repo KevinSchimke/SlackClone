@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, confirmPasswordReset, applyActionCode } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 @Component({
   selector: 'app-setnewpassword',
@@ -16,7 +17,7 @@ export class SetnewpasswordComponent {
   hide = true;
   routeData: any;
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -37,7 +38,7 @@ export class SetnewpasswordComponent {
         .then(() => {
           this.router.navigate(['/login']);
         }).catch((error) => {
-          console.log(this.authError.errorCode(error.code));
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }
