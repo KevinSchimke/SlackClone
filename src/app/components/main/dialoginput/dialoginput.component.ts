@@ -3,29 +3,9 @@ import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { AngularEditorConfig } from '@kolkov/angular-editor';
-
-
-const CUSTOM_EMOJIS = [
-  {
-    name: 'Party Parrot',
-    shortNames: ['parrot'],
-    keywords: ['party'],
-    imageUrl: './assets/images/parrot.gif',
-  },
-  {
-    name: 'Octocat',
-    shortNames: ['octocat'],
-    keywords: ['github'],
-    imageUrl: 'https://github.githubassets.com/images/icons/emoji/octocat.png',
-  },
-  {
-    name: 'Squirrel',
-    shortNames: ['shipit', 'squirrel'],
-    keywords: ['github'],
-    imageUrl: 'https://github.githubassets.com/images/icons/emoji/shipit.png',
-  },
-];
+import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
+import { Observable } from 'rxjs';
+import { HttpEvent } from '@angular/common/http';
 
 @Component({
   selector: 'app-dialoginput',
@@ -38,39 +18,37 @@ export class DialoginputComponent {
   chat: string[] = [];
   comments: any[] = [];
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore) {}
 
-
-
-editorConfig: AngularEditorConfig = {
+  editorConfig: AngularEditorConfig = {
     editable: true,
-      spellcheck: true,
-      height: 'auto',
-      minHeight: '0',
-      maxHeight: 'auto',
-      width: 'auto',
-      minWidth: '0',
-      translate: 'yes',
-      enableToolbar: true,
-      showToolbar: true,
-      placeholder: 'Enter text here...',
-      defaultParagraphSeparator: '',
-      defaultFontName: '',
-      defaultFontSize: '',
-      fonts: [
-        {class: 'arial', name: 'Arial'},
-        {class: 'times-new-roman', name: 'Times New Roman'},
-        {class: 'calibri', name: 'Calibri'},
-        {class: 'comic-sans-ms', name: 'Comic Sans MS'}
-      ],
-      customClasses: [
+    spellcheck: true,
+    height: 'auto',
+    minHeight: '0',
+    maxHeight: 'auto',
+    width: 'auto',
+    minWidth: '0',
+    translate: 'yes',
+    enableToolbar: true,
+    showToolbar: true,
+    placeholder: 'Enter text here...',
+    defaultParagraphSeparator: '',
+    defaultFontName: '',
+    defaultFontSize: '',
+    fonts: [
+      { class: 'arial', name: 'Arial' },
+      { class: 'times-new-roman', name: 'Times New Roman' },
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+    ],
+    customClasses: [
       {
         name: 'quote',
         class: 'quote',
       },
       {
         name: 'redText',
-        class: 'redText'
+        class: 'redText',
       },
       {
         name: 'titleText',
@@ -79,24 +57,36 @@ editorConfig: AngularEditorConfig = {
       },
     ],
     uploadUrl: 'v1/image',
-    // upload: (file: File) => { ... }
+    // upload: (file: File) => { Observable<HttpEvent<UploadResponse>>; },
     uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
-     toolbarHiddenButtons: [
-      ['customClasses', 'strikeThrough', 'subscript',
-      'superscript',],
-      ['fontSize',    'indent',
-      'outdent', 'heading', 'insertVideo',
-      'insertHorizontalRule',
-      'removeFormat', 'link',
-      'unlink', 'backgroundColor', 'fontName']
-    ]
-};
- 
+    outline: false,
+    toolbarHiddenButtons: [
+      ['customClasses', 'strikeThrough', 'subscript', 'superscript'],
+      [
+        'fontSize',
+        'indent',
+        'outdent',
+        'heading',
+        'insertVideo',
+        'insertHorizontalRule',
+        'removeFormat',
+        'link',
+        'unlink',
+        'backgroundColor',
+        'fontName',
+      ],
+    ],
+  };
 
-  async saveThread(thread: Comment){
-    let coll = collection(this.firestore, 'channels','Angular','ThreadCollection');
+  async saveThread(thread: Comment) {
+    let coll = collection(
+      this.firestore,
+      'channels',
+      'Angular',
+      'ThreadCollection'
+    );
     await setDoc(doc(coll), thread.toJSON());
     console.log('created Channel');
   }
@@ -115,13 +105,6 @@ editorConfig: AngularEditorConfig = {
     this.saveThread(comment);
   }
 
-  themes = [
-    'native',
-    'apple',
-    'google',
-    'twitter',
-    'facebook',
-  ];
 
   darkMode: undefined | boolean = !!(
     typeof matchMedia === 'function' &&
@@ -131,7 +114,7 @@ editorConfig: AngularEditorConfig = {
   darkestMode: undefined | boolean = undefined;
   set = 'native';
   native = true;
-  CUSTOM_EMOJIS = CUSTOM_EMOJIS;
+
 
   setTheme(set: string) {
     this.native = set === 'native';
@@ -149,21 +132,24 @@ editorConfig: AngularEditorConfig = {
       this.darkestMode = mode;
     }
   }
-  
-  handleKeyUp($event:any){
-//      if($event.keyCode === 13 && !$event.shiftKey){
-//       $event.preventDefault();
-//        this.getMessage();
-//      }
+
+  handleKeyUp($event: any) {
+    //      if($event.keyCode === 13 && !$event.shiftKey){
+    //       $event.preventDefault();
+    //        this.getMessage();
+    //      }
   }
-  
+
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
-    // $event.stopPropagation();
-    // $event.preventDefault();
     this.message += $event.emoji.native;
   }
-  
+
+  stop($event: any) {
+    $event.stopPropagation();
+    $event.preventDefault();
+  }
+
   emojiFilter(e: string): boolean {
     // Can use this to test [emojisToShowFilter]
     if (e && e.indexOf && e.indexOf('1F4') >= 0) {

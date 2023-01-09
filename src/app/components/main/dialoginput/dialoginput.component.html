@@ -1,4 +1,3 @@
-<!-- Valer Input area -->
 
 <div class="card" *ngFor="let card of comments">
   <p>
@@ -7,44 +6,24 @@
   <p>{{ card.message }}</p>
 </div>
 <mat-card id="chatcard">
-  <!-- <mat-card-header class="header">
-    <mat-card-subtitle>
-      
-      <div class="editor-menubar">
-        <button class="editor-btn" data-attribute="bold">Bold</button>
-        <button class="editor-btn" data-attribute="italic">Italic</button>
-        <button class="editor-btn" data-attribute="underline">Underline</button>
-      </div>
-    </mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content>
-    <textarea
-      placeholder="leave a message"
-      rows="3"
-      [(ngModel)]="message"
-      id="textarea"
-    ></textarea>
-  </mat-card-content> -->
-  <angular-editor (keyup)="handleKeyUp($event)" placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig">
-<!--   <ng-template #customButtons>
+  <angular-editor (keyup)="handleKeyUp($event)" placeholder="Leave a message..." [(ngModel)]="message" [config]="editorConfig">
+  <ng-template #customButtons>
     <ae-toolbar-set>
       <ae-button iconClass="fa fa-smile-o" title="Emoijs"
       [matMenuTriggerFor]="emoij">
       </ae-button>
     </ae-toolbar-set>
-  </ng-template> -->
+  </ng-template>
   </angular-editor>
 
   <div class="under">
-    <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
-
     <button (click)="getMessage()">
       <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
     </button>
   </div>
 
-  <mat-menu #emoij="matMenu">
-    <emoji-mart (emojiSelect)="handleClick($event)" [i18n]="{
+  <mat-menu #emoij="matMenu" xPosition="before">
+    <emoji-mart (click)="stop($event)" (emojiSelect)="handleClick($event)" [i18n]="{
         search: 'Recherche',
         categories: { search: 'Résultats de recherche', recent: 'Récents' }
       }"></emoji-mart>
@@ -53,15 +32,4 @@
 <!--   <div *ngFor="let message of messages" value="message" [innerHTML]="message"></div> -->
 
   <!-- https://github.com/kolkov/angular-editor -->
-
-
-  <!-- <emoji-mart title="Pick your emoji…" emoji="point_up"></emoji-mart>  -->
-
-  <!-- <emoji-mart [set]="''" [darkMode]="true" [isNative]="native" [hideRecent]="false" [custom]="CUSTOM_EMOJIS"
-        (emojiSelect)="handleClick($event)" title="Pick your emoji…" emoji="point_up">
-      </emoji-mart> -->
-
-  <!-- <emoji-mart set="emojione"></emoji-mart> -->
-  <!-- <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart> -->
-  <!-- <emoji-mart [style]="{ position: 'absolute', bottom: '20px', right: '20px' }"></emoji-mart> -->
 </mat-card>
