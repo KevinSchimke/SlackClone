@@ -146,6 +146,8 @@ editorConfig: AngularEditorConfig = {
   }
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
+    // $event.stopPropagation();
+    // $event.preventDefault();
     this.message += $event.emoji.native;
   }
   emojiFilter(e: string): boolean {
