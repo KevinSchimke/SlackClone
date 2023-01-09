@@ -1,35 +1,33 @@
-
 <div class="card" *ngFor="let card of comments">
-  <p>
-    <strong>{{ card.userid }}</strong>
-  </p>
-  <p>{{ card.message }}</p>
+    <p>
+        <strong>{{ card.userid }}</strong>
+    </p>
+    <p>{{ card.message }}</p>
 </div>
 <mat-card id="chatcard">
-  <angular-editor (keyup)="handleKeyUp($event)" placeholder="Leave a message..." [(ngModel)]="message" [config]="editorConfig">
-  <ng-template #customButtons>
-    <ae-toolbar-set>
-      <ae-button iconClass="fa fa-smile-o" title="Emoijs"
-      [matMenuTriggerFor]="emoij">
-      </ae-button>
-    </ae-toolbar-set>
-  </ng-template>
-  </angular-editor>
+    <angular-editor (keyup)="handleKeyUp($event)" placeholder="Leave a message..." [(ngModel)]="message" [config]="editorConfig">
+        <ng-template #customButtons>
+            <ae-toolbar-set>
+                <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
+                </ae-button>
+            </ae-toolbar-set>
+        </ng-template>
+    </angular-editor>
 
-  <div class="under">
-    <button (click)="getMessage()">
+    <div class="under">
+        <button (click)="getMessage()">
       <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
     </button>
-  </div>
+    </div>
 
-  <mat-menu #emoij="matMenu" xPosition="before">
-    <emoji-mart (click)="stop($event)" (emojiSelect)="handleClick($event)" [i18n]="{
+    <mat-menu #emoij="matMenu" xPosition="before">
+        <emoji-mart (click)="stop($event)" (emojiSelect)="handleClick($event)" [i18n]="{
         search: 'Recherche',
         categories: { search: 'Résultats de recherche', recent: 'Récents' }
       }"></emoji-mart>
-  </mat-menu>
-  
-<!--   <div *ngFor="let message of messages" value="message" [innerHTML]="message"></div> -->
+    </mat-menu>
 
-  <!-- https://github.com/kolkov/angular-editor -->
+    <!-- <div *ngFor="let message of messages" value="message" [innerHTML]="message"></div> -->
+
+    <!-- https://github.com/kolkov/angular-editor -->
 </mat-card>
