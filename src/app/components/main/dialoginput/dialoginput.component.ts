@@ -150,12 +150,12 @@ editorConfig: AngularEditorConfig = {
     }
   }
   
-//    handleKeyUp($event:any){
+  handleKeyUp($event:any){
 //      if($event.keyCode === 13 && !$event.shiftKey){
 //       $event.preventDefault();
 //        this.getMessage();
 //      }
-//   }
+  }
   
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
