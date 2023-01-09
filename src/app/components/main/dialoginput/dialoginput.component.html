@@ -25,7 +25,7 @@
       id="textarea"
     ></textarea>
   </mat-card-content> -->
-  <angular-editor placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig">
+  <angular-editor (keyup)="handleKeyUp($event)" placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig">
 <!--   <ng-template #customButtons>
     <ae-toolbar-set>
       <ae-button iconClass="fa fa-smile-o" title="Emoijs"

@@ -149,12 +149,21 @@ editorConfig: AngularEditorConfig = {
       this.darkestMode = mode;
     }
   }
+  
+  handleKeyUp($event:any){
+//      if($event.keyCode === 13 && !$event.shiftKey){
+//       $event.preventDefault();
+//        this.getMessage();
+//      }
+  }
+  
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
     // $event.stopPropagation();
     // $event.preventDefault();
     this.message += $event.emoji.native;
   }
+  
   emojiFilter(e: string): boolean {
     // Can use this to test [emojisToShowFilter]
     if (e && e.indexOf && e.indexOf('1F4') >= 0) {
