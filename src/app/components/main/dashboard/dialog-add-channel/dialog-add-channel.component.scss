@@ -1,8 +1,18 @@
 h2,
-h3 {
+h3,
+h4 {
     margin: 0;
 }
 
 mat-form-field {
     width: 100%;
+}
+
+.set-locked-grid {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    mat-slide-toggle {
+        display: flex;
+        align-items: center;
+    }
 }

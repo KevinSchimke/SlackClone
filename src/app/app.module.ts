@@ -44,6 +44,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -94,7 +95,8 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     MatSnackBarModule,
     HttpClientModule,
     AngularEditorModule,
-    MatSlideToggleModule
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
