@@ -10,7 +10,7 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 })
 export class WorkspaceBarComponent {
 constructor(public dialog: MatDialog, public createChannelService: FirestoreService){}
-
+  
 
 
   openDialog(): void {

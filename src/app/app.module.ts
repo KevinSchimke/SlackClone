@@ -12,7 +12,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-// Compontens
+// Components
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataprotectionComponent } from './components/dataprotection/dataprotection.component';
 
