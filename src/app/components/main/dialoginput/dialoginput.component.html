@@ -25,7 +25,7 @@
       id="textarea"
     ></textarea>
   </mat-card-content> -->
-  <angular-editor placeholder="'Enter text here...'" [(ngModel)]="message"></angular-editor>
+  <angular-editor placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig"></angular-editor>
 
   <div class="under">
     <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
