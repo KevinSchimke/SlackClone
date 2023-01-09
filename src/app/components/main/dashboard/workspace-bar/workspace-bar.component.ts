@@ -9,15 +9,16 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
   styleUrls: ['./workspace-bar.component.scss']
 })
 export class WorkspaceBarComponent {
-constructor(public dialog: MatDialog, public createChannelService: FirestoreService){}
-  
+  panelOpenState = false;
+  constructor(public dialog: MatDialog, public createChannelService: FirestoreService) { }
+
 
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddChannelComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed with result '+result);
+      console.log('The dialog was closed with result ' + result);
     });
   }
 }

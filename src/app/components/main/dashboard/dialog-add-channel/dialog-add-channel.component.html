@@ -1,1 +1,26 @@
-<p>dialog-add-channel works!</p>
+<div class="d-flex justify-content-between">
+    <h2>Channels erstellen</h2>
+    <button class="btn-unset">X</button>
+</div>
+<p>Channels dienen deinem Team zur Kommunikation Am besten sollten sie themenbezogen sein - #marketing zum Beispiel</p>
+<h3>Name</h3>
+<mat-form-field>
+    <input matInput placeholder="z.B. budget-planung">
+    <div matPrefix style="color:white">#</div>
+    <div matSuffix style="color:white">80</div>
+</mat-form-field>
+<h3>Beschreibung (optional)</h3>
+<mat-form-field>
+    <input matInput>
+    <div matPrefix style="color:white">#</div>
+    <div matSuffix style="color:white">80</div>
+    <mat-hint>Worum geht es in diesem Channel?</mat-hint>
+</mat-form-field>
+
+<div class="set-locked-grid">
+    <div>
+        <p>Auf "Geschlossen" setzen</p>
+        <p>Wenn ein Channel in einen geschlossenen Channel umgewandelt, sind Anzeige und Beitritt nur auf Einladung möglich.</p>
+    </div>
+
+</div>
