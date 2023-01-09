@@ -25,7 +25,15 @@
       id="textarea"
     ></textarea>
   </mat-card-content> -->
-  <angular-editor placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig"></angular-editor>
+  <angular-editor placeholder="'Enter text here...'" [(ngModel)]="message" [config]="editorConfig">
+<!--   <ng-template #customButtons>
+    <ae-toolbar-set>
+      <ae-button iconClass="fa fa-smile-o" title="Emoijs"
+      [matMenuTriggerFor]="emoij">
+      </ae-button>
+    </ae-toolbar-set>
+  </ng-template> -->
+  </angular-editor>
 
   <div class="under">
     <span class="material-icons" [matMenuTriggerFor]="emoij">mood</span>
