@@ -83,9 +83,14 @@ editorConfig: AngularEditorConfig = {
     uploadWithCredentials: false,
     sanitize: true,
     toolbarPosition: 'top',
-    toolbarHiddenButtons: [
-      ['bold', 'italic'],
-      ['fontSize']
+     toolbarHiddenButtons: [
+      ['customClasses', 'strikeThrough', 'subscript',
+      'superscript',],
+      ['fontSize',    'indent',
+      'outdent', 'heading', 'insertVideo',
+      'insertHorizontalRule',
+      'removeFormat', 'link',
+      'unlink', 'backgroundColor', 'fontName']
     ]
 };
  
