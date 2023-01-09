@@ -1,7 +1,6 @@
 @import "./assets/scss/colors.scss";
 @import "./../node_modules/@ctrl/ngx-emoji-mart/picker.css";
-
-
+@import "assets/scss/edit-md.scss";
 * {
     margin: 0;
     // outline: 1px solid green;
@@ -42,7 +41,6 @@ h1 {
 }
 
 // Color Themes for PushUp Components
-
 .success .mdc-snackbar__surface {
     background-color: green !important;
 }

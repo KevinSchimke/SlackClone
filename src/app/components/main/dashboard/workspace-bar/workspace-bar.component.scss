@@ -13,4 +13,18 @@
     .mat-content.mat-content-hide-toggle {
         margin-right: 0;
     }
+    .mat-expansion-panel-header {
+        padding: 0;
+        height: auto;
+    }
+    .mat-expansion-panel-header.mat-expanded {
+        height: auto;
+    }
+    .mat-expansion-panel-body {
+        padding: -2rem !important;
+    }
+}
+
+.mat-expansion-panel-body {
+    padding: 0 0 0 0 !important;
 }
