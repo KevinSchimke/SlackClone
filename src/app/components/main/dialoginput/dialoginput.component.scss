@@ -7,6 +7,10 @@
   background-color: gray;
 }
 
+.angular-editor-textarea {
+  resize: unset !important;
+}
+
 textarea {
   margin-top: 10px;
   border: none;
