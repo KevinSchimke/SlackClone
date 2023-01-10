@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { addDoc, collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Thread } from 'src/app/models/thread.class';
@@ -49,5 +49,14 @@ export class FirestoreService {
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
     console.log('created Channel');
+  }
+
+  async getCollection(collPath: string){
+    let coll = collection(this.firestore, collPath);
+    let collData$ = collectionData(coll,{idField:'id'});
+    collData$.subscribe((collItem) => {
+      console.log('Collected item is ',collItem);
+      return collItem;
+    })
   }
 }

@@ -10,7 +10,14 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 })
 export class WorkspaceBarComponent {
   panelOpenState = false;
-  constructor(public dialog: MatDialog, public createChannelService: FirestoreService) { }
+  constructor(public dialog: MatDialog, public createChannelService: FirestoreService) {
+    this.getChannels();
+  }
+
+  async getChannels() {
+    let channels = await this.createChannelService.getCollection('channels');
+    console.log('Channels are ', channels);
+  }
 
 
 

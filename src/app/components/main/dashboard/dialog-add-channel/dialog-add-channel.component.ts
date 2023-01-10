@@ -20,6 +20,8 @@ export class DialogAddChannelComponent {
     console.log(this.channelForm);
   }
 
+
+
   test() {
     console.log(this.channelForm.controls.locked);
   }
