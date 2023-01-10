@@ -8,16 +8,16 @@ export class Channel {
     locked: boolean;
 
     constructor(obj?: any) {
-        this.name = obj ? obj.name : '';
-        this.users = obj ? obj.users : [];
-        this.topic = obj ? obj.topic : '';
-        this.description = obj ? obj.description : '';
-        this.creationDate = obj ? obj.creationDate : null;
-        this.creator = obj ? obj.creator : '';
-        this.locked = obj ? obj.locked : false;
+        this.name = obj.name ? obj.name : '';
+        this.users = obj.users ? obj.users : ['user0'];
+        this.topic = obj.topic ? obj.topic : '';
+        this.description = obj.description ? obj.description : '';
+        this.creationDate = obj.creationDate ? obj.creationDate : new Date();
+        this.creator = obj.creator ? obj.creator : '';
+        this.locked = obj.locked ? obj.locked : false;
     }
 
-    toJSON() {
+    toJson() {
         return {
             name: this.name,
             users: this.users,
@@ -27,5 +27,5 @@ export class Channel {
             creator: this.creator,
             locked: this.locked
         };
-      }
+    }
 }

@@ -7,6 +7,7 @@ export class User {
     state: boolean; //active or inactive
     status: string; //e.g. "In Holidays"
     lastLogin: Date;
+    creationDate: Date;
 
 
     constructor(obj?: any) {
@@ -18,9 +19,10 @@ export class User {
         this.state = obj ? obj.state : false;
         this.status = obj ? obj.status : '';
         this.lastLogin = obj ? obj.lastLogin : null;
+        this.creationDate = obj ? obj.creationDate : '';
     }
 
-    toJSON() {
+    toJson() {
         return {
             id: this.id,
             name: this.name,
@@ -29,7 +31,8 @@ export class User {
             src: this.src,
             state: this.state,
             status: this.status,
-            lastLogin: this.lastLogin
+            lastLogin: this.lastLogin,
+            creationDate: this.creationDate
         };
     }
 }
