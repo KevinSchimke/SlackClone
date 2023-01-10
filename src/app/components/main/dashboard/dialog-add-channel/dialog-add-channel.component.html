@@ -1,1 +1,32 @@
-<p>dialog-add-channel works!</p>
+<div class="d-flex justify-content-between">
+    <h2>Create channel</h2>
+    <button class="btn-unset">X</button>
+</div>
+<p>Channels are used by your team to communicate. Ideally, they should be topic-related - #marketing, for example.</p>
+<form [formGroup]="channelForm">
+    <h3>Name</h3>
+    <mat-form-field>
+        <input formControlName="name" matInput placeholder="z.B. budget-planung">
+        <div matPrefix style="color:white">#</div>
+        <div matSuffix style="color:white">80</div>
+    </mat-form-field>
+    <h3>Description (optional)</h3>
+    <mat-form-field>
+        <input formControlName="description" matInput>
+        <div matPrefix style="color:white">#</div>
+        <div matSuffix style="color:white">80</div>
+        <mat-hint>What is the channel about?</mat-hint>
+    </mat-form-field>
+
+    <div class="set-locked-grid">
+        <div>
+            <h4>Set "locked"</h4>
+            <p>When a channel becomes a closed channel, viewing and joining are by invitation only.</p>
+        </div>
+        <mat-slide-toggle formControlName="locked" onclick="console.log(channelForm.controls.locked);"></mat-slide-toggle>
+    </div>
+
+    <div class="d-flex justify-content-end">
+        <button mat-flat-button (click)="dialogRef.close();">Create</button>
+    </div>
+</form>

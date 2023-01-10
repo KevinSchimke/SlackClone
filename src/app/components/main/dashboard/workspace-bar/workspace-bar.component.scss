@@ -1,8 +1,12 @@
+@import "../../../../../assets/scss/company-colors.scss";
 .channels-header-title {
     justify-content: space-between;
 }
 
 .channels-accordion {
+    mat-expansion-panel {
+        background-color: unset;
+    }
     .mat-expansion-panel-header-title {
         width: 100%;
         margin-right: 0;
@@ -12,5 +16,15 @@
     }
     .mat-content.mat-content-hide-toggle {
         margin-right: 0;
+    }
+    .mat-expansion-panel-header {
+        padding: 0;
+        height: auto;
+    }
+    .mat-expansion-panel-header.mat-expanded {
+        height: auto;
+    }
+    .mat-expansion-panel:not([class*=mat-elevation-z]) {
+        box-shadow: none;
     }
 }

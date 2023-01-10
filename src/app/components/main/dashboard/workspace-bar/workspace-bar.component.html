@@ -13,8 +13,8 @@
 
 <ul>
     <li>
-        <mat-accordion>
-            <mat-expansion-panel hideToggle class="channels-accordion">
+        <mat-accordion class="channels-accordion">
+            <mat-expansion-panel hideToggle [expanded]="true">
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
@@ -23,7 +23,8 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <p>This is the primary content of the panel.</p>
+                <li>Angular</li>
+                <li>Javascript</li>
             </mat-expansion-panel>
         </mat-accordion>
     </li>

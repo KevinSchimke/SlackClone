@@ -10,7 +10,7 @@ export class AuthErrorService {
 
   getErrorMessage(user: FormGroup, formControl: string) {
     if (formControl == 'username') {
-      if (user.get('username')?.hasError('minlength')) return 'Your username is short';
+      if (user.get('username')?.hasError('minlength')) return 'Your username is too short';
       if (user.get('username')?.hasError('required')) return 'You must enter a username';
     }
     if (formControl == 'email') {
@@ -25,11 +25,11 @@ export class AuthErrorService {
   }
 
   errorCode(code: string) {
-    if (code == 'auth/email-already-in-use') return 'E-Mail adress already exists'
-    if (code == 'auth/weak-password') return 'Short Password lenght'
-    if (code == 'auth/invalid-email') return 'E-Mail adress isn`t valid'
-    if (code == 'auth/user-not-found') return 'User not found'
-    if (code == 'auth/wrong-password') return 'Password incorrect'
-    return 'Error unknow'
+    if (code == 'auth/email-already-in-use') return 'E-Mail address already exists';
+    if (code == 'auth/weak-password') return 'Short Password length';
+    if (code == 'auth/invalid-email') return 'E-Mail address isn\'t valid';
+    if (code == 'auth/user-not-found') return 'User not found';
+    if (code == 'auth/wrong-password') return 'Password incorrect';
+    return 'Error unknow';
   }
 }

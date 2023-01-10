@@ -12,7 +12,7 @@ import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
-// Compontens
+// Components
 import { ImprintComponent } from './components/imprint/imprint.component';
 import { DataprotectionComponent } from './components/dataprotection/dataprotection.component';
 
@@ -43,6 +43,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatButtonModule} from '@angular/material/button';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -96,7 +98,9 @@ import { EditsettingcardComponent } from './components/usercard/editsettingcard/
     MatDialogModule,
     MatSnackBarModule,
     HttpClientModule,
-    AngularEditorModule
+    AngularEditorModule,
+    MatSlideToggleModule,
+    MatButtonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
