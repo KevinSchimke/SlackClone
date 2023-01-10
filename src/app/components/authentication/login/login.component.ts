@@ -5,6 +5,9 @@ import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
+import { MatDialog } from '@angular/material/dialog';
+import { EditsettingcardComponent } from '../../usercard/editsettingcard/editsettingcard.component';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +20,9 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router, public dialog: MatDialog) {
+    this.openDialog('0ms', '0ms')
+  }
 
   login() {
     if (this.user.valid) {
@@ -40,5 +45,12 @@ export class LoginComponent {
 
   getErrorMessage(formControlName: string) {
     return this.authError.getErrorMessage(this.user, formControlName)
+  }
+
+  openDialog(enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(EditsettingcardComponent, {
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
   }
 }

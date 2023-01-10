@@ -1,0 +1,40 @@
+@import "./../usercard.component.scss";
+
+.userCard {
+    mat-card {
+
+
+        mat-card-header {
+            align-items: center;
+            background-color: #1A1D21;
+            padding-bottom: 16px;
+
+            img {
+                object-fit: cover;
+                height: 75px;
+                width: 75px;
+                margin-right: 16px;
+                border-radius: 8px;
+            }
+
+            span {
+                font-size: 1.5rem;
+            }
+        }
+
+        .card {
+            margin-top: 16px;
+            padding: 16px;
+            background-color: #1A1D21;
+            border-radius: 8px;
+        }
+    }
+}
+
+mat-expansion-panel-header {
+    padding: 0 0 0 24px !important;
+}
+
+mat-panel-description {
+    justify-content: end;
+}
