@@ -3,14 +3,14 @@ import { Timestamp } from "@angular/fire/firestore";
 export class Thread {
   src: string;
   name: string;
-  timestamp: Timestamp;
+  creationDate: Timestamp;
   message: string;
   comments: object;
 
   constructor(obj?: any) {
     this.src = obj ? obj.src : '';
     this.name = obj ? obj.name : '';
-    this.timestamp = obj ? obj.timestamp : '';
+    this.creationDate = obj ? obj.creationDate : '';
     this.message = obj ? obj.message : '';
     this.comments = obj ? obj.comments : '';
 
@@ -22,11 +22,11 @@ export class Thread {
     // });
   }
 
-  toJSON() {
+  toJson() {
     return {
       src: this.src,
       name: this.name,
-      timestamp: this.timestamp,
+      creationDate: this.creationDate,
       message: this.message,
       comments: this.comments,
     };

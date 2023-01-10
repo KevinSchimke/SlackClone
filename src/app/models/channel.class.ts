@@ -17,7 +17,7 @@ export class Channel {
         this.locked = obj ? obj.locked : false;
     }
 
-    toJSON() {
+    toJson() {
         return {
             name: this.name,
             users: this.users,
@@ -27,5 +27,5 @@ export class Channel {
             creator: this.creator,
             locked: this.locked
         };
-      }
+    }
 }

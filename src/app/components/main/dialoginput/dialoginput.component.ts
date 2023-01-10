@@ -87,7 +87,7 @@ export class DialoginputComponent {
       'Angular',
       'ThreadCollection'
     );
-    await setDoc(doc(coll), thread.toJSON());
+    await setDoc(doc(coll), thread.toJson());
     console.log('created Channel');
   }
 
@@ -97,7 +97,7 @@ export class DialoginputComponent {
     this.user.id = 'testuser';
     comment.userid = this.user.id + this.comments.length;
     comment.message = this.message;
-    comment.timestamp = new Date();
+    comment.creationDate = new Date();
     this.comments.push(this.message);
     this.chat.push(this.message);
     this.message = '';

@@ -46,7 +46,7 @@ export class RegistrationComponent {
     this.userData.name = this.user.value.username!;
     this.userData.lastLogin = new Date();
     let coll = collection(this.firestore, 'users');
-    setDoc(doc(coll, user.user.uid), this.userData.toJSON());
+    setDoc(doc(coll, user.user.uid), this.userData.toJson());
   }
 
   verify(user: UserCredential) {

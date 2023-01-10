@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { addDoc, collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
+import { Comment } from 'src/app/models/comment.class';
+import { Thread } from 'src/app/models/thread.class';
+import { User } from 'src/app/models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -21,7 +24,7 @@ export class FirestoreService {
     newChannel.description = 'Toller Channel';
     newChannel.creationDate = new Date();
     let coll = collection(this.firestore, 'channels');
-    await setDoc(doc(coll, 'Angular'), newChannel.toJSON());
+    await setDoc(doc(coll, 'Angular'), newChannel.toJson());
     console.log('created Channel');
   }
 
@@ -40,5 +43,11 @@ export class FirestoreService {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection', 'ThreadID', 'Thread-Comments');
     await setDoc(doc(coll), { comment: 'laeuft' });
     console.log('created comment');
+  }
+
+  async save(obj: Channel | Thread | Comment | User, collPath: string){
+    let coll = collection(this.firestore, collPath);
+    await setDoc(doc(coll), obj.toJson());
+    console.log('created Channel');
   }
 }
