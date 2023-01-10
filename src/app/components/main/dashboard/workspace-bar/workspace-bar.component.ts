@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
+import { collection, collectionData, Firestore } from '@angular/fire/firestore';
 import { MatDialog } from '@angular/material/dialog';
+import { Channel } from 'src/app/models/channel.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 
@@ -10,13 +12,19 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 })
 export class WorkspaceBarComponent {
   panelOpenState = false;
-  constructor(public dialog: MatDialog, public createChannelService: FirestoreService) {
+  channels: any[] = [];
+  constructor(public dialog: MatDialog, public createChannelService: FirestoreService, private firestore: Firestore) {
     this.getChannels();
   }
 
   async getChannels() {
-    let channels = await this.createChannelService.getCollection('channels');
-    console.log('Channels are ', channels);
+    // this.channels = await this.createChannelService.getCollection('channels');
+    // console.log('Channels are ', this.channels);
+    let coll = collection(this.firestore, 'channels');
+    let collData$ = collectionData(coll, { idField: 'id' });
+    collData$.subscribe((collItem) => {
+      this.channels = collItem;
+    });
   }
 
 
