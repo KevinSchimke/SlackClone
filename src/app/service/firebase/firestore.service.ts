@@ -20,11 +20,11 @@ export class FirestoreService {
 
   async createChannel() {
     let newChannel = new Channel();
-    newChannel.name = 'Angular';
+    newChannel.name = 'Test';
     newChannel.description = 'Toller Channel';
     newChannel.creationDate = new Date();
     let coll = collection(this.firestore, 'channels');
-    await setDoc(doc(coll, 'Angular'), newChannel.toJson());
+    await setDoc(doc(coll), newChannel.toJson());
     console.log('created Channel');
   }
 
@@ -45,7 +45,7 @@ export class FirestoreService {
     console.log('created comment');
   }
 
-  async save(obj: Channel | Thread | Comment | User, collPath: string){
+  async save(obj: Channel, collPath: string){
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
     console.log('created Channel');
