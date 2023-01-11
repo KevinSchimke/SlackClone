@@ -24,7 +24,10 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let channel of collData$ | async"><a [routerLink]="">{{channel.name}}</a></li>
+                <li *ngFor="let channel of collData$ | async">
+                    <a [routerLink]="">
+                        <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.name}}</a>
+                </li>
             </mat-expansion-panel>
         </mat-accordion>
     </li>
