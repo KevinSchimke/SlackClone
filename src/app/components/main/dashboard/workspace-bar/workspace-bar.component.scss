@@ -1,10 +1,17 @@
 @import "../../../../../assets/scss/company-colors.scss";
 ul {
     padding: 0;
-}
-
-li {
-    list-style-type: disc;
+    li {
+        list-style-type: disc;
+        display: flex;
+        align-items: center;
+        gap: .5rem;
+        img {
+            height: 1.2rem;
+            width: 1.2rem;
+            display: block;
+        }
+    }
 }
 
 .bar-header {
