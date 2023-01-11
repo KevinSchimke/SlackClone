@@ -3,7 +3,6 @@
 .userCard {
     mat-card {
 
-
         mat-card-header {
             align-items: center;
             background-color: #1A1D21;
@@ -22,11 +21,28 @@
             }
         }
 
-        .card {
+
+
+        .actionButton {
+            width: 50%;
+            cursor: pointer;
+            padding: 10px;
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 0.15rem;
+            border-radius: 4px;
+            outline: none;
+            border: none;
+
+            &:hover {
+                opacity: 0.75;
+            }
+        }
+
+        .submit {
             margin-top: 16px;
-            padding: 16px;
-            background-color: #1A1D21;
-            border-radius: 8px;
+            font-weight: 800;
+            font-size: 1.25rem;
         }
     }
 }
