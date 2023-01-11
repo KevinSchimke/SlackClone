@@ -9,6 +9,8 @@ export class EditsettingcardComponent {
   panelOpenState = false;
   step = -1;
 
+  hide = true;
+
   setStep(index: number) {
     this.step = index;
   }

@@ -15,14 +15,11 @@
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-
                 <mat-form-field appearance="fill">
-                    <mat-label>First name</mat-label>
-                    <input matInput>
+                    <mat-label>Enter new username</mat-label>
+                    <input matInput placeholder="Enter your Username" formControlName="username" required>
                 </mat-form-field>
-
-                <button [disabled]="false" class="actionButton" mat-raised-button>Login</button>
-
+                <button [disabled]="false" class="actionButton" mat-raised-button>Save new username</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
@@ -35,17 +32,11 @@
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-
                 <mat-form-field appearance="fill">
-                    <mat-label>First name</mat-label>
-                    <input matInput>
+                    <mat-label>Enter new email</mat-label>
+                    <input matInput placeholder="pat@example.com" formControlName="email" required>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Age</mat-label>
-                    <input matInput type="number" min="1">
-                </mat-form-field>
-
+                <button [disabled]="false" class="actionButton" mat-raised-button>Save new email</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
@@ -58,19 +49,16 @@
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-
                 <mat-form-field appearance="fill">
-                    <mat-label>First name</mat-label>
-                    <input matInput>
+                    <mat-label>Enter your password</mat-label>
+                    <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                    <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
                 </mat-form-field>
-
-                <mat-form-field appearance="fill">
-                    <mat-label>Age</mat-label>
-                    <input matInput type="number" min="1">
-                </mat-form-field>
-
+                <button [disabled]="false" class="actionButton" mat-raised-button>Save new password</button>
             </mat-expansion-panel>
-
         </mat-card-content>
     </mat-card>
 </div>

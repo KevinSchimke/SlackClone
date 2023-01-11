@@ -21,10 +21,18 @@
             }
         }
 
+        mat-panel-title {
+            mat-icon {
+                margin-right: 8px;
+            }
+        }
 
+        mat-form-field {
+            margin-top: 16px;
+        }
 
         .actionButton {
-            width: 50%;
+            width: 100%;
             cursor: pointer;
             padding: 10px;
             font-weight: 600;
@@ -33,18 +41,17 @@
             border-radius: 4px;
             outline: none;
             border: none;
+            background-color: $button-color-1;
 
             &:hover {
                 opacity: 0.75;
             }
         }
-
-        .submit {
-            margin-top: 16px;
-            font-weight: 800;
-            font-size: 1.25rem;
-        }
     }
+}
+
+.mat-mdc-form-field {
+    width: 100% !important;
 }
 
 mat-expansion-panel-header {
@@ -53,4 +60,8 @@ mat-expansion-panel-header {
 
 mat-panel-description {
     justify-content: end;
+}
+
+mat-expansion-panel {
+    margin: 8px 0 !important;
 }
