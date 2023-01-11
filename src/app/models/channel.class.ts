@@ -1,4 +1,5 @@
 export class Channel {
+    id: string;
     name: string;
     users: string[];
     topic: string;
@@ -8,6 +9,7 @@ export class Channel {
     locked: boolean;
 
     constructor(obj?: any) {
+        this.id = obj.id ? obj.id: '';
         this.name = obj.name ? obj.name : '';
         this.users = obj.users ? obj.users : ['user0'];
         this.topic = obj.topic ? obj.topic : '';

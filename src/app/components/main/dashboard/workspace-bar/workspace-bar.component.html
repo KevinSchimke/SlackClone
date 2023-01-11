@@ -23,8 +23,7 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li>Angular</li>
-                <li>Javascript</li>
+                <li *ngFor="let channel of channels"><a [routerLink]="">{{channel.name}}</a></li>
             </mat-expansion-panel>
         </mat-accordion>
     </li>
