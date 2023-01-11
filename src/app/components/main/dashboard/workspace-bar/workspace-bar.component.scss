@@ -1,4 +1,18 @@
 @import "../../../../../assets/scss/company-colors.scss";
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: disc;
+}
+
+.bar-header {
+    h2 {
+        color: $color-main;
+    }
+}
+
 .channels-header-title {
     justify-content: space-between;
 }
@@ -13,6 +27,7 @@
         display: unset;
         flex-grow: unset;
         flex-basis: unset;
+        color: $color-main;
     }
     .mat-content.mat-content-hide-toggle {
         margin-right: 0;
@@ -30,13 +45,6 @@
     a {
         width: 100%;
         display: block;
+        color: $color-secondary;
     }
-}
-
-ul {
-    padding: 0;
-}
-
-li {
-    list-style-type: disc;
 }

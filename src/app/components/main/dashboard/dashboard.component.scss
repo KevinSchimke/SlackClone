@@ -4,34 +4,19 @@ $gap_channel_thread: .5rem;
 .main-container {
     height: 100vh;
     background-color: $bg-color;
-    header {
-        padding: .5rem 1.5rem;
-    }
+    color: $color-main;
 }
 
 .workspace-bar {
-    width: 15%;
+    width: clamp(12.5rem, 20%, 16.25rem);
     background-color: #19171D;
+    color: $color-secondary;
+    padding: .5rem;
 }
 
 .thread-bar {
     width: 35%;
     background-color: $bg-color;
-}
-
-.workspace-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    img {
-        display: block;
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-    &:hover {
-        background-color: $bg-color-hover;
-    }
 }
 
 .bar-header {

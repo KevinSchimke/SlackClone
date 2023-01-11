@@ -23,11 +23,11 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let channel of channels"><a [routerLink]="">{{channel.name}}</a></li>
+                <li *ngFor="let channel of collData$ | async"><a [routerLink]="">{{channel.name}}</a></li>
             </mat-expansion-panel>
         </mat-accordion>
     </li>
 </ul>
-<button (click)="createChannelService.createChannel()">Clicken</button>
+
 <button (click)="createChannelService.saveThread()">Create Thread</button>
 <button (click)="createChannelService.saveComment()">Create Comment</button>

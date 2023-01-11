@@ -18,22 +18,6 @@ export class FirestoreService {
 
   constructor(private firestore: Firestore) { }
 
-
-  async createChannel() {
-    let newChannel = new Channel();
-    newChannel.name = 'Test';
-    newChannel.description = 'Toller Channel';
-    newChannel.creationDate = new Date();
-    let coll = collection(this.firestore, 'channels');
-    await setDoc(doc(coll), newChannel.toJson());
-    console.log('created Channel');
-  }
-
-  async saveChannel() {
-    // let coll = collection(this.firestore);
-  }
-
-
   async saveThread() {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
     await setDoc(doc(coll), { thread: 'laeuft' });
@@ -46,32 +30,15 @@ export class FirestoreService {
     console.log('created comment');
   }
 
-  async save(obj: Channel, collPath: string) {
+  async save(obj: Channel | Thread | Comment | User, collPath: string) {
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
-    console.log('created Channel');
+    console.log('Saved document');
   }
 
-  async getCollection(collPath: string) {
-    // let arr: any[] = [];
+  getCollection(collPath: string) {
     let coll = collection(this.firestore, collPath);
     let collData$ = collectionData(coll, { idField: 'id' });
-    collData$.subscribe((collItem) => {
-      this.obj_arr = collItem;
-      console.log(this.obj_arr);
-      // return obj_arr;
-      // collItem.forEach(item => {
-        // if (collPath === 'channels') {
-        //   let obj = new Channel(item);
-        //   console.log('Current obj.id is ', obj.id);
-        //   console.log(obj_arr[0]);
-        //   obj_arr.push(obj);
-        // }
-        // else {
-        //   obj_arr.splice(obj_arr.indexOf(obj.id), 1)
-        // }
-      // });
-    });
-    return this.obj_arr;
+    return collData$;
   }
 }
