@@ -31,6 +31,17 @@ ul {
     justify-content: space-between;
 }
 
+.btn-add-channel {
+    border-radius: .25rem;
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+    img {
+        padding: .1rem;
+        display: block;
+    }
+}
+
 .channels-accordion {
     width: 100%;
     mat-expansion-panel {

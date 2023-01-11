@@ -14,6 +14,7 @@ import { VerifyuserComponent } from './components/authentication/verifyuser/veri
 
 // Main Components
 import { MainComponent } from './components/main/main.component';
+import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
 
 
 const routes: Routes = [
@@ -25,7 +26,7 @@ const routes: Routes = [
   { path: 'verification', component: VerifyuserComponent },
   { path: 'reset', component: ForgotpasswordComponent },
   { path: 'response', component: SetnewpasswordComponent },
-  { path: 'main', component: MainComponent },
+  { path: 'main', component: MainComponent, children: [{path: ':id', component: ChannelBarComponent}] },
   { path: '**', redirectTo: 'main', pathMatch: 'full' }
 ];
 

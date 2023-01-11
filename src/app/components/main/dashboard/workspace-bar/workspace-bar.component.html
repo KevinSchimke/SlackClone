@@ -20,12 +20,12 @@
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
                             <span>Channels</span>
-                            <button appClickStopPropagation (click)="openDialog()">+</button>
+                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel"><img src="assets/img/plus_939295.png"></button>
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <li *ngFor="let channel of collData$ | async">
-                    <a [routerLink]="">
+                    <a [routerLink]="['/main/'+channel.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.name}}</a>
                 </li>
             </mat-expansion-panel>
