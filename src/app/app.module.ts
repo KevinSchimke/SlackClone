@@ -53,6 +53,8 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
+import { InfocardComponent } from './components/usercard/infocard/infocard.component';
+import { EditsettingcardComponent } from './components/usercard/editsettingcard/editsettingcard.component';
 
 @NgModule({
   declarations: [
@@ -71,7 +73,9 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
     ThreadBarComponent,
     ChannelBarComponent,
     DialogAddChannelComponent,
-    ClickStopPropagationDirective
+    ClickStopPropagationDirective,
+    InfocardComponent,
+    EditsettingcardComponent
   ],
   imports: [
     BrowserModule,
