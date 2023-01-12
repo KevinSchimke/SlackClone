@@ -33,6 +33,8 @@
     </li>
 </ul>
 
+<div *ngFor="let channels2 of collData2$ | async ">{{channels2.name}}</div>
+
 <button (click)="createChannelService.saveThread()">Create Thread</button>
 <button (click)="createChannelService.saveComment()">Create Comment</button>
 

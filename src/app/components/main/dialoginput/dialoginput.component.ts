@@ -31,7 +31,7 @@ export class DialoginputComponent {
     translate: 'yes',
     enableToolbar: true,
     showToolbar: true,
-    placeholder: 'Enter text here...',
+    placeholder: 'Leave a message...',
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',

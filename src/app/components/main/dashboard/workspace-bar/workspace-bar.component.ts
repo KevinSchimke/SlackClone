@@ -15,9 +15,12 @@ export class WorkspaceBarComponent {
   panelOpenState = false;
   channels: any[] = [];
   collData$: any;
+  collData2$: any;
 
   constructor(public dialog: MatDialog, public createChannelService: FirestoreService, private firestore: Firestore) {
     this.collData$ = this.createChannelService.getCollection('channels');
+    this.collData2$ = this.createChannelService.getCollection('users/'+'1oiPPQw7aPUmTKkZNk2QBRoZnRz2/'+'channels');
+    this.collData2$.subscribe((data: any) => console.log(data));
   }
 
   openDialog(): void {

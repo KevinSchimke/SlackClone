@@ -5,7 +5,7 @@
     <p>{{ card.message }}</p>
 </div>
 <mat-card id="chatcard">
-    <angular-editor (keyup)="handleKeyUp($event)" placeholder="Leave a message..." [(ngModel)]="message" [config]="editorConfig">
+    <angular-editor (keyup)="handleKeyUp($event)" [(ngModel)]="message" [config]="editorConfig">
         <ng-template #customButtons>
             <ae-toolbar-set>
                 <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
