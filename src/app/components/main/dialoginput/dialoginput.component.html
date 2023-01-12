@@ -21,7 +21,7 @@
     </div>
 
     <mat-menu #emoij="matMenu" xPosition="before">
-        <emoji-mart (click)="stop($event)" (emojiSelect)="handleClick($event)" [i18n]="{
+        <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event)" [i18n]="{
         search: 'Recherche',
         categories: { search: 'Résultats de recherche', recent: 'Récents' }
       }"></emoji-mart>

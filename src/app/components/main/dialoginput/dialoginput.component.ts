@@ -6,6 +6,7 @@ import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
+import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 
 @Component({
   selector: 'app-dialoginput',
@@ -18,7 +19,16 @@ export class DialoginputComponent {
   chat: string[] = [];
   comments: any[] = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore, public fireservice: FirestoreService) {}
+
+  darkMode: undefined | boolean = !!(
+    typeof matchMedia === 'function' &&
+    matchMedia('(prefers-color-scheme: dark)').matches
+  );
+
+  darkestMode: undefined | boolean = undefined;
+  set = 'native';
+  native = true;
 
   editorConfig: AngularEditorConfig = {
     editable: true,
@@ -37,9 +47,7 @@ export class DialoginputComponent {
     defaultFontSize: '',
     fonts: [
       { class: 'arial', name: 'Arial' },
-      { class: 'times-new-roman', name: 'Times New Roman' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' },
+      
     ],
     customClasses: [
       {
@@ -75,7 +83,7 @@ export class DialoginputComponent {
         'link',
         'unlink',
         'backgroundColor',
-        'fontName',
+        'textColor',
       ],
     ],
   };
@@ -106,14 +114,7 @@ export class DialoginputComponent {
   }
 
 
-  darkMode: undefined | boolean = !!(
-    typeof matchMedia === 'function' &&
-    matchMedia('(prefers-color-scheme: dark)').matches
-  );
-
-  darkestMode: undefined | boolean = undefined;
-  set = 'native';
-  native = true;
+ 
 
 
   setTheme(set: string) {
