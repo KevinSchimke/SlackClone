@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
-import { collection, Firestore } from '@angular/fire/firestore';
-import { ActivatedRoute } from '@angular/router';
-import { Channel } from 'src/app/models/channel.class';
+import { ActivatedRoute, Params } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
-import { EMPTY, Observable, of } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-channel-bar',
@@ -15,11 +13,10 @@ export class ChannelBarComponent {
   isGoToThreadHovered = false;
   channelId: string = '';
   pathToChild: string = '';
-  // channel: Channel;
-  collData$: any = '';
+  collData$: Observable<any>;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private firestore: Firestore, public fireService: FirestoreService) { 
-    this.collData$ = of({});
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService) { 
+    this.collData$ = EMPTY;
   }
 
   ngOnInit(): void {
@@ -27,10 +24,11 @@ export class ChannelBarComponent {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
 
-  subscribeCurrentChannel(param: any){
+  subscribeCurrentChannel(param: {id: string}){
     console.log(param);
     this.channelId = param.id;
     this.collData$ = this.fireService.getCollection('channels/'+param.id+'/ThreadCollection');
     console.log(this.collData$);
+
   }
 }
