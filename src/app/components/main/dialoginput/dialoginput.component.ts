@@ -18,7 +18,7 @@ export class DialoginputComponent {
   chat: string[] = [];
   comments: any[] = [];
 
-  constructor(private firestore: Firestore) {}
+  constructor(private firestore: Firestore) { }
 
   editorConfig: AngularEditorConfig = {
     editable: true,

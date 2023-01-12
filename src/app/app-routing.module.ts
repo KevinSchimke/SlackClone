@@ -15,10 +15,11 @@ import { VerifyuserComponent } from './components/authentication/verifyuser/veri
 // Main Components
 import { MainComponent } from './components/main/main.component';
 import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
+import { AuthFirebaseGuard } from './guard/auth-firebase.guard';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'main', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprotection', component: DataprotectionComponent },
   { path: 'login', component: LoginComponent },
@@ -26,8 +27,15 @@ const routes: Routes = [
   { path: 'verification', component: VerifyuserComponent },
   { path: 'reset', component: ForgotpasswordComponent },
   { path: 'response', component: SetnewpasswordComponent },
-  { path: 'main', component: MainComponent, children: [{path: ':id', component: ChannelBarComponent}] },
-  { path: '**', redirectTo: 'main', pathMatch: 'full' }
+  {
+    path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
+    children: [
+      { path: '', redirectTo: 'main', pathMatch: 'prefix' },
+      { path: ':id', component: ChannelBarComponent }
+    ]
+  },
+  // { path: 'main', component: MainComponent, children: [{path: ':id', component: ChannelBarComponent}] },
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({
