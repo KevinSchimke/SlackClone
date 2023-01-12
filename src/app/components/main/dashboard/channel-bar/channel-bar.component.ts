@@ -15,7 +15,7 @@ export class ChannelBarComponent {
   pathToChild: string = '';
   collData$: Observable<any>;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService) { 
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService) {
     this.collData$ = EMPTY;
   }
 
@@ -24,10 +24,10 @@ export class ChannelBarComponent {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
 
-  subscribeCurrentChannel(param: {id: string}){
+  subscribeCurrentChannel(param: { id: string }) {
     console.log(param);
     this.channelId = param.id;
-    this.collData$ = this.fireService.getCollection('channels/'+param.id+'/ThreadCollection');
+    this.collData$ = this.fireService.getCollection('channels/' + param.id + '/ThreadCollection');
     console.log(this.collData$);
 
   }

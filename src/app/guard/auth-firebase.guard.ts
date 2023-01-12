@@ -24,6 +24,6 @@ export class AuthFirebaseGuard implements CanActivate {
 
   private handleState(state: any) {
     if (!state)
-      this.router.navigateByUrl('/main');
+      this.router.navigateByUrl('/login');
   }
 }

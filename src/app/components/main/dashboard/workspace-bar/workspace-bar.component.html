@@ -20,16 +20,18 @@
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
                             <span>Channels</span>
-                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel"><img src="assets/img/plus_939295.png"></button>
+                            <button appClickStopPropagation (click)="openDialog()"
+                                class="btn-unset btn-add-channel"><img src="assets/img/plus_939295.png"></button>
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let channel of collData$ | async">
-                    <a [routerLink]="['/main/'+channel.id]">
-                        <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.name}}</a>
-                </li>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <li *ngFor="let channel of collData$ | async">
+        <a [routerLink]="['/main/'+channel.id]">
+            <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.name}}
+        </a>
+    </li>
+    </mat-expansion-panel>
+    </mat-accordion>
     </li>
 </ul>
 
@@ -37,6 +39,7 @@
 
 <button (click)="createChannelService.saveThread()">Create Thread</button>
 <button (click)="createChannelService.saveComment()">Create Comment</button>
+<button (click)="logout()">Logout current user</button>
 
 <!-- Threads: <a target="_blank" href="https://icons8.com/icon/TfBuMnTzwL0v/chat-message">Chat Message</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
 <!-- Direct Messages :<a target="_blank" href="https://icons8.com/icon/87372/communication">Communication</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
