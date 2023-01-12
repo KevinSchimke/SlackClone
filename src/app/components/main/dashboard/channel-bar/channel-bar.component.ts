@@ -14,6 +14,7 @@ import { EMPTY, Observable, of } from 'rxjs';
 export class ChannelBarComponent {
   isGoToThreadHovered = false;
   channelId: string = '';
+  pathToChild: string = '';
   // channel: Channel;
   collData$: any = '';
 
@@ -28,11 +29,8 @@ export class ChannelBarComponent {
 
   subscribeCurrentChannel(param: any){
     console.log(param);
-    // this.channel.id = param.id;
-    let coll = collection(this.firestore, 'channels/'+param.id+'/ThreadCollection');
+    this.channelId = param.id;
     this.collData$ = this.fireService.getCollection('channels/'+param.id+'/ThreadCollection');
     console.log(this.collData$);
-    // let docRef = doc(coll, this.userID);
-    // let user$ = docData(docRef);
   }
 }
