@@ -24,3 +24,5 @@
         </button>
     </div>
 </div>
+
+<div *ngFor="let threads of collData$ | async">{{threads.message}}</div>

@@ -21,7 +21,7 @@ export class FirestoreService {
   async saveThread() {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
     await setDoc(doc(coll), { thread: 'laeuft' });
-    console.log('created Channel');
+    console.log('created thread');
   }
 
   async saveComment() {
