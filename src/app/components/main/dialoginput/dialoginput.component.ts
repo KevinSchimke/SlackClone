@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
@@ -7,6 +7,7 @@ import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-dialoginput',
@@ -18,8 +19,19 @@ export class DialoginputComponent {
   message: string = '';
   chat: string[] = [];
   comments: any[] = [];
+  channelId: string ='';
+  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute) { }
 
-  constructor(private firestore: Firestore, public fireservice: FirestoreService) { }
+  ngOnInit() {
+    this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
+  }
+
+  getIdFromUrl(param: { id: string }) {
+    if (param.id && param.id.length > 2) {
+      this.channelId = param.id;
+    };
+    console.log(this.channelId);
+  }
 
   darkMode: undefined | boolean = !!(
     typeof matchMedia === 'function' &&
@@ -92,7 +104,7 @@ export class DialoginputComponent {
     let coll = collection(
       this.firestore,
       'channels',
-      'Angular',
+      this.channelId,
       'ThreadCollection'
     );
     await setDoc(doc(coll), thread.toJson());
@@ -100,6 +112,7 @@ export class DialoginputComponent {
   }
 
   getMessage() {
+    console.log(this.channelId);
     let comment: Comment = new Comment();
 
     this.user.id = 'testuser';
@@ -144,12 +157,9 @@ export class DialoginputComponent {
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
     this.message += $event.emoji.native;
+    console.log(this.channelId);
   }
 
-  stop($event: any) {
-    $event.stopPropagation();
-    $event.preventDefault();
-  }
 
   emojiFilter(e: string): boolean {
     // Can use this to test [emojisToShowFilter]
