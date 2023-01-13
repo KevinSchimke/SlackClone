@@ -55,6 +55,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { InfocardComponent } from './components/usercard/infocard/infocard.component';
 import { EditsettingcardComponent } from './components/usercard/editsettingcard/editsettingcard.component';
+import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { EditsettingcardComponent } from './components/usercard/editsettingcard/
     DialogAddChannelComponent,
     ClickStopPropagationDirective,
     InfocardComponent,
-    EditsettingcardComponent
+    EditsettingcardComponent,
+    DashboardHeaderComponent
   ],
   imports: [
     BrowserModule,

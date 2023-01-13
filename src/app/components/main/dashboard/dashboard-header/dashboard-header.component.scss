@@ -1,0 +1,33 @@
+@import "../../../../../assets/scss/company-colors.scss";
+.btn-header-search {
+    height: fit-content;
+    border: 1px solid #d1d2d357;
+    border-radius: 0.33rem;
+    padding: .4rem .8rem;
+    color: $color-main;
+    background-color: #38373C;
+    min-width: 300px;
+    img {
+        height: 1rem;
+        width: 1rem;
+    }
+    &:hover {
+        border: 1px solid $color-main;
+    }
+}
+
+.help-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+}
+
+.avatar,
+.emoji-state {
+    border-radius: 4px;
+    img {
+        height: 2rem;
+        width: 2rem;
+        object-fit: cover;
+        display: block;
+    }
+}

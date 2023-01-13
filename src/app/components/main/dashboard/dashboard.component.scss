@@ -1,8 +1,16 @@
 @import "../../../../assets/scss/colors.scss";
 @import "../../../../assets/scss/company-colors.scss";
 $gap_channel_thread: .5rem;
+$header-hight: 2.75rem;
+.main-header {
+    height: $header-hight;
+    background-color: $bg-accent;
+    border-bottom: solid 1px rgba(255, 255, 255, .12);
+    padding-inline: 1rem;
+}
+
 .main-container {
-    height: 100vh;
+    height: calc(100vh - $header-hight - 1px);
     background-color: $bg-color;
     color: $color-main;
 }
@@ -23,7 +31,7 @@ $gap_channel_thread: .5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem;
+    padding: .5rem 1rem;
     h2 {
         margin: 0;
     }
