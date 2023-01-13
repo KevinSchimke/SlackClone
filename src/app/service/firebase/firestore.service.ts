@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { addDoc, collection, collectionData, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { getDoc, collection, collectionData, doc, Firestore, setDoc, onSnapshot } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Thread } from 'src/app/models/thread.class';
@@ -39,6 +39,12 @@ export class FirestoreService {
   getCollection(collPath: string) {
     let coll = collection(this.firestore, collPath);
     let collData$ = collectionData(coll, { idField: 'id' });
+    return collData$;
+  }
+
+  getUser(uid: any) {
+    let coll = collection(this.firestore, 'users/');
+    let collData$ = collectionData(coll);
     return collData$;
   }
 }

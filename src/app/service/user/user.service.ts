@@ -4,6 +4,13 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class UserService {
+  private uid?: string;
 
-  constructor() { }
+  setUid(uid: string) {
+    this.uid = uid;
+  }
+
+  getUid() {
+    return this.uid;
+  }
 }

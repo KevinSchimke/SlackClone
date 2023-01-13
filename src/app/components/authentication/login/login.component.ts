@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, signInWithEmailAndPassword, UserCredential } from '@angular/fire/auth';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ export class LoginComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router) { }
+  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private userService: UserService, private router: Router) { }
 
   login() {
     if (this.user.valid) {
@@ -27,6 +28,7 @@ export class LoginComponent {
         .then((user: UserCredential) => {
           if (user.user?.emailVerified) {
             this.router.navigate(['/main']);
+            this.userService.setUid(user.user.uid);
             this.pushupMessage.openPushupMessage('success', 'Login Successfully')
           } else {
             this.router.navigate(['/verification']);

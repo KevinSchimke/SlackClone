@@ -20,15 +20,15 @@ export class ChannelBarComponent {
   }
 
   ngOnInit(): void {
-    console.log(this.route.params);
+    // console.log(this.route.params);
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
 
   subscribeCurrentChannel(param: { id: string }) {
-    console.log(param);
+    // console.log(param);
     this.channelId = param.id;
     this.collData$ = this.fireService.getCollection('channels/' + param.id + '/ThreadCollection');
-    console.log(this.collData$);
+    // console.log(this.collData$);
 
   }
 }

@@ -16,8 +16,6 @@ export class AuthFirebaseGuard implements CanActivate {
 
     return authState(this.auth).pipe(map(state => {
       this.handleState(state);
-      console.log(state);
-
       return !!state
     }));
   }
