@@ -3,6 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 import { UserService } from 'src/app/service/user/user.service';
+import { User } from 'src/app/models/user.class';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -24,8 +26,8 @@ export class WorkspaceBarComponent {
     // this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
     // this.collData2$.subscribe((data: any) => console.log(data));
 
-    // this.user$ = this.firestoreService.getUser(this.userService.getUid());
-    // this.user$.subscribe((data: any) => console.log(data));
+    this.user$ = this.firestoreService.getUser(this.userService.getUid());
+    this.user$.subscribe((data: User) => console.log(data));
   }
 
   openDialog(): void {
