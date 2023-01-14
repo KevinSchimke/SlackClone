@@ -147,6 +147,7 @@ export class DialoginputComponent {
         'insertHorizontalRule',
         'removeFormat',
         'link',
+        'insertImage',
         'unlink',
         'backgroundColor',
         'textColor',
