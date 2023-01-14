@@ -12,7 +12,6 @@ import { EMPTY, Observable } from 'rxjs';
 export class ChannelBarComponent {
   isGoToThreadHovered = false;
   channelId: string = '';
-  pathToChild: string = '';
   collData$: Observable<any> = EMPTY;
   @ViewChild('threadBar') threadBar: any;
 
@@ -23,17 +22,13 @@ export class ChannelBarComponent {
   }
 
   ngOnInit(): void {
-    // console.log(this.route.params);
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
 
 
   subscribeCurrentChannel(param: { id: string }) {
-    // console.log(param);
     this.channelId = param.id;
     this.collData$ = this.fireService.getCollection('channels/' + param.id + '/ThreadCollection');
-    // console.log(this.collData$);
-
   }
 
   openThread(threadId: string){

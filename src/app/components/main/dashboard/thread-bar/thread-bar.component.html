@@ -5,4 +5,18 @@
     </div>
     <button (click)="closeThread()" class="btn-unset close-thread-btn"><img src="assets/svg/x.svg"></button>
 </header>
+<div class="channel-thread" *ngFor="let threads of collData$ | async">
+    <img src="assets/img/user0.png" class="channel-thread-img">
+    <div class="channel-thread-content">
+        <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
+        <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
+        <p [innerHTML]="threads.message"></p>
+        <img *ngIf="threads.img" [src]="threads.img" alt="">
+        <p class="d-flex">
+            <button>:-)</button>
+            <button>:) +</button>
+        </p>
+        <p>{{threads.id}}</p>
+    </div>
+</div>
 <app-dialoginput></app-dialoginput>
