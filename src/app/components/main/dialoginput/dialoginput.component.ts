@@ -172,8 +172,10 @@ export class DialoginputComponent {
     comment.userid = this.user.id + this.comments.length;
     comment.message = this.message;
     comment.creationDate = new Date();
+    comment.img = this.imageURL;
     this.message = '';
     this.saveThread(comment);
+    this.imageURL = '';
   }
 
 
