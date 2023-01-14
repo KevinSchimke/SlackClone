@@ -6,7 +6,6 @@ import { MatDrawer } from '@angular/material/sidenav';
 })
 export class SidenavToggleService {
 
-
   workspaceBar: any;
   threadBar: any;
 

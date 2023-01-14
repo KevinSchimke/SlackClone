@@ -43,6 +43,7 @@
                 <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
                 <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
                 <p [innerHTML]="threads.message"></p>
+                <img *ngIf="threads.img" [src]="threads.img" alt="">
                 <p class="d-flex">
                     <button>:-)</button>
                     <button>:) +</button>
