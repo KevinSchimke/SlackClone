@@ -16,6 +16,7 @@ export class ThreadBarComponent {
   channelId: string = '';
   threadId: string = '';
   collData$: Observable<any> = EMPTY;
+  collPath: string = '';
 
   constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location, private fireService: FirestoreService) { }
 
@@ -32,8 +33,8 @@ export class ThreadBarComponent {
 
   subscribeCurrentChannel(param: { id: string }) {
     this.threadId = param.id;
-    console.log('channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection');
-    this.collData$ = this.fireService.getCollection('channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection');
+    this.collPath='channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection';
+    this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((data: any) => console.log(data));
   }
 

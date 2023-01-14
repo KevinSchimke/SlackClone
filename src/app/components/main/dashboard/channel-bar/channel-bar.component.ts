@@ -13,6 +13,7 @@ export class ChannelBarComponent {
   isGoToThreadHovered = false;
   channelId: string = '';
   collData$: Observable<any> = EMPTY;
+  collPath: string = '';
   @ViewChild('threadBar') threadBar: any;
 
   constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router) {}
@@ -28,7 +29,8 @@ export class ChannelBarComponent {
 
   subscribeCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
-    this.collData$ = this.fireService.getCollection('channels/' + param.id + '/ThreadCollection');
+    this.collPath = 'channels/' + param.id + '/ThreadCollection'
+    this.collData$ = this.fireService.getCollection(this.collPath);
   }
 
   openThread(threadId: string){

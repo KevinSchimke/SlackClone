@@ -20,6 +20,7 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, Upload
   styleUrls: ['./dialoginput.component.scss'],
 })
 export class DialoginputComponent {
+  @Input() collectionPath = '';
   user: User = Object();
   message: string = '';
   chat: string[] = [];
