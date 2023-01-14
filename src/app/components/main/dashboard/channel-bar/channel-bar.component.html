@@ -1,4 +1,4 @@
-<header class="bar-header">
+<!-- <header class="bar-header">
     <div class="d-flex"><button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
         <h2>Workspace-Header</h2>
     </div>
@@ -6,7 +6,7 @@
 <div class="channel-thread" *ngFor="let threads of collData$ | async">
     <img src="assets/img/user0.png" class="channel-thread-img">
     <div class="channel-thread-content">
-        <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
+         This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) 
         <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
         <p [innerHTML]="threads.message"></p>
         <p class="d-flex">
@@ -15,16 +15,49 @@
         </p>
         <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="sidenavToggler.threadBar.open()">
             <div class="d-flex first-comments">
-                <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+                 This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.
                 <img src="assets/img/user0.png">
             </div>
             <span class="channel-thread-comments">X Antwort(en)</span>
             <span *ngIf="!isGoToThreadHovered">Letzte Antwort vor X Tagen</span>
             <span *ngIf="isGoToThreadHovered">Thread ansehen</span>
         </button>
+        <p>{{threads.id}}</p>
     </div>
-</div>
+</div> -->
 
-
-
-<app-dialoginput class=""></app-dialoginput>
+<mat-drawer-container class="main-container">
+    <mat-drawer closed mode="side" position="end" class="thread-bar" #threadBar>
+        <router-outlet></router-outlet>
+    </mat-drawer>
+    <mat-drawer-content>
+        <header class="bar-header">
+            <div class="d-flex"><button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
+                <h2>Workspace-Header</h2>
+            </div>
+        </header>
+        <div class="channel-thread" *ngFor="let threads of collData$ | async">
+            <img src="assets/img/user0.png" class="channel-thread-img">
+            <div class="channel-thread-content">
+                <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
+                <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
+                <p [innerHTML]="threads.message"></p>
+                <p class="d-flex">
+                    <button>:-)</button>
+                    <button>:) +</button>
+                </p>
+                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="threadBar.open()" [routerLink]="threads.id">
+                    <div class="d-flex first-comments">
+                        <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+                        <img src="assets/img/user0.png">
+                    </div>
+                    <span class="channel-thread-comments">X Antwort(en)</span>
+                    <span *ngIf="!isGoToThreadHovered">Letzte Antwort vor X Tagen</span>
+                    <span *ngIf="isGoToThreadHovered">Thread ansehen</span>
+                </button>
+                <p>{{threads.id}}</p>
+            </div>
+        </div>
+        <app-dialoginput class=""></app-dialoginput>
+    </mat-drawer-content>
+</mat-drawer-container>

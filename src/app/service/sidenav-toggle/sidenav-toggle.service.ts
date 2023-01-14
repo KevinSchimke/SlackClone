@@ -12,8 +12,11 @@ export class SidenavToggleService {
 
   constructor() { }
 
-  getChildById(threadBar: MatDrawer,workspaceBar: MatDrawer){
-    this.threadBar = threadBar;
+  getChildById(workspaceBar: MatDrawer){
     this.workspaceBar = workspaceBar;
+  }
+
+  getChild2ById(threadBar: MatDrawer){
+    this.threadBar = threadBar;
   }
 }

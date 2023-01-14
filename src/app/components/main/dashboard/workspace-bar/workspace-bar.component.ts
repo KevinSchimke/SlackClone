@@ -21,11 +21,11 @@ export class WorkspaceBarComponent {
     private userService: UserService,
     private firestoreService: FirestoreService) {
     this.collData$ = this.createChannelService.getCollection('channels');
-    this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
-    this.collData2$.subscribe((data: any) => console.log(data));
+    // this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
+    // this.collData2$.subscribe((data: any) => console.log(data));
 
-    this.user$ = this.firestoreService.getUser(this.userService.getUid());
-    this.user$.subscribe((data: any) => console.log(data));
+    // this.user$ = this.firestoreService.getUser(this.userService.getUid());
+    // this.user$.subscribe((data: any) => console.log(data));
   }
 
   openDialog(): void {

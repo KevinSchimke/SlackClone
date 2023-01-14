@@ -4,13 +4,12 @@
     <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">
         <app-workspace-bar></app-workspace-bar>
     </mat-drawer>
-    <mat-drawer closed mode="side" position="end" class="thread-bar" #threadBar>
-        <app-thread-bar></app-thread-bar>
-    </mat-drawer>
+    <!-- <mat-drawer closed mode="side" position="end" class="thread-bar" #threadBar>
+        <router-outlet name="childRoute"></router-outlet>
+    </mat-drawer> -->
     <mat-drawer-content>
         <router-outlet></router-outlet>
-        <!-- <app-channel-bar></app-channel-bar> -->
-        <!-- <app-dialoginput></app-dialoginput> -->
+        <!-- Inside is app-channel-bar.component-->
     </mat-drawer-content>
 </mat-drawer-container>
 

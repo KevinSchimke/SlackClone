@@ -16,6 +16,7 @@ import { VerifyuserComponent } from './components/authentication/verifyuser/veri
 import { MainComponent } from './components/main/main.component';
 import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
 import { AuthFirebaseGuard } from './guard/auth-firebase.guard';
+import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
 
 
 const routes: Routes = [
@@ -30,11 +31,16 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
-      { path: '', redirectTo: 'main', pathMatch: 'prefix' },
-      { path: ':id', component: ChannelBarComponent }
+      { path: '', redirectTo: 'main', pathMatch: 'full' },
+      {
+        path: ':id', component: ChannelBarComponent,
+        children: [
+          { path: ':id', component: ThreadBarComponent }
+        ]
+      },
+      // {path: '(:id,childRoute:/child)', component: ThreadBarComponent, outlet: 'childRoute'}
     ]
   },
-  // { path: 'main', component: MainComponent, children: [{path: ':id', component: ChannelBarComponent}] },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
