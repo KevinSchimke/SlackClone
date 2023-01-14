@@ -4,6 +4,7 @@ import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class FirestoreService {
   locked = false;
   obj_arr: any[] = [];
 
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore, private userService: UserService) { }
 
   async saveThread() {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
@@ -42,8 +43,8 @@ export class FirestoreService {
     return collData$;
   }
 
-  getUser(uid: any) {
-    let docRef = doc(collection(this.firestore, 'users'), uid);
+  getUser() {
+    let docRef = doc(collection(this.firestore, 'users'), this.userService.getUid());
     let user = docData(docRef);
     return user;
   }
