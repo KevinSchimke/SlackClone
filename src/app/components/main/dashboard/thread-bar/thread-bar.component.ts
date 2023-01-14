@@ -1,7 +1,7 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
 @Component({
@@ -15,7 +15,7 @@ export class ThreadBarComponent {
   pathToChild: string = '';
   collData$: Observable<any> = EMPTY;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private fireService: FirestoreService){}
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location){}
 
 
   ngOnInit(): void {
@@ -23,10 +23,16 @@ export class ThreadBarComponent {
   }
 
   subscribeCurrentChannel(param: { id: string }) {
+    
     // console.log(param);
     // this.channelId = param.id;
     // this.collData$ = this.fireService.getCollection('channels/' + param.id + '/ThreadCollection');
     // console.log(this.collData$);
 
+  }
+
+  closeThread(){
+    this.sidenavToggler.threadBar.close();
+    this._location.back();
   }
 }

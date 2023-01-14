@@ -48,7 +48,7 @@
                     <button>:-)</button>
                     <button>:) +</button>
                 </p>
-                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="threadBar.open()" [routerLink]="threads.id">
+                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="openThread(threads.id)">
                     <div class="d-flex first-comments">
                         <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                         <img src="assets/img/user0.png">
