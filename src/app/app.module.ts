@@ -11,6 +11,8 @@ import { environment } from 'src/environment/environment';
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
+import { getStorage, provideStorage, connectStorageEmulator } from '@angular/fire/storage';
+
 
 // Components
 import { ImprintComponent } from './components/imprint/imprint.component';
@@ -85,6 +87,7 @@ import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-
     provideFirebaseApp(() => initializeApp(environment.firebaseConfig)),
     provideFirestore(() => getFirestore()),
     provideAuth(() => getAuth()),
+    provideStorage(() => getStorage()),
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatCardModule,

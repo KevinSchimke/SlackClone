@@ -1,13 +1,18 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, HostListener, Output, EventEmitter } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getFirestore, setDoc } from '@angular/fire/firestore';
 import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
-import { Observable } from 'rxjs';
+import { finalize, Observable } from 'rxjs';
 import { HttpEvent } from '@angular/common/http';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { ActivatedRoute } from '@angular/router';
+// import { getStorage, ref } from "firebase/storage";
+import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
+
+// Create a root reference
+// const storage = getStorage();
 
 @Component({
   selector: 'app-dialoginput',
@@ -20,7 +25,15 @@ export class DialoginputComponent {
   chat: string[] = [];
   comments: any[] = [];
   channelId: string ='';
-  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute) { }
+  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage ) { }
+  // private afStorage2: AngularFireStorage
+  // private fireStorage: Storage
+  // db = getFirestore();
+
+  imageURL = '';
+  downloadURL2!: Observable<string>;
+  storageRef! : StorageReference;
+  path = '';
 
   ngOnInit() {
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
@@ -31,6 +44,47 @@ export class DialoginputComponent {
       this.channelId = param.id;
     };
     console.log(this.channelId);
+  }
+
+  file:any = {};
+ 
+  upload = ($event: any) => {
+    this.file = $event.target.files[0];
+    this.path = `images/${this.file.name}`
+    this.storageRef = ref(this.fireStorage, this.path);
+    const uploadTask = uploadBytesResumable(this.storageRef, this.file);
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('upload is ' + progress + " % done");
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    },
+    (error) =>{
+      console.log(error.message);
+    }
+    ,
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('download is ' + downloadURL);
+        this.imageURL = downloadURL;
+      });
+    });
+  }
+
+  discardUpload() {
+    this.imageURL = '';
+    const desertRef = ref(this.fireStorage, this.path);
+    deleteObject(desertRef).then(() => {
+      // File deleted successfully
+    }).catch((error) => {
+      // Uh-oh, an error occurred!
+    });
   }
 
   darkMode: undefined | boolean = !!(
@@ -93,6 +147,7 @@ export class DialoginputComponent {
         'insertHorizontalRule',
         'removeFormat',
         'link',
+        'insertImage',
         'unlink',
         'backgroundColor',
         'textColor',
@@ -112,18 +167,15 @@ export class DialoginputComponent {
   }
 
   getMessage() {
-    console.log(this.channelId);
     let comment: Comment = new Comment();
-
     this.user.id = 'testuser';
     comment.userid = this.user.id + this.comments.length;
     comment.message = this.message;
     comment.creationDate = new Date();
-    this.comments.push(this.message);
-    this.chat.push(this.message);
+    comment.img = this.imageURL;
     this.message = '';
-    console.log(this.comments);
     this.saveThread(comment);
+    this.imageURL = '';
   }
 
 
@@ -168,4 +220,8 @@ export class DialoginputComponent {
     }
     return false;
   }
+}
+
+function refFromURL(imageURL: string) {
+  throw new Error('Function not implemented.');
 }

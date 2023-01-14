@@ -10,9 +10,20 @@
             <ae-toolbar-set>
                 <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
                 </ae-button>
+                <ae-button iconClass="fa fa-sharp fa-image" [matMenuTriggerFor]="uploader">
+                    
+                </ae-button>
             </ae-toolbar-set>
         </ng-template>
     </angular-editor>
+
+    <div class="upload-image-container" *ngIf="imageURL">
+        <div class="position-relative">
+            <img  [src]="imageURL" class=""> 
+            <!-- (click)="openLightbox(url)" -->
+            <i (click)="discardUpload()" class="material-icons">close</i>
+        </div>
+    </div>
 
     <div class="under">
         <button (click)="getMessage()">
@@ -27,6 +38,11 @@
       }"></emoji-mart>
     </mat-menu>
 
+    <mat-menu #uploader="matMenu">
+        <div>
+        <input type="file" id="fileChatroom" (change)="upload($event)" accept=".png,.jpg">
+    </div>
+    </mat-menu>
     <!-- <div *ngFor="let message of messages" value="message" [innerHTML]="message"></div> -->
 
     <!-- https://github.com/kolkov/angular-editor -->
