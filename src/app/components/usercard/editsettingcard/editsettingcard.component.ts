@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { Auth, updateEmail, onAuthStateChanged } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
+import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-editsettingcard',
@@ -12,9 +14,12 @@ export class EditsettingcardComponent {
   step = -1;
 
   hide = true;
+  user$: any;
 
-  constructor(private auth: Auth) {
 
+  constructor(private auth: Auth, private firestoreService: FirestoreService, private userService: UserService) {
+    this.user$ = this.firestoreService.getUser(this.userService.getUid());
+    this.user$.subscribe((data: User) => console.log(data));
   }
 
   ngOnInit(): void {
@@ -51,4 +56,5 @@ export class EditsettingcardComponent {
       }
     });
   }
+
 }

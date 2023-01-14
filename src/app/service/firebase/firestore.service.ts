@@ -11,13 +11,12 @@ import { UserService } from '../user/user.service';
 })
 export class FirestoreService {
 
-  // 
   name = 'Angular';
   description = 'Toller Channel';
   locked = false;
   obj_arr: any[] = [];
-
-  constructor(private firestore: Firestore, private userService: UserService) { }
+  uid: any
+  constructor(private firestore: Firestore) { }
 
   async saveThread() {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
@@ -43,8 +42,8 @@ export class FirestoreService {
     return collData$;
   }
 
-  getUser() {
-    let docRef = doc(collection(this.firestore, 'users'), this.userService.getUid());
+  getUser(uid: string) {
+    let docRef = doc(collection(this.firestore, 'users'), uid);
     let user = docData(docRef);
     return user;
   }
