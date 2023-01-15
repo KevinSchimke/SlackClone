@@ -44,7 +44,8 @@ export class DialoginputComponent {
  
   upload = ($event: any) => {
     this.file = $event.target.files[0];
-    this.path = `images/${this.file.name}`
+    const randomId = Math.random().toString(36).substring(2);
+    this.path = `images/${randomId}`;
     this.storageRef = ref(this.fireStorage, this.path);
     const uploadTask = uploadBytesResumable(this.storageRef, this.file);
     uploadTask.on('state_changed', (snapshot) => {
