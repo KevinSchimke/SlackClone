@@ -5,32 +5,28 @@ import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { collection, doc, Firestore, getFirestore, setDoc } from '@angular/fire/firestore';
 import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
 import { finalize, Observable } from 'rxjs';
-import { HttpEvent } from '@angular/common/http';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { ActivatedRoute } from '@angular/router';
-// import { getStorage, ref } from "firebase/storage";
 import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
 
-// Create a root reference
-// const storage = getStorage();
 
 @Component({
   selector: 'app-dialoginput',
   templateUrl: './dialoginput.component.html',
   styleUrls: ['./dialoginput.component.scss'],
 })
+
 export class DialoginputComponent {
   @Input() collectionPath = '';
+  @Input() thread: boolean = false;
+
+  
+  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage ) { }
+
   user: User = Object();
   message: string = '';
-  chat: string[] = [];
-  comments: any[] = [];
   channelId: string ='';
-  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage ) { }
-  // private afStorage2: AngularFireStorage
-  // private fireStorage: Storage
-  // db = getFirestore();
-
+  file:any = {};
   imageURL = '';
   downloadURL2!: Observable<string>;
   storageRef! : StorageReference;
@@ -38,16 +34,13 @@ export class DialoginputComponent {
 
   ngOnInit() {
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
+    if(this.thread) console.log("coll", this.collectionPath);
   }
 
   getIdFromUrl(param: { id: string }) {
-    if (param.id && param.id.length > 2) {
       this.channelId = param.id;
-    };
     console.log(this.channelId);
   }
-
-  file:any = {};
  
   upload = ($event: any) => {
     this.file = $event.target.files[0];
@@ -114,6 +107,8 @@ export class DialoginputComponent {
     defaultFontSize: '',
     fonts: [
       { class: 'arial', name: 'Arial' },
+      {class: 'calibri', name: 'Calibri'},
+      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
 
     ],
     customClasses: [
@@ -170,23 +165,25 @@ export class DialoginputComponent {
   getMessage() {
     let comment: Comment = new Comment();
     this.user.id = 'testuser';
-    comment.userid = this.user.id + this.comments.length;
+    comment.userid = this.user.id;
     comment.message = this.message;
     comment.creationDate = new Date();
     comment.img = this.imageURL;
     this.message = '';
-    this.saveThread(comment);
+    // this.saveThread(comment);
+    if(this.thread){
+      this.fireservice.save(comment, 'channels/' + this.channelId + '/ThreadCollection');
+    } else {
+      // this.fireservice.save(comment, 'channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection' )
+    }
     this.imageURL = '';
   }
-
-
-
-
 
   setTheme(set: string) {
     this.native = set === 'native';
     this.set = set;
   }
+
   setDarkmode(mode: boolean | undefined) {
     if (mode === undefined) {
       this.darkestMode = mode;
@@ -213,7 +210,6 @@ export class DialoginputComponent {
     console.log(this.channelId);
   }
 
-
   emojiFilter(e: string): boolean {
     // Can use this to test [emojisToShowFilter]
     if (e && e.indexOf && e.indexOf('1F4') >= 0) {
@@ -223,6 +219,4 @@ export class DialoginputComponent {
   }
 }
 
-function refFromURL(imageURL: string) {
-  throw new Error('Function not implemented.');
-}
+

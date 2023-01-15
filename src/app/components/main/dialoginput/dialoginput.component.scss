@@ -5,11 +5,6 @@
   background-color: gray;
 }
 
-.angular-editor-textarea {
-  resize: unset !important;
-  height: 200px !important;
-}
-
 textarea {
   margin-top: 10px;
   border: none;
@@ -28,7 +23,6 @@ textarea {
 }
 
 .material-icons {
-  background-color: lightgray;
   cursor: pointer;
 }
 
@@ -42,8 +36,13 @@ mat-card-content {
 
 .under{
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 emoji-mart.section{
   width: 260px !important;
+}
+
+.send-btn{
+  border: none;
+  background-color: rgba(23, 47, 128, 0.3);
 }

@@ -1,17 +1,10 @@
-<div class="card" *ngFor="let card of comments">
-    <p>
-        <strong>{{ card.userid }}</strong>
-    </p>
-    <p>{{ card.message }}</p>
-</div>
 <mat-card id="chatcard">
     <angular-editor (keyup)="handleKeyUp($event)" [(ngModel)]="message" [config]="editorConfig">
         <ng-template #customButtons>
             <ae-toolbar-set>
                 <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
                 </ae-button>
-                <ae-button iconClass="fa fa-sharp fa-image" [matMenuTriggerFor]="uploader">
-                    
+                <ae-button iconClass="fa fa-sharp fa-image" [matMenuTriggerFor]="uploader">            
                 </ae-button>
             </ae-toolbar-set>
         </ng-template>
@@ -26,24 +19,22 @@
     </div>
 
     <div class="under">
-        <button (click)="getMessage()">
-      <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
-    </button>
+        <button (click)="getMessage()" class="send-btn" *ngIf="message">
+            <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
+        </button>
     </div>
 
     <mat-menu #emoij="matMenu" xPosition="before">
         <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event)" [i18n]="{
         search: 'Recherche',
-        categories: { search: 'Résultats de recherche', recent: 'Récents' }
-      }"></emoji-mart>
+        categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+        </emoji-mart>
     </mat-menu>
 
     <mat-menu #uploader="matMenu">
-        <div>
-        <input type="file" id="fileChatroom" (change)="upload($event)" accept=".png,.jpg">
-    </div>
+        <input type="file" (change)="upload($event)" accept=".png,.jpg">
     </mat-menu>
-    <!-- <div *ngFor="let message of messages" value="message" [innerHTML]="message"></div> -->
 
-    <!-- https://github.com/kolkov/angular-editor -->
 </mat-card>
+
+<!-- https://github.com/kolkov/angular-editor -->
