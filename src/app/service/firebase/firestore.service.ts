@@ -16,7 +16,7 @@ export class FirestoreService {
   locked = false;
   obj_arr: any[] = [];
   uid: any
-  constructor(private firestore: Firestore) { }
+  constructor(private firestore: Firestore, private userService: UserService) { }
 
   async saveThread() {
     let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
@@ -42,8 +42,8 @@ export class FirestoreService {
     return collData$;
   }
 
-  getUser(uid: string) {
-    let docRef = doc(collection(this.firestore, 'users'), uid);
+  getUser() {
+    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid);
     let user = docData(docRef);
     return user;
   }

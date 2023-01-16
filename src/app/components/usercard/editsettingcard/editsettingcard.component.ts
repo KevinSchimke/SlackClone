@@ -18,7 +18,7 @@ export class EditsettingcardComponent {
 
 
   constructor(private auth: Auth, private firestoreService: FirestoreService, private userService: UserService) {
-    this.user$ = this.firestoreService.getUser(this.userService.getUid());
+    this.user$ = this.firestoreService.getUser();
     this.user$.subscribe((data: User) => console.log(data));
   }
 

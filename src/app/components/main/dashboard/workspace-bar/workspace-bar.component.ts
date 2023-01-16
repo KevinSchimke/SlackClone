@@ -18,21 +18,21 @@ export class WorkspaceBarComponent {
   collData2$: any = EMPTY;;
   user$: any = EMPTY;
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService) {}
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService) { }
 
-  ngOnInit(): void{
+  ngOnInit(): void {
     this.collData$ = this.firestoreService.getCollection('channels');
     this.collData$.subscribe((channels: any[]) => this.sortChannels(channels));
     // this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
     // this.collData2$.subscribe((data: any) => console.log(data));
 
-    // this.user$ = this.firestoreService.getUser(this.userService.getUid());
-    // this.user$.subscribe((data: User) => console.log(data));
+    this.user$ = this.firestoreService.getUser();
+    this.user$.subscribe((data: User) => console.log(data));
   }
 
-  sortChannels(channels: any[]){
+  sortChannels(channels: any[]) {
     let self = this;
-    this.channels = channels.sort(function(a: {name:string}, b: {name:string}) {
+    this.channels = channels.sort(function (a: { name: string }, b: { name: string }) {
       return self.compareStrings(a.name, b.name);
     });
   }
