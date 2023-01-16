@@ -37,6 +37,10 @@ $gap_channel_thread: .5rem;
     }
 }
 
+.show-thread {
+    display: none;
+}
+
 .go-to-thread {
     width: 100%;
     cursor: pointer;
@@ -56,5 +60,11 @@ $gap_channel_thread: .5rem;
     &:hover {
         background-color: $bg-color;
         border: 1px solid rgba(255, 255, 255, .12);
+        .time-of-last-answer {
+            display: none;
+        }
+        .show-thread {
+            display: unset;
+        }
     }
 }

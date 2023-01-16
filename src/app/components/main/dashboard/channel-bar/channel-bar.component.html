@@ -48,14 +48,14 @@
                     <button>:-)</button>
                     <button>:) +</button>
                 </p>
-                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="openThread(thread.id)">
+                <button class="d-flex go-to-thread" (click)="openThread(thread.id)">
                     <div class="d-flex first-comments">
                         <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                         <img src="assets/img/user0.png">
                     </div>
                     <span class="channel-thread-comments">X Antwort(en)</span>
-                    <span *ngIf="!isGoToThreadHovered">Letzte Antwort vor X Tagen</span>
-                    <span *ngIf="isGoToThreadHovered">Thread ansehen</span>
+                    <span class="time-of-last-answer">Letzte Antwort vor X Tagen</span>
+                    <span class="show-thread">Thread ansehen</span>
                 </button>
                 <p>{{thread.id}}</p>
             </div>
