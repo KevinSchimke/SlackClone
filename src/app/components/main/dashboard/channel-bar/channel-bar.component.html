@@ -37,18 +37,18 @@
                 <h2>Workspace-Header</h2>
             </div>
         </header>
-        <div class="channel-thread" *ngFor="let threads of collData$ | async">
+        <div class="channel-thread" *ngFor="let thread of threads">
             <img src="assets/img/user0.png" class="channel-thread-img">
             <div class="channel-thread-content">
-                <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
-                <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
-                <p [innerHTML]="threads.message"></p>
-                <img *ngIf="threads.img" [src]="threads.img" alt="">
+                <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
+                <p><span>{{ thread.userid + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
+                <p [innerHTML]="thread.message"></p>
+                <img *ngIf="thread.img" [src]="thread.img" alt="">
                 <p class="d-flex">
                     <button>:-)</button>
                     <button>:) +</button>
                 </p>
-                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="openThread(threads.id)">
+                <button class="d-flex go-to-thread" (mouseover)="isGoToThreadHovered = true;" (mouseleave)="isGoToThreadHovered = false;" (click)="openThread(thread.id)">
                     <div class="d-flex first-comments">
                         <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                         <img src="assets/img/user0.png">
@@ -57,7 +57,7 @@
                     <span *ngIf="!isGoToThreadHovered">Letzte Antwort vor X Tagen</span>
                     <span *ngIf="isGoToThreadHovered">Thread ansehen</span>
                 </button>
-                <p>{{threads.id}}</p>
+                <p>{{thread.id}}</p>
             </div>
         </div>
         <app-dialoginput [collectionPath]="collPath" [thread]="true"></app-dialoginput>
