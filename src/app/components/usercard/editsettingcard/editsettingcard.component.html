@@ -36,7 +36,8 @@
                     <mat-label>Enter new email</mat-label>
                     <input matInput placeholder="pat@example.com" formControlName="email" required>
                 </mat-form-field>
-                <button [disabled]="false" class="actionButton" mat-raised-button>Save new email</button>
+                <!-- <button [disabled]="false" class="actionButton" mat-raised-button>Save new email</button> -->
+                <button (click)="updateUserEmail()" class="actionButton" mat-raised-button>Save new email</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>

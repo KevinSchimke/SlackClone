@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Auth, updateEmail, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
@@ -22,38 +22,33 @@ export class EditsettingcardComponent {
     this.user$.subscribe((data: User) => console.log(data));
   }
 
-  ngOnInit(): void {
-    this.load();
-  }
-
   setStep(index: number) {
     this.step = index;
   }
 
-  // updateUserEmail() {
-  //   updateEmail(this.auth
-  //     , "user@example.com")
-  //     .then(() => {
-  //       console.log('save');
-  //     }).catch((error) => {
-  //       console.log(error);
-  //     });
-  // }
+  updateUserEmail() {
+    updateEmail(this.auth.currentUser!, "kevin@kevin-schimke.de")
+      .then(() => {
+        console.log('save');
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 
-  load() {
-    onAuthStateChanged(this.auth, (user) => {
-      if (user) {
-        // User is signed in, see docs for a list of available properties
-        // https://firebase.google.com/docs/reference/js/firebase.User
-        const uid = user.uid;
-        console.log(uid);
+  updateUserPassword() {
+    updatePassword(this.auth.currentUser!, "111111")
+      .then(() => {
+        console.log('save');
+      }).catch((error) => {
+        console.log(error);
+      });
+  }
 
-        // ...
-      } else {
-        // console.log(uid);
-        // User is signed out
-        // ...
-      }
+  deleteUser() {
+    deleteUser(this.auth.currentUser!).then(() => {
+      console.log('save');
+    }).catch((error) => {
+      console.log(error);
     });
   }
 
