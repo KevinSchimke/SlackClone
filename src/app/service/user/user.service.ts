@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, onAuthStateChanged } from '@angular/fire/auth';
+import { Auth } from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
@@ -7,14 +7,10 @@ import { Auth, onAuthStateChanged } from '@angular/fire/auth';
 export class UserService {
   public uid: any;
 
-  constructor(private auth: Auth) {
-    onAuthStateChanged(this.auth, ((user: any) => {
-      this.setUid(user.uid);
-    }))
-  }
+  constructor(private auth: Auth) { }
 
-  setUid(uid: string) {
-    this.uid = uid;
+  setUid() {
+    this.uid = this.auth.currentUser?.uid;
   }
 
   getUid() {
