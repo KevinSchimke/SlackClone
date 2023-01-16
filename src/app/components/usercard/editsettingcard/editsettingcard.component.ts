@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Auth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
@@ -10,6 +11,16 @@ import { UserService } from 'src/app/service/user/user.service';
   styleUrls: ['./editsettingcard.component.scss']
 })
 export class EditsettingcardComponent {
+  username = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
+  });
+  email = new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email])
+  });
+  password = new FormGroup({
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
+
   panelOpenState = false;
   step = -1;
 
@@ -24,6 +35,10 @@ export class EditsettingcardComponent {
 
   setStep(index: number) {
     this.step = index;
+  }
+
+  updateUserName() {
+    console.log('success');
   }
 
   updateUserEmail() {
@@ -45,11 +60,11 @@ export class EditsettingcardComponent {
   }
 
   deleteUser() {
-    deleteUser(this.auth.currentUser!).then(() => {
-      console.log('save');
-    }).catch((error) => {
-      console.log(error);
-    });
+    deleteUser(this.auth.currentUser!)
+      .then(() => {
+        console.log('save');
+      }).catch((error) => {
+        console.log(error);
+      });
   }
-
 }
