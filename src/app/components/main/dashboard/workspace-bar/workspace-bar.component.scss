@@ -16,6 +16,9 @@ ul {
         a {
             display: flex;
             gap: .5rem;
+            &:hover {
+                background-color: $bg-color-hover;
+            }
         }
     }
 }
