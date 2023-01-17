@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Thread } from 'src/app/models/thread.class';
@@ -31,7 +31,7 @@ export class FirestoreService {
   }
 
   async save(obj: Channel | Thread | Comment | User, collPath: string) {
-    console.log('path is ',obj, collPath);
+    console.log('path is ', obj, collPath);
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
     console.log('Saved document');
@@ -47,5 +47,10 @@ export class FirestoreService {
     let docRef = doc(collection(this.firestore, 'users'), this.userService.uid);
     let user = docData(docRef);
     return user;
+  }
+
+  updateUser() {
+    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
+    updateDoc(docRef, { name: 'max' });
   }
 }

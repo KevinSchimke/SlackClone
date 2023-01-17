@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { EditsettingcardComponent } from 'src/app/components/usercard/editsettingcard/editsettingcard.component';
+import { EditsettingcardComponent } from 'src/app/components/main/usercard/editsettingcard/editsettingcard.component';
 import { Auth, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 

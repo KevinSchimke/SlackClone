@@ -45,8 +45,8 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
-import {MatButtonModule} from '@angular/material/button';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatButtonModule } from '@angular/material/button';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -55,8 +55,8 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { InfocardComponent } from './components/usercard/infocard/infocard.component';
-import { EditsettingcardComponent } from './components/usercard/editsettingcard/editsettingcard.component';
+import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
+import { EditsettingcardComponent } from './components/main/usercard/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
 
 @NgModule({
