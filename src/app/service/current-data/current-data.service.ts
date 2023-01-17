@@ -14,18 +14,18 @@ export class CurrentDataService {
 
   constructor() { }
 
-  setThread(obj: Thread) {
-    this.currentThread.src = obj.src;
-    this.currentThread.name = obj.name;
-    this.currentThread.creationDate = obj.creationDate;
+  setThread(obj: any) {
+    this.currentThread.userName = obj.userName;
+    this.currentThread.userSrc = obj.userSrc;
+    this.currentThread.creationDate = obj.creationDate.toDate();
     this.currentThread.message = obj.message;
     this.currentThread.comments = obj.comments;
-    console.log(this.currentThread);
+    console.log('Test log',this.currentThread);
   }
 
   setChannel(obj: Channel) {
-    this.currentChannel.id = obj.id;
-    this.currentChannel.name = obj.name;
+    this.currentChannel.channelId = obj.channelId;
+    this.currentChannel.channelName = obj.channelName;
     this.currentChannel.users = obj.users;
     this.currentChannel.topic = obj.topic;
     this.currentChannel.description = obj.description;
@@ -35,26 +35,26 @@ export class CurrentDataService {
   }
 
   setUser(obj: User) {
-    this.currentUser.id =obj.id;
-    this.currentUser.name =obj.name;
-    this.currentUser.mail =obj.mail;
-    this.currentUser.telephone =obj.telephone;
-    this.currentUser.src =obj.src;
-    this.currentUser.state =obj.state;
-    this.currentUser.status =obj.status;
-    this.currentUser.lastLogin =obj.lastLogin;
-    this.currentUser.creationDate =obj.creationDate;
+    this.currentUser.id = obj.id;
+    this.currentUser.name = obj.name;
+    this.currentUser.mail = obj.mail;
+    this.currentUser.telephone = obj.telephone;
+    this.currentUser.src = obj.src;
+    this.currentUser.state = obj.state;
+    this.currentUser.status = obj.status;
+    this.currentUser.lastLogin = obj.lastLogin;
+    this.currentUser.creationDate = obj.creationDate;
   }
 
-  getThread() { 
+  getThread() {
     return this.currentThread;
   }
 
-  getChannel() { 
+  getChannel() {
     return this.currentChannel;
   }
 
-  getUser() { 
+  getUser() {
     return this.currentUser;
   }
 

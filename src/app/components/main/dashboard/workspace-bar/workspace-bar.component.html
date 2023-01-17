@@ -26,7 +26,7 @@
                 </mat-expansion-panel-header>
                 <li *ngFor="let channel of channels">
                     <a [routerLink]="['/main/'+channel.id]">
-                        <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.name}}
+                        <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.channelName}}
                     </a>
                 </li>
             </mat-expansion-panel>

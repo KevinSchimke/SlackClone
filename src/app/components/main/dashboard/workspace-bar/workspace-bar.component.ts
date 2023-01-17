@@ -17,6 +17,7 @@ export class WorkspaceBarComponent {
   collData$: any = EMPTY;
   collData2$: any = EMPTY;;
   user$: any = EMPTY;
+  userId: string = '';
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService) { }
 
@@ -25,15 +26,17 @@ export class WorkspaceBarComponent {
     this.collData$.subscribe((channels: any[]) => this.sortChannels(channels));
     // this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
     // this.collData2$.subscribe((data: any) => console.log(data));
-
     this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe((data: User) => console.log(data));
+    this.user$.subscribe((data: any) => {
+      this.userId = data.id;
+      console.log(this.userId);
+    });
   }
 
   sortChannels(channels: any[]) {
     let self = this;
-    this.channels = channels.sort(function (a: { name: string }, b: { name: string }) {
-      return self.compareStrings(a.name, b.name);
+    this.channels = channels.sort(function (a: { channelName: string }, b: { channelName: string }) {
+      return self.compareStrings(a.channelName, b.channelName);
     });
   }
 

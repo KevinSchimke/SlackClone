@@ -16,15 +16,7 @@ export class DialogAddChannelComponent {
     locked: new FormControl('')
   });
 
-  constructor(public dialogRef: MatDialogRef<DialogAddChannelComponent>, private setFirestore: FirestoreService) {
-    console.log(this.channelForm);
-  }
-
-
-
-  test() {
-    console.log(this.channelForm.controls.locked);
-  }
+  constructor(public dialogRef: MatDialogRef<DialogAddChannelComponent>, private setFirestore: FirestoreService) { }
 
   onSubmit() {
     if (this.channelForm.valid) {
@@ -33,14 +25,15 @@ export class DialogAddChannelComponent {
   }
 
   async createNewChannel() {
-    let newChannelJSON = {
-      name: this.channelForm.controls.name.value,
-      description: this.channelForm.controls.description.value,
-      locked:this.channelForm.controls.locked.value
-    }
-    console.log(newChannelJSON);
-    let channel = new Channel(newChannelJSON);
-    console.log(channel);
+    // let newChannelJSON = {
+    //   channelName: this.channelForm.controls.name.value,
+    //   description: this.channelForm.controls.description.value,
+    //   locked: this.channelForm.controls.locked.value
+    // }
+    let channel: Channel = new Channel();
+    channel.channelName = this.channelForm.controls.name.value || '';
+    channel.description = this.channelForm.controls.description.value || '';
+    channel.locked = this.channelForm.controls.locked.value || false || '';
     await this.setFirestore.save(channel, 'channels');
     this.dialogRef.close();
   }

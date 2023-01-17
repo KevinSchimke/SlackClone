@@ -47,7 +47,7 @@
             <img src="assets/img/user0.png" class="channel-thread-img">
             <div class="channel-thread-content">
                 <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-                <p><span>{{ thread.userid + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
+                <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
                 <p [innerHTML]="thread.message"></p>
                 <img *ngIf="thread.img" [src]="thread.img" alt="">
                 <p class="d-flex">

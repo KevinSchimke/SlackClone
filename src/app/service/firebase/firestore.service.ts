@@ -31,6 +31,7 @@ export class FirestoreService {
   }
 
   async save(obj: Channel | Thread | Comment | User, collPath: string) {
+    console.log('path is ',obj, collPath);
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
     console.log('Saved document');

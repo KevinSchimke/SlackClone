@@ -2,6 +2,8 @@ import { Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
+import { Thread } from 'src/app/models/thread.class';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
@@ -12,13 +14,13 @@ import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-tog
 })
 export class ThreadBarComponent {
   isGoToThreadHovered = false;
-
+  thread = new Thread();
   channelId: string = '';
   threadId: string = '';
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location, private fireService: FirestoreService) { }
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location, private fireService: FirestoreService, private currentDataService: CurrentDataService) { }
 
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class ThreadBarComponent {
       });
     }
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    this.thread = this.currentDataService.getThread();
   }
 
   subscribeCurrentChannel(param: { id: string }) {

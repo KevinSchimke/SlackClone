@@ -1,26 +1,26 @@
 export class Channel {
-    id: string;
-    name: string;
+    channelId: string;
+    channelName: string;
     users: string[];
     topic: string;
     description: string;
     creationDate: Date;
     creator: string;
-    locked: boolean;
+    locked: boolean | string;
 
     constructor(obj?: any) {
-        this.id = obj ? obj.id : '';
-        this.name = obj ? obj.name : '';
+        this.channelId = obj ? obj.channelId : '';
+        this.channelName = obj ? obj.channelName : '';
         this.users = obj ? obj.users : ['user0'];
         this.topic = obj ? obj.topic : '';
         this.description = obj ? obj.description : '';
         this.creationDate = obj ? obj.creationDate : new Date();
         this.creator = obj ? obj.creator : '';
-        this.locked = obj ? obj.locked : false;
+        this.locked = obj ? obj.locked : false || '';
     }
     toJson() {
         return {
-            name: this.name,
+            channelName: this.channelName,
             users: this.users,
             topic: this.topic,
             description: this.description,
