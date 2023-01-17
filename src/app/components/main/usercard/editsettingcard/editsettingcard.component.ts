@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Auth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/user.class';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
 
@@ -25,24 +26,8 @@ export class EditsettingcardComponent {
   step = -1;
 
   hide = true;
-  user$: any;
-  user: User
 
-  constructor(private auth: Auth, private firestoreService: FirestoreService, private userService: UserService) {
-    this.user = new User();
-    this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe((user: User) => {
-      this.user.name = user.name;
-      this.user.id = user.id;
-      this.user.mail = user.mail;
-      this.user.telephone = user.telephone;
-      this.user.src = user.src;
-      this.user.state = user.state;
-      this.user.status = user.status;
-      this.user.lastLogin = user.lastLogin;
-      this.user.creationDate = user.creationDate;
-    });
-    console.log(this.user);
+  constructor(private auth: Auth, private firestoreService: FirestoreService, private currentDataService: CurrentDataService) {
   }
 
   setStep(index: number) {
@@ -50,10 +35,7 @@ export class EditsettingcardComponent {
   }
 
   updateUserName() {
-    console.log(this.user$, 'update');
-
-    this.firestoreService.updateUser();
-    console.log('success');
+    this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
   }
 
   updateUserEmail() {

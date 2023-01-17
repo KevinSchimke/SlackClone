@@ -20,7 +20,7 @@ export class CurrentDataService {
     this.currentThread.creationDate = obj.creationDate.toDate();
     this.currentThread.message = obj.message;
     this.currentThread.comments = obj.comments;
-    console.log('Test log',this.currentThread);
+    console.log('Test log', this.currentThread);
   }
 
   setChannel(obj: Channel) {
@@ -44,6 +44,7 @@ export class CurrentDataService {
     this.currentUser.status = obj.status;
     this.currentUser.lastLogin = obj.lastLogin;
     this.currentUser.creationDate = obj.creationDate;
+    console.log('The cuurent User from Service is', this.currentUser);
   }
 
   getThread() {
