@@ -34,12 +34,16 @@ export class DialoginputComponent {
 
   ngOnInit() {
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
-    if(this.thread) console.log("coll", this.collectionPath);
+    // if(this.thread) console.log("coll", this.collectionPath);
+  }
+
+  ngOnChanges(){
+    // console.log(this.collectionPath);
   }
 
   getIdFromUrl(param: { id: string }) {
       this.channelId = param.id;
-    console.log(this.channelId);
+    // console.log(this.channelId);
   }
  
   upload = ($event: any) => {
@@ -160,7 +164,7 @@ export class DialoginputComponent {
       'ThreadCollection'
     );
     await setDoc(doc(coll), thread.toJson());
-    console.log('created Channel');
+    // console.log('created Channel');
   }
 
   getMessage() {
@@ -208,7 +212,7 @@ export class DialoginputComponent {
   handleClick($event: EmojiEvent) {
     // console.log($event.emoji);
     this.message += $event.emoji.native;
-    console.log(this.channelId);
+    // console.log(this.channelId);
   }
 
   emojiFilter(e: string): boolean {

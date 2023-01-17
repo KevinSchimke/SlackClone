@@ -1,9 +1,7 @@
-import { Timestamp } from "@angular/fire/firestore";
-
 export class Thread {
   src: string;
   name: string;
-  creationDate: Timestamp;
+  creationDate: Date;
   message: string;
   comments: object;
 
@@ -13,13 +11,6 @@ export class Thread {
     this.creationDate = obj ? obj.creationDate : '';
     this.message = obj ? obj.message : '';
     this.comments = obj ? obj.comments : '';
-
-    // let coll = collection(this.firestore, 'channels','Angular','Threads');
-    // this.users$ = collectionData(coll,{idField:'id'});
-    // this.users$.subscribe((user) => {
-    //   this.users = user;
-    //   console.log(this.users);
-    // });
   }
 
   toJson() {

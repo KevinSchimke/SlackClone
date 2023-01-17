@@ -4,6 +4,7 @@ export class Comment {
   creationDate: Date;
   message: string;
   img: string;
+  test = '';
 
   constructor(obj?: any) {
     this.userid = obj ? obj.userid : '';

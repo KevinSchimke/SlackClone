@@ -4,6 +4,7 @@ import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-tog
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 @Component({
   selector: 'app-channel-bar',
@@ -18,7 +19,7 @@ export class ChannelBarComponent {
   threads: any[] = [];
   @ViewChild('threadBar') threadBar: any;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router) {}
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) {}
 
   ngAfterViewInit(){
     this.sidenavToggler.getChild2ById(this.threadBar);
@@ -47,8 +48,11 @@ export class ChannelBarComponent {
     return (a < b) ? -1 : (a > b) ? 1 : 0;
   }
 
-  openThread(threadId: string){
+  openThread(thread: any){
     this.threadBar.open();
-    this.router.navigateByUrl('main/' + this.channelId+"/"+threadId);
+    console.log('ThreadID is',thread.id);
+    this.currentDataService.setThread(thread);
+    
+    this.router.navigateByUrl('main/' + this.channelId+"/"+thread.id);
   }
 }
