@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Auth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
+import { Auth, reauthenticateWithCredential, EmailAuthProvider, signInWithRedirect, reauthenticateWithPopup, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
@@ -28,6 +28,18 @@ export class EditsettingcardComponent {
 
   setStep(index: number) {
     this.step = index;
+  }
+
+  reauthenticate() {
+    const credential = EmailAuthProvider.credential(this.auth.currentUser!.email!, '123456')
+
+    reauthenticateWithCredential(this.auth.currentUser!, credential).then(() => {
+      console.log();
+
+    }).catch((error) => {
+      // An error ocurred
+      // ...
+    });
   }
 
   updateUserName() {
