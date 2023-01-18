@@ -38,7 +38,7 @@ export class DialoginputComponent {
   }
 
   ngOnChanges(){
-    // console.log(this.collectionPath);
+    console.log(this.collectionPath);
   }
 
   getIdFromUrl(param: { id: string }) {
@@ -172,17 +172,12 @@ export class DialoginputComponent {
     this.user.id = 'testuser';
     comment.userId = this.user.id;
     comment.userName = 'Max Mustermann';
-    comment.userSrc = 'assets/img/user0.png';
+    comment.userSrc = this.thread ? 'assets/img/user1.jpg' : 'assets/img/user2.jpg';
     comment.message = this.message;
     comment.creationDate = new Date();
     comment.img = this.imageURL;
     this.message = '';
-    // this.saveThread(comment);
-    if(this.thread){
-      this.fireservice.save(comment, 'channels/' + this.channelId + '/ThreadCollection');
-    } else {
-      // this.fireservice.save(comment, 'channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection' )
-    }
+    this.fireservice.save(comment, this.collectionPath);
     this.imageURL = '';
   }
 
