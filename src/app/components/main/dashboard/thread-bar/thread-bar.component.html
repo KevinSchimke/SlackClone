@@ -23,22 +23,13 @@
             <button>:-)</button>
             <button>:) +</button>
         </p>
-        <button class="d-flex go-to-thread">
-            <div class="d-flex first-comments">
-                <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-                <img src="assets/img/user0.png">
-            </div>
-            <span class="channel-thread-comments">X Antwort(en)</span>
-            <span class="time-of-last-answer">Letzte Antwort vor X Tagen</span>
-            <span class="show-thread">Thread ansehen</span>
-        </button>
     </div>
 </div>
 <div class="channel-thread" *ngFor="let threads of collData$ | async">
-    <img src="assets/img/user0.png" class="channel-thread-img">
+    <img [src]="threads.userSrc" class="channel-thread-img">
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
-        <p><span>{{ threads.userid + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
+        <p><span>{{ threads.userName + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
         <p [innerHTML]="threads.message"></p>
         <img *ngIf="threads.img" [src]="threads.img" alt="">
         <p class="d-flex">
