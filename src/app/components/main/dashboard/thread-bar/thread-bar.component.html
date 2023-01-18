@@ -12,7 +12,7 @@
         <button class="btn-unset"><img src="assets/img/share_D1D2D3.png"></button>
         <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
     </div>
-    <img src="assets/img/user0.png" class="channel-thread-img">
+    <img [src]="thread.userSrc" class="channel-thread-img">
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
         <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toLocaleTimeString()) + " Uhr" }}</span></p>

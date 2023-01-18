@@ -70,3 +70,13 @@ h1 {
 .angular-editor-toolbar {
   background-color: rgba($color: #264bc5, $alpha: 0.15) !important;
 }
+
+::-webkit-scrollbar {
+    width: 8px;
+    height: 6px;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: rgb(124, 62, 182) !important;;
+    border-radius: 5px;
+  }
