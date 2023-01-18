@@ -1,5 +1,5 @@
 <header class="bar-header">
-    <h2>Workspace-Header</h2>
+    <h2>Workspace-Bar</h2>
 </header>
 
 <ul>
@@ -20,17 +20,18 @@
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
                             <span>Channels</span>
-                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel"><img src="assets/img/plus_939295.png"></button>
+                            <button appClickStopPropagation (click)="openDialog()"
+                                class="btn-unset btn-add-channel"><img src="assets/img/plus_939295.png"></button>
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let channel of channels">
-                    <a [routerLink]="['/main/'+channel.id]">
-                        <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.channelName}}
-                    </a>
-                </li>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <li *ngFor="let channel of channels">
+        <a [routerLink]="['/main/'+channel.id]">
+            <div style="font-size: 1.2rem; width: 1.2rem;">#</div>{{channel.channelName}}
+        </a>
+    </li>
+    </mat-expansion-panel>
+    </mat-accordion>
     </li>
 </ul>
 
