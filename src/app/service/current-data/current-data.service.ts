@@ -20,7 +20,7 @@ export class CurrentDataService {
     this.currentThread.creationDate = obj.creationDate.toDate();
     this.currentThread.message = obj.message;
     this.currentThread.comments = obj.comments;
-    console.log('Test log', this.currentThread);
+    console.log('The cuurent Thread from Service is', this.currentThread);
   }
 
   setChannel(obj: Channel) {
