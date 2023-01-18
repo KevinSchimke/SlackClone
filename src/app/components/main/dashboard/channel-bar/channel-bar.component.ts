@@ -17,9 +17,9 @@ export class ChannelBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
   threads: any[] = [];
-  
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) {}
+
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
@@ -29,14 +29,16 @@ export class ChannelBarComponent {
   subscribeCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
     this.currentDataService.setChannelId(this.channelId);
+    console.log(this.currentDataService.currentChannelId);
+
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.sortThreads(threads));
   }
 
-  sortThreads(threads: any[]){
+  sortThreads(threads: any[]) {
     let self = this;
-    this.threads = threads.sort(function(a: {creationDate:Timestamp}, b: {creationDate:Timestamp}) {
+    this.threads = threads.sort(function (a: { creationDate: Timestamp }, b: { creationDate: Timestamp }) {
       return self.compareStrings(a.creationDate.seconds, b.creationDate.seconds);
     });
   }
@@ -45,9 +47,9 @@ export class ChannelBarComponent {
     return (a < b) ? -1 : (a > b) ? 1 : 0;
   }
 
-  openThread(thread: any){
+  openThread(thread: any) {
     this.sidenavToggler.threadBar.open();
     this.currentDataService.setThread(thread);
-    this.router.navigate([{outlets:{right: ['thread',thread.id]}}],{relativeTo : this.route.parent});
+    this.router.navigate([{ outlets: { right: [thread.id] } }], { relativeTo: this.route.parent });
   }
 }

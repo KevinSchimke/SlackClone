@@ -25,14 +25,20 @@ export class ThreadBarComponent {
 
   ngOnInit(): void {
     this.channelId = this.currentDataService.currentChannelId;
-    if (this.channelId) {
-      this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
-    }
+    console.log('in thread bar is id', this.currentDataService.currentChannelId);
+    this.route.parent?.children[0].params.subscribe((params: any) => console.log('test', params.id)
+    );
+
+
+    this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+
     this.thread = this.currentDataService.getThread();
   }
 
   subscribeCurrentChannel(param: { id: string }) {
-    console.log('Param is ', param);
+    // console.log('Param is ', param);
+    // console.log(this.route);
+
     this.threadId = param.id;
     this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection';
     this.collData$ = this.fireService.getCollection(this.collPath);
