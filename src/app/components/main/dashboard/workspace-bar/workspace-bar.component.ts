@@ -5,6 +5,7 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -18,8 +19,9 @@ export class WorkspaceBarComponent {
   collData2$: any = EMPTY;;
   user$: any = EMPTY;
   userId: string = '';
+  lastChildUrl = '';
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService) { }
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.collData$ = this.firestoreService.getCollection('channels');
