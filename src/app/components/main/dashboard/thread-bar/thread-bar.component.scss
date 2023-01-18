@@ -1,23 +1,53 @@
 @import "../dashboard.component.scss";
 @import "../channel-bar/channel-bar.component.scss";
 .close-thread-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $color-main;
-    font-weight: 700;
-    font-size: 1.2rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
-    img {
-        width: 1.5rem;
-        height: 1.5rem;
-        object-fit: cover;
-    }
-    &:hover {
-        background-color: $bg-color-hover;
-    }
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $color-main;
+  font-weight: 700;
+  font-size: 1.2rem;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  img {
+    width: 1.5rem;
+    height: 1.5rem;
+    object-fit: cover;
+  }
+  &:hover {
+    background-color: $bg-color-hover;
+  }
+}
+
+.thread-separator {
+    margin-bottom: -2px;
+}
+
+.thread-flexpane {
+  align-items: center;
+  display: flex;
+  margin-bottom: 4px;
+  margin-top: 4px;
+  padding-left: 16px;
+  position: relative;
+  width: calc(100% - 40px);
+}
+
+.separator-line {
+  border-top-color: gray;
+  flex: 1;
+  margin: 1px;
+}
+
+
+
+.thread-flexpane-count {
+  color: gray;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.38463;
+  margin-right: 12px;
 }
