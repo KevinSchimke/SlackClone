@@ -24,6 +24,7 @@ export class ThreadBarComponent {
 
 
   ngOnInit(): void {
+    console.log('derzeite route is ', this.route);
     this.channelId = this.currentDataService.currentChannelId;
     if (this.channelId) {
       this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
@@ -41,6 +42,6 @@ export class ThreadBarComponent {
 
   closeThread() {
     this.sidenavToggler.threadBar.close();
-    this.router.navigateByUrl('main/' + this.channelId);
+    // this.router.navigateByUrl('main/');
   }
 }

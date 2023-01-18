@@ -48,6 +48,7 @@ export class ChannelBarComponent {
   openThread(thread: any){
     this.sidenavToggler.threadBar.open();
     this.currentDataService.setThread(thread);
+    this.currentDataService.setChannelId(this.channelId);
     this.router.navigate([{outlets:{right: ['thread',thread.id]}}],{relativeTo : this.route.parent});
   }
 }
