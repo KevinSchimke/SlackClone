@@ -28,9 +28,6 @@ export class ChannelBarComponent {
 
   subscribeCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
-    this.currentDataService.setChannelId(this.channelId);
-    console.log(this.currentDataService.currentChannelId);
-
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.sortThreads(threads));

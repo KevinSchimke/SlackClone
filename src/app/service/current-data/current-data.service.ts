@@ -11,7 +11,6 @@ export class CurrentDataService {
   currentThread = new Thread();
   currentChannel = new Channel();
   currentUser = new User();
-  currentChannelId = '';
 
   constructor() { }
 
@@ -33,10 +32,6 @@ export class CurrentDataService {
     this.currentChannel.creationDate = obj.creationDate;
     this.currentChannel.creator = obj.creator;
     this.currentChannel.locked = obj.locked;
-  }
-
-  setChannelId(id: string){
-    this.currentChannelId = id;
   }
 
   setUser(obj: User) {
