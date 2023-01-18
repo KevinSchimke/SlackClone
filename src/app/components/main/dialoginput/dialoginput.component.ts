@@ -37,9 +37,9 @@ export class DialoginputComponent {
     // if(this.thread) console.log("coll", this.collectionPath);
   }
 
-  ngOnChanges(){
-    console.log(this.collectionPath);
-  }
+  // ngOnChanges(){
+  //   console.log(this.collectionPath);
+  // }
 
   getIdFromUrl(param: { id: string }) {
       this.channelId = param.id;
