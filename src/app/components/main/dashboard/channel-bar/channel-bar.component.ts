@@ -21,8 +21,6 @@ export class ChannelBarComponent {
 
   constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) {}
 
-  
-
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
@@ -30,6 +28,7 @@ export class ChannelBarComponent {
 
   subscribeCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
+    this.currentDataService.setChannelId(this.channelId);
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.sortThreads(threads));
@@ -48,9 +47,7 @@ export class ChannelBarComponent {
 
   openThread(thread: any){
     this.sidenavToggler.threadBar.open();
-    console.log('ThreadID is',thread.id);
     this.currentDataService.setThread(thread);
-    this.currentDataService.setChannelId(this.channelId);
     this.router.navigate([{outlets:{right: ['thread',thread.id]}}],{relativeTo : this.route.parent});
   }
 }

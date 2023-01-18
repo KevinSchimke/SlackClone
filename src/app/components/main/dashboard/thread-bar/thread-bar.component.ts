@@ -1,6 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { Thread } from 'src/app/models/thread.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
@@ -20,24 +20,27 @@ export class ThreadBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location, private fireService: FirestoreService, private currentDataService: CurrentDataService) { }
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private _location: Location, private fireService: FirestoreService, private currentDataService: CurrentDataService, private router: Router) { }
 
 
   ngOnInit(): void {
     this.channelId = this.currentDataService.currentChannelId;
-    this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    if (this.channelId) {
+      this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    }
     this.thread = this.currentDataService.getThread();
   }
 
   subscribeCurrentChannel(param: { id: string }) {
+    console.log('Param is ', param);
     this.threadId = param.id;
-    this.collPath='channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection';
+    this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection';
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((data: any) => console.log(data));
   }
 
   closeThread() {
     this.sidenavToggler.threadBar.close();
-    this._location.back();
+    this.router.navigateByUrl('main/' + this.channelId);
   }
 }
