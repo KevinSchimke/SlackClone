@@ -14,7 +14,7 @@ export class AuthErrorService {
       if (user.get('username')?.hasError('required')) return 'You must enter a username';
     }
     if (formControl == 'email') {
-      if (user.get('email')?.hasError('required')) return 'You must enter a value';
+      if (user.get('email')?.hasError('required')) return 'You must enter a email';
       if (user.get('email')?.hasError('valid')) return 'Not a valid email';
     }
     if (formControl == 'password') {
