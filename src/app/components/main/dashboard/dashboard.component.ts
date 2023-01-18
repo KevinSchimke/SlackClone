@@ -10,11 +10,12 @@ import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-tog
 export class DashboardComponent {
 
   @ViewChild('workspaceBar') workspaceBar: any;
+  @ViewChild('threadBar') threadBar: any;
 
-  constructor(public createChannelService: FirestoreService, public sidenavToggler: SidenavToggleService){
-  }
+  constructor(public createChannelService: FirestoreService, public sidenavToggler: SidenavToggleService) { }
 
-  ngAfterViewInit(){
+  ngAfterViewInit() {
     this.sidenavToggler.getChildById(this.workspaceBar);
+    this.sidenavToggler.getChild2ById(this.threadBar);
   }
 }

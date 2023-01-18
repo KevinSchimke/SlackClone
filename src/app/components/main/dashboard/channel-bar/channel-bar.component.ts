@@ -17,13 +17,11 @@ export class ChannelBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
   threads: any[] = [];
-  @ViewChild('threadBar') threadBar: any;
+  
 
   constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) {}
 
-  ngAfterViewInit(){
-    this.sidenavToggler.getChild2ById(this.threadBar);
-  }
+  
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
@@ -49,10 +47,10 @@ export class ChannelBarComponent {
   }
 
   openThread(thread: any){
-    this.threadBar.open();
+    this.sidenavToggler.threadBar.open();
     console.log('ThreadID is',thread.id);
     this.currentDataService.setThread(thread);
-    
-    this.router.navigateByUrl('main/' + this.channelId+"/"+thread.id);
+    this.currentDataService.setChannelId(this.channelId);
+    this.router.navigate([{outlets:{right: ['thread',thread.id]}}],{relativeTo : this.route.parent});
   }
 }

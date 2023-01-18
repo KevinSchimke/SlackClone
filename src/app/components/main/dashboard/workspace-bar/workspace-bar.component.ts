@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
-import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -18,19 +18,13 @@ export class WorkspaceBarComponent {
   collData2$: any = EMPTY;;
   user$: any = EMPTY;
   userId: string = '';
+  lastChildUrl = '';
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private userService: UserService) { }
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService) { }
 
   ngOnInit(): void {
     this.collData$ = this.firestoreService.getCollection('channels');
     this.collData$.subscribe((channels: any[]) => this.sortChannels(channels));
-    // this.collData2$ = this.createChannelService.getCollection('users/' + '1oiPPQw7aPUmTKkZNk2QBRoZnRz2/' + 'channels');
-    // this.collData2$.subscribe((data: any) => console.log(data));
-    this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe((data: any) => {
-      this.userId = data.id;
-      console.log(this.userId);
-    });
   }
 
   sortChannels(channels: any[]) {

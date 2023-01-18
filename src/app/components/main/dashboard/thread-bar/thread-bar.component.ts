@@ -24,12 +24,7 @@ export class ThreadBarComponent {
 
 
   ngOnInit(): void {
-    if (this.route.parent) {
-      this.route.parent.url.subscribe((parent: any) => {
-        this.channelId = parent[0].path;
-        console.log(this.channelId);
-      });
-    }
+    this.channelId = this.currentDataService.currentChannelId;
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
     this.thread = this.currentDataService.getThread();
   }

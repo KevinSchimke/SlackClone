@@ -31,16 +31,16 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
-      { path: '', redirectTo: 'main', pathMatch: 'full' },
       {
         path: ':id', component: ChannelBarComponent,
         children: [
-          { path: ':id', component: ThreadBarComponent }
+          // { path: ':id', component: ThreadBarComponent }
         ]
       },
-      // {path: '(:id,childRoute:/child)', component: ThreadBarComponent, outlet: 'childRoute'}
+      { path: 'thread/:id', component: ThreadBarComponent, outlet: 'right' }
     ]
   },
+
   { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
