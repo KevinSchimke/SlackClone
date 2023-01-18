@@ -34,6 +34,9 @@ export class DialoginputComponent {
 
   ngOnInit() {
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
+    if(!this.thread) {
+      this.editorConfig.toolbarHiddenButtons?.push(this.small);
+    }
     // if(this.thread) console.log("coll", this.collectionPath);
   }
 
@@ -155,6 +158,11 @@ export class DialoginputComponent {
       ],
     ],
   };
+
+  small: string[] = this.thread ? [] : ['undo', 'redo', 'justifyLeft',
+  'justifyCenter',
+  'justifyRight',
+  'justifyFull',];
 
   async saveThread(thread: Comment) {
     let coll = collection(
