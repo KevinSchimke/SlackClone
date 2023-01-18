@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
@@ -17,12 +17,30 @@ export class ChannelBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
   threads: any[] = [];
+  numberOfLoadMessages: number = 12;
+  scrollCounter: number = 0;
 
 
+  @ViewChild('scrollMe')
+  private myScrollContainer!: ElementRef;
+  
   constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+  }
+
+  ngAfterViewChecked() {
+    // if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
+      this.scrollToBottom();
+      this.scrollCounter++
+    // }
+  }
+
+  scrollToBottom(): void {
+    try {
+      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
+    } catch (err) { }
   }
 
 

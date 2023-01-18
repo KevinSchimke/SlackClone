@@ -27,43 +27,63 @@
     </div>
 </div> -->
 
-
 <header class="bar-header">
-    <div class="d-flex"><button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn"><img src="assets/icons/navbar-48.png"></button>
-        <h2>Workspace-Header</h2>
-    </div>
+  <div class="d-flex">
+    <button
+      (click)="sidenavToggler.workspaceBar.toggle()"
+      class="workspace-btn"
+    >
+      <img src="assets/icons/navbar-48.png" />
+    </button>
+    <h2>Workspace-Header</h2>
+  </div>
 </header>
-<div class="channel-thread" *ngFor="let thread of threads">
+
+<div class="channel-messages" #scrollMe>
+  <div class="channel-thread" *ngFor="let thread of threads">
     <div class="thread-options">
-        <button class="btn-unset"><img src="assets/img/emoji_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/threads_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/share_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
+      <button class="btn-unset">
+        <img src="assets/img/emoji_D1D2D3.png" />
+      </button>
+      <button class="btn-unset">
+        <img src="assets/img/threads_D1D2D3.png" />
+      </button>
+      <button class="btn-unset">
+        <img src="assets/img/share_D1D2D3.png" />
+      </button>
+      <button class="btn-unset">
+        <img src="assets/img/bookmark_D1D2D3.png" />
+      </button>
     </div>
-    <img [src]="thread.userSrc" class="channel-thread-img">
+    <img [src]="thread.userSrc" class="channel-thread-img" />
     <div class="channel-thread-content">
-        <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
-        <p [innerHTML]="thread.message"></p>
-        <img *ngIf="thread.img" [src]="thread.img" alt="">
-        <p class="d-flex">
-            only if reactions already exist
-            <button>:-)</button>
-            <button>:) +</button>
-        </p>
-        <button class="d-flex go-to-thread" (click)="openThread(thread)">
-                    <div class="d-flex first-comments">
-                        <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-                        <img src="assets/img/user0.png">
-                    </div>
-                    <span class="channel-thread-comments">X Antwort(en)</span>
-                    <span class="time-of-last-answer">Letzte Antwort vor X Tagen</span>
-                    <span class="show-thread">Thread ansehen</span>
-                </button>
+      <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
+      <p>
+        <span>{{ thread.userName + " " }}</span
+        ><span *ngIf="thread.creationDate">{{
+          thread.creationDate.toDate().toLocaleTimeString() + " Uhr"
+        }}</span>
+      </p>
+      <p [innerHTML]="thread.message"></p>
+      <img *ngIf="thread.img" [src]="thread.img" alt="" />
+      <p class="d-flex">
+        only if reactions already exist
+        <button>:-)</button>
+        <button>:) +</button>
+      </p>
+      <button class="d-flex go-to-thread" (click)="openThread(thread)">
+        <div class="d-flex first-comments">
+          <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+          <img src="assets/img/user0.png" />
+        </div>
+        <span class="channel-thread-comments">X Antwort(en)</span>
+        <span class="time-of-last-answer">Letzte Antwort vor X Tagen</span>
+        <span class="show-thread">Thread ansehen</span>
+      </button>
     </div>
+  </div>
 </div>
 <app-dialoginput [collectionPath]="collPath" [thread]="true"></app-dialoginput>
-
 
 <!-- Happy Emoji<a target="_blank" href="https://icons8.com/icon/85774/happy">Happy</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
 <!-- Share <a target="_blank" href="https://icons8.com/icon/90278/share">Share</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
