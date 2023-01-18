@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { Auth, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
-import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-editsettingcard',
@@ -22,38 +21,47 @@ export class EditsettingcardComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
-  panelOpenState = false;
   step = -1;
-
   hide = true;
 
-  constructor(private auth: Auth, private firestoreService: FirestoreService, private currentDataService: CurrentDataService) {
-  }
+  constructor(private auth: Auth, private firestoreService: FirestoreService, private currentDataService: CurrentDataService, private authError: AuthErrorService) { }
 
   setStep(index: number) {
     this.step = index;
   }
 
   updateUserName() {
-    this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
+    if (this.username.valid) {
+      let username = this.username.value.username;
+      this.currentDataService.currentUser.name = username!;
+      this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
+      console.log('Update username successfully');
+
+    }
   }
 
   updateUserEmail() {
-    updateEmail(this.auth.currentUser!, "kevin@kevin-schimke.de")
-      .then(() => {
-        console.log('save');
-      }).catch((error) => {
-        console.log(error);
-      });
+    if (this.email.valid) {
+      let email = this.email.value.email!;
+      updateEmail(this.auth.currentUser!, email)
+        .then(() => {
+          console.log('Update email successfully');
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   updateUserPassword() {
-    updatePassword(this.auth.currentUser!, "111111")
-      .then(() => {
-        console.log('save');
-      }).catch((error) => {
-        console.log(error);
-      });
+    if (this.password.valid) {
+      let password = this.password.value.password!;
+      updatePassword(this.auth.currentUser!, password)
+        .then(() => {
+          console.log('Update password successfully');
+        }).catch((error) => {
+          console.log(error);
+        });
+    }
   }
 
   deleteUser() {
@@ -63,5 +71,9 @@ export class EditsettingcardComponent {
       }).catch((error) => {
         console.log(error);
       });
+  }
+
+  getErrorMessage(formGroup: FormGroup, formControlName: string) {
+    return this.authError.getErrorMessage(formGroup, formControlName)
   }
 }

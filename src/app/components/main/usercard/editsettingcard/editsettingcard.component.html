@@ -19,8 +19,10 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Enter new username</mat-label>
                         <input matInput placeholder="Enter your Username" formControlName="username" required>
+                        <mat-error *ngIf="username.invalid">{{getErrorMessage(username,'username')}}</mat-error>
                     </mat-form-field>
-                    <button [disabled]="false" class="actionButton" mat-raised-button>Save new username</button>
+                    <button [disabled]="!username.valid" class="actionButton" mat-raised-button>Save new
+                        username</button>
                 </form>
             </mat-expansion-panel>
 
@@ -33,13 +35,14 @@
                     <mat-panel-description>
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
-                </mat-expansion-panel-header>#
+                </mat-expansion-panel-header>
                 <form (ngSubmit)="updateUserEmail()" [formGroup]="email">
                     <mat-form-field appearance="fill">
                         <mat-label>Enter new email</mat-label>
                         <input matInput placeholder="pat@example.com" formControlName="email" required>
+                        <mat-error *ngIf="email.invalid">{{getErrorMessage(email,'email')}}</mat-error>
                     </mat-form-field>
-                    <button [disabled]="false" class="actionButton" mat-raised-button>Save new email</button>
+                    <button [disabled]="!email.valid" class="actionButton" mat-raised-button>Save new email</button>
                 </form>
             </mat-expansion-panel>
 
@@ -57,12 +60,14 @@
                     <mat-form-field appearance="fill">
                         <mat-label>Enter your password</mat-label>
                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
+                        <mat-error *ngIf="password.invalid">{{getErrorMessage(password,'password')}}</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
-                    <button [disabled]="false" class="actionButton" mat-raised-button>Save new password</button>
+                    <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Save new
+                        password</button>
                 </form>
             </mat-expansion-panel>
         </mat-card-content>
