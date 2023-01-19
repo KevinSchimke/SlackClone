@@ -25,6 +25,7 @@ export class WorkspaceBarComponent {
 
   currentUser?: User;
   username: string = 'valer';
+  user$: any = EMPTY;
 
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private currentData: CurrentDataService) { }
@@ -33,21 +34,15 @@ export class WorkspaceBarComponent {
     this.currentUser = this.currentData.getUser();
     this.collChannels$ = this.firestoreService.getCollection('channels');
     this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
-    console.log(this.currentUser.mail);
-    console.log(this.currentUser.privates[0]);
-    console.log(this.currentData.currentUser);
-    console.log(this.currentData.currentUser['privates']);
-    console.log(this.currentData.getUserPrivates);
-    // currentUser.privates.forEach(element => {
-    //   console.log(element);
-    //   let private$ = this.firestoreService.getDocument(element, 'privates');
-    //   private$.subscribe((message: any) =>{
-    //     // this.privates.push(message);
-    //     console.log(message);
+    this.user$ = this.firestoreService.getUser();
+    this.user$.subscribe((user: User) => {
+      this.currentUser = user;
+      this.currentData.currentUser = user;
+      console.log('in workspace bar',this.currentUser);
+      console.log('in workspace bar',this.currentUser.privates);
+    });
+    console.log('in ', this.currentUser);
 
-    //   });
-    // });
-    // console.log(this.privates);
 
     // const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
     // const querySnapshot = await getDocs(q);

@@ -9,7 +9,7 @@ export class User {
     lastLogin: Date;
     creationDate: Date;
     channels: string[];
-    privates: string[];
+    privates: any;
 
 
     constructor(obj?: any) {

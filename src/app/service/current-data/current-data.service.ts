@@ -65,8 +65,5 @@ export class CurrentDataService {
     return this.currentUser;
   }
 
-  getUserPrivates(){
-    return this.currentUser.privates;
-  }
 
 }
