@@ -35,11 +35,16 @@ export class WorkspaceBarComponent {
     this.collChannels$ = this.firestoreService.getCollection('channels');
     this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
     this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe((user: User) => {
-      this.currentUser = user;
-      this.currentData.currentUser = user;
-      console.log('in workspace bar',this.currentUser);
-      console.log('in workspace bar',this.currentUser.privates);
+    this.user$.subscribe(async (user: User) => {
+      const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
+    const querySnapshot = await getDocs(q);
+    this.privates = [];
+    querySnapshot.forEach((doc) => {
+      this.privates.push(doc.data());
+    console.log(doc.id, " => ", doc.data());
+    });
+    console.log(this.collPrivates$)
+    this.collPrivates$.subscribe((privates: any[]) =>  console.log(privates));
     });
     console.log('in ', this.currentUser);
 
