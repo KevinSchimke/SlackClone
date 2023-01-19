@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { EMPTY, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
@@ -10,14 +11,19 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 })
 export class MainComponent {
 
-  user$: any;
+  user$: Observable<any> = EMPTY;
+  users$: Observable<any> = EMPTY;
 
   constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
     this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe((user: User) => {
-      this.currentDataService.setUser(user);
+    this.user$.subscribe((user: User) => this.currentDataService.setUser(user));
+    this.users$ = this.firestoreService.getCollection('users');
+    this.users$.subscribe((users) => {
+      this.currentDataService.setUsers(users)
+      console.log(this.currentDataService.users);
     });
+    
   }
 }

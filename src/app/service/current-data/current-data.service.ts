@@ -11,6 +11,7 @@ export class CurrentDataService {
   currentThread = new Thread();
   currentChannel = new Channel();
   currentUser = new User();
+  users = [];
 
   constructor() { }
 
@@ -44,7 +45,11 @@ export class CurrentDataService {
     this.currentUser.status = obj.status;
     this.currentUser.lastLogin = obj.lastLogin;
     this.currentUser.creationDate = obj.creationDate;
-    console.log('The cuurent User from Service is', this.currentUser);
+    console.log('The current User from Service is', this.currentUser);
+  }
+
+  setUsers(user_arr: []){
+    this.users = user_arr;
   }
 
   getThread() {

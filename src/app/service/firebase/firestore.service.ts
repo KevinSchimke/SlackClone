@@ -16,19 +16,8 @@ export class FirestoreService {
   locked = false;
   obj_arr: any[] = [];
   uid: any
+  
   constructor(private firestore: Firestore, private userService: UserService) { }
-
-  async saveThread() {
-    let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection');
-    await setDoc(doc(coll), { thread: 'laeuft' });
-    console.log('created thread');
-  }
-
-  async saveComment() {
-    let coll = collection(this.firestore, 'channels', 'Angular', 'ThreadCollection', 'ThreadID', 'Thread-Comments');
-    await setDoc(doc(coll), { comment: 'laeuft' });
-    console.log('created comment');
-  }
 
   async save(obj: Channel | Thread | Comment | User, collPath: string) {
     console.log('path is ', obj, collPath);
@@ -47,7 +36,7 @@ export class FirestoreService {
     let coll = collection(this.firestore, collPath);
     let docRef = doc(coll, id);
     let user$ = docData(docRef);
-    return user$
+    return user$;
   }
 
   getUser() {

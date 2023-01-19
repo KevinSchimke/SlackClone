@@ -16,8 +16,6 @@ export class DashboardComponent {
 
   ngAfterViewInit() {
     this.sidenavToggler.setWorkspaceBar(this.workspaceBar);
-    setTimeout(() => {
-      this.sidenavToggler.setThreadBar(this.threadBar);
-    }, 0);
+    setTimeout(() => this.sidenavToggler.setThreadBar(this.threadBar), 0);
   }
 }
