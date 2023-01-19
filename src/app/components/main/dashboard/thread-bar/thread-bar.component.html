@@ -13,10 +13,10 @@
         <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
     </div>
     <img [src]="thread.userSrc" class="channel-thread-img">
-    
+
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate">{{ (thread.creationDate.toLocaleTimeString()) + " Uhr" }}</span></p>
+        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{ (thread.creationDate.toLocaleTimeString()) + " Uhr" }}</span></p>
         <p [innerHTML]="thread.message"></p>
         <img *ngIf="thread.img" [src]="thread.img" alt="">
         <p class="d-flex">
@@ -26,24 +26,27 @@
         </p>
     </div>
 </div>
- <div class="thread-separator">
+<div class="thread-separator">
     <div class="thread-flexpane">
         <span class="thread-flexpane-count">Antworten</span>
         <hr class="separator-line">
     </div>
- </div>
-<div class="channel-thread" *ngFor="let threads of collData$ | async">
-    <img [src]="threads.userSrc" class="channel-thread-img">
+</div>
+<div class="channel-thread" *ngFor="let comment of comments">
+    <img [src]="comment.userSrc" class="channel-thread-img">
     <div class="channel-thread-content">
-        <!-- This div gets *ngFor for all threads (load max 12 threads and scroll up for older threads) -->
-        <p><span>{{ threads.userName + " " }}</span><span *ngIf="threads.creationDate">{{ (threads.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span></p>
-        <p [innerHTML]="threads.message"></p>
-        <img *ngIf="threads.img" [src]="threads.img" alt="">
+        <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
+        <p>
+            <span><b>{{ comment.userName + " " }}</b></span>
+            <span *ngIf="comment.creationDate" class="span-time">{{ (comment.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span>
+        </p>
+        <p [innerHTML]="comment.message"></p>
+        <img *ngIf="comment.img" [src]="comment.img" alt="">
         <p class="d-flex">
             <button>:-)</button>
             <button>:) +</button>
         </p>
-        <p>{{threads.id}}</p>
+        <p>{{comment.id}}</p>
     </div>
 </div>
 <app-dialoginput [collectionPath]="this.collPath" [thread]="false"></app-dialoginput>

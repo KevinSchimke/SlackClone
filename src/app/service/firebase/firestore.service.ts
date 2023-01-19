@@ -43,6 +43,13 @@ export class FirestoreService {
     return collData$;
   }
 
+  getDocument(id: string, collPath: string) {
+    let coll = collection(this.firestore, collPath);
+    let docRef = doc(coll, id);
+    let user$ = docData(docRef);
+    return user$
+  }
+
   getUser() {
     let docRef = doc(collection(this.firestore, 'users'), this.userService.uid);
     let user = docData(docRef);

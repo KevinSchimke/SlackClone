@@ -15,7 +15,9 @@ export class DashboardComponent {
   constructor(public createChannelService: FirestoreService, public sidenavToggler: SidenavToggleService) { }
 
   ngAfterViewInit() {
-    this.sidenavToggler.getChildById(this.workspaceBar);
-    this.sidenavToggler.getChild2ById(this.threadBar);
+    this.sidenavToggler.setWorkspaceBar(this.workspaceBar);
+    setTimeout(() => {
+      this.sidenavToggler.setThreadBar(this.threadBar);
+    }, 0);
   }
 }

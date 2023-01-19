@@ -5,6 +5,7 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { SortService } from 'src/app/service/sort/sort.service';
 
 @Component({
   selector: 'app-channel-bar',
@@ -24,7 +25,7 @@ export class ChannelBarComponent {
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
   
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService) { }
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
@@ -48,18 +49,7 @@ export class ChannelBarComponent {
     this.channelId = param.id;
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
-    this.collData$.subscribe((threads) => this.sortThreads(threads));
-  }
-
-  sortThreads(threads: any[]) {
-    let self = this;
-    this.threads = threads.sort(function (a: { creationDate: Timestamp }, b: { creationDate: Timestamp }) {
-      return self.compareStrings(a.creationDate.seconds, b.creationDate.seconds);
-    });
-  }
-
-  compareStrings(a: number, b: number) {
-    return (a < b) ? -1 : (a > b) ? 1 : 0;
+    this.collData$.subscribe((threads) => this.threads = this.sorter.sortByDate(threads));
   }
 
   openThread(thread: any) {
