@@ -62,7 +62,7 @@
         <li *ngFor="let private of privates">
           <a [routerLink]="['/main/' + private.id]">
             <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-            {{ private.users }} // pipe for message partner(s)
+            {{ private.users[1] }}
           </a>
         </li>
       </mat-expansion-panel>

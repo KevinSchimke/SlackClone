@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { getDocs } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -22,20 +23,42 @@ export class WorkspaceBarComponent {
   privates: any[] = [];
   collPrivates$: any = EMPTY;
 
-  currentUser?: User = undefined;
+  currentUser?: User;
+  username: string = 'valer';
 
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private currentData: CurrentDataService) { }
 
-  ngOnInit(): void {
+   ngOnInit() {
     this.currentUser = this.currentData.getUser();
     this.collChannels$ = this.firestoreService.getCollection('channels');
     this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
+    console.log(this.currentUser.mail);
+    console.log(this.currentUser.privates[0]);
+    console.log(this.currentData.currentUser);
+    console.log(this.currentData.currentUser['privates']);
+    console.log(this.currentData.getUserPrivates);
+    // currentUser.privates.forEach(element => {
+    //   console.log(element);
+    //   let private$ = this.firestoreService.getDocument(element, 'privates');
+    //   private$.subscribe((message: any) =>{
+    //     // this.privates.push(message);
+    //     console.log(message);
 
-    this.collPrivates$ = this.firestoreService.getCollection('privates');
-    this.collPrivates$.subscribe((privates: any[]) => this.privates = this.sort.sortByName(privates));
+    //   });
+    // });
+    // console.log(this.privates);
+
+    // const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
+    // const querySnapshot = await getDocs(q);
+    // querySnapshot.forEach((doc) => {
+    //   this.privates.push(doc.data());
+    // console.log(doc.id, " => ", doc.data());
+    // });
+    // console.log(this.collPrivates$)
+    // this.collPrivates$.subscribe((privates: any[]) =>  console.log(privates));
   }
-
+  //this.privates = this.sort.sortByName(privates)
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddChannelComponent);

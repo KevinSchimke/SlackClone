@@ -9,7 +9,7 @@ export class User {
     lastLogin: Date;
     creationDate: Date;
     channels: string[];
-    private: string[];
+    privates: string[];
 
 
     constructor(obj?: any) {
@@ -22,8 +22,8 @@ export class User {
         this.status = obj ? obj.status : '';
         this.lastLogin = obj ? obj.lastLogin : null;
         this.creationDate = obj ? obj.creationDate : '';
-        this.channels = obj ? obj.channels : '';
-        this.private = obj ? obj.private : '';
+        this.channels = obj ? obj.channels : [];
+        this.privates = obj ? obj.privates : [];
     }
 
     toJson() {
@@ -38,7 +38,7 @@ export class User {
             lastLogin: this.lastLogin,
             creationDate: this.creationDate,
             channels: this.channels,
-            private: this.private
+            privates: this.privates
         };
     }
 }

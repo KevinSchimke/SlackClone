@@ -45,6 +45,7 @@ export class CurrentDataService {
     this.currentUser.status = obj.status;
     this.currentUser.lastLogin = obj.lastLogin;
     this.currentUser.creationDate = obj.creationDate;
+    this.currentUser.privates = obj.privates;
     console.log('The current User from Service is', this.currentUser);
   }
 
@@ -62,6 +63,10 @@ export class CurrentDataService {
 
   getUser() {
     return this.currentUser;
+  }
+
+  getUserPrivates(){
+    return this.currentUser.privates;
   }
 
 }

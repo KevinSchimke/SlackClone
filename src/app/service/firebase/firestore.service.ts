@@ -30,7 +30,7 @@ export class FirestoreService {
 
   getCurrentUserData(collPath: string, specifier: string, target: string){
     const collRef = collection(this.firestore, collPath);
-    const q = query(collRef, where(specifier, "==", target));
+    const q = query(collRef, where(specifier, "array-contains", target));
     return q;
   }
 
