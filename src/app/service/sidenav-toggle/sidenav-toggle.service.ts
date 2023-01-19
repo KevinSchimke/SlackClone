@@ -10,7 +10,6 @@ export class SidenavToggleService {
   workspaceBar: any;
   threadBar: any;
   threadBarIsInit: BehaviorSubject<boolean> = new BehaviorSubject(false);
-  changeBool = this.threadBarIsInit.asObservable();
 
   constructor() { }
 

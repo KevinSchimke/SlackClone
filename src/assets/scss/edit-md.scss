@@ -8,3 +8,12 @@ h2,
 .mat-typography h2 {
     font-size: 1.125rem;
 }
+
+.dialog-add-channel {
+    .mdc-text-field--filled:not(.mdc-text-field--disabled) {
+        background-color: unset;
+    }
+    .mat-mdc-form-field-focus-overlay {
+        background-color: unset;
+    }
+}
