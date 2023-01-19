@@ -53,7 +53,6 @@ export class ThreadBarComponent {
 
   subscribeThreadDoc(thread: any){
     thread.creationDate = new Date(thread.creationDate.seconds);
-    console.log(thread.creationDate);
     this.thread = thread;
   }
 

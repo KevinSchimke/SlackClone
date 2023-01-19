@@ -20,9 +20,6 @@ export class SidenavToggleService {
 
   setThreadBar(threadBar: MatDrawer){
     this.threadBar = threadBar;
-    console.log(this.threadBarIsInit);
     this.threadBarIsInit.next(true);
-    console.log(this.threadBarIsInit);
-    console.log(threadBar);
   }
 }
