@@ -8,6 +8,8 @@ export class User {
     status: string; //e.g. "In Holidays"
     lastLogin: Date;
     creationDate: Date;
+    channels: string[];
+    private: string[];
 
 
     constructor(obj?: any) {
@@ -20,6 +22,8 @@ export class User {
         this.status = obj ? obj.status : '';
         this.lastLogin = obj ? obj.lastLogin : null;
         this.creationDate = obj ? obj.creationDate : '';
+        this.channels = obj ? obj.channels : '';
+        this.private = obj ? obj.private : '';
     }
 
     toJson() {
@@ -32,7 +36,9 @@ export class User {
             state: this.state,
             status: this.status,
             lastLogin: this.lastLogin,
-            creationDate: this.creationDate
+            creationDate: this.creationDate,
+            channels: this.channels,
+            private: this.private
         };
     }
 }

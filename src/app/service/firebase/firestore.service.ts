@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Thread } from 'src/app/models/thread.class';
@@ -16,6 +16,8 @@ export class FirestoreService {
   locked = false;
   obj_arr: any[] = [];
   uid: any
+
+  
   
   constructor(private firestore: Firestore, private userService: UserService) { }
 
@@ -24,6 +26,12 @@ export class FirestoreService {
     let coll = collection(this.firestore, collPath);
     await setDoc(doc(coll), obj.toJson());
     console.log('Saved document');
+  }
+
+  getCurrentUserData(collPath: string, specifier: string, target: string){
+    const collRef = collection(this.firestore, collPath);
+    const q = query(collRef, where(specifier, "==", target));
+    return q;
   }
 
   getCollection(collPath: string) {

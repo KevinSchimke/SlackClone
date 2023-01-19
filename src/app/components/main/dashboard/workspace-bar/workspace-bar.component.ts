@@ -5,6 +5,9 @@ import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-chan
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { SortService } from 'src/app/service/sort/sort.service';
+import { User } from 'src/app/models/user.class';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -14,31 +17,25 @@ import { ActivatedRoute } from '@angular/router';
 export class WorkspaceBarComponent {
   panelOpenState = false;
   channels: any[] = [];
-  collData$: any = EMPTY;
-  collData2$: any = EMPTY;;
-  user$: any = EMPTY;
-  userId: string = '';
-  lastChildUrl = '';
+  collChannels$: any = EMPTY;
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService) { }
+  privates: any[] = [];
+  collPrivates$: any = EMPTY;
+
+  currentUser?: User = undefined;
+
+
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private currentData: CurrentDataService) { }
 
   ngOnInit(): void {
-    this.collData$ = this.firestoreService.getCollection('channels');
-    this.collData$.subscribe((channels: any[]) => this.sortChannels(channels));
+    this.currentUser = this.currentData.getUser();
+    this.collChannels$ = this.firestoreService.getCollection('channels');
+    this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
+
+    this.collPrivates$ = this.firestoreService.getCollection('privates');
+    this.collPrivates$.subscribe((privates: any[]) => this.privates = this.sort.sortByName(privates));
   }
 
-  sortChannels(channels: any[]) {
-    let self = this;
-    this.channels = channels.sort(function (a: { channelName: string }, b: { channelName: string }) {
-      return self.compareStrings(a.channelName, b.channelName);
-    });
-  }
-
-  compareStrings(a: string, b: string) {
-    a = a.toLowerCase();
-    b = b.toLowerCase();
-    return (a < b) ? -1 : (a > b) ? 1 : 0;
-  }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddChannelComponent);
