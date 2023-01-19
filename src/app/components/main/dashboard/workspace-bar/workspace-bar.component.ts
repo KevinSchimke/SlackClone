@@ -23,7 +23,7 @@ export class WorkspaceBarComponent {
   privates: any[] = [];
   collPrivates$: any = EMPTY;
 
-  currentUser?: User;
+  currentUser: User = new User();
   username: string = 'valer';
   user$: any = EMPTY;
 
@@ -48,7 +48,10 @@ export class WorkspaceBarComponent {
     });
     console.log('in ', this.currentUser);
 
-
+    setTimeout(() => {
+      console.log('in ', this.currentUser);
+      console.log('in ', this.currentUser.mail);
+    }, 5000);
     // const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
     // const querySnapshot = await getDocs(q);
     // querySnapshot.forEach((doc) => {
