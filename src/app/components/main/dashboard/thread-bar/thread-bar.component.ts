@@ -27,23 +27,33 @@ export class ThreadBarComponent {
     this.subscribeUrl();
     this.subscribeThreadbarInit();
   }
+
   subscribeUrl(){
-    this.route.parent?.children[0].params.subscribe((params: any) => this.channelId = params.id);
-    this.route.params.subscribe((param: any) => this.getCollAndDoc(param));
+    this.route.url.subscribe((params: any) => this.setCommentCollection(params));
   }
+
+  setCommentCollection(params: any){
+    this.setChannelAndThreadId(params);
+    this.getCollAndDoc();
+    this.subscribeCollAndDoc();
+  }
+
+  setChannelAndThreadId(params: any){
+    this.channelId = params[0].path;
+    this.threadId = params[1].path;
+  }
+
+  getCollAndDoc() {
+    this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection';
+    this.collData$ = this.fireService.getCollection(this.collPath);
+    this.docData$ = this.fireService.getDocument(this.threadId,'channels/' + this.channelId + '/ThreadCollection/');
+  }
+
   subscribeThreadbarInit(){
     this.childSelector.threadBarIsInit.subscribe(isLoaded=>{
       if(isLoaded===true)
         this.childSelector.threadBar.open();
     });
-  }
-
-  getCollAndDoc(param: { id: string }) {
-    this.threadId = param.id;
-    this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + param.id + '/commentCollection';
-    this.collData$ = this.fireService.getCollection(this.collPath);
-    this.docData$ = this.fireService.getDocument(this.threadId,'channels/' + this.channelId + '/ThreadCollection/');
-    this.subscribeCollAndDoc();
   }
 
   subscribeCollAndDoc(){

@@ -18,6 +18,7 @@ import { ChannelBarComponent } from './components/main/dashboard/channel-bar/cha
 import { AuthFirebaseGuard } from './guard/auth-firebase.guard';
 import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
 import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
+import { PrivateComponent } from './components/main/dashboard/private/private.component';
 
 
 const routes: Routes = [
@@ -32,9 +33,10 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
-      { path: ':id', component: ChannelBarComponent },
+      { path: 'channel/:id', component: ChannelBarComponent },
+      { path: 'private/:id', component: PrivateComponent },
       { path: 'profile/:id', component: InfocardComponent, outlet: 'right' },
-      { path: 'thread/:id', component: ThreadBarComponent, outlet: 'right' }
+      { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' }
     ]
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }

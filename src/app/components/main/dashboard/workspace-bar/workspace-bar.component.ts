@@ -72,8 +72,6 @@ export class WorkspaceBarComponent {
     k++;
     return k;
   }
-
-
 }
 
 // This was in OnInit()

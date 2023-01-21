@@ -1,73 +1,65 @@
 <header class="bar-header">
-  <h2>Workspace-Bar</h2>
+    <h2>Workspace-Bar</h2>
 </header>
 
 <ul>
-  <li><img src="assets/img/threads_939295.png" />Threads</li>
-  <li><img src="assets/img/direct_mess_939295.png" />Direct messages</li>
-  <li><img src="assets/img/at_939295.png" />Mentions and reactions</li>
-  <li><img src="assets/img/drafts_939295.png" />Drafts and sent</li>
-  <li><img src="assets/img/bookmark_939295.png" />Bookmarks</li>
+    <li><img src="assets/img/threads_939295.png" />Threads</li>
+    <li><img src="assets/img/direct_mess_939295.png" />Direct messages</li>
+    <li><img src="assets/img/at_939295.png" />Mentions and reactions</li>
+    <li><img src="assets/img/drafts_939295.png" />Drafts and sent</li>
+    <li><img src="assets/img/bookmark_939295.png" />Bookmarks</li>
 </ul>
 
 <mat-divider></mat-divider>
 
 <ul>
-  <li>
-    <mat-accordion class="channels-accordion">
-      <mat-expansion-panel hideToggle [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="d-flex channels-header-title">
-              <span>Channels</span>
-              <button
-                appClickStopPropagation
-                (click)="openDialog()"
-                class="btn-unset btn-add-channel"
-              >
+    <li>
+        <mat-accordion class="channels-accordion">
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="d-flex channels-header-title">
+                            <span>Channels</span>
+                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel">
                 <img src="assets/img/plus_939295.png" />
               </button>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <li *ngFor="let channel of channels">
-          <a [routerLink]="['/main/' + channel.id]">
-            <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-            {{ channel.channelName }}
-          </a>
-        </li>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </li>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <li *ngFor="let channel of channels">
+                    <a [routerLink]="['/main/channel/' + channel.id]">
+                        <div style="font-size: 1.2rem; width: 1.2rem">#</div>
+                        {{ channel.channelName }}
+                    </a>
+                </li>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </li>
 </ul>
 
 <ul>
-  <li>
-    <mat-accordion class="channels-accordion">
-      <mat-expansion-panel hideToggle [expanded]="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            <div class="d-flex channels-header-title">
-              <span>Direct Messages</span>
-              <button
-                appClickStopPropagation
-                (click)="openDialog()"
-                class="btn-unset btn-add-channel"
-              >
+    <li>
+        <mat-accordion class="channels-accordion">
+            <mat-expansion-panel hideToggle [expanded]="true">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <div class="d-flex channels-header-title">
+                            <span>Direct Messages</span>
+                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel">
                 <img src="assets/img/plus_939295.png" />
               </button>
-            </div>
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <li *ngFor="let private of privates">
-          <a [routerLink]="['/main/' + private.id]">
-            <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-            {{ private.users[1] }}
-          </a>
-        </li>
-      </mat-expansion-panel>
-    </mat-accordion>
-  </li>
+                        </div>
+                    </mat-panel-title>
+                </mat-expansion-panel-header>
+                <li *ngFor="let private of privates">
+                    <a [routerLink]="['/main/private/' + private.id]">
+                        <div style="font-size: 1.2rem; width: 1.2rem">#</div>
+                        {{ private.users[1] }}
+                    </a>
+                </li>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </li>
 </ul>
 
 <!-- <div *ngFor="let channels2 of collData2$ | async ">{{channels2.name}}</div>
