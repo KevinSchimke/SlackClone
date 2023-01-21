@@ -24,6 +24,5 @@ export class MainComponent {
       this.currentDataService.setUsers(users)
     });
     // console.log('main name is', this.currentDataService.currentUser.name);
-
   }
 }

@@ -3,16 +3,23 @@
         <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
       <img src="assets/icons/navbar-48.png" />
     </button>
-        <!-- <h2 *ngIf="channel.locked != undefined || channel.locked != null">Workspace-Header</h2>
-        <h2 *ngIf="channel.locked == undefined || channel.locked == null">Workspace-Header2</h2> -->
+        <!-- Test Raphael -->
+        <h2 *ngIf="channel.hasOwnProperty('locked')">Workspace-Header</h2>
+        <h2 *ngIf="!channel.hasOwnProperty('locked')">Workspace-Header2</h2>
     </div>
 </header>
 
 <div class="channel-messages" #scrollMe>
     <div class="channel-thread" *ngFor="let thread of threads">
         <div class="thread-options">
-            <button class="btn-unset">
+            <button class="btn-unset" [matMenuTriggerFor]="emoji">
             <img src="assets/img/emoji_D1D2D3.png" />
+            <mat-menu #emoji="matMenu" xPosition="before">
+              <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event, thread)" [i18n]="{
+              search: 'Recherche',
+              categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+              </emoji-mart>
+          </mat-menu>
           </button>
             <button class="btn-unset" (click)="openThread(thread)">
             <img src="assets/img/threads_D1D2D3.png" />
@@ -33,10 +40,12 @@
             </p>
             <p [innerHTML]="thread.message"></p>
             <img *ngIf="thread.img" [src]="thread.img" alt="" />
-            <p class="d-flex">
+            <p class="d-flex" *ngIf="thread.reactions">
                 only if reactions already exist
                 <button>:-)</button>
-                <button>:) +</button>
+                <button *ngFor="let reaction of thread.reactions">
+                  <span [innerHTML]="reaction.id"></span>
+                </button>
             </p>
             <button class="d-flex go-to-thread" (click)="openThread(thread)">
         <div class="d-flex first-comments">

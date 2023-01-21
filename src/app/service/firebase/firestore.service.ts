@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
+import { Reaction } from 'src/app/models/reaction.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
 import { UserService } from '../user/user.service';
@@ -21,10 +22,10 @@ export class FirestoreService {
   
   constructor(private firestore: Firestore, private userService: UserService) { }
 
-  async save(obj: Channel | Thread | Comment | User, collPath: string) {
+  async save(obj: Channel | Thread | Comment | User | Reaction, collPath: string, id?: string) {
     console.log('path is ', obj, collPath);
     let coll = collection(this.firestore, collPath);
-    await setDoc(doc(coll), obj.toJson());
+    await setDoc(doc(coll, id), obj.toJson());
     console.log('Saved document');
   }
 

@@ -50,7 +50,6 @@ export class WorkspaceBarComponent {
     let k = 0;
     querySnapshot.forEach((doc: any) => k = this.pushIntoChannel(doc, k));
     this.sort.sortByName(this.channels);
-    console.log(this.channels);
   }
 
   pushIntoChannel(doc: any, k: number) {
@@ -65,7 +64,6 @@ export class WorkspaceBarComponent {
     let k = 0;
     querySnapshot.forEach((doc: any) => k = this.pushIntoPrivate(doc, k));
     this.sort.sortByName(this.privates);
-    console.log(this.privates);
   }
 
   pushIntoPrivate(doc: any, k: number) {
