@@ -18,11 +18,9 @@ import { ChannelBarComponent } from './components/main/dashboard/channel-bar/cha
 import { AuthFirebaseGuard } from './guard/auth-firebase.guard';
 import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
 import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
-import { PrivateComponent } from './components/main/dashboard/private/private.component';
-
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprotection', component: DataprotectionComponent },
   { path: 'login', component: LoginComponent },
@@ -33,13 +31,12 @@ const routes: Routes = [
   {
     path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
-      { path: 'channel/:id', component: ChannelBarComponent },
-      { path: 'private/:id', component: PrivateComponent },
+      { path: ':id', component: ChannelBarComponent },
       { path: 'profile/:id', component: InfocardComponent, outlet: 'right' },
       { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' }
     ]
   },
-  { path: '**', redirectTo: 'login', pathMatch: 'full' }
+  // { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

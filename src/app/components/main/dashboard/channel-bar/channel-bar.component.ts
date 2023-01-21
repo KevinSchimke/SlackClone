@@ -6,6 +6,8 @@ import { EMPTY, Observable } from 'rxjs';
 import { Timestamp } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
+import { Channel } from 'src/app/models/channel.class';
+import { Private } from 'src/app/models/private.class';
 
 @Component({
   selector: 'app-channel-bar',
@@ -20,6 +22,7 @@ export class ChannelBarComponent {
   threads: any[] = [];
   numberOfLoadMessages: number = 12;
   scrollCounter: number = 0;
+  channel = new Private();
 
 
   @ViewChild('scrollMe')

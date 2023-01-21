@@ -68,6 +68,6 @@ export class ThreadBarComponent {
 
   closeThread() {
     this.sidenavToggler.threadBar.close();
-    this.router.navigateByUrl('main/' + this.channelId);
+    this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 }

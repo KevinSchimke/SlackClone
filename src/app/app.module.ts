@@ -59,7 +59,6 @@ import { InfocardComponent } from './components/main/usercard/infocard/infocard.
 import { EditsettingcardComponent } from './components/main/usercard/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
 import { ReauthenticateComponent } from './components/main/usercard/reauthenticate/reauthenticate.component';
-import { PrivateComponent } from './components/main/dashboard/private/private.component';
 
 @NgModule({
   declarations: [
@@ -82,8 +81,7 @@ import { PrivateComponent } from './components/main/dashboard/private/private.co
     InfocardComponent,
     EditsettingcardComponent,
     DashboardHeaderComponent,
-    ReauthenticateComponent,
-    PrivateComponent
+    ReauthenticateComponent
   ],
   imports: [
     BrowserModule,

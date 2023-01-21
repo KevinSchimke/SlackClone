@@ -27,7 +27,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <li *ngFor="let channel of channels">
-                    <a [routerLink]="['/main/channel/' + channel.id]">
+                    <a [routerLink]="['/main/' + channel.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem">#</div>
                         {{ channel.channelName }}
                     </a>
@@ -52,7 +52,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <li *ngFor="let private of privates">
-                    <a [routerLink]="['/main/private/' + private.id]">
+                    <a [routerLink]="['/main/' + private.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem">#</div>
                         {{ private.users[1] }}
                     </a>
