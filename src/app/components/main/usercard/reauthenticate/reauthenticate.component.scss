@@ -4,9 +4,9 @@
     mat-card {
 
         mat-card-header {
-            align-items: center;
             background-color: #1A1D21;
             padding-bottom: 16px;
+            align-items: flex-end;
 
             img {
                 object-fit: cover;
@@ -16,8 +16,22 @@
                 border-radius: 8px;
             }
 
-            span {
-                font-size: 1.5rem;
+            div {
+                display: flex;
+                flex-direction: column;
+
+                span {
+                    font-size: 1.5rem;
+
+                    &:first-child::first-letter {
+                        text-transform: uppercase;
+                    }
+
+                    &:last-child {
+                        margin-top: 8px;
+                        font-size: 1rem;
+                    }
+                }
             }
         }
 
