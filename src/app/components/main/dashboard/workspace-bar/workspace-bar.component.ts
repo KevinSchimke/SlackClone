@@ -30,39 +30,6 @@ export class WorkspaceBarComponent {
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private currentData: CurrentDataService) { }
 
-   ngOnInit() {
-    this.currentUser = this.currentData.getUser();
-    this.collChannels$ = this.firestoreService.getCollection('channels');
-    this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
-    this.user$ = this.firestoreService.getUser();
-    this.user$.subscribe(async (user: User) => {
-      const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
-    const querySnapshot = await getDocs(q);
-    this.privates = [];
-    querySnapshot.forEach((doc) => {
-      this.privates.push(doc.data());
-    console.log(doc.id, " => ", doc.data());
-    });
-    console.log(this.collPrivates$)
-    this.collPrivates$.subscribe((privates: any[]) =>  console.log(privates));
-    });
-    console.log('in ', this.currentUser);
-
-    setTimeout(() => {
-      console.log('in ', this.currentUser);
-      console.log('in ', this.currentUser.mail);
-    }, 5000);
-    // const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
-    // const querySnapshot = await getDocs(q);
-    // querySnapshot.forEach((doc) => {
-    //   this.privates.push(doc.data());
-    // console.log(doc.id, " => ", doc.data());
-    // });
-    // console.log(this.collPrivates$)
-    // this.collPrivates$.subscribe((privates: any[]) =>  console.log(privates));
-  }
-  //this.privates = this.sort.sortByName(privates)
-
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogAddChannelComponent);
 

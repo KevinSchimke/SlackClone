@@ -58,6 +58,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
 import { EditsettingcardComponent } from './components/main/usercard/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
+import { ReauthenticateComponent } from './components/main/usercard/reauthenticate/reauthenticate.component';
 
 @NgModule({
   declarations: [
@@ -79,7 +80,8 @@ import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-
     ClickStopPropagationDirective,
     InfocardComponent,
     EditsettingcardComponent,
-    DashboardHeaderComponent
+    DashboardHeaderComponent,
+    ReauthenticateComponent
   ],
   imports: [
     BrowserModule,

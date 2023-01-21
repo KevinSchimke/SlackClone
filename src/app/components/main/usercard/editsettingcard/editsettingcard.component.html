@@ -2,8 +2,9 @@
     <mat-card>
         <mat-card-header>
             <img src="../../../../assets/img/user0.png">
-            <span>Username</span>
+            <span>{{currentDataService.currentUser.name}}</span>
         </mat-card-header>
+        <button (click)="reauthenticate()">click mich</button>
         <mat-card-content>
             <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
                 <mat-expansion-panel-header>
@@ -30,7 +31,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>mail</mat-icon>
-                        E-Mail adress
+                        E-Mail address
                     </mat-panel-title>
                     <mat-panel-description>
                         <mat-icon>expand_more</mat-icon>

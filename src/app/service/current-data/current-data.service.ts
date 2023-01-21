@@ -46,10 +46,10 @@ export class CurrentDataService {
     this.currentUser.lastLogin = obj.lastLogin;
     this.currentUser.creationDate = obj.creationDate;
     this.currentUser.privates = obj.privates;
-    console.log('The current User from Service is', this.currentUser);
+    console.log('Current User Service -->setUser<--', this.currentUser);
   }
 
-  setUsers(user_arr: []){
+  setUsers(user_arr: []) {
     this.users = user_arr;
   }
 

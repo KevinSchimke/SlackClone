@@ -6,11 +6,11 @@ import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 
 @Component({
-  selector: 'app-editsettingcard',
-  templateUrl: './editsettingcard.component.html',
-  styleUrls: ['./editsettingcard.component.scss']
+  selector: 'app-reauthenticate',
+  templateUrl: './reauthenticate.component.html',
+  styleUrls: ['./reauthenticate.component.scss']
 })
-export class EditsettingcardComponent {
+export class ReauthenticateComponent {
   username = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
@@ -24,15 +24,10 @@ export class EditsettingcardComponent {
   step = -1;
   hide = true;
 
-  constructor(private auth: Auth, private firestoreService: FirestoreService, public currentDataService: CurrentDataService, private authError: AuthErrorService) { }
+  constructor(private auth: Auth, private firestoreService: FirestoreService, private currentDataService: CurrentDataService, private authError: AuthErrorService) { }
+
   setStep(index: number) {
     this.step = index;
-  }
-
-  ngOnInit(): void {
-    console.log('oninit', this.currentDataService.currentUser);
-    console.log('oninit name', this.currentDataService.currentUser.name);
-
   }
 
   reauthenticate() {
@@ -50,11 +45,9 @@ export class EditsettingcardComponent {
     if (this.username.valid) {
       let username = this.username.value.username;
       this.currentDataService.currentUser.name = username!;
-      console.log(this.currentDataService.currentUser);
-
-
       this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
       console.log('Current User Service -->getUser<--', this.currentDataService.getUser());
+      console.log('Current User Service -->getThread<--', this.currentDataService.getThread());
     }
   }
 
@@ -95,3 +88,6 @@ export class EditsettingcardComponent {
     return this.authError.getErrorMessage(formGroup, formControlName)
   }
 }
+
+
+
