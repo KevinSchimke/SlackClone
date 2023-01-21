@@ -23,7 +23,7 @@ export class MainComponent {
     this.users$.subscribe((users) => {
       this.currentDataService.setUsers(users)
     });
-    console.log('main name is', this.currentDataService.currentUser.name);
+    // console.log('main name is', this.currentDataService.currentUser.name);
 
   }
 }
