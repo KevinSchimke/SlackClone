@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification, UserCredential } from '@angular/fire/auth';
+import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -26,6 +27,10 @@ export class EditsettingcardComponent {
 
   step = -1;
   hide = true;
+  file:any = {};
+  path = '';
+  storageRef! : StorageReference;
+  imageURL = '';
 
   constructor(
     private auth: Auth,
@@ -34,6 +39,7 @@ export class EditsettingcardComponent {
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
     private router: Router,
+    private fireStorage: Storage,
     private dialogRef: MatDialogRef<EditsettingcardComponent>) { }
 
   setStep(index: number) {
@@ -106,5 +112,37 @@ export class EditsettingcardComponent {
 
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
     return this.authError.getErrorMessage(formGroup, formControlName)
+  }
+
+  upload = ($event: any) => {
+    this.file = $event.target.files[0];
+    const randomId = Math.random().toString(36).substring(2);
+    this.path = `images/${randomId}`;
+    this.storageRef = ref(this.fireStorage, this.path);
+    const uploadTask = uploadBytesResumable(this.storageRef, this.file);
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      console.log('upload is ' + progress + " % done");
+      switch (snapshot.state) {
+        case 'paused':
+          console.log('Upload is paused');
+          break;
+        case 'running':
+          console.log('Upload is running');
+          break;
+      }
+    },
+    (error) =>{
+      console.log(error.message);
+    }
+    ,
+    () => {
+      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+        console.log('download is ' + downloadURL);
+        this.imageURL = downloadURL;
+        this.currentDataService.currentUser.src = downloadURL;
+        this.updateUserData();
+      });
+    });
   }
 }

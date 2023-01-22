@@ -51,3 +51,20 @@ emoji-mart.section{
   max-height: 200px;
   max-width: 200px;
 }
+
+// input[type="file"] {
+//   display: none;
+// }
+
+.send-icon2{
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  label{
+      cursor: pointer;
+  }
+  &:hover{
+      color: #A161A3;
+     
+  }
+}

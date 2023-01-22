@@ -8,6 +8,7 @@ import { finalize, Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class DialoginputComponent {
   @Input() thread: boolean = false;
 
   
-  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage ) { }
+  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private currentData: CurrentDataService ) { }
 
   user: User = Object();
   message: string = '';
@@ -31,8 +32,10 @@ export class DialoginputComponent {
   downloadURL2!: Observable<string>;
   storageRef! : StorageReference;
   path = '';
+  currentUser = new User();
 
   ngOnInit() {
+    this.currentUser = this.currentData.getUser();
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
     if(!this.thread) {
       this.editorConfig.toolbarHiddenButtons?.push(this.small);
@@ -177,14 +180,14 @@ export class DialoginputComponent {
 
   getMessage() {
     let comment: Comment = new Comment();
-    this.user.id = 'testuser';
-    comment.userId = this.user.id;
-    comment.userName =  this.thread ? 'Otto Normalverbraucher' : 'Max Mustermann';
-    comment.userSrc = this.thread ? 'assets/img/user1.jpg' : 'assets/img/user4.jpg';
+    comment.userId = this.currentUser.id;
+    comment.userName =  this.currentUser.name;
+    comment.userSrc = this.currentUser.src ? this.currentUser.src : 'assets/img/user4.jpg';
     comment.message = this.message;
     comment.creationDate = new Date();
     comment.img = this.imageURL;
     this.message = '';
+    console.log(this.collectionPath);
     this.fireservice.save(comment, this.collectionPath);
     this.imageURL = '';
   }
