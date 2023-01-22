@@ -4,12 +4,9 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
-import { ActivatedRoute } from '@angular/router';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { User } from 'src/app/models/user.class';
-import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { collection, Firestore, getDocs, onSnapshot } from '@angular/fire/firestore';
-import { where } from '@firebase/firestore';
+import { onSnapshot } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -29,10 +26,10 @@ export class WorkspaceBarComponent {
   user$: any = EMPTY;
 
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private currentData: CurrentDataService, private userService: UserService, private firestore: Firestore) { }
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService) { }
 
   ngOnInit() {
-    this.currentUser = this.currentData.getUser();
+    this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
     onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
     const q2 = this.firestoreService.getCurrentUserData('privates', 'users', this.userService.getUid());

@@ -1,11 +1,11 @@
 <div class="userCard">
     <mat-card>
         <mat-card-header>
-            <img src={{currentDataService.currentUser.src}}>
+            <img src={{userService.currentUser.src}}>
             <div>
-                <span>{{currentDataService.currentUser.name}}</span>
+                <span>{{userService.currentUser.name}}</span>
                 <span>Edit Profile Picture</span>
-        <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
+                <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
 
             </div>
         </mat-card-header>

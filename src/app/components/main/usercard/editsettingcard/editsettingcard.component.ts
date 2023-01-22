@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification, UserCredential } from '@angular/fire/auth';
-import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
+import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification } from '@angular/fire/auth';
+import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { CurrentDataService } from 'src/app/service/current-data/current-data.se
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-editsettingcard',
@@ -27,9 +28,9 @@ export class EditsettingcardComponent {
 
   step = -1;
   hide = true;
-  file:any = {};
+  file: any = {};
   path = '';
-  storageRef! : StorageReference;
+  storageRef!: StorageReference;
   imageURL = '';
 
   constructor(
@@ -40,20 +41,21 @@ export class EditsettingcardComponent {
     private pushupMessage: PushupMessageService,
     private router: Router,
     private fireStorage: Storage,
-    private dialogRef: MatDialogRef<EditsettingcardComponent>) { }
+    private dialogRef: MatDialogRef<EditsettingcardComponent>,
+    public userService: UserService) { }
 
   setStep(index: number) {
     this.step = index;
   }
 
   updateUserData() {
-    this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
+    this.firestoreService.updateUser(this.userService.get().toJson());
   }
 
   updateUserName() {
     if (this.username.valid) {
       let username = this.username.value.username;
-      this.currentDataService.currentUser.name = username!;
+      this.userService.currentUser.name = username!;
       this.updateUserData();
     }
   }
@@ -63,7 +65,7 @@ export class EditsettingcardComponent {
       let email = this.email.value.email!;
       updateEmail(this.auth.currentUser!, email)
         .then(() => {
-          this.currentDataService.currentUser.mail = email!;
+          this.userService.currentUser.mail = email!;
           this.updateUserData();
           sendEmailVerification(this.auth.currentUser!)
           this.pushupMessage.openPushupMessage('success', 'Please verify your new email')
@@ -132,17 +134,17 @@ export class EditsettingcardComponent {
           break;
       }
     },
-    (error) =>{
-      console.log(error.message);
-    }
-    ,
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('download is ' + downloadURL);
-        this.imageURL = downloadURL;
-        this.currentDataService.currentUser.src = downloadURL;
-        this.updateUserData();
+      (error) => {
+        console.log(error.message);
+      }
+      ,
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('download is ' + downloadURL);
+          this.imageURL = downloadURL;
+          this.userService.currentUser.src = downloadURL;
+          this.updateUserData();
+        });
       });
-    });
   }
 }

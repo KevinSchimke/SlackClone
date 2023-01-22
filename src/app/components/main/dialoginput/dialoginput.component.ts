@@ -1,14 +1,14 @@
-import { Component, Input, OnInit, ViewChild, HostListener, Output, EventEmitter } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { collection, doc, Firestore, getFirestore, setDoc } from '@angular/fire/firestore';
-import { AngularEditorConfig, UploadResponse } from '@kolkov/angular-editor';
-import { finalize, Observable } from 'rxjs';
+import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { AngularEditorConfig } from '@kolkov/angular-editor';
+import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { ActivatedRoute } from '@angular/router';
-import { Storage, ref, uploadBytesResumable, getDownloadURL, uploadBytes, UploadTask, StorageReference, deleteObject  } from '@angular/fire/storage';
-import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, deleteObject } from '@angular/fire/storage';
+import { UserService } from 'src/app/service/user/user.service';
 
 
 @Component({
@@ -21,23 +21,23 @@ export class DialoginputComponent {
   @Input() collectionPath = '';
   @Input() thread: boolean = false;
 
-  
-  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private currentData: CurrentDataService ) { }
+
+  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
 
   user: User = Object();
   message: string = '';
-  channelId: string ='';
-  file:any = {};
+  channelId: string = '';
+  file: any = {};
   imageURL = '';
   downloadURL2!: Observable<string>;
-  storageRef! : StorageReference;
+  storageRef!: StorageReference;
   path = '';
   currentUser = new User();
 
   ngOnInit() {
-    this.currentUser = this.currentData.getUser();
+    this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
-    if(!this.thread) {
+    if (!this.thread) {
       this.editorConfig.toolbarHiddenButtons?.push(this.small);
     }
     // if(this.thread) console.log("coll", this.collectionPath);
@@ -48,10 +48,10 @@ export class DialoginputComponent {
   // }
 
   getIdFromUrl(param: { id: string }) {
-      this.channelId = param.id;
+    this.channelId = param.id;
     // console.log(this.channelId);
   }
- 
+
   upload = ($event: any) => {
     this.file = $event.target.files[0];
     const randomId = Math.random().toString(36).substring(2);
@@ -70,16 +70,16 @@ export class DialoginputComponent {
           break;
       }
     },
-    (error) =>{
-      console.log(error.message);
-    }
-    ,
-    () => {
-      getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-        console.log('download is ' + downloadURL);
-        this.imageURL = downloadURL;
+      (error) => {
+        console.log(error.message);
+      }
+      ,
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('download is ' + downloadURL);
+          this.imageURL = downloadURL;
+        });
       });
-    });
   }
 
   discardUpload() {
@@ -118,8 +118,8 @@ export class DialoginputComponent {
     defaultFontSize: '',
     fonts: [
       { class: 'arial', name: 'Arial' },
-      {class: 'calibri', name: 'Calibri'},
-      {class: 'comic-sans-ms', name: 'Comic Sans MS'}
+      { class: 'calibri', name: 'Calibri' },
+      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
 
     ],
     customClasses: [
@@ -163,9 +163,9 @@ export class DialoginputComponent {
   };
 
   small: string[] = this.thread ? [] : ['undo', 'redo', 'justifyLeft',
-  'justifyCenter',
-  'justifyRight',
-  'justifyFull',];
+    'justifyCenter',
+    'justifyRight',
+    'justifyFull',];
 
   async saveThread(thread: Comment) {
     let coll = collection(
@@ -181,7 +181,7 @@ export class DialoginputComponent {
   getMessage() {
     let comment: Comment = new Comment();
     comment.userId = this.currentUser.id;
-    comment.userName =  this.currentUser.name;
+    comment.userName = this.currentUser.name;
     comment.userSrc = this.currentUser.src ? this.currentUser.src : 'assets/img/user4.jpg';
     comment.message = this.message;
     comment.creationDate = new Date();

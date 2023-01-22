@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { UserService } from 'src/app/service/user/user.service';
 import { EditsettingcardComponent } from '../editsettingcard/editsettingcard.component';
 
 @Component({
@@ -26,11 +27,12 @@ export class ReauthenticateComponent {
     private auth: Auth,
     private currentDataService: CurrentDataService,
     private authError: AuthErrorService,
-    private pushupMessage: PushupMessageService
+    private pushupMessage: PushupMessageService,
+    private userService: UserService
   ) { }
 
   ngOnInit(): void {
-    this.currentUser = this.currentDataService.getUser();
+    this.currentUser = this.userService.get();
   }
 
   reauthenticate() {
