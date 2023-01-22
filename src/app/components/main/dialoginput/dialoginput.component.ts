@@ -182,7 +182,7 @@ export class DialoginputComponent {
     let comment: Comment = new Comment();
     comment.userId = this.currentUser.id;
     comment.userName = this.currentUser.name;
-    comment.userSrc = this.currentUser.src ? this.currentUser.src : 'assets/img/user4.jpg';
+    comment.userSrc = this.currentUser.src ? this.currentUser.src : 'assets/img/user0.png';
     comment.message = this.message;
     comment.creationDate = new Date();
     comment.img = this.imageURL;
