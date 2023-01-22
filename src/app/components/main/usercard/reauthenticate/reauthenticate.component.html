@@ -1,4 +1,4 @@
-<div class="userCard">
+<div #userCard class="userCard">
     <mat-card>
         <mat-card-header>
             <img src="../../../../assets/img/user0.png">
@@ -18,8 +18,7 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-                <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Save new
-                    password</button>
+                <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Submit</button>
             </form>
         </mat-card-content>
     </mat-card>

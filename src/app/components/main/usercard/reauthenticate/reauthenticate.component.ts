@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { Auth, reauthenticateWithCredential, EmailAuthProvider } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { EditsettingcardComponent } from '../editsettingcard/editsettingcard.component';
 
 @Component({
@@ -19,7 +20,14 @@ export class ReauthenticateComponent {
   });
   hide = true;
 
-  constructor(private dialog: MatDialog, private auth: Auth, private currentDataService: CurrentDataService, private authError: AuthErrorService) { }
+  constructor(
+    public dialogRef: MatDialogRef<ReauthenticateComponent>,
+    private dialog: MatDialog,
+    private auth: Auth,
+    private currentDataService: CurrentDataService,
+    private authError: AuthErrorService,
+    private pushupMessage: PushupMessageService
+  ) { }
 
   ngOnInit(): void {
     this.currentUser = this.currentDataService.getUser();
@@ -31,9 +39,9 @@ export class ReauthenticateComponent {
       const credential = EmailAuthProvider.credential(this.auth.currentUser!.email!, password!)
       reauthenticateWithCredential(this.auth.currentUser!, credential).then(() => {
         this.dialog.open(EditsettingcardComponent)
-        // this.dialog.close(ReauthenticateComponent)
+        this.dialogRef.close();
       }).catch((error) => {
-        console.log(error);
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
       });
     }
   }

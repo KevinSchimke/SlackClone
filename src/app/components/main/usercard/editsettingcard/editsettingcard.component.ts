@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
-import { Auth, reauthenticateWithCredential, EmailAuthProvider, deleteUser, updateEmail, updatePassword } from '@angular/fire/auth';
+import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification, UserCredential } from '@angular/fire/auth';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 @Component({
   selector: 'app-editsettingcard',
@@ -24,37 +27,28 @@ export class EditsettingcardComponent {
   step = -1;
   hide = true;
 
-  constructor(private auth: Auth, private firestoreService: FirestoreService, public currentDataService: CurrentDataService, private authError: AuthErrorService) { }
+  constructor(
+    private auth: Auth,
+    private firestoreService: FirestoreService,
+    public currentDataService: CurrentDataService,
+    private authError: AuthErrorService,
+    private pushupMessage: PushupMessageService,
+    private router: Router,
+    private dialogRef: MatDialogRef<EditsettingcardComponent>) { }
+
   setStep(index: number) {
     this.step = index;
   }
 
-  ngOnInit(): void {
-    console.log('oninit', this.currentDataService.currentUser);
-    console.log('oninit name', this.currentDataService.currentUser.name);
-
-  }
-
-  reauthenticate() {
-    const credential = EmailAuthProvider.credential(this.auth.currentUser!.email!, '123456')
-    console.log('credit', credential);
-
-    reauthenticateWithCredential(this.auth.currentUser!, credential).then(() => {
-      console.log('success', this.auth.currentUser);
-    }).catch((error) => {
-      console.log(error);
-    });
+  updateUserData() {
+    this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
   }
 
   updateUserName() {
     if (this.username.valid) {
       let username = this.username.value.username;
       this.currentDataService.currentUser.name = username!;
-      console.log(this.currentDataService.currentUser);
-
-
-      this.firestoreService.updateUser(this.currentDataService.getUser().toJson());
-      console.log('Current User Service -->getUser<--', this.currentDataService.getUser());
+      this.updateUserData();
     }
   }
 
@@ -63,9 +57,14 @@ export class EditsettingcardComponent {
       let email = this.email.value.email!;
       updateEmail(this.auth.currentUser!, email)
         .then(() => {
-          console.log('Update email successfully');
+          this.currentDataService.currentUser.mail = email!;
+          this.updateUserData();
+          sendEmailVerification(this.auth.currentUser!)
+          this.pushupMessage.openPushupMessage('success', 'Please verify your new email')
+          this.closeDialog();
+          this.logout();
         }).catch((error) => {
-          console.log(error);
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }
@@ -87,6 +86,20 @@ export class EditsettingcardComponent {
       .then(() => {
         console.log('save');
       }).catch((error) => {
+        console.log(error);
+      });
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
+  }
+
+  logout() {
+    signOut(this.auth)
+      .then(() => {
+        this.router.navigate(['/login']);
+      })
+      .catch((error) => {
         console.log(error);
       });
   }

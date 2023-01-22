@@ -32,7 +32,7 @@ export class LoginComponent {
             this.pushupMessage.openPushupMessage('success', 'Login Successfully')
           } else {
             this.router.navigate(['/verification']);
-            this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Adress')
+            this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address')
           }
         }).catch((error) => {
           this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))

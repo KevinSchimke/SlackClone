@@ -31,7 +31,7 @@ export class ChannelBarComponent {
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore : Firestore) { }
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
@@ -58,14 +58,14 @@ export class ChannelBarComponent {
     this.collData$.subscribe((threads) => this.setThreads(threads));
   }
 
-  setThreads(threads: []){
+  setThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
-    this.threads.forEach((thread, k) =>{
+    this.threads.forEach((thread, k) => {
       let threadPath = 'channels/' + this.channelId + '/ThreadCollection/' + thread.id + '/ReactionCollection';
       let reactionData$ = this.fireService.getCollection(threadPath);
       reactionData$.subscribe((reactions) => {
         this.threads[k]['reactions'] = reactions;
-        console.log(reactions)
+        // console.log(reactions)
       });
     })
   }
@@ -77,11 +77,11 @@ export class ChannelBarComponent {
   }
 
   handleClick($event: EmojiEvent, thread: any) {
-    console.log($event);
-    console.log(thread);
+    // console.log($event);
+    // console.log(thread);
     let uids = ['user0'];
     let reaction = new Reaction(uids);
     let collPath = this.collPath + '/' + thread.id + '/ReactionCollection';
-    this.fireService.save(reaction,collPath,$event.emoji.native);
+    this.fireService.save(reaction, collPath, $event.emoji.native);
   }
 }

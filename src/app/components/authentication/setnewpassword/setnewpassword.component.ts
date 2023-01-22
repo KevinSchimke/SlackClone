@@ -24,7 +24,7 @@ export class SetnewpasswordComponent {
       if (params['mode'] === 'resetPassword') {
         this.routeData = params;
       }
-      if (params['mode'] === 'verifyEmail') {
+      if (params['mode'] === 'verifyEmail' || params['mode'] === 'recoverEmail') {
         applyActionCode(this.auth, params['oobCode'])
         this.router.navigate(['/login']);
         this.pushupMessage.openPushupMessage('success', 'Verification successful')
