@@ -17,7 +17,7 @@ export class User {
         this.name = obj ? obj.name : '';
         this.mail = obj ? obj.mail : '';
         this.telephone = obj ? obj.telephone : '';
-        this.src = obj ? obj.src : '';
+        this.src = obj ? obj.src : 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2F2vaxlp928h2?alt=media&token=77a22de9-f29e-45eb-91cd-e61def848038';
         this.state = obj ? obj.state : false;
         this.status = obj ? obj.status : '';
         this.lastLogin = obj ? obj.lastLogin : null;

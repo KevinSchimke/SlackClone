@@ -31,7 +31,6 @@ export class EditsettingcardComponent {
   file: any = {};
   path = '';
   storageRef!: StorageReference;
-  imageURL = '';
 
   constructor(
     private auth: Auth,
@@ -82,9 +81,10 @@ export class EditsettingcardComponent {
       let password = this.password.value.password!;
       updatePassword(this.auth.currentUser!, password)
         .then(() => {
-          console.log('Update password successfully');
+          this.pushupMessage.openPushupMessage('success', 'Update password successfully')
+          this.closeDialog();
         }).catch((error) => {
-          console.log(error);
+          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
   }
@@ -124,26 +124,24 @@ export class EditsettingcardComponent {
     const uploadTask = uploadBytesResumable(this.storageRef, this.file);
     uploadTask.on('state_changed', (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('upload is ' + progress + " % done");
       switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
+        case 'canceled':
+          this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
           break;
         case 'running':
-          console.log('Upload is running');
+          this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
           break;
       }
     },
       (error) => {
-        console.log(error.message);
+        this.pushupMessage.openPushupMessage('error', error.message)
       }
       ,
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('download is ' + downloadURL);
-          this.imageURL = downloadURL;
           this.userService.currentUser.src = downloadURL;
           this.updateUserData();
+          this.pushupMessage.openPushupMessage('success', 'Upload success')
         });
       });
   }

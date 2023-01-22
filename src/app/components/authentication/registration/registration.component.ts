@@ -21,12 +21,12 @@ export class RegistrationComponent {
   });
   hide = true;
   userData = new User();
+  // pathDefaultUserImg = 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2F2vaxlp928h2?alt=media&token=77a22de9-f29e-45eb-91cd-e61def848038'
 
   constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router, private firestore: Firestore) { }
 
   register() {
     if (this.user.valid) {
-      const username = this.user.value.username;
       const email = this.user.value.email;
       const password = this.user.value.password;
       createUserWithEmailAndPassword(this.auth, email!, password!)
@@ -42,6 +42,7 @@ export class RegistrationComponent {
 
   saveNewUser(user: UserCredential) {
     this.userData.id = user.user.uid;
+    // this.userData.src = this.pathDefaultUserImg;
     this.userData.mail = user.user.email!;
     this.userData.name = this.user.value.username!;
     this.userData.lastLogin = new Date();
