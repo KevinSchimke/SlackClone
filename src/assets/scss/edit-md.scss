@@ -1,3 +1,5 @@
+@import "./colors.scss";
+
 .channels-accordion {
     .mat-expansion-panel-body {
         padding: 0 !important;
@@ -13,7 +15,21 @@ h2,
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: unset;
     }
+
     .mat-mdc-form-field-focus-overlay {
         background-color: unset;
     }
+}
+
+// Color Themes for PushUp Components
+.success .mdc-snackbar__surface {
+    background-color: $background-card-success !important;
+}
+
+.error .mdc-snackbar__surface {
+    background-color: $background-card-error !important;
+}
+
+.info .mdc-snackbar__surface {
+    background-color: $background-card-info !important;
 }

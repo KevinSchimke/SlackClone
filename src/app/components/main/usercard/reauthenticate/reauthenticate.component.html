@@ -1,7 +1,7 @@
 <div #userCard class="userCard">
     <mat-card>
         <mat-card-header>
-            <img src={{currentUser.src}}>
+            <img [src]="userService.currentUser.src ? userService.currentUser.src : 'assets/img/user0.png'">
             <div>
                 <span>{{currentUser.name}}</span>
                 <span>Please enter your password to edit your settings</span>

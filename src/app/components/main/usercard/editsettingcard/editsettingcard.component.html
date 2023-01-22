@@ -4,7 +4,6 @@
             <img [src]="userService.currentUser.src ? userService.currentUser.src : 'assets/img/user0.png'">
             <div>
                 <span>{{userService.currentUser.name}}</span>
-                <span>Edit Profile Picture</span>
                 <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
             </div>
         </mat-card-header>
@@ -73,6 +72,23 @@
                     <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Save new
                         password</button>
                 </form>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        <mat-icon>person_remove</mat-icon>
+                        Delete User
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <mat-icon>expand_more</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="fill">
+                    <mat-label>Danger!</mat-label>
+                    <input matInput placeholder="Sure ? Enter your Username">
+                </mat-form-field>
+                <button class="deleteButton" mat-raised-button>Delete User</button>
             </mat-expansion-panel>
         </mat-card-content>
     </mat-card>

@@ -25,10 +25,9 @@ export class ReauthenticateComponent {
     public dialogRef: MatDialogRef<ReauthenticateComponent>,
     private dialog: MatDialog,
     private auth: Auth,
-    private currentDataService: CurrentDataService,
+    public userService: UserService,
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
-    private userService: UserService
   ) { }
 
   ngOnInit(): void {

@@ -1,6 +1,7 @@
 @import "./assets/scss/colors.scss";
 @import "./../node_modules/@ctrl/ngx-emoji-mart/picker.css";
 @import "assets/scss/edit-md.scss";
+
 * {
   margin: 0;
   // outline: 1px solid green;
@@ -49,19 +50,6 @@ h1 {
   cursor: pointer;
 }
 
-// Color Themes for PushUp Components
-.success .mdc-snackbar__surface {
-  background-color: green !important;
-}
-
-.error .mdc-snackbar__surface {
-  background-color: red !important;
-}
-
-.info .mdc-snackbar__surface {
-  background-color: rgb(226, 226, 0) !important;
-}
-
 .angular-editor-textarea {
   resize: none !important;
   border: none !important;
@@ -72,11 +60,12 @@ h1 {
 }
 
 ::-webkit-scrollbar {
-    width: 8px;
-    height: 6px;
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: rgb(124, 62, 182) !important;;
-    border-radius: 5px;
-  }
+  width: 8px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgb(124, 62, 182) !important;
+  ;
+  border-radius: 5px;
+}
