@@ -14,6 +14,8 @@ import { Reaction } from 'src/app/models/reaction.class';
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { ThreadBarComponent } from '../thread-bar/thread-bar.component';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
 
 @Component({
   selector: 'app-channel-bar',
@@ -35,7 +37,7 @@ export class ChannelBarComponent {
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
 
   }
 
@@ -87,32 +89,38 @@ export class ChannelBarComponent {
     let userEmojiCount = thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
     let emojiIndex = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
     let emojiAlreadyByMe = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id)));
-    if (emojiAlreadyByMe != -1) {
-      this.threads[t].reactions[emojiIndex].users.splice(thread.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
-      if(this.threads[t].reactions[emojiIndex].users.length == 0){
-        this.threads[t].reactions.splice(emojiIndex,1);
-      }
-    } else if (userEmojiCount > 2) {
-      // Open Dialog 
-      alert('Hier kommt ein Dialog hin. Vorerst: KONTROLL MAL DEINE EMOTIONEN!!!');
-    } else if (emojiIndex != -1) {
-      this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
-    } else if (emojiIndex == -1) {
-      this.threads[t].reactions.push({
-        id: $event.emoji.native,
-        users: [this.currentUser.id]
-      });
-    }
-    console.log('userid des threads ',this.threads[t]);
+    this.evaluateThreadCases($event, thread, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
     let updatedThread = new Thread(this.threads[t]);
-    if (updatedThread.comments == undefined) {
-      updatedThread.comments = 0;
-    }
-    if (updatedThread.lastComment == undefined) {
-      updatedThread.lastComment = updatedThread.creationDate;
-    }
-    
     this.fireService.save(updatedThread,'channels/'+this.channelId + '/ThreadCollection',thread.id);
-    console.log('Aktualisierte Reactions sind: ',thread.reactions);
+  }
+
+  evaluateThreadCases($event: EmojiEvent, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: number){
+    if (emojiAlreadyByMe != -1)
+      this.removeReaction(thread, t, userEmojiCount, emojiIndex)
+    else if (userEmojiCount > 2)
+      this.openDialog();
+    else if (emojiIndex != -1)
+      this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
+    else if (emojiIndex == -1)
+      this.addNewReaction($event, t);
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogReactionComponent);
+    dialogRef.afterClosed().subscribe();
+  }
+
+  removeReaction(thread: Thread, t: number, userEmojiCount: number, emojiIndex: number){
+    this.threads[t].reactions[emojiIndex].users.splice(thread.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
+    if(this.threads[t].reactions[emojiIndex].users.length == 0){
+      this.threads[t].reactions.splice(emojiIndex,1);
+    }
+  }
+
+  addNewReaction($event: EmojiEvent, t: number){
+    this.threads[t].reactions.push({
+      id: $event.emoji.native,
+      users: [this.currentUser.id]
+    });
   }
 }

@@ -16,7 +16,7 @@
 
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{ (thread.creationDate.toLocaleTimeString()) + " Uhr" }}</span></p>
+        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{ thread.creationDate| date }}</span></p>
         <p [innerHTML]="thread.message"></p>
         <img *ngIf="thread.img" [src]="thread.img" alt="">
         <p class="d-flex">
@@ -38,7 +38,7 @@
         <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
         <p>
             <span><b>{{ comment.userName + " " }}</b></span>
-            <span *ngIf="comment.creationDate" class="span-time">{{ (comment.creationDate.toDate().toLocaleTimeString()) + " Uhr" }}</span>
+            <span *ngIf="comment.creationDate" class="span-time">{{ comment.creationDate | date }}</span>
         </p>
         <p [innerHTML]="comment.message"></p>
         <img *ngIf="comment.img" [src]="comment.img" alt="">
