@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, deleteObject } from '@angular/fire/storage';
 import { UserService } from 'src/app/service/user/user.service';
 import { Thread } from 'src/app/models/thread.class';
+import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class DialoginputComponent {
   @Input() thread: boolean = false;
 
 
-  constructor(private firestore: Firestore, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
+  constructor(private firestore: Firestore, private pushupMessage: PushupMessageService, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
 
   user: User = Object();
   message: string = '';
@@ -60,13 +61,13 @@ export class DialoginputComponent {
     const uploadTask = uploadBytesResumable(this.storageRef, this.file);
     uploadTask.on('state_changed', (snapshot) => {
       const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      console.log('upload is ' + progress + " % done");
+      // console.log('upload is ' + progress + " % done");
       switch (snapshot.state) {
-        case 'paused':
-          console.log('Upload is paused');
+        case 'canceled':
+          this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
           break;
         case 'running':
-          console.log('Upload is running');
+          // this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
           break;
       }
     },
@@ -76,7 +77,7 @@ export class DialoginputComponent {
       ,
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          console.log('download is ' + downloadURL);
+          this.pushupMessage.openPushupMessage('info', 'Upload is success');
           this.imageURL = downloadURL;
         });
       });

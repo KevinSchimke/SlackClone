@@ -38,9 +38,8 @@ mat-card-content {
   display: flex;
   justify-content: flex-end;
 }
-emoji-mart.section{
-  width: 260px !important;
-}
+
+
 
 .send-btn{
   border: none;
@@ -52,19 +51,3 @@ emoji-mart.section{
   max-width: 200px;
 }
 
-// input[type="file"] {
-//   display: none;
-// }
-
-.send-icon2{
-  position: absolute;
-  right: 12px;
-  top: 8px;
-  label{
-      cursor: pointer;
-  }
-  &:hover{
-      color: #A161A3;
-     
-  }
-}
