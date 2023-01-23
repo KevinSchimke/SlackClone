@@ -62,6 +62,7 @@ import { ReauthenticateComponent } from './components/main/usercard/reauthentica
 import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
 import { UsernamePipe } from './pipes/username/username.pipe';
 import { DialogReactionComponent } from './components/main/dashboard/dialog-reaction/dialog-reaction.component';
+import { DatePipe } from './pipes/date/date.pipe';
 
 @NgModule({
   declarations: [
@@ -87,7 +88,8 @@ import { DialogReactionComponent } from './components/main/dashboard/dialog-reac
     ReauthenticateComponent,
     ImgSrcPipe,
     UsernamePipe,
-    DialogReactionComponent
+    DialogReactionComponent,
+    DatePipe
   ],
   imports: [
     BrowserModule,
