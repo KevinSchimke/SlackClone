@@ -46,6 +46,7 @@ $avatar-width: 2.5rem;
     width: $avatar-width;
     display: block;
     border-radius: .5rem;
+    object-fit: cover;
 }
 
 .channel-thread-comments {
