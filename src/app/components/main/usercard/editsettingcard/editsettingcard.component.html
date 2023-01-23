@@ -86,9 +86,10 @@
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="fill">
                     <mat-label>Danger!</mat-label>
-                    <input matInput placeholder="Sure ? Enter your Username">
+                    <input [(ngModel)]="deletUsername" matInput placeholder="Sure ? Enter your Username">
                 </mat-form-field>
-                <button class="deleteButton" mat-raised-button>Delete User</button>
+                <button [disabled]="deletUsername !== userService.currentUser.name" (click)="deleteCurrentUser()"
+                    class="deleteButton" mat-raised-button>Delete User</button>
             </mat-expansion-panel>
         </mat-card-content>
     </mat-card>
