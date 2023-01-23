@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
+import { User } from 'src/app/models/user.class';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +10,14 @@ export class CurrentDataService {
 
   currentThread = new Thread();
   currentChannel = new Channel();
-  users = [];
+  users: User[] = [];
 
   constructor() { }
 
   setThread(obj: any) {
     this.currentThread.userName = obj.userName;
     this.currentThread.userSrc = obj.userSrc;
-    this.currentThread.creationDate = obj.creationDate.toDate();
+    this.currentThread.creationDate = obj.creationDate;
     this.currentThread.message = obj.message;
     this.currentThread.comments = obj.comments;
     // console.log('The cuurent Thread from Service is', this.currentThread);

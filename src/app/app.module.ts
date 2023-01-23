@@ -59,6 +59,8 @@ import { InfocardComponent } from './components/main/usercard/infocard/infocard.
 import { EditsettingcardComponent } from './components/main/usercard/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
 import { ReauthenticateComponent } from './components/main/usercard/reauthenticate/reauthenticate.component';
+import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
+import { UsernamePipe } from './pipes/username/username.pipe';
 
 @NgModule({
   declarations: [
@@ -81,7 +83,9 @@ import { ReauthenticateComponent } from './components/main/usercard/reauthentica
     InfocardComponent,
     EditsettingcardComponent,
     DashboardHeaderComponent,
-    ReauthenticateComponent
+    ReauthenticateComponent,
+    ImgSrcPipe,
+    UsernamePipe
   ],
   imports: [
     BrowserModule,

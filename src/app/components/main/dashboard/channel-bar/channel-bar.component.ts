@@ -62,15 +62,14 @@ export class ChannelBarComponent {
     this.channelId = param.id;
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
-    this.collData$.subscribe((threads) => this.setThreads(threads));
+    this.collData$.subscribe((threads) => this.convertThreads(threads));
   }
 
-  setThreads(threads: []) {
+  convertThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
     this.threads.forEach( (thread, k) => {
       this.threads[k].reactions = JSON.parse(thread.reactions);
       this.threads[k].creationDate = this.threads[k].creationDate.toDate();
-      
     });
   }
 

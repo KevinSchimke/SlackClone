@@ -22,7 +22,8 @@ export class MainComponent {
     this.user$.subscribe((user: User) => this.userService.set(user));
     this.users$ = this.firestoreService.getCollection('users');
     this.users$.subscribe((users) => {
-      this.currentDataService.setUsers(users)
+      this.currentDataService.setUsers(users);
+      console.log(this.currentDataService.users);
     });
     // console.log('main name is', this.currentDataService.currentUser.name);
   }

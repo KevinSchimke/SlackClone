@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.class';
-import { Comment } from 'src/app/models/comment.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
@@ -9,6 +8,7 @@ import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, deleteObject } from '@angular/fire/storage';
 import { UserService } from 'src/app/service/user/user.service';
+import { Thread } from 'src/app/models/thread.class';
 
 
 @Component({
@@ -167,19 +167,9 @@ export class DialoginputComponent {
     'justifyRight',
     'justifyFull',];
 
-  async saveThread(thread: Comment) {
-    let coll = collection(
-      this.firestore,
-      'channels',
-      this.channelId,
-      'ThreadCollection'
-    );
-    await setDoc(doc(coll), thread.toJson());
-    // console.log('created Channel');
-  }
 
   getMessage() {
-    let comment: Comment = new Comment();
+    let comment: Thread = new Thread();
     comment.userId = this.currentUser.id;
     comment.userName = this.currentUser.name;
     comment.userSrc = this.currentUser.src ? this.currentUser.src : 'assets/img/user0.png';
