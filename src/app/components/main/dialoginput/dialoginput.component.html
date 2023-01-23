@@ -32,6 +32,8 @@
     </mat-menu>
 
     <mat-menu #uploader="matMenu">
+        <!-- <button class="btn btn-default" style="cursor: pointer;" flow-btn (click)="fInput.click()">Edit Picture</button>
+        <input #fInput type="file" style="visibility: hidden;" (change)="upload($event)"> -->
         <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
     </mat-menu>
 
