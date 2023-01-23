@@ -4,7 +4,6 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Router } from '@angular/router';
-import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
@@ -26,6 +25,8 @@ export class EditsettingcardComponent {
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
 
+  deletUsername: string = '';
+
   step = -1;
   hide = true;
   file: any = {};
@@ -33,9 +34,8 @@ export class EditsettingcardComponent {
   storageRef!: StorageReference;
 
   constructor(
-    private auth: Auth,
+    public auth: Auth,
     private firestoreService: FirestoreService,
-    public currentDataService: CurrentDataService,
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
     private router: Router,
@@ -89,10 +89,13 @@ export class EditsettingcardComponent {
     }
   }
 
-  deleteUser() {
+  deleteCurrentUser() {
+    this.firestoreService.deleteUser();
     deleteUser(this.auth.currentUser!)
       .then(() => {
-        console.log('save');
+        this.pushupMessage.openPushupMessage('success', 'Account delete successfully')
+        this.closeDialog();
+        this.router.navigate(['/login']);
       }).catch((error) => {
         console.log(error);
       });

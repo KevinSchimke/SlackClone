@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
@@ -12,14 +12,6 @@ import { UserService } from '../user/user.service';
 })
 export class FirestoreService {
 
-  name = 'Angular';
-  description = 'Toller Channel';
-  locked = false;
-  obj_arr: any[] = [];
-  uid: any
-
-  
-  
   constructor(private firestore: Firestore, private userService: UserService) { }
 
   async save(obj: Channel | Thread | Comment | User | Reaction, collPath: string, id?: string) {
@@ -29,7 +21,7 @@ export class FirestoreService {
     console.log('Saved document');
   }
 
-  getCurrentUserData(collPath: string, specifier: string, target: string){
+  getCurrentUserData(collPath: string, specifier: string, target: string) {
     const collRef = collection(this.firestore, collPath);
     const q = query(collRef, where(specifier, "array-contains", target));
     return q;
@@ -55,7 +47,11 @@ export class FirestoreService {
   }
 
   updateUser(obj: any) {
-    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
+    let docRef = doc(collection(this.firestore, 'users'),)
     updateDoc(docRef, obj);
+  }
+
+  deleteUser() {
+    deleteDoc(doc(this.firestore, 'users', this.userService.uid));
   }
 }
