@@ -39,7 +39,7 @@
                 <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>
-            <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image"/>
+            <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)"/>
             <p class="d-flex" *ngIf="thread.reactions.length > 0">
                 <button *ngFor="let reaction of thread.reactions">
                   <span [innerHTML]="reaction.id"></span>

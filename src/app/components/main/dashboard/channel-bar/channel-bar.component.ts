@@ -16,6 +16,7 @@ import { UserService } from 'src/app/service/user/user.service';
 import { ThreadBarComponent } from '../thread-bar/thread-bar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
+import { OpenboxComponent } from 'src/app/openbox/openbox.component';
 
 @Component({
   selector: 'app-channel-bar',
@@ -122,5 +123,10 @@ export class ChannelBarComponent {
       id: $event.emoji.native,
       users: [this.currentUser.id]
     });
+  }
+
+  openBox(url: string) {
+    let dialog = this.dialog.open(OpenboxComponent);
+    dialog.componentInstance.openboxImg = url;
   }
 }
