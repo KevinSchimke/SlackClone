@@ -4,11 +4,12 @@
             <ae-toolbar-set>
                 <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
                 </ae-button>
-                <ae-button iconClass="fa fa-sharp fa-image" [matMenuTriggerFor]="uploader">            
+                <ae-button iconClass="fa fa-sharp fa-image" (buttonClick)="fInput.click()">            
                 </ae-button>
             </ae-toolbar-set>
         </ng-template>
     </angular-editor>
+    <input #fInput type="file" style="visibility: hidden;" (change)="upload($event)" accept=".png,.jpg">
 
     <div class="upload-image-container" *ngIf="imageURL">
         <div class="position-relative">
@@ -29,12 +30,6 @@
         search: 'Recherche',
         categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
         </emoji-mart>
-    </mat-menu>
-
-    <mat-menu #uploader="matMenu">
-        <!-- <button class="btn btn-default" style="cursor: pointer;" flow-btn (click)="fInput.click()">Edit Picture</button>
-        <input #fInput type="file" style="visibility: hidden;" (change)="upload($event)"> -->
-        <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
     </mat-menu>
 
 </mat-card>
