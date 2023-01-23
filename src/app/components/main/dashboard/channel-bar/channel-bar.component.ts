@@ -11,6 +11,9 @@ import { Private } from 'src/app/models/private.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Thread } from 'src/app/models/thread.class';
 import { Reaction } from 'src/app/models/reaction.class';
+import { User } from 'src/app/models/user.class';
+import { UserService } from 'src/app/service/user/user.service';
+import { ThreadBarComponent } from '../thread-bar/thread-bar.component';
 
 @Component({
   selector: 'app-channel-bar',
@@ -26,14 +29,18 @@ export class ChannelBarComponent {
   numberOfLoadMessages: number = 12;
   scrollCounter: number = 0;
   channel = new Private();
+  currentUser: User = new User();
 
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore) { }
+  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
+
+  }
 
   ngOnInit(): void {
+    this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
   }
 
@@ -60,14 +67,11 @@ export class ChannelBarComponent {
 
   setThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
-    this.threads.forEach((thread, k) => {
-      let threadPath = 'channels/' + this.channelId + '/ThreadCollection/' + thread.id + '/ReactionCollection';
-      let reactionData$ = this.fireService.getCollection(threadPath);
-      reactionData$.subscribe((reactions) => {
-        this.threads[k]['reactions'] = reactions;
-        // console.log(reactions)
-      });
-    })
+    this.threads.forEach( (thread, k) => {
+      this.threads[k].reactions = JSON.parse(thread.reactions);
+      this.threads[k].creationDate = this.threads[k].creationDate.toDate();
+      
+    });
   }
 
   openThread(thread: any) {
@@ -76,12 +80,40 @@ export class ChannelBarComponent {
     this.router.navigate([{ outlets: { right: [this.channelId, thread.id] } }], { relativeTo: this.route.parent });
   }
 
-  handleClick($event: EmojiEvent, thread: any) {
-    // console.log($event);
-    // console.log(thread);
-    let uids = ['user0'];
-    let reaction = new Reaction(uids);
-    let collPath = this.collPath + '/' + thread.id + '/ReactionCollection';
-    this.fireService.save(reaction, collPath, $event.emoji.native);
+  handleClick($event: EmojiEvent, thread: Thread, t: number) {
+    this.evaluateThread($event, thread, t);
+  }
+
+  evaluateThread($event: EmojiEvent, thread: Thread, t: number) {
+    let userEmojiCount = thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
+    let emojiIndex = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
+    let emojiAlreadyByMe = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id)));
+    if (emojiAlreadyByMe != -1) {
+      this.threads[t].reactions[emojiIndex].users.splice(thread.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
+      if(this.threads[t].reactions[emojiIndex].users.length == 0){
+        this.threads[t].reactions.splice(emojiIndex,1);
+      }
+    } else if (userEmojiCount > 2) {
+      // Open Dialog 
+      alert('Hier kommt ein Dialog hin. Vorerst: KONTROLL MAL DEINE EMOTIONEN!!!');
+    } else if (emojiIndex != -1) {
+      this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
+    } else if (emojiIndex == -1) {
+      this.threads[t].reactions.push({
+        id: $event.emoji.native,
+        users: [this.currentUser.id]
+      });
+    }
+    console.log('userid des threads ',this.threads[t]);
+    let updatedThread = new Thread(this.threads[t]);
+    if (updatedThread.comments == undefined) {
+      updatedThread.comments = 0;
+    }
+    if (updatedThread.lastComment == undefined) {
+      updatedThread.lastComment = updatedThread.creationDate;
+    }
+    
+    this.fireService.save(updatedThread,'channels/'+this.channelId + '/ThreadCollection',thread.id);
+    console.log('Aktualisierte Reactions sind: ',thread.reactions);
   }
 }

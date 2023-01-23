@@ -20,7 +20,7 @@ import { ThreadBarComponent } from './components/main/dashboard/thread-bar/threa
 import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'imprint', component: ImprintComponent },
   { path: 'dataprotection', component: DataprotectionComponent },
   { path: 'login', component: LoginComponent },
@@ -36,7 +36,7 @@ const routes: Routes = [
       { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' }
     ]
   },
-  // { path: '**', redirectTo: 'login', pathMatch: 'full' }
+  { path: '**', redirectTo: 'login', pathMatch: 'full' }
 ];
 
 @NgModule({

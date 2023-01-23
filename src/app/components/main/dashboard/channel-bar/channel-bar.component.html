@@ -10,12 +10,12 @@
 </header>
 
 <div class="channel-messages" #scrollMe>
-    <div class="channel-thread" *ngFor="let thread of threads">
+    <div class="channel-thread" *ngFor="let thread of threads; let t = index">
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
             <img src="assets/img/emoji_D1D2D3.png" />
             <mat-menu #emoji="matMenu" xPosition="before">
-              <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event, thread)" [i18n]="{
+              <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event, thread, t)" [i18n]="{
               search: 'Recherche',
               categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
               </emoji-mart>
@@ -36,16 +36,15 @@
             <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
             <p>
                 <span><b>{{ thread.userName + " " }}</b></span>
-                <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate.toDate().toLocaleTimeString() + " Uhr"}}</span>
+                <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate.toLocaleTimeString() + " Uhr"}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>
             <img *ngIf="thread.img" [src]="thread.img" alt="" />
-            <p class="d-flex" *ngIf="thread.reactions">
-                only if reactions already exist
-                <button>:-)</button>
+            <p class="d-flex" *ngIf="thread.reactions.length > 0">
                 <button *ngFor="let reaction of thread.reactions">
                   <span [innerHTML]="reaction.id"></span>
                 </button>
+                <button>+</button>
             </p>
             <button class="d-flex go-to-thread" (click)="openThread(thread)">
         <div class="d-flex first-comments">
