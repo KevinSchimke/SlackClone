@@ -4,7 +4,8 @@
             <img [src]="userService.currentUser.src ? userService.currentUser.src : 'assets/img/user0.png'">
             <div>
                 <span>{{userService.currentUser.name}}</span>
-                <input type="file" id="input-file" (change)="upload($event)" accept=".png,.jpg">
+                <button class="btn btn-default" style="cursor: pointer;" flow-btn (click)="fInput.click()">Edit Picture</button>
+                <input #fInput type="file" style="visibility: hidden; position: absolute;" (change)="upload($event)">
             </div>
         </mat-card-header>
         <mat-card-content>
