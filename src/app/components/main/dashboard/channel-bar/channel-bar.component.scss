@@ -101,3 +101,8 @@ $avatar-width: 2.5rem;
     overflow-x: hidden;
     height: calc(100% - 250px);
 }
+
+.thread-headline{
+    display: flex;
+    gap: 0.7rem;
+}

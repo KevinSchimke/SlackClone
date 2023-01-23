@@ -61,6 +61,7 @@ import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-
 import { ReauthenticateComponent } from './components/main/usercard/reauthenticate/reauthenticate.component';
 import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
 import { UsernamePipe } from './pipes/username/username.pipe';
+import { DatePipe } from './pipes/date/date.pipe';
 
 @NgModule({
   declarations: [
@@ -85,7 +86,8 @@ import { UsernamePipe } from './pipes/username/username.pipe';
     DashboardHeaderComponent,
     ReauthenticateComponent,
     ImgSrcPipe,
-    UsernamePipe
+    UsernamePipe,
+    DatePipe
   ],
   imports: [
     BrowserModule,
