@@ -16,7 +16,7 @@
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
         <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{ thread.creationDate| date }}</span></p>
         <p [innerHTML]="thread.message"></p>
-        <img *ngIf="thread.img" [src]="thread.img" alt="">
+        <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" >
         <p class="d-flex">
             only if reactions already exist
             <button>:-)</button>

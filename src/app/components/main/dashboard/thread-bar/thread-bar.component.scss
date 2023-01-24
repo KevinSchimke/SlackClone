@@ -53,3 +53,10 @@
     line-height: 1.38463;
     margin-right: 12px;
 }
+
+.post-image{
+    max-width: 200px;
+    max-height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+}
