@@ -1,5 +1,4 @@
 @import "./colors.scss";
-
 .channels-accordion {
     .mat-expansion-panel-body {
         padding: 0 !important;
@@ -15,7 +14,6 @@ h2,
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: unset;
     }
-
     .mat-mdc-form-field-focus-overlay {
         background-color: unset;
     }
@@ -32,4 +30,8 @@ h2,
 
 .info .mdc-snackbar__surface {
     background-color: $background-card-info !important;
+}
+
+.mat-mdc-menu-panel.mat-mdc-menu-panel {
+    max-width: unset !important;
 }
