@@ -3,9 +3,7 @@
         <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
       <img src="assets/icons/navbar-48.png" />
     </button>
-        <!-- Test Raphael -->
-        <h2 *ngIf="channel.hasOwnProperty('locked')">Workspace-Header</h2>
-        <h2 *ngIf="!channel.hasOwnProperty('locked')">Workspace-Header2</h2>
+        <h2>Workspace-Header</h2>
     </div>
 </header>
 
@@ -15,7 +13,7 @@
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
             <img src="assets/img/emoji_D1D2D3.png" />
             <mat-menu #emoji="matMenu" xPosition="before">
-              <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event, thread, t)" [i18n]="{
+              <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event, thread, t)" [i18n]="{
               search: 'Recherche',
               categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
               </emoji-mart>
@@ -39,12 +37,12 @@
                 <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>
-            <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)"/>
-            <p class="d-flex" *ngIf="thread.reactions.length > 0">
-                <button *ngFor="let reaction of thread.reactions">
-                  <span [innerHTML]="reaction.id"></span>
+            <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
+            <p class="d-flex emoji-container" *ngIf="thread.reactions.length > 0">
+                <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions">
+                  <span [innerHTML]="reaction.id"></span><span>{{reaction.users.length}}</span>
                 </button>
-                <button>+</button>
+                <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
             </p>
             <button class="d-flex go-to-thread" (click)="openThread(thread)">
         <div class="d-flex first-comments">

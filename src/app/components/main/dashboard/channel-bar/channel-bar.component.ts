@@ -3,20 +3,18 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
-import { collection, doc, Firestore, setDoc, Timestamp } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
-import { Private } from 'src/app/models/private.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Thread } from 'src/app/models/thread.class';
-import { Reaction } from 'src/app/models/reaction.class';
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
-import { ThreadBarComponent } from '../thread-bar/thread-bar.component';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
 import { OpenboxComponent } from 'src/app/openbox/openbox.component';
+import { ReactionService } from 'src/app/service/reaction/reaction.service';
 
 @Component({
   selector: 'app-channel-bar',
@@ -31,14 +29,14 @@ export class ChannelBarComponent {
   threads: any[] = [];
   numberOfLoadMessages: number = 12;
   scrollCounter: number = 0;
-  channel = new Private();
+  channel = new Channel();
   currentUser: User = new User();
 
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, private reaction: ReactionService) {
 
   }
 
@@ -70,7 +68,7 @@ export class ChannelBarComponent {
 
   convertThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
-    this.threads.forEach( (thread, k) => {
+    this.threads.forEach((thread, k) => {
       this.threads[k].reactions = JSON.parse(thread.reactions);
       this.threads[k].creationDate = this.threads[k].creationDate.toDate();
     });
@@ -82,22 +80,30 @@ export class ChannelBarComponent {
     this.router.navigate([{ outlets: { right: [this.channelId, thread.id] } }], { relativeTo: this.route.parent });
   }
 
-  handleClick($event: EmojiEvent, thread: Thread, t: number) {
-    this.evaluateThread($event, thread, t);
-  }
-
   evaluateThread($event: EmojiEvent, thread: Thread, t: number) {
-    let userEmojiCount = thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
-    let emojiIndex = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
-    let emojiAlreadyByMe = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id)));
+    let userEmojiCount = this.getEmojiCount(thread);
+    let emojiIndex = this.getEmojiIndex($event, thread);
+    let emojiAlreadyByMe = this.isEmojiAlreadyByMe($event, thread);
     this.evaluateThreadCases($event, thread, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
     let updatedThread = new Thread(this.threads[t]);
-    this.fireService.save(updatedThread,'channels/'+this.channelId + '/ThreadCollection',thread.id);
+    this.fireService.save(updatedThread, 'channels/' + this.channelId + '/ThreadCollection', thread.id);
   }
 
-  evaluateThreadCases($event: EmojiEvent, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: number){
-    if (emojiAlreadyByMe != -1)
-      this.removeReaction(thread, t, userEmojiCount, emojiIndex)
+  getEmojiCount(thread: Thread) {
+    return thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
+  }
+
+  getEmojiIndex($event: EmojiEvent, thread: Thread) {
+    return thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
+  }
+
+  isEmojiAlreadyByMe($event: EmojiEvent, thread: Thread) {
+    return thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id))) != -1;
+  }
+
+  evaluateThreadCases($event: EmojiEvent, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
+    if (emojiAlreadyByMe)
+      this.removeReaction(thread, t, emojiIndex);
     else if (userEmojiCount > 2)
       this.openDialog();
     else if (emojiIndex != -1)
@@ -106,19 +112,20 @@ export class ChannelBarComponent {
       this.addNewReaction($event, t);
   }
 
+
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogReactionComponent);
     dialogRef.afterClosed().subscribe();
   }
 
-  removeReaction(thread: Thread, t: number, userEmojiCount: number, emojiIndex: number){
+  removeReaction(thread: Thread, t: number, emojiIndex: number) {
     this.threads[t].reactions[emojiIndex].users.splice(thread.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
-    if(this.threads[t].reactions[emojiIndex].users.length == 0){
-      this.threads[t].reactions.splice(emojiIndex,1);
+    if (this.threads[t].reactions[emojiIndex].users.length == 0) {
+      this.threads[t].reactions.splice(emojiIndex, 1);
     }
   }
 
-  addNewReaction($event: EmojiEvent, t: number){
+  addNewReaction($event: EmojiEvent, t: number) {
     this.threads[t].reactions.push({
       id: $event.emoji.native,
       users: [this.currentUser.id]

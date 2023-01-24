@@ -8,8 +8,6 @@
 <div class="channel-thread">
     <div class="thread-options">
         <button class="btn-unset"><img src="assets/img/emoji_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/threads_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/share_D1D2D3.png"></button>
         <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
     </div>
     <img [src]="thread.userSrc" class="channel-thread-img">
@@ -32,7 +30,21 @@
         <hr class="separator-line">
     </div>
 </div>
-<div class="channel-thread" *ngFor="let comment of comments">
+<div class="channel-thread" *ngFor="let comment of comments; let c = index">
+    <div class="thread-options">
+        <button class="btn-unset" [matMenuTriggerFor]="emoji">
+        <img src="assets/img/emoji_D1D2D3.png" />
+        <mat-menu #emoji="matMenu" xPosition="before">
+          <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event, comment, c)" [i18n]="{
+          search: 'Recherche',
+          categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+          </emoji-mart>
+      </mat-menu>
+      </button>
+        <button class="btn-unset">
+        <img src="assets/img/bookmark_D1D2D3.png" />
+      </button>
+    </div>
     <img [src]="comment.userSrc" class="channel-thread-img">
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
@@ -42,11 +54,13 @@
         </p>
         <p [innerHTML]="comment.message"></p>
         <img *ngIf="comment.img" [src]="comment.img" alt="">
-        <p class="d-flex">
-            <button>:-)</button>
-            <button>:) +</button>
+        <img *ngIf="comment.img" [src]="comment.img" alt="" class="post-image" (click)="openBox(comment.img)" />
+        <p class="d-flex" *ngIf="comment.reactions.length > 0">
+            <button class="btn-unset" *ngFor="let reaction of comment.reactions">
+                <span [innerHTML]="reaction.id"></span>
+            </button>
+            <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
         </p>
-        <p>{{comment.id}}</p>
     </div>
 </div>
 <app-dialoginput [collectionPath]="this.collPath" [thread]="false"></app-dialoginput>

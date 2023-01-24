@@ -64,6 +64,7 @@ import { UsernamePipe } from './pipes/username/username.pipe';
 import { DialogReactionComponent } from './components/main/dashboard/dialog-reaction/dialog-reaction.component';
 import { DatePipe } from './pipes/date/date.pipe';
 import { OpenboxComponent } from './openbox/openbox.component';
+import { MessageBarComponent } from './components/main/dashboard/message-bar/message-bar.component';
 
 @NgModule({
   declarations: [
@@ -91,7 +92,8 @@ import { OpenboxComponent } from './openbox/openbox.component';
     UsernamePipe,
     DialogReactionComponent,
     DatePipe,
-    OpenboxComponent
+    OpenboxComponent,
+    MessageBarComponent
   ],
   imports: [
     BrowserModule,
