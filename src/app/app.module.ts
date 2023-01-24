@@ -65,6 +65,7 @@ import { DialogReactionComponent } from './components/main/dashboard/dialog-reac
 import { DatePipe } from './pipes/date/date.pipe';
 import { OpenboxComponent } from './openbox/openbox.component';
 import { MessageBarComponent } from './components/main/dashboard/message-bar/message-bar.component';
+import { NewMessageComponent } from './components/main/dashboard/new-message/new-message.component';
 
 @NgModule({
   declarations: [
@@ -93,7 +94,8 @@ import { MessageBarComponent } from './components/main/dashboard/message-bar/mes
     DialogReactionComponent,
     DatePipe,
     OpenboxComponent,
-    MessageBarComponent
+    MessageBarComponent,
+    NewMessageComponent
   ],
   imports: [
     BrowserModule,

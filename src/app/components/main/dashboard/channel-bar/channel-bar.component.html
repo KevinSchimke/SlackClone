@@ -40,7 +40,7 @@
             <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
             <p class="d-flex emoji-container" *ngIf="thread.reactions.length > 0">
                 <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions">
-                  <span [innerHTML]="reaction.id"></span><span>{{reaction.users.length}}</span>
+                  <span>{{reaction.id}}</span><span>{{reaction.users.length}}</span>
                 </button>
                 <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
             </p>

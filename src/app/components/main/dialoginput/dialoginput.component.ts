@@ -209,7 +209,7 @@ export class DialoginputComponent {
   }
 
   handleClick($event: EmojiEvent) {
-    // console.log($event.emoji);
+    console.log($event.emoji);
     this.message += $event.emoji.native;
     // console.log(this.channelId);
   }

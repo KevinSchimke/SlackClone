@@ -45,14 +45,14 @@
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
                             <span>Direct Messages</span>
-                            <button appClickStopPropagation (click)="openDialog()" class="btn-unset btn-add-channel">
+                            <button appClickStopPropagation routerLink='/main/newMessage' class="btn-unset btn-add-channel">
                 <img src="assets/img/plus_939295.png" />
               </button>
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <li *ngFor="let private of privates">
-                    <a [routerLink]="['/main/' + private.id]">
+                    <a [routerLink]="['/main/message/' + private.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem">#</div>
                         {{ private.users[1] }}
                     </a>
