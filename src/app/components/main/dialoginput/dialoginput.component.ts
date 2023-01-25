@@ -41,16 +41,10 @@ export class DialoginputComponent {
     if (!this.thread) {
       this.editorConfig.toolbarHiddenButtons?.push(this.small);
     }
-    // if(this.thread) console.log("coll", this.collectionPath);
   }
-
-  // ngOnChanges(){
-  //   console.log(this.collectionPath);
-  // }
 
   getIdFromUrl(param: { id: string }) {
     this.channelId = param.id;
-    // console.log(this.channelId);
   }
 
   upload = ($event: any) => {
@@ -60,14 +54,9 @@ export class DialoginputComponent {
     this.storageRef = ref(this.fireStorage, this.path);
     const uploadTask = uploadBytesResumable(this.storageRef, this.file);
     uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      // console.log('upload is ' + progress + " % done");
       switch (snapshot.state) {
         case 'canceled':
           this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
-          break;
-        case 'running':
-          // this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
           break;
       }
     },
@@ -77,7 +66,7 @@ export class DialoginputComponent {
       ,
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this.pushupMessage.openPushupMessage('info', 'Upload is success');
+          this.pushupMessage.openPushupMessage('success', 'Upload is success');
           this.imageURL = downloadURL;
         });
       });
@@ -178,8 +167,11 @@ export class DialoginputComponent {
     comment.creationDate = new Date();
     comment.img = this.imageURL;
     this.message = '';
-    console.log(this.collectionPath);
-    this.fireservice.save(comment, this.collectionPath);
+    if(this.collectionPath){
+      this.fireservice.save(comment, this.collectionPath);
+    }else{
+      
+    }
     this.imageURL = '';
   }
 

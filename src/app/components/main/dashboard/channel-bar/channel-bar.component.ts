@@ -50,10 +50,10 @@ export class ChannelBarComponent {
   }
 
   ngAfterViewChecked() {
-    // if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
+    if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
     this.scrollToBottom();
     this.scrollCounter++
-    // }
+    }
   }
 
   scrollToBottom(): void {

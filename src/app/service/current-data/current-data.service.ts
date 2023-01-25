@@ -12,9 +12,15 @@ export class CurrentDataService {
   currentThread = new Thread();
   currentChannel = new Channel();
   users: User[] = [];
+  newChatUsers: User[] = [];
   usersAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
+
+  setChatUsers(users: User[]){
+    this.newChatUsers = users;
+    console.log(this.newChatUsers);
+  }
 
   setThread(obj: any) {
     this.currentThread.userName = obj.userName;
