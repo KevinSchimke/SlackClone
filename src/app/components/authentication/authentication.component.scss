@@ -1,21 +1,15 @@
 @import "./../../../assets/scss/colors.scss";
+@import "./../../../assets/scss/mixin.scss";
 
 .authMain {
+    @include containerSize(100vh, 100vw);
+    @include containerPosition(center, center);
     background-color: $background-auth-compontens;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
     .backgroundLoginImg {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 100vh;
-        width: 100vw;
+        @include image(cover, 100vh, 100vw);
+        @include positionAbsolute(0, 0);
         overflow: hidden;
-        object-fit: cover;
         opacity: 0.2;
     }
 
@@ -24,14 +18,11 @@
         min-width: 450px;
 
         mat-card-header {
-            justify-content: center;
-            align-items: center;
+            @include containerPosition(center, center);
             padding-bottom: 16px;
 
             .placeholderIcon {
-                height: 48px;
-                width: 48px;
-                object-fit: cover;
+                @include image(cover, 64px, 64px);
                 padding-right: 16px;
             }
         }
@@ -43,7 +34,7 @@
         }
 
         .headerButtons {
-            display: flex;
+            @include containerPosition();
             gap: 16px;
             padding-bottom: 16px;
         }
@@ -58,15 +49,13 @@
         }
 
         .actionButton {
-            width: 100%;
-            cursor: pointer;
+            @include noBorderWithRadius(4px);
+            @include containerSize(auto, 100%);
             padding: 10px;
-            font-weight: 600;
             font-size: 1rem;
+            font-weight: 600;
             letter-spacing: 0.15rem;
-            border-radius: 4px;
             outline: none;
-            border: none;
 
             &:hover {
                 opacity: 0.75;
@@ -75,20 +64,18 @@
 
         .submit {
             margin-top: 16px;
-            font-weight: 800;
             font-size: 1.25rem;
+            font-weight: 800;
         }
 
         .enable {
-            background-color: #7b1fa2;
-            border: 1px solid #7b1fa2;
-            color: #fff;
+            @include border(1px, solid, $border-button-enable);
+            background-color: $background-button-auth1;
         }
 
         .disable {
-            background-color: transparent;
-            border: 1px solid #fff;
-            color: #fff;
+            @include border(1px, solid, $border-button-disable);
+            background-color: $background-button-auth2;
         }
     }
 
@@ -101,10 +88,8 @@
     }
 
     .legalNotice {
+        @include positionAbsolute(unset, 32px, 32px);
         z-index: 999;
-        position: absolute;
-        bottom: 32px;
-        right: 32px;
         font-size: 1.25rem;
 
         a {
@@ -120,8 +105,7 @@
 @media (max-width: 450px) {
     mat-card {
         padding: 0 !important;
-        width: 100%;
+        width: 100% !important;
         min-width: unset !important;
-        ;
     }
 }

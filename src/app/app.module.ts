@@ -63,7 +63,7 @@ import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
 import { UsernamePipe } from './pipes/username/username.pipe';
 import { DialogReactionComponent } from './components/main/dashboard/dialog-reaction/dialog-reaction.component';
 import { DatePipe } from './pipes/date/date.pipe';
-import { OpenboxComponent } from './openbox/openbox.component';
+import { OpenboxComponent } from './components/openbox/openbox.component';
 import { MessageBarComponent } from './components/main/dashboard/message-bar/message-bar.component';
 import { NewMessageComponent } from './components/main/dashboard/new-message/new-message.component';
 import { TelephonePipe } from './pipes/telephone/telephone.pipe';

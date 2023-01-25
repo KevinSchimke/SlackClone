@@ -1,20 +1,25 @@
 // includes all colors in the project
 
-$background-auth-compontens: #4A154B;
-$link-auth-compontens: #fff;
-$link-hover-auth-compontens: #007A5A;
-$background-main: #424242;
-
+// Color Themes gerneral
+$background-main: #1A1D21;
 $textcolor-white: #fff;
+$border-button-enable: #7b1fa2;
+$border-button-disable: #fff;
 
-$button-color-1: #007A5A;
-$button-color-2: #ff0000;
+// Color Themes for Auth Components
+$background-auth-compontens: #4A154B;
 
-$link: #5f676f;
-$link-hover: #f8290d;
+$link-auth-compontens: #fff;
+$link-hover-auth-compontens: #008000;
 
+$background-button-auth1: #7b1fa2;
+$background-button-auth2: transparent;
 
 // Color Themes for PushUp Components
 $background-card-success: #008000;
 $background-card-error: #ff0000;
 $background-card-info: #e2e200;
+
+// Color Themes for Edituser and Reauth Components
+$button-color-1: #008000;
+$button-color-2: #ff0000;

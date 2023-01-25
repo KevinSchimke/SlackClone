@@ -28,7 +28,6 @@ export class LoginComponent {
         .then((user: UserCredential) => {
           if (user.user?.emailVerified) {
             this.router.navigate(['/main']);
-            // this.userService.setUid(user.user.uid);
             this.pushupMessage.openPushupMessage('success', 'Login Successfully')
           } else {
             this.router.navigate(['/verification']);

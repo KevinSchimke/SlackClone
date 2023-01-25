@@ -13,7 +13,7 @@ import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
-import { OpenboxComponent } from 'src/app/openbox/openbox.component';
+import { OpenboxComponent } from 'src/app/components/openbox/openbox.component';
 import { ReactionService } from 'src/app/service/reaction/reaction.service';
 
 @Component({
@@ -32,7 +32,7 @@ export class ChannelBarComponent {
   channel = new Channel();
   currentUser: User = new User();
 
-  getUserNameById$(id: string){
+  getUserNameById$(id: string) {
     return "";
   }
 
@@ -51,8 +51,8 @@ export class ChannelBarComponent {
 
   ngAfterViewChecked() {
     if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
-    this.scrollToBottom();
-    this.scrollCounter++
+      this.scrollToBottom();
+      this.scrollCounter++
     }
   }
 
