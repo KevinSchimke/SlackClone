@@ -11,7 +11,6 @@ export class UsernamePipe implements PipeTransform {
 
 
   transform(userId: string): string {
-    console.log('Users in username Pipe',this.currentData.users);
     let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
     if (j == -1) {
       return 'Deleted User';
