@@ -6,6 +6,7 @@ import { User } from 'src/app/models/user.class';
   providedIn: 'root'
 })
 export class UserService {
+  public userDelete: boolean = false;
   public uid: any;
   public currentUser = new User();
 

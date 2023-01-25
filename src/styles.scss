@@ -1,6 +1,7 @@
 @import "./assets/scss/colors.scss";
 @import "./../node_modules/@ctrl/ngx-emoji-mart/picker.css";
-@import "assets/scss/edit-md.scss";
+@import "./assets/scss/edit-md.scss";
+@import "./assets/scss/company-colors.scss";
 
 * {
   margin: 0;
@@ -13,8 +14,14 @@ body {
 }
 
 a {
-  text-decoration: none !important;
+  color: $color-link;
+  text-decoration: none;
   cursor: pointer !important;
+
+  &:hover {
+    text-decoration: underline 0.5px solid $color-link;
+    text-underline-offset: 2px;
+  }
 }
 
 h1 {
@@ -24,6 +31,10 @@ h1 {
   font-weight: 500 !important;
   line-height: 32px !important;
   letter-spacing: 5px !important;
+  margin: 0 !important;
+}
+
+h2 {
   margin: 0 !important;
 }
 
@@ -41,6 +52,14 @@ h1 {
 
 .justify-content-end {
   justify-content: flex-end;
+}
+
+.justify-content-center {
+  justify-content: center;
+}
+
+.column {
+  flex-direction: column;
 }
 
 .btn-unset {
@@ -70,6 +89,6 @@ h1 {
   border-radius: 5px;
 }
 
-emoji-mart.section{
+emoji-mart.section {
   width: 260px !important;
 }

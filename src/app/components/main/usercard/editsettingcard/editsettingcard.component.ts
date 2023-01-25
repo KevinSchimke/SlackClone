@@ -90,6 +90,7 @@ export class EditsettingcardComponent {
   }
 
   deleteCurrentUser() {
+    this.userService.userDelete = true;
     this.firestoreService.deleteUser();
     deleteUser(this.auth.currentUser!)
       .then(() => {
