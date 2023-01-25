@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
@@ -11,6 +12,7 @@ export class CurrentDataService {
   currentThread = new Thread();
   currentChannel = new Channel();
   users: User[] = [];
+  usersAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
 
@@ -36,6 +38,7 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
+    this.usersAreLoaded.next(true);
   }
 
   getThread() {
@@ -44,6 +47,10 @@ export class CurrentDataService {
 
   getChannel() {
     return this.currentChannel;
+  }
+
+  getUsers(){
+    return this.users;
   }
 
 }

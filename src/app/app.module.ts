@@ -67,6 +67,7 @@ import { OpenboxComponent } from './openbox/openbox.component';
 import { MessageBarComponent } from './components/main/dashboard/message-bar/message-bar.component';
 import { NewMessageComponent } from './components/main/dashboard/new-message/new-message.component';
 import { TelephonePipe } from './pipes/telephone/telephone.pipe';
+import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { TelephonePipe } from './pipes/telephone/telephone.pipe';
     MessageBarComponent,
     NewMessageComponent,
     TelephonePipe,
+    MessagePartnerPipe,
   ],
   imports: [
     BrowserModule,

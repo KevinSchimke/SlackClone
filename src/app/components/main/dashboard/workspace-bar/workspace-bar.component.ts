@@ -7,6 +7,7 @@ import { EMPTY } from 'rxjs';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { User } from 'src/app/models/user.class';
 import { onSnapshot } from '@angular/fire/firestore';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -25,8 +26,10 @@ export class WorkspaceBarComponent {
   username: string = 'valer';
   user$: any = EMPTY;
 
+  users: any[] = [];
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService) { }
+
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService) { }
 
   ngOnInit() {
     this.currentUser = this.userService.get();
