@@ -47,6 +47,10 @@ export class CurrentDataService {
     this.usersAreLoaded.next(true);
   }
 
+  getChatUsers(){
+    return this.newChatUsers;
+  }
+
   getThread() {
     return this.currentThread;
   }

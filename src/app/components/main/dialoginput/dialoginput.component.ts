@@ -10,6 +10,7 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, d
 import { UserService } from 'src/app/service/user/user.service';
 import { Thread } from 'src/app/models/thread.class';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class DialoginputComponent {
   @Input() thread: boolean = false;
 
 
-  constructor(private firestore: Firestore, private pushupMessage: PushupMessageService, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
+  constructor(private firestore: Firestore, private pushupMessage: PushupMessageService, private currentDataService: CurrentDataService, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
 
   user: User = Object();
   message: string = '';
@@ -170,7 +171,7 @@ export class DialoginputComponent {
     if(this.collectionPath){
       this.fireservice.save(comment, this.collectionPath);
     }else{
-      
+      // this.currentDataService.getChatUsers();
     }
     this.imageURL = '';
   }
