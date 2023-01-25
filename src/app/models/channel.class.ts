@@ -7,6 +7,7 @@ export class Channel {
     creationDate: Date;
     creator: string;
     locked: boolean | string;
+    // category: string;
 
     constructor(obj?: any) {
         this.channelId = obj ? obj.channelId : '';

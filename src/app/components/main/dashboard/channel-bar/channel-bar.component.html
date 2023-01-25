@@ -33,7 +33,7 @@
         <div class="channel-thread-content">
             <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
             <p class="thread-headline">
-                <span><b>{{ thread.userId | username }}</b></span>
+                <span><b>{{ thread.userId | username  }}</b></span>
                 <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>

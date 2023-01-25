@@ -54,7 +54,7 @@
                 <li *ngFor="let private of privates">
                     <a [routerLink]="['/main/message/' + private.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-                        {{ private.users[1] }}
+                        {{ private.users | messagePartner: currentData.users }}
                     </a>
                 </li>
             </mat-expansion-panel>

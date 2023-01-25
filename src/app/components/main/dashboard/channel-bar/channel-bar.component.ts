@@ -32,6 +32,10 @@ export class ChannelBarComponent {
   channel = new Channel();
   currentUser: User = new User();
 
+  getUserNameById$(id: string){
+    return "";
+  }
+
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;

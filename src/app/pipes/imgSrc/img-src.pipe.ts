@@ -11,6 +11,9 @@ export class ImgSrcPipe implements PipeTransform {
 
   transform(userId: string): string {
     let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
+    if (j == -1) {
+      return 'assets/img/user0.png';
+    }
     return this.currentData.users[j].src;
   }
 

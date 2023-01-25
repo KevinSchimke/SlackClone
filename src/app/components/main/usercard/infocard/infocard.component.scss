@@ -1,1 +1,28 @@
 @import "./../usercard.component.scss";
+
+.bar-header {
+    padding: .5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+
+    h2 {
+        color: $color-main;
+    }
+}
+
+.header-img {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+
+    img {
+        display: block;
+        border-radius: 8px;
+        object-fit: cover;
+        height: 14rem;
+        width: 14rem;
+    }
+}
+
+.generalContent {
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+}
