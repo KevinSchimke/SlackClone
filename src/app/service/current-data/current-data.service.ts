@@ -11,8 +11,14 @@ export class CurrentDataService {
   currentThread = new Thread();
   currentChannel = new Channel();
   users: User[] = [];
+  newChatUsers: User[] = [];
 
   constructor() { }
+
+  setChatUsers(users: User[]){
+    this.newChatUsers = users;
+    console.log(this.newChatUsers);
+  }
 
   setThread(obj: any) {
     this.currentThread.userName = obj.userName;
@@ -36,6 +42,10 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
+  }
+
+  getChatUsers(): User[] {
+    return this.newChatUsers;
   }
 
   getThread() {
