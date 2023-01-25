@@ -13,7 +13,6 @@ export class CurrentDataService {
   currentChannel = new Channel();
   users: User[] = [];
   newChatUsers: User[] = [];
-  usersAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
   constructor() { }
 
@@ -44,7 +43,6 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
-    this.usersAreLoaded.next(true);
   }
 
   getChatUsers(){
