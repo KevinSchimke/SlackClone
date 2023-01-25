@@ -44,15 +44,20 @@
                 </button>
                 <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
             </p>
-            <button class="d-flex go-to-thread" (click)="openThread(thread)">
-        <div class="d-flex first-comments">
-          <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-          <img src="assets/img/user0.png" />
-        </div>
-        <span class="channel-thread-comments">X Antwort(en)</span>
-        <span class="time-of-last-answer">Letzte Antwort vor X Tagen</span>
-        <span class="show-thread">Thread ansehen</span>
-      </button>
+            <div *ngIf="thread.comments > 0">
+                <button class="d-flex go-to-thread" (click)="openThread(thread)">
+        
+                <div class="d-flex first-comments">
+                  <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+                <img src="assets/img/user0.png" />
+                </div>
+        
+                <span class="channel-thread-comments">{{thread.comments}} Antwort(en)</span>
+                <span class="time-of-last-answer">Letzte Antwort vor {{thread.lastComment}} Tagen</span>
+                <span class="show-thread">Thread ansehen</span>
+              </button>
+            </div>
+
         </div>
     </div>
 </div>

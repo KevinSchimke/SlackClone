@@ -36,17 +36,17 @@ export class ThreadBarComponent {
     this.subscribeThreadbarInit();
   }
 
-  subscribeUrl(){
+  subscribeUrl() {
     this.route.url.subscribe((params: any) => this.setCommentCollection(params));
   }
 
-  setCommentCollection(params: any){
+  setCommentCollection(params: any) {
     this.setChannelAndThreadId(params);
     this.getCollAndDoc();
     this.subscribeCollAndDoc();
   }
 
-  setChannelAndThreadId(params: any){
+  setChannelAndThreadId(params: any) {
     this.channelId = params[0].path;
     this.threadId = params[1].path;
   }
@@ -54,24 +54,26 @@ export class ThreadBarComponent {
   getCollAndDoc() {
     this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection';
     this.collData$ = this.fireService.getCollection(this.collPath);
-    this.docData$ = this.fireService.getDocument(this.threadId,'channels/' + this.channelId + '/ThreadCollection/');
+    this.docData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
   }
 
-  subscribeThreadbarInit(){
-    this.childSelector.threadBarIsInit.subscribe(isLoaded=>{
-      if(isLoaded===true)
+  subscribeThreadbarInit() {
+    this.childSelector.threadBarIsInit.subscribe(isLoaded => {
+      if (isLoaded === true)
         this.childSelector.threadBar.open();
     });
   }
 
-  subscribeCollAndDoc(){
+  subscribeCollAndDoc() {
     this.docData$.subscribe((thread) => this.thread = thread);
-    this.collData$.subscribe((comments) => {
-      this.comments = this.sorter.sortByDate(comments);
-      this.comments.forEach((comment, k) => {
-        this.comments[k].reactions = JSON.parse(comment.reactions);
-        this.comments[k].creationDate = this.comments[k].creationDate.toDate();
-      });
+    this.collData$.subscribe((comments) => this.setComments(comments));
+  }
+
+  setComments(comments: any[]) {
+    this.comments = this.sorter.sortByDate(comments);
+    this.comments.forEach((comment, k) => {
+      this.comments[k].reactions = JSON.parse(comment.reactions);
+      this.comments[k].creationDate = this.comments[k].creationDate.toDate();
     });
   }
 
@@ -81,7 +83,6 @@ export class ThreadBarComponent {
   }
 
   evaluateThread($event: EmojiEvent, comment: Thread, t: number) {
-    console.log('Comment is ',comment);
     let userEmojiCount = comment.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
     let emojiIndex = comment.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
     let emojiAlreadyByMe = comment.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id))) != -1;

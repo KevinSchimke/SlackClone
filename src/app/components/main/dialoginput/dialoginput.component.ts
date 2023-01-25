@@ -168,8 +168,12 @@ export class DialoginputComponent {
     comment.creationDate = new Date();
     comment.img = this.imageURL;
     this.message = '';
+    console.log(this.collectionPath);
     if(this.collectionPath){
       this.fireservice.save(comment, this.collectionPath);
+      if (this.collectionPath.includes('commentCollection')) {
+        this.fireservice.addCommentToThread(this.collectionPath.replace("/commentCollection",""));
+      }
     }else{
       // this.currentDataService.getChatUsers();
     }

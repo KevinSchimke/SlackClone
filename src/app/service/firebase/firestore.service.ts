@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
@@ -49,6 +49,15 @@ export class FirestoreService {
   updateUser(obj: any) {
     let docRef = doc(collection(this.firestore, 'users'),)
     updateDoc(docRef, obj);
+  }
+
+  async addCommentToThread(collPath: string) {
+    let docRef = doc(this.firestore, collPath);
+    await updateDoc(docRef, {
+      comments: increment(1),
+      lastComment: new Date()
+    });
+
   }
 
   deleteUser() {
