@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
@@ -20,6 +20,13 @@ export class FirestoreService {
     id ? await setDoc(doc(coll, id), obj.toJson()) : await setDoc(doc(coll), obj.toJson());
     console.log('Saved document');
   }
+
+  async add(obj: Channel){
+    const docRef = await addDoc(collection(this.firestore, "channels"), obj.toJson());
+    console.log("Document written with ID: ", docRef.id);
+    return docRef.id;
+  }
+
 
   getCurrentUserData(collPath: string, specifier: string, target: string) {
     const collRef = collection(this.firestore, collPath);
