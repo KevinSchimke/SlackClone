@@ -78,6 +78,11 @@ export class ChannelBarComponent {
     });
   }
 
+  openUserInfoCard(thread: any) {
+    this.sidenavToggler.threadBar.open();
+    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
+  }
+
   openThread(thread: any) {
     this.sidenavToggler.threadBar.open();
     this.currentDataService.setThread(thread);
