@@ -97,17 +97,12 @@ export class EditsettingcardComponent {
     }
   }
 
-  deleteCurrentUser() {
+  async deleteCurrentUser() {
     this.userService.userDelete = true;
-    this.firestoreService.deleteUser();
-    deleteUser(this.auth.currentUser!)
-      .then(() => {
-        this.pushupMessage.openPushupMessage('success', 'Account delete successfully')
-        this.closeDialog();
-        this.router.navigate(['/login']);
-      }).catch((error) => {
-        console.log(error);
-      });
+    await this.firestoreService.deleteUser();
+    this.closeDialog();
+    await deleteUser(this.auth.currentUser!)
+    location.reload();
   }
 
   closeDialog() {

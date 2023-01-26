@@ -60,7 +60,7 @@ export class FirestoreService {
     updateDoc(docRef, obj);
   }
 
-  deleteUser() {
-    deleteDoc(doc(this.firestore, 'users', this.userService.uid));
+  async deleteUser() {
+    await deleteDoc(doc(this.firestore, 'users', this.userService.uid));
   }
 }

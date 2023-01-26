@@ -19,17 +19,16 @@ export class PeriodOfTimePipe implements PipeTransform {
 
   }
 
-  evaluatePeriod(postTime: any){
+  evaluatePeriod(postTime: any) {
     let currentTime = new Date().getTime();
-    let timeDifference = (currentTime - postTime)/1000;
-    console.log(timeDifference);
+    let timeDifference = (currentTime - postTime) / 1000;
     if (timeDifference < 60)
       return Math.round(timeDifference) + " seconds";
     else if (timeDifference < 3600)
-      return Math.round(timeDifference/60) + " minutes";
+      return Math.round(timeDifference / 60) + " minutes";
     else if (timeDifference < 86400)
-      return Math.round(timeDifference/(60*60)) + " hours";
+      return Math.round(timeDifference / (60 * 60)) + " hours";
     else
-      return Math.round(timeDifference/(60*60*24)) + " days";
+      return Math.round(timeDifference / (60 * 60 * 24)) + " days";
   }
 }
