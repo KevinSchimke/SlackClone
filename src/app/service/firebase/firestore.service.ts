@@ -56,7 +56,7 @@ export class FirestoreService {
   }
 
   updateUser(obj: any) {
-    let docRef = doc(collection(this.firestore, 'users'),)
+    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
     updateDoc(docRef, obj);
   }
 
