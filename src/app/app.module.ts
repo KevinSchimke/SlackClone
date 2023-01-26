@@ -68,6 +68,7 @@ import { MessageBarComponent } from './components/main/dashboard/message-bar/mes
 import { NewMessageComponent } from './components/main/dashboard/new-message/new-message.component';
 import { TelephonePipe } from './pipes/telephone/telephone.pipe';
 import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe';
+import { PeriodOfTimePipe } from './pipes/date/period-of-time.pipe';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe
     NewMessageComponent,
     TelephonePipe,
     MessagePartnerPipe,
+    PeriodOfTimePipe,
   ],
   imports: [
     BrowserModule,

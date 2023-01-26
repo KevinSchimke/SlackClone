@@ -54,7 +54,7 @@
           </div>
 
           <span class="channel-thread-comments">{{thread.comments}} Antwort<span *ngIf="thread.comments > 1">en</span></span>
-          <span class="time-of-last-answer">Letzte Antwort vor {{thread.lastComment}} Tagen</span>
+          <span class="time-of-last-answer">Letzte Antwort vor {{thread.lastComment | periodOfTime}} Tagen</span>
           <span class="show-thread">Thread ansehen</span>
         </button>
             </div>

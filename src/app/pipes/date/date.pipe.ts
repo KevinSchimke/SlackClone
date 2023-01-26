@@ -8,7 +8,7 @@ export class DatePipe implements PipeTransform {
   transform(value: Timestamp | Date | string): string {
     if((typeof value !== 'string')){
       if (!(value instanceof Date)) value = value.toDate();
-      if (value instanceof Date) value = value.toLocaleTimeString();
+      if (value instanceof Date) value = value.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
     }
     return value;
   }
