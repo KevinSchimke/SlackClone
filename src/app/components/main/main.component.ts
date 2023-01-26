@@ -21,7 +21,7 @@ export class MainComponent {
 
     if (!this.userService.userDelete) {
       console.log('geladen');
-      this.user$ = this.firestoreService.getUser();
+      this.user$ = this.firestoreService.getUser(this.userService.uid);
       this.user$.subscribe((user: User) => this.userService.set(user));
       this.users$ = this.firestoreService.getCollection('users');
       this.users$.subscribe((users) => {
