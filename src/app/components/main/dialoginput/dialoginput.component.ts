@@ -11,6 +11,7 @@ import { UserService } from 'src/app/service/user/user.service';
 import { Thread } from 'src/app/models/thread.class';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { Channel } from 'src/app/models/channel.class';
 
 
 @Component({
@@ -159,7 +160,7 @@ export class DialoginputComponent {
     'justifyFull',];
 
 
-  getMessage() {
+   async getMessage() {
     let comment: Thread = new Thread();
     comment.userId = this.currentUser.id;
     comment.userName = this.currentUser.name;
@@ -175,9 +176,22 @@ export class DialoginputComponent {
         this.fireservice.addCommentToThread(this.collectionPath.replace("/commentCollection",""));
       }
     }else{
-      // this.currentDataService.getChatUsers();
+      let channelId = await this.createNewChannel();
+      this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
     }
     this.imageURL = '';
+  }
+
+  async createNewChannel() {
+    let channel: Channel = new Channel();
+    channel.channelName =  '';
+    channel.description =  '';
+    channel.locked = true;
+    channel.category = 'private';
+    this.currentDataService.getChatUsers().forEach(user => channel.users.push(user.id));
+    channel.users.push(this.currentUser.id);
+     return await this.fireservice.add(channel);
+
   }
 
   setTheme(set: string) {

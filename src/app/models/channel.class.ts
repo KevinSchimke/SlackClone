@@ -7,17 +7,18 @@ export class Channel {
     creationDate: Date;
     creator: string;
     locked: boolean | string;
-    // category: string;
+    category: string;
 
     constructor(obj?: any) {
         this.channelId = obj ? obj.channelId : '';
         this.channelName = obj ? obj.channelName : '';
-        this.users = obj ? obj.users : ['user0'];
+        this.users = obj ? obj.users : [];
         this.topic = obj ? obj.topic : '';
         this.description = obj ? obj.description : '';
         this.creationDate = obj ? obj.creationDate : new Date();
         this.creator = obj ? obj.creator : '';
         this.locked = obj ? obj.locked : false || '';
+        this.category = obj ? obj.category : 'channel';
     }
     toJson() {
         return {
@@ -28,6 +29,7 @@ export class Channel {
             creationDate: this.creationDate,
             creator: this.creator,
             locked: this.locked,
+            category: this.category
         };
     }
 }
