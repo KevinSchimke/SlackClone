@@ -36,9 +36,9 @@
     <div class="d-flex align-items-center">
         <img src="assets/img/phone_fff.png">
         <div class="column d-flex justify-content-center">
-            <span>Telephone</span>
-            <a *ngIf="user?.telephone" href="tel:{{user?.telephone}}">{{user?.telephone}}</a>
-            <a *ngIf="!user?.telephone" (click)="openDialog()">+Add telephone</a>
+            <span>phone</span>
+            <a *ngIf="user?.phone" href="tel:{{user?.phone}}">{{user?.phone}}</a>
+            <a *ngIf="!user?.phone" (click)="openDialog()">+Add phone</a>
         </div>
     </div>
 </div>

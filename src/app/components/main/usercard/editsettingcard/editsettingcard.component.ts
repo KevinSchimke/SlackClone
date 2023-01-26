@@ -3,7 +3,6 @@ import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerifi
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
@@ -16,7 +15,7 @@ import { UserService } from 'src/app/service/user/user.service';
 })
 export class EditsettingcardComponent {
 
-  @ViewChild('telephone') telephone?: ElementRef
+  @ViewChild('phone') phone?: ElementRef
   username = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
@@ -31,6 +30,7 @@ export class EditsettingcardComponent {
 
   step = -1;
   hide = true;
+
   file: any = {};
   path = '';
   storageRef!: StorageReference;
@@ -40,13 +40,16 @@ export class EditsettingcardComponent {
     private firestoreService: FirestoreService,
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
-    private router: Router,
     private fireStorage: Storage,
     private dialogRef: MatDialogRef<EditsettingcardComponent>,
     public userService: UserService) { }
 
   setStep(index: number) {
     this.step = index;
+  }
+
+  closeDialog() {
+    this.dialogRef.close();
   }
 
   updateUserData() {
@@ -61,9 +64,9 @@ export class EditsettingcardComponent {
     }
   }
 
-  updateTelephone() {
-    const telephone = this.telephone!.nativeElement.value;
-    this.userService.currentUser.telephone = telephone!
+  updatePhone() {
+    const phone = this.phone!.nativeElement.value;
+    this.userService.currentUser.phone = phone!
     this.updateUserData();
   }
 
@@ -98,21 +101,15 @@ export class EditsettingcardComponent {
   }
 
   async deleteCurrentUser() {
-    this.userService.userDelete = true;
     await this.firestoreService.deleteUser();
-    this.closeDialog();
     await deleteUser(this.auth.currentUser!)
     location.reload();
-  }
-
-  closeDialog() {
-    this.dialogRef.close();
   }
 
   logout() {
     signOut(this.auth)
       .then(() => {
-        this.router.navigate(['/login']);
+        location.reload();
       })
       .catch((error) => {
         console.log(error);

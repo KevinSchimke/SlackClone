@@ -80,17 +80,17 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>phone_android</mat-icon>
-                        Telephone
+                        phone
                     </mat-panel-title>
                     <mat-panel-description>
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="fill">
-                    <mat-label>Enter your telephone number</mat-label>
-                    <input #telephone type="number" matInput>
+                    <mat-label>Enter your phone number</mat-label>
+                    <input #phone type="number" matInput>
                 </mat-form-field>
-                <button (click)="updateTelephone()" class="actionButton" mat-raised-button>Save telephone</button>
+                <button (click)="updatePhone()" class="actionButton" mat-raised-button>Save phone</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
