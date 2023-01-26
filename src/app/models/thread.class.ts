@@ -9,6 +9,7 @@ export class Thread {
   lastComment: Date;
   img: string;
   reactions: [{ id: string, users: string[] }];
+  users: string[] = [];
 
   constructor(obj?: any) {
     this.id = obj ? obj.id : '';

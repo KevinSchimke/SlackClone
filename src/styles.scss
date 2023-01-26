@@ -3,97 +3,94 @@
 @import "./assets/scss/edit-md.scss";
 @import "./assets/scss/company-colors.scss";
 @import "./assets/scss/mixin.scss";
-
 * {
-  margin: 0;
-  // outline: 1px solid green;
+    margin: 0;
+    // outline: 1px solid green;
 }
 
 body {
-  background-color: $background-main;
-  color: $textcolor-white;
+    background-color: $background-main;
+    color: $textcolor-white;
 }
 
 a {
-  color: $color-link;
-  text-decoration: none;
-  cursor: pointer !important;
-
-  &:hover {
-    text-decoration: underline 0.5px solid $color-link;
-    text-underline-offset: 2px;
-  }
+    color: $color-link;
+    text-decoration: none;
+    cursor: pointer !important;
+    &:hover {
+        text-decoration: underline 0.5px solid $color-link;
+        text-underline-offset: 2px;
+    }
 }
 
 h1 {
-  color: $textcolor-white;
-  font-size: clamp(2rem, 1.704rem + 1.48vw, 3rem) !important;
-  font-family: Roboto, sans-serif !important;
-  font-weight: 500 !important;
-  line-height: 32px !important;
-  letter-spacing: 5px !important;
-  margin: 0 !important;
+    color: $textcolor-white;
+    font-size: clamp(2rem, 1.704rem + 1.48vw, 3rem) !important;
+    font-family: Roboto, sans-serif !important;
+    font-weight: 500 !important;
+    line-height: 32px !important;
+    letter-spacing: 5px !important;
+    margin: 0 !important;
 }
 
 h2 {
-  margin: 0 !important;
+    margin: 0 !important;
 }
 
 button {
-  cursor: pointer;
+    cursor: pointer;
 }
 
 .d-flex {
-  display: flex;
+    display: flex;
 }
 
 .align-items-center {
-  align-items: center;
+    align-items: center;
 }
 
 .justify-content-between {
-  justify-content: space-between;
+    justify-content: space-between;
 }
 
 .justify-content-end {
-  justify-content: flex-end;
+    justify-content: flex-end;
 }
 
 .justify-content-center {
-  justify-content: center;
+    justify-content: center;
 }
 
 .column {
-  flex-direction: column;
+    flex-direction: column;
 }
 
 .btn-unset {
-  border: unset;
-  background: none;
-  padding: 0;
-  cursor: pointer;
+    border: unset;
+    background: none;
+    padding: 0;
+    cursor: pointer;
 }
 
 .angular-editor-textarea {
-  resize: none !important;
-  border: none !important;
+    resize: none !important;
+    border: none !important;
 }
 
 .angular-editor-toolbar {
-  background-color: rgba($color: #461574, $alpha: 0.55) !important;
+    background-color: rgba($color: #461574, $alpha: 0.55) !important;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 6px;
+    width: 8px;
+    height: 6px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgb(124, 62, 182) !important;
-  ;
-  border-radius: 5px;
+    background: $color-main !important;
+    border-radius: 5px;
 }
 
 emoji-mart.section {
-  width: 260px !important;
+    width: 260px !important;
 }

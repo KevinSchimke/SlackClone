@@ -53,7 +53,8 @@
             <img src="assets/img/user0.png" />
           </div>
 
-          <span class="channel-thread-comments">{{thread.comments}} answer<span *ngIf="thread.comments > 1">s</span></span>
+          <span class="channel-thread-comments" *ngIf="thread.comments < 2">{{thread.comments}} reply</span>
+          <span class="channel-thread-comments" *ngIf="thread.comments > 1">{{thread.comments}} replies</span>
           <span class="time-of-last-answer">Last answer {{thread.lastComment | periodOfTime}} ago</span>
           <span class="show-thread">Show thread</span>
         </button>

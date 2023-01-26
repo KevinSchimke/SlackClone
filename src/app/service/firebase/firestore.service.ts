@@ -53,7 +53,6 @@ export class FirestoreService {
       comments: increment(1),
       lastComment: new Date()
     });
-
   }
 
   getUser(uid: any) {
