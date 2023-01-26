@@ -4,7 +4,8 @@
             <img [src]="userService.currentUser.src ? userService.currentUser.src : 'assets/img/user0.png'">
             <div>
                 <span>{{userService.currentUser.name}}</span>
-                <button class="btn btn-default" style="cursor: pointer;" flow-btn (click)="fInput.click()">Edit Picture</button>
+                <button class="btn btn-default" style="cursor: pointer;" flow-btn (click)="fInput.click()">Edit
+                    Picture</button>
                 <input #fInput type="file" style="visibility: hidden; position: absolute;" (change)="upload($event)">
             </div>
         </mat-card-header>
@@ -22,7 +23,7 @@
                 <form (ngSubmit)="updateUserName()" [formGroup]="username">
                     <mat-form-field appearance="fill">
                         <mat-label>Enter new username</mat-label>
-                        <input matInput placeholder="Enter your Username" formControlName="username" required>
+                        <input matInput formControlName="username" required>
                         <mat-error *ngIf="username.invalid">{{getErrorMessage(username,'username')}}</mat-error>
                     </mat-form-field>
                     <button [disabled]="!username.valid" class="actionButton" mat-raised-button>Save new
@@ -43,7 +44,7 @@
                 <form (ngSubmit)="updateUserEmail()" [formGroup]="email">
                     <mat-form-field appearance="fill">
                         <mat-label>Enter new email</mat-label>
-                        <input matInput placeholder="pat@example.com" formControlName="email" required>
+                        <input matInput formControlName="email" required>
                         <mat-error *ngIf="email.invalid">{{getErrorMessage(email,'email')}}</mat-error>
                     </mat-form-field>
                     <button [disabled]="!email.valid" class="actionButton" mat-raised-button>Save new email</button>
@@ -78,6 +79,23 @@
             <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
+                        <mat-icon>phone_android</mat-icon>
+                        Telephone
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        <mat-icon>expand_more</mat-icon>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <mat-form-field appearance="fill">
+                    <mat-label>Enter your telephone number</mat-label>
+                    <input #telephone type="number" matInput>
+                </mat-form-field>
+                <button (click)="updateTelephone()" class="actionButton" mat-raised-button>Save telephone</button>
+            </mat-expansion-panel>
+
+            <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
                         <mat-icon>person_remove</mat-icon>
                         Delete User
                     </mat-panel-title>
@@ -86,8 +104,8 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="fill">
-                    <mat-label>Danger!</mat-label>
-                    <input [(ngModel)]="deletUsername" matInput placeholder="Sure ? Enter your Username">
+                    <mat-label>! Enter username ! Danger !</mat-label>
+                    <input [(ngModel)]="deletUsername" matInput>
                 </mat-form-field>
                 <button [disabled]="deletUsername !== userService.currentUser.name" (click)="deleteCurrentUser()"
                     class="deleteButton" mat-raised-button>Delete User</button>

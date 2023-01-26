@@ -82,3 +82,9 @@ mat-panel-description {
 mat-expansion-panel {
     margin: 8px 0 !important;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}

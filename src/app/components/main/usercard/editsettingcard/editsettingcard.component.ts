@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification } from '@angular/fire/auth';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -15,6 +15,8 @@ import { UserService } from 'src/app/service/user/user.service';
   styleUrls: ['./editsettingcard.component.scss']
 })
 export class EditsettingcardComponent {
+
+  @ViewChild('telephone') telephone?: ElementRef
   username = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
@@ -57,6 +59,12 @@ export class EditsettingcardComponent {
       this.userService.currentUser.name = username!;
       this.updateUserData();
     }
+  }
+
+  updateTelephone() {
+    const telephone = this.telephone!.nativeElement.value;
+    this.userService.currentUser.telephone = telephone!
+    this.updateUserData();
   }
 
   updateUserEmail() {
