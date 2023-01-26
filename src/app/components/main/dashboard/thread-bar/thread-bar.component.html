@@ -14,9 +14,10 @@
 
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{ thread.creationDate| date }}</span></p>
+        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{
+                thread.creationDate| date }}</span></p>
         <p [innerHTML]="thread.message"></p>
-        <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" >
+        <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)">
         <p class="d-flex">
             only if reactions already exist
             <button>:-)</button>
@@ -33,17 +34,17 @@
 <div class="channel-thread" *ngFor="let comment of comments; let c = index">
     <div class="thread-options">
         <button class="btn-unset" [matMenuTriggerFor]="emoji">
-        <img src="assets/img/emoji_D1D2D3.png" />
-        <mat-menu #emoji="matMenu" xPosition="before">
-          <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event, comment, c)" [i18n]="{
+            <img src="assets/img/emoji_D1D2D3.png" />
+            <mat-menu #emoji="matMenu" xPosition="before">
+                <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event, comment, c)" [i18n]="{
           search: 'Recherche',
           categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
-          </emoji-mart>
-      </mat-menu>
-      </button>
+                </emoji-mart>
+            </mat-menu>
+        </button>
         <button class="btn-unset">
-        <img src="assets/img/bookmark_D1D2D3.png" />
-      </button>
+            <img src="assets/img/bookmark_D1D2D3.png" />
+        </button>
     </div>
     <img [src]="comment.userSrc" class="channel-thread-img">
     <div class="channel-thread-content">
@@ -59,7 +60,8 @@
             <button class="btn-unset" *ngFor="let reaction of comment.reactions">
                 <span [innerHTML]="reaction.id"></span>
             </button>
-            <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
+            <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction"
+                    src="assets/img/emoji_D1D2D3.png"></button>
         </p>
     </div>
 </div>

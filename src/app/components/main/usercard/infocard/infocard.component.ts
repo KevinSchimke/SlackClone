@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { ReauthenticateComponent } from '../reauthenticate/reauthenticate.component';
 
@@ -15,7 +16,7 @@ import { ReauthenticateComponent } from '../reauthenticate/reauthenticate.compon
 export class InfocardComponent {
   user$: Observable<any> = EMPTY;
   user?: User;
-  constructor(public userService: UserService, private firestoreService: FirestoreService, private dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(public sidenavToggler: SidenavToggleService, private router: Router, public userService: UserService, private firestoreService: FirestoreService, private dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => this.getUser(params.id));
@@ -28,5 +29,10 @@ export class InfocardComponent {
 
   openDialog(): void {
     this.dialog.open(ReauthenticateComponent);
+  }
+
+  closeThread() {
+    this.sidenavToggler.threadBar.close();
+    this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 }
