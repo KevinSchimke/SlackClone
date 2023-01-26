@@ -40,17 +40,6 @@ export class FirestoreService {
     return user$;
   }
 
-  getUser() {
-    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid);
-    let user = docData(docRef);
-    return user;
-  }
-
-  updateUser(obj: any) {
-    let docRef = doc(collection(this.firestore, 'users'),)
-    updateDoc(docRef, obj);
-  }
-
   async addCommentToThread(collPath: string) {
     let docRef = doc(this.firestore, collPath);
     await updateDoc(docRef, {
@@ -58,6 +47,17 @@ export class FirestoreService {
       lastComment: new Date()
     });
 
+  }
+
+  getUser(uid: any) {
+    let docRef = doc(collection(this.firestore, 'users'), uid);
+    let user = docData(docRef);
+    return user;
+  }
+
+  updateUser(obj: any) {
+    let docRef = doc(collection(this.firestore, 'users'),)
+    updateDoc(docRef, obj);
   }
 
   deleteUser() {
