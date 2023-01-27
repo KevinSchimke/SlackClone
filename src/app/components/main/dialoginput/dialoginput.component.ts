@@ -160,35 +160,51 @@ export class DialoginputComponent {
     'justifyFull',];
 
 
-   async getMessage() {
-    let comment: Thread = new Thread();
-    comment.userId = this.currentUser.id;
-    comment.message = this.message;
-    comment.creationDate = new Date();
-    comment.img = this.imageURL;
-    this.message = '';
-    console.log(this.collectionPath);
-    if(this.collectionPath){
+  async getMessage() {
+    let comment: Thread = this.setComment();
+    if (this.collectionPath) {
       this.fireservice.save(comment, this.collectionPath);
-      if (this.collectionPath.includes('commentCollection')) {
-        this.fireservice.addCommentToThread(this.collectionPath.replace("/commentCollection",""));
-      }
-    }else{
+      this.setThreadData();
+    } else {
       let channelId = await this.createNewChannel();
       this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
     }
     this.imageURL = '';
   }
 
+  setComment() {
+    let comment: Thread = new Thread();
+    comment.userId = this.currentUser.id;
+    comment.message = this.message;
+    comment.creationDate = new Date();
+    comment.img = this.imageURL;
+    this.message = '';
+    return comment;
+  }
+
+  setThreadData() {
+    if (this.collectionPath.includes('commentCollection')) {
+      let users_arr: string[] = this.currentDataService.currentThread.users;
+      if (this.isNotCommentedByCurrentUser()) {
+        users_arr.push(this.currentUser.id);
+      }
+      this.fireservice.updateThread(users_arr, this.collectionPath.replace("/commentCollection", ""));
+    }
+  }
+
+  isNotCommentedByCurrentUser(){
+    return this.currentDataService.currentThread.users && !this.currentDataService.currentThread.users.includes(this.currentUser.id);
+  }
+
   async createNewChannel() {
     let channel: Channel = new Channel();
-    channel.channelName =  '';
-    channel.description =  '';
+    channel.channelName = '';
+    channel.description = '';
     channel.locked = true;
     channel.category = 'private';
     this.currentDataService.getChatUsers().forEach(user => channel.users.push(user.id));
     channel.users.push(this.currentUser.id);
-     return await this.fireservice.add(channel);
+    return await this.fireservice.add(channel);
 
   }
 

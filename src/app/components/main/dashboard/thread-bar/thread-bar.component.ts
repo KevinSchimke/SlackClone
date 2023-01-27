@@ -65,8 +65,13 @@ export class ThreadBarComponent {
   }
 
   subscribeCollAndDoc() {
-    this.docData$.subscribe((thread) => this.thread = thread);
+    this.docData$.subscribe((thread) => this.setThread(thread));
     this.collData$.subscribe((comments) => this.setComments(comments));
+  }
+
+  setThread(thread: Thread){
+    this.thread = thread;
+    this.currentDataService.setThread(thread);
   }
 
   setComments(comments: any[]) {

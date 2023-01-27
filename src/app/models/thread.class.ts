@@ -30,7 +30,7 @@ export class Thread {
       lastComment: this.lastComment,
       img: this.img,
       reactions: JSON.stringify(this.reactions),
-      users: JSON.stringify(this.users)
+      users: this.users
     };
   }
 }

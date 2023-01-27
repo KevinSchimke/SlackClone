@@ -18,15 +18,13 @@ export class FirestoreService {
     console.log('path is ', obj, collPath);
     let coll = collection(this.firestore, collPath);
     id ? await setDoc(doc(coll, id), obj.toJson()) : await setDoc(doc(coll), obj.toJson());
-    console.log('Saved document');
   }
 
-  async add(obj: Channel){
+  async add(obj: Channel) {
     const docRef = await addDoc(collection(this.firestore, "channels"), obj.toJson());
     console.log("Document written with ID: ", docRef.id);
     return docRef.id;
   }
-
 
   getCurrentUserData(collPath: string, specifier: string, target: string) {
     const collRef = collection(this.firestore, collPath);
@@ -43,16 +41,22 @@ export class FirestoreService {
   getDocument(id: string, collPath: string) {
     let coll = collection(this.firestore, collPath);
     let docRef = doc(coll, id);
-    let user$ = docData(docRef);
+    let user$ = docData(docRef, { idField: 'id' });
     return user$;
   }
 
-  async addCommentToThread(collPath: string) {
+  async updateThread(users: string[], collPath: string) {
     let docRef = doc(this.firestore, collPath);
     await updateDoc(docRef, {
       comments: increment(1),
-      lastComment: new Date()
+      lastComment: new Date(),
+      users: users
     });
+  }
+
+  updateObj(obj: Thread | Channel, collPath: string) {
+    let docRef = doc(this.firestore, collPath);
+    updateDoc(docRef, obj.toJson());
   }
 
   getUser(uid: any) {

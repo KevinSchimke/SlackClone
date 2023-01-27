@@ -46,11 +46,11 @@
             <img src="assets/img/bookmark_D1D2D3.png" />
         </button>
     </div>
-    <img [src]="comment.userSrc" class="channel-thread-img">
+    <img [src]="comment.userId | imgSrc" class="channel-thread-img">
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
         <p>
-            <span><b>{{ comment.userName + " " }}</b></span>
+            <span><b>{{ comment.userId | username }}</b></span>
             <span *ngIf="comment.creationDate" class="span-time">{{ comment.creationDate | date }}</span>
         </p>
         <p [innerHTML]="comment.message"></p>
