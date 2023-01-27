@@ -18,7 +18,8 @@
     </div>
     <div>
         <img src="assets/img/clock_fff.png">
-        <span>{{user!.lastLogin | date}} Local Time</span>
+        <!-- <span>{{user?.lastLogin | date }} Local Time</span> -->
+        <span>{{user?.lastLogin }} Local Time</span>
     </div>
 </div>
 
@@ -34,12 +35,12 @@
             <a href="mailto:{{user?.mail}}">{{user?.mail}}</a>
         </div>
     </div>
-    <div>
+    <div *ngIf="user?.phone || userService.currentUser.id == user?.id">
         <img src="assets/img/phone_fff.png">
         <div class="contactItems">
             <span>phone</span>
             <a *ngIf="user?.phone" href="tel:{{user?.phone}}">{{user?.phone}}</a>
-            <a *ngIf="!user?.phone" (click)="openDialog()">+Add phone</a>
+            <a *ngIf="!user?.phone && userService.currentUser.id == user?.id" (click)="openDialog()">+Add phone</a>
         </div>
     </div>
 </div>
