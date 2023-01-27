@@ -5,7 +5,7 @@ import { Timestamp } from '@angular/fire/firestore';
   providedIn: 'root',
 })
 export class SortService {
-  constructor() {}
+  constructor() { }
 
   sortByDate(array: any[]) {
     let self = this;

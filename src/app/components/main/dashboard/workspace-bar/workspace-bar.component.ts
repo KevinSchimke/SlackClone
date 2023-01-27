@@ -8,6 +8,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { User } from 'src/app/models/user.class';
 import { onSnapshot } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { Channel } from 'src/app/models/channel.class';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -35,8 +36,6 @@ export class WorkspaceBarComponent {
     this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
     onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
-    const q2 = this.firestoreService.getCurrentUserData('privates', 'users', this.userService.getUid());
-    onSnapshot(q2, (querySnapshot: any) => this.snapShotPrivate(querySnapshot));
   }
 
   openDialog(): void {
@@ -47,9 +46,22 @@ export class WorkspaceBarComponent {
 
   snapShotChannel(querySnapshot: any) {
     this.channels = [];
+    this.privates = [];
     let k = 0;
     querySnapshot.forEach((doc: any) => k = this.pushIntoChannel(doc, k));
-    this.sort.sortByName(this.channels);
+    this.privates = this.channels.filter(this.categoryIsPrivate);
+    this.privates = this.sort.sortByName(this.privates);
+    this.channels = this.channels.filter(this.categoryIsChannel);
+    this.channels = this.sort.sortByName(this.channels);
+
+  }
+
+  categoryIsChannel(channel: Channel){
+    return channel.category == 'channel';
+  }
+
+  categoryIsPrivate(channel: Channel){
+    return channel.category == 'private';
   }
 
   pushIntoChannel(doc: any, k: number) {

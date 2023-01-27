@@ -24,12 +24,19 @@ export class MessagePartnerPipe implements PipeTransform {
   }
 
   getFuids(users: string[]) {
-    return users.filter((user) => (user !== this.user.getUid()));
+    if (this.isChatWithMyself(users))
+      return [this.user.getUid()];
+    else
+      return users.filter((user) => (user !== this.user.getUid()));
   }
 
   findFilteredName(fuid: string, allUsers: any[]){
     let j = allUsers.findIndex((user: User) => (user.id === fuid));
     if (allUsers[j])
       this.filteredUserNames.push(allUsers[j].name);
+  }
+
+  isChatWithMyself(users: string[]){
+    return JSON.stringify(users) === JSON.stringify([this.user.getUid()]);
   }
 }
