@@ -15,7 +15,8 @@ import { ReauthenticateComponent } from '../reauthenticate/reauthenticate.compon
 })
 export class InfocardComponent {
   user$: Observable<any> = EMPTY;
-  user?: User;
+  user = new User();
+
   constructor(public sidenavToggler: SidenavToggleService, private router: Router, public userService: UserService, private firestoreService: FirestoreService, private dialog: MatDialog, private route: ActivatedRoute) { }
 
   ngOnInit(): void {

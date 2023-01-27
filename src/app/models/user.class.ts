@@ -17,7 +17,7 @@ export class User {
         this.src = obj ? obj.src : this.pathDefaultImg;
         this.state = obj ? obj.state : false;
         this.status = obj ? obj.status : '';
-        this.lastLogin = obj ? obj.lastLogin : null;
+        this.lastLogin = obj ? obj.lastLogin : new Date();
     }
 
     toJson() {
