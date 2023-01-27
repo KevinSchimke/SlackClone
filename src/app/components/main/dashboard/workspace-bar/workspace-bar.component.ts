@@ -53,7 +53,6 @@ export class WorkspaceBarComponent {
     this.privates = this.sort.sortByName(this.privates);
     this.channels = this.channels.filter(this.categoryIsChannel);
     this.channels = this.sort.sortByName(this.channels);
-
   }
 
   categoryIsChannel(channel: Channel){
@@ -71,39 +70,4 @@ export class WorkspaceBarComponent {
     return k;
   }
 
-  snapShotPrivate(querySnapshot: any) {
-    this.privates = [];
-    let k = 0;
-    querySnapshot.forEach((doc: any) => k = this.pushIntoPrivate(doc, k));
-    this.sort.sortByName(this.privates);
-  }
-
-  pushIntoPrivate(doc: any, k: number) {
-    this.privates.push(doc.data());
-    this.privates[k]['id'] = doc.id;
-    k++;
-    return k;
-  }
 }
-
-// This was in OnInit()
-// this.collChannels$ = this.firestoreService.getCollection('channels');
-    // this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
-    // this.user$ = this.firestoreService.getUser();
-    // this.user$.subscribe(async (user: User) => {
-    //   const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
-    //   const querySnapshot = await getDocs(q);
-    //   this.privates = [];
-    //   querySnapshot.forEach((doc) => {
-    //     this.privates.push(doc.data());
-    //     console.log(doc.id, " => ", doc.data());
-    //   });
-    //   console.log(this.collPrivates$)
-    //   this.collPrivates$.subscribe((privates: any[]) => console.log(privates));
-    // });
-    // console.log('in ', this.currentUser);
-
-    // setTimeout(() => {
-    //   console.log('in ', this.currentUser);
-    //   console.log('in ', this.currentUser.mail);
-    // }, 5000);
