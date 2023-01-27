@@ -5,6 +5,14 @@
     }
 }
 
+.mat-body,
+.mat-body-2,
+.mat-typography .mat-body,
+.mat-typography .mat-body-2,
+.mat-typography {
+    font: 400 14px/20px Lato, sans-serif !important;
+}
+
 h2,
 .mat-typography h2 {
     font-size: 1.125rem;
