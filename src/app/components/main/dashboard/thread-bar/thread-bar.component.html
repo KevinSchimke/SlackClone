@@ -10,11 +10,11 @@
         <button class="btn-unset"><img src="assets/img/emoji_D1D2D3.png"></button>
         <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
     </div>
-    <img [src]="thread.userSrc" class="channel-thread-img">
+    <img [src]="thread.userId | imgSrc" class="channel-thread-img">
 
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p><span>{{ thread.userName + " " }}</span><span *ngIf="thread.creationDate" class="span-time">{{
+        <p><span>{{ thread.userId | username }}</span><span *ngIf="thread.creationDate" class="span-time">{{
                 thread.creationDate| date }}</span></p>
         <p [innerHTML]="thread.message"></p>
         <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)">

@@ -16,18 +16,21 @@ export class CurrentDataService {
 
   constructor() { }
 
-  setChatUsers(users: User[]){
+  setChatUsers(users: User[]) {
     this.newChatUsers = users;
-    console.log(this.newChatUsers);
+    // console.log(this.newChatUsers);
   }
 
   setThread(obj: any) {
-    this.currentThread.userName = obj.userName;
-    this.currentThread.userSrc = obj.userSrc;
+    this.currentThread.id = obj.id;
+    this.currentThread.userId = obj.userId;
     this.currentThread.creationDate = obj.creationDate;
     this.currentThread.message = obj.message;
     this.currentThread.comments = obj.comments;
-    // console.log('The cuurent Thread from Service is', this.currentThread);
+    this.currentThread.lastComment = obj.lastComment;
+    this.currentThread.img = obj.img;
+    this.currentThread.reactions = obj.reactions;
+    this.currentThread.users = obj.users;
   }
 
   setChannel(obj: Channel) {
@@ -45,7 +48,7 @@ export class CurrentDataService {
     this.users = user_arr;
   }
 
-  getChatUsers(){
+  getChatUsers() {
     return this.newChatUsers;
   }
 
@@ -57,7 +60,7 @@ export class CurrentDataService {
     return this.currentChannel;
   }
 
-  getUsers(){
+  getUsers() {
     return this.users;
   }
 
