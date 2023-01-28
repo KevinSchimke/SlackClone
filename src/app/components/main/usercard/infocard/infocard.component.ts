@@ -24,29 +24,47 @@ export class InfocardComponent {
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
       this.getUser(params.id);
-      this.userActive = false;
-      this.userState();
     });
-  }
-
-  userState() {
-    let lastLoginTimestamp = this.user.lastLogin;
-    let lastLoginDate = new Date((lastLoginTimestamp.seconds + lastLoginTimestamp.nanoseconds / 1e9) * 1000);
-    let currentTime = new Date().getTime();
-
-    if (currentTime - lastLoginDate.getTime() > 6000) {
-      this.userActive = true;
-    } else {
-      this.userActive = false;
-    }
   }
 
   getUser(uid: string) {
     this.user$ = this.firestoreService.getUser(uid);
     this.user$.subscribe((user: User) => {
       this.user = user;
+      // this.userActive = false;
+      this.userState();
     });
   }
+
+  userState() {
+    let lastLogin = this.user.lastLogin.toDate().getTime();
+    let currentTime = new Date().getTime();
+    console.log(lastLogin);
+    console.log(currentTime);
+    console.log(currentTime - lastLogin > 6000);
+
+
+    if (currentTime - lastLogin < 60000) {
+      this.userActive = true;
+    } else {
+      this.userActive = false;
+    }
+  }
+
+  // userState() {
+  //   let lastLoginTimestamp = this.user.lastLogin;
+  //   let lastLoginTimestamp2 = this.user.lastLogin.toDate();
+  //   let lastLoginDate = new Date((lastLoginTimestamp.seconds + lastLoginTimestamp.nanoseconds / 1e9) * 1000);
+  //   let currentTime = new Date().getTime();
+
+  //   if (currentTime - lastLoginDate.getTime() > 6000) {
+  //     this.userActive = true;
+  //   } else {
+  //     this.userActive = false;
+  //   }
+  // }
+
+
 
   openDialog(): void {
     this.dialog.open(ReauthenticateComponent);
