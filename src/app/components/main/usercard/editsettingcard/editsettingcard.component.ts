@@ -125,6 +125,10 @@ export class EditsettingcardComponent {
 
   upload = ($event: any) => {
     this.file = $event.target.files[0];
+    if(this.file.size > 3000000){
+      this.pushupMessage.openPushupMessage('error', 'Your upload is too large, select a file smaller than 3 MB!');
+      return
+    }
     const randomId = Math.random().toString(36).substring(2);
     this.path = `images/${randomId}`;
     this.storageRef = ref(this.fireStorage, this.path);
