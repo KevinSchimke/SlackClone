@@ -48,6 +48,10 @@
             }
         }
 
+        .formLinks {
+            @include containerPosition(space-between, center);
+        }
+
         .actionButton {
             @include noBorderWithRadius(4px);
             @include containerSize(auto, 100%);

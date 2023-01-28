@@ -8,7 +8,7 @@
         <mat-card-subtitle>
             Login
         </mat-card-subtitle>
-        <form (ngSubmit)="login()" [formGroup]="user">
+        <form (ngSubmit)="loginAsUser()" [formGroup]="user">
             <mat-card-content>
                 <div class="headerButtons">
                     <button class="actionButton enable" mat-raised-button routerLink="/login">Login</button>
@@ -28,7 +28,10 @@
                         <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
                 </mat-form-field>
-                <a routerLink="/reset">Forgot Password</a>
+                <div class="formLinks">
+                    <a routerLink="/reset">Forgot Password</a>
+                    <a (click)="loginAsGuest()">Guest Login</a>
+                </div>
                 <button [disabled]="!user.valid" class="actionButton enable submit" mat-raised-button>Login</button>
             </mat-card-content>
         </form>

@@ -26,9 +26,12 @@ export class MainComponent {
     this.users$.subscribe((users) => this.currentDataService.setUsers(users))
 
     setInterval(() => {
-      console.log('update last login time');
-      this.userService.currentUser.lastLogin = new Date();
-      this.firestoreService.updateUser(this.userService.get().toJson());
+      this.updateLastLogin();
     }, this.updateLastLoginTime);
+  }
+
+  updateLastLogin() {
+    this.userService.currentUser.lastLogin = new Date();
+    this.firestoreService.updateUser(this.userService.get().toJson());
   }
 }
