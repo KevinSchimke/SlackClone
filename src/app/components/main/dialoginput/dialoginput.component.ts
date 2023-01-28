@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
+import { collection, doc, Firestore, getDocs, query, setDoc, where } from '@angular/fire/firestore';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
@@ -36,13 +36,31 @@ export class DialoginputComponent {
   storageRef!: StorageReference;
   path = '';
   currentUser = new User();
+  chatChannels: any[] = [];
+  isAlready: boolean = false;
+  privateId: string = '';
 
-  ngOnInit() {
+  async ngOnInit() {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.getIdFromUrl(param));
     if (!this.thread) {
       this.editorConfig.toolbarHiddenButtons?.push(this.small);
     }
+  }
+
+  async isChatAlreadyExists() {
+    let target = false;
+    const citiesRef = collection(this.firestore, "channels");
+    const q = query(citiesRef, where("category", "==", 'private'));
+    const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+      if(JSON.stringify(doc.data()['users'].sort()) === JSON.stringify(this.currentDataService.getChatUsersId().sort())){
+        target = true;
+        this.privateId = doc.id.toString();
+        console.log('privateId', this.privateId);
+      }
+    });
+    return target;
   }
 
   getIdFromUrl(param: { id: string }) {
@@ -140,7 +158,7 @@ export class DialoginputComponent {
     toolbarPosition: 'top',
     outline: false,
     toolbarHiddenButtons: [
-      ['customClasses', 'strikeThrough', 'subscript', 'superscript'],
+      ['customClasses', 'subscript', 'superscript'],
       [
         'fontSize',
         'indent',
@@ -149,19 +167,19 @@ export class DialoginputComponent {
         'insertVideo',
         'insertHorizontalRule',
         'removeFormat',
-        'link',
         'insertImage',
         'unlink',
         'backgroundColor',
         'textColor',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
       ],
     ],
   };
 
-  small: string[] = this.thread ? [] : ['undo', 'redo', 'justifyLeft',
-    'justifyCenter',
-    'justifyRight',
-    'justifyFull',];
+  small: string[] = this.thread ? [] : ['undo', 'redo', ];
 
 
   async getMessage() {
@@ -170,8 +188,12 @@ export class DialoginputComponent {
       this.fireservice.save(comment, this.collectionPath);
       this.setThreadData();
     } else {
-      let channelId = await this.createNewChannel();
-      this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
+      if(await this.isChatAlreadyExists()){
+        this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
+      } else{
+        let channelId = await this.createNewChannel();
+        this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
+      }
     }
     this.imageURL = '';
   }

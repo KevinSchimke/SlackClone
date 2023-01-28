@@ -27,10 +27,9 @@ export class ChannelBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
   threads: any[] = [];
-  numberOfLoadMessages: number = 12;
-  scrollCounter: number = 0;
   channel = new Channel();
   currentUser: User = new User();
+  isFirstLoad = true;
 
   getUserNameById$(id: string) {
     return "";
@@ -47,19 +46,25 @@ export class ChannelBarComponent {
   ngOnInit(): void {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    this.isFirstLoad = true;
   }
 
   ngAfterViewChecked() {
-    if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
+    if(this.isFirstLoad){
       this.scrollToBottom();
-      this.scrollCounter++
     }
   }
 
-  scrollToBottom(): void {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+  scrolled(event: any): void {
+    this.isFirstLoad = false;
+  }
+
+  private scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
 
@@ -68,6 +73,7 @@ export class ChannelBarComponent {
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.convertThreads(threads));
+    this.isFirstLoad = true;
   }
 
   convertThreads(threads: []) {

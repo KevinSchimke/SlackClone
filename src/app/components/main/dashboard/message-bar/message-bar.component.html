@@ -1,1 +1,70 @@
-<p>message-bar works!</p>
+<header class="bar-header">
+    <div class="d-flex">
+        <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
+      <img src="assets/icons/navbar-48.png" />
+    </button>
+        <h2>Workspace-Header</h2>
+    </div>
+</header>
+
+<div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
+    <div class="channel-thread" *ngFor="let thread of threads; let t = index">
+        <div class="thread-options">
+            <button class="btn-unset" [matMenuTriggerFor]="emoji">
+        <img src="assets/img/emoji_D1D2D3.png" />
+        <mat-menu #emoji="matMenu" xPosition="before">
+          <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, thread, t)" [i18n]="{
+              search: 'Recherche',
+              categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+          </emoji-mart>
+        </mat-menu>
+      </button>
+            <button class="btn-unset" (click)="openThread(thread)">
+        <img src="assets/img/threads_D1D2D3.png" />
+      </button>
+            <button class="btn-unset">
+        <img src="assets/img/share_D1D2D3.png" />
+      </button>
+            <button class="btn-unset">
+        <img src="assets/img/bookmark_D1D2D3.png" />
+      </button>
+        </div>
+        <img [src]="thread.userId | imgSrc" class="channel-thread-img" />
+        <div class="channel-thread-content">
+            <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
+            <p class="thread-headline">
+                <span class="pointer" (click)="openUserInfoCard(thread)"><b>{{ thread.userId | username }}</b></span>
+                <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
+            </p>
+            <p [innerHTML]="thread.message"></p>
+            <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
+            <p class="d-flex emoji-container" *ngIf="thread.reactions.length > 0">
+                <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, thread, t)">
+          <span>{{reaction.id}}</span><span>{{reaction.users.length}}</span>
+        </button>
+                <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction"
+            src="assets/img/emoji_D1D2D3.png"></button>
+            </p>
+            <div *ngIf="thread.comments > 0">
+                <button class="d-flex go-to-thread" (click)="openThread(thread)">
+
+          <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
+            <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
+            <img [src]="commentUser | imgSrc" />
+          </div>
+          <span class="channel-thread-comments" *ngIf="thread.comments < 2">{{thread.comments}} reply</span>
+          <span class="channel-thread-comments" *ngIf="thread.comments > 1">{{thread.comments}} replies</span>
+          <span class="time-of-last-answer">Last reply {{thread.lastComment | periodOfTime}} ago</span>
+          <span class="show-thread">Show thread</span>
+        </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<app-dialoginput [collectionPath]="collPath" [thread]="true"></app-dialoginput>
+
+<!-- Happy Emoji<a target="_blank" href="https://icons8.com/icon/85774/happy">Happy</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
+<!-- Share <a target="_blank" href="https://icons8.com/icon/90278/share">Share</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
