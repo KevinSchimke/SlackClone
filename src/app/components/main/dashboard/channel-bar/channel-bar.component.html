@@ -3,7 +3,10 @@
         <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
       <img src="assets/icons/navbar-48.png" />
     </button>
-        <h2>{{ channelName}}</h2>
+        <h2>
+            <span *ngIf="channel.category == 'channel'">{{channel.channelName}}</span>
+            <span *ngIf="channel.category == 'private'">{{channel.users | messagePartner: currentDataService.users}}</span>
+        </h2>
     </div>
 </header>
 

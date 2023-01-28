@@ -31,6 +31,7 @@ export class ChannelBarComponent {
   currentUser: User = new User();
   isFirstLoad = true;
   channelName: string = '';
+  channel$: Observable<any> = EMPTY;
 
   getUserNameById$(id: string) {
     return "";
@@ -40,7 +41,7 @@ export class ChannelBarComponent {
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, private currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, private reaction: ReactionService) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, private reaction: ReactionService) {
 
   }
 
@@ -79,11 +80,10 @@ export class ChannelBarComponent {
   }
 
   async getChannelName(){
-   const docRef = doc(this.firestore, "channels", this.channelId);
-   const docSnap = await getDoc(docRef);
-   if (docSnap.exists()) {
-    this.channelName = docSnap.data()['channelName'];
-   } 
+  this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
+  this.channel$.subscribe((doc: any) => {
+    this.channel = doc;
+  })
   }
 
   convertThreads(threads: []) {
