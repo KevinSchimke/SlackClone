@@ -27,11 +27,9 @@ export class ChannelBarComponent {
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
   threads: any[] = [];
-  numberOfLoadMessages: number = 12;
-  scrollCounter: number = 0;
   channel = new Channel();
   currentUser: User = new User();
-  private isFirstLoad = true;
+  isFirstLoad = true;
 
   getUserNameById$(id: string) {
     return "";
