@@ -14,7 +14,6 @@
     <div class="upload-image-container" *ngIf="imageURL">
         <div class="position-relative">
             <img  [src]="imageURL" class="upload-img"> 
-            <!-- (click)="openLightbox(url)" -->
             <i (click)="discardUpload()" class="material-icons">close</i>
         </div>
     </div>
