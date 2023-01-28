@@ -32,7 +32,7 @@
 .header-img {
     display: flex;
     justify-content: center;
-    width: 100%;
+    padding: 0.5rem;
 
     img {
         @include image(cover, 14rem, 14rem);
@@ -42,20 +42,31 @@
 }
 
 .generalContent {
+    padding: 0.5rem;
     border-bottom: 1px solid rgba(255, 255, 255, .12);
 
     div {
         @include containerPosition(unset, center);
+        padding: 0.5rem;
 
         &:first-child {
             justify-content: space-between;
+        }
+
+        img {
+            padding-right: 0.5rem;
+
         }
     }
 }
 
 .contactDetails {
+    padding: 0.5rem;
+
     div {
         @include containerPosition(unset, center);
+        padding: 0.5rem;
+
 
         &:first-child {
             justify-content: space-between;
@@ -65,4 +76,8 @@
             @include containerPosition(center, unset, column);
         }
     }
+}
+
+.a {
+    outline: 1px solid green;
 }

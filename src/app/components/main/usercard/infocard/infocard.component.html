@@ -13,8 +13,14 @@
         <a *ngIf="userService.currentUser.id == user?.id" (click)="openDialog()">Edit profile</a>
     </div>
     <div>
-        <img src="assets/img/circle_008000.png">
-        <span>Activ</span>
+        <img *ngIf="userActive" src="assets/img/circle_008000.png">
+        <img *ngIf="!userActive" src="assets/img/circle_border_008000.png">
+        <span *ngIf="userActive">Online</span>
+        <span *ngIf="!userActive">Offline</span>
+    </div>
+    <div>
+        <img src="assets/img/pencil_fff.png">
+        <span>Status</span>
     </div>
     <div>
         <img src="assets/img/clock_fff.png">
@@ -37,7 +43,7 @@
     <div *ngIf="user?.phone || userService.currentUser.id == user?.id">
         <img src="assets/img/phone_fff.png">
         <div class="contactItems">
-            <span>phone</span>
+            <span>Phone</span>
             <a *ngIf="user?.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
             <a *ngIf="!user?.phone && userService.currentUser.id == user?.id" (click)="openDialog()">+Add phone</a>
         </div>
