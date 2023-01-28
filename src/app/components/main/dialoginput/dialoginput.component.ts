@@ -54,7 +54,9 @@ export class DialoginputComponent {
     const q = query(citiesRef, where("category", "==", 'private'));
     const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-      if(JSON.stringify(doc.data()['users'].sort()) === JSON.stringify(this.currentDataService.getChatUsersId().sort())){
+        let _currentChatUser = this.currentDataService.getChatUsersId();
+        _currentChatUser.push(this.userService.getUid())
+      if(JSON.stringify(doc.data()['users'].sort()) === JSON.stringify(_currentChatUser.sort())){
         target = true;
         this.privateId = doc.id.toString();
         console.log('privateId', this.privateId);
