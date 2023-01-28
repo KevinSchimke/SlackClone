@@ -37,6 +37,15 @@
             }
         }
 
+        .inputStatus {
+            display: flex;
+            align-items: center;
+
+            button {
+                width: auto;
+            }
+        }
+
         mat-form-field {
             margin-top: 16px;
         }

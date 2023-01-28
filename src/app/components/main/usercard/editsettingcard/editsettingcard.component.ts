@@ -3,6 +3,7 @@ import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerifi
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
@@ -31,6 +32,8 @@ export class EditsettingcardComponent {
   step = -1;
   hide = true;
 
+  public statusValue: any = '';
+
   file: any = {};
   path = '';
   storageRef!: StorageReference;
@@ -42,7 +45,9 @@ export class EditsettingcardComponent {
     private pushupMessage: PushupMessageService,
     private fireStorage: Storage,
     private dialogRef: MatDialogRef<EditsettingcardComponent>,
-    public userService: UserService) { }
+    public userService: UserService) {
+    this.statusValue = this.userService.currentUser.status;
+  }
 
   setStep(index: number) {
     this.step = index;
@@ -67,6 +72,11 @@ export class EditsettingcardComponent {
   updatePhone() {
     const phone = this.phone!.nativeElement.value;
     this.userService.currentUser.phone = phone!
+    this.updateUserData();
+  }
+
+  updateStatus() {
+    this.userService.currentUser.status = this.statusValue;
     this.updateUserData();
   }
 
@@ -116,13 +126,17 @@ export class EditsettingcardComponent {
       });
   }
 
+  handleClick($event: EmojiEvent) {
+    this.statusValue += $event.emoji.native;
+  }
+
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
     return this.authError.getErrorMessage(formGroup, formControlName)
   }
 
   upload = ($event: any) => {
     this.file = $event.target.files[0];
-    if(this.file.size > 3000000){
+    if (this.file.size > 3000000) {
       this.pushupMessage.openPushupMessage('error', 'Your upload is too large, select a file smaller than 3 MB!');
       return
     }
@@ -153,4 +167,6 @@ export class EditsettingcardComponent {
         });
       });
   }
+
+
 }

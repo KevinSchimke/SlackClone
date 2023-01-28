@@ -41,14 +41,22 @@
                         <mat-icon>expand_more</mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-form-field appearance="fill">
-                    <mat-label>Enter your status</mat-label>
-                    <input matInput>
-                    <button mat-icon-button matSuffix (click)="hide = !hide">
-                        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <div class="inputStatus">
+                    <button class="btn-unset" [matMenuTriggerFor]="emoji">
+                        <img src="assets/img/emoji_D1D2D3.png" />
+                        <mat-menu #emoji="matMenu" xPosition="before">
+                            <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event)" [i18n]="{
+                              search: 'Recherche',
+                              categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+                            </emoji-mart>
+                        </mat-menu>
                     </button>
-                </mat-form-field>
-                <button class="actionButton" mat-raised-button>Save status</button>
+                    <mat-form-field appearance="fill">
+                        <mat-label>Enter your status</mat-label>
+                        <input matInput #status [(ngModel)]="statusValue">
+                    </mat-form-field>
+                </div>
+                <button (click)="updateStatus()" class="actionButton" mat-raised-button>Save status</button>
             </mat-expansion-panel>
 
             <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
@@ -100,7 +108,7 @@
                 <mat-expansion-panel-header>
                     <mat-panel-title>
                         <mat-icon>phone_android</mat-icon>
-                        phone
+                        Phone
                     </mat-panel-title>
                     <mat-panel-description>
                         <mat-icon>expand_more</mat-icon>
