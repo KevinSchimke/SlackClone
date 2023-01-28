@@ -52,7 +52,7 @@
                     </mat-panel-title>
                 </mat-expansion-panel-header>
                 <li *ngFor="let private of privates">
-                    <a [routerLink]="['/main/message/' + private.id]">
+                    <a [routerLink]="['/main/' + private.id]">
                         <div style="font-size: 1.2rem; width: 1.2rem">#</div>
                         {{ private.users | messagePartner: currentData.users }}
                     </a>
