@@ -73,6 +73,7 @@ export class ChannelBarComponent {
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.convertThreads(threads));
+    this.isFirstLoad = true;
   }
 
   convertThreads(threads: []) {
