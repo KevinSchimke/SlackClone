@@ -54,7 +54,7 @@
           </div>
           <span class="channel-thread-comments" *ngIf="thread.comments < 2">{{thread.comments}} reply</span>
           <span class="channel-thread-comments" *ngIf="thread.comments > 1">{{thread.comments}} replies</span>
-          <span class="time-of-last-answer">Last reply {{thread.lastComment | periodOfTime}} ago</span>
+          <span class="time-of-last-answer"><span *ngIf="thread.comments > 1">Last reply</span> {{thread.lastComment | periodOfTime}} ago</span>
           <span class="show-thread">Show thread</span>
         </button>
             </div>
