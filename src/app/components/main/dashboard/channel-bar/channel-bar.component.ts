@@ -31,6 +31,7 @@ export class ChannelBarComponent {
   scrollCounter: number = 0;
   channel = new Channel();
   currentUser: User = new User();
+  private isFirstLoad = true;
 
   getUserNameById$(id: string) {
     return "";
@@ -47,19 +48,25 @@ export class ChannelBarComponent {
   ngOnInit(): void {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    this.isFirstLoad = true;
   }
 
   ngAfterViewChecked() {
-    if (this.numberOfLoadMessages == 12 && this.scrollCounter == 0) {
+    if(this.isFirstLoad){
       this.scrollToBottom();
-      this.scrollCounter++
     }
   }
 
-  scrollToBottom(): void {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
+  scrolled(event: any): void {
+    this.isFirstLoad = false;
+  }
+
+  private scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
 
