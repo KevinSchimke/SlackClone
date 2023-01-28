@@ -91,6 +91,8 @@ button {
 
 .angular-editor-toolbar {
     background-color: rgba($color-main, 0.5) !important;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 
 ::-webkit-scrollbar {
