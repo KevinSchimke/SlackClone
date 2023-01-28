@@ -6,7 +6,7 @@ export class User {
     src: string;
     state: boolean; //active or inactive
     status: string; //e.g. "In Holidays"
-    lastLogin: Date;
+    lastLogin: any;
     pathDefaultImg: string = 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2F2vaxlp928h2?alt=media&token=77a22de9-f29e-45eb-91cd-e61def848038'
 
     constructor(obj?: any) {

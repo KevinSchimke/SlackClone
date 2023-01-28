@@ -3,6 +3,7 @@
 @import "./assets/scss/edit-md.scss";
 @import "./assets/scss/company-colors.scss";
 @import "./assets/scss/mixin.scss";
+
 * {
     margin: 0;
     // outline: 1px solid green;
@@ -12,12 +13,14 @@ body {
     background-color: $background-main;
     color: $textcolor-white;
     font-family: 'Lato', sans-serif !important;
+    cursor: default;
 }
 
 a {
     color: $color-link;
     text-decoration: none;
     cursor: pointer !important;
+
     &:hover {
         text-decoration: underline 0.5px solid $color-link;
         text-underline-offset: 2px;
@@ -35,6 +38,10 @@ h1 {
 }
 
 h2 {
+    margin: 0 !important;
+}
+
+h3 {
     margin: 0 !important;
 }
 

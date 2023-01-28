@@ -65,9 +65,14 @@ export class FirestoreService {
     return user;
   }
 
-  updateUser(obj: any) {
+  async updateLastLogin(date: Date) {
     let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
-    updateDoc(docRef, obj);
+    await updateDoc(docRef, { lastLogin: date });
+  }
+
+  async updateUser(obj: any) {
+    let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
+    await updateDoc(docRef, obj);
   }
 
   async deleteUser() {
