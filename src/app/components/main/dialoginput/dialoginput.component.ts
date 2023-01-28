@@ -158,7 +158,7 @@ export class DialoginputComponent {
     toolbarPosition: 'top',
     outline: false,
     toolbarHiddenButtons: [
-      ['customClasses', 'strikeThrough', 'subscript', 'superscript'],
+      ['customClasses', 'subscript', 'superscript'],
       [
         'fontSize',
         'indent',
@@ -167,19 +167,19 @@ export class DialoginputComponent {
         'insertVideo',
         'insertHorizontalRule',
         'removeFormat',
-        'link',
         'insertImage',
         'unlink',
         'backgroundColor',
         'textColor',
+        'justifyLeft',
+        'justifyCenter',
+        'justifyRight',
+        'justifyFull',
       ],
     ],
   };
 
-  small: string[] = this.thread ? [] : ['undo', 'redo', 'justifyLeft',
-    'justifyCenter',
-    'justifyRight',
-    'justifyFull',];
+  small: string[] = this.thread ? [] : ['undo', 'redo', ];
 
 
   async getMessage() {
