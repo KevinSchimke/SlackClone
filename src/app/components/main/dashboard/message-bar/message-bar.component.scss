@@ -1,0 +1,116 @@
+@import "../../../../../assets/scss/colors.scss";
+@import "../../../../../assets/scss/company-colors.scss";
+@import "../dashboard.component.scss";
+$gap_channel_thread: .5rem;
+$avatar-width: 2.5rem;
+.show-thread {
+    display: none;
+}
+
+.thread-options {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: -1rem;
+    background-color: $bg-color;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: .5rem;
+    padding: .3rem 1rem;
+    gap: 1rem;
+    button {
+        cursor: pointer;
+        img {
+            width: 1.25rem;
+            height: 1.25rem;
+            display: block;
+        }
+    }
+}
+
+.channel-thread {
+    display: grid;
+    grid-template-columns: $avatar-width 1fr;
+    gap: $gap_channel_thread;
+    padding: .5rem 1.5rem;
+    position: relative;
+    &:hover {
+        background-color: $bg-color-hover;
+        .thread-options {
+            display: flex;
+        }
+    }
+}
+
+.channel-thread-img {
+    height: $avatar-width;
+    width: $avatar-width;
+    display: block;
+    border-radius: .5rem;
+    object-fit: cover;
+}
+
+.channel-thread-comments {
+    color: #1D9BD1;
+    font-weight: 700;
+}
+
+.workspace-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    img {
+        display: block;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+}
+
+.go-to-thread {
+    width: 100%;
+    cursor: pointer;
+    gap: .5rem;
+    align-items: center;
+    padding: 0;
+    background: unset;
+    border: unset;
+    padding-block: .2rem;
+    border: 1px solid transparent;
+    border-radius: .5rem;
+    color: $color-main;
+    img {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    &:hover {
+        background-color: $bg-color;
+        border: 1px solid rgba(255, 255, 255, .12);
+        .time-of-last-answer {
+            display: none;
+        }
+        .show-thread {
+            display: unset;
+        }
+    }
+}
+
+.channel-messages {
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height: calc(100% - 250px);
+}
+
+.thread-headline{
+    display: flex;
+    gap: 0.7rem;
+}
+
+.post-image{
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    cursor: pointer;
+}
