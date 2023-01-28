@@ -50,15 +50,13 @@ export class DialoginputComponent {
 
   async isChatAlreadyExists() {
     let target = false;
-    const citiesRef = collection(this.firestore, "channels");
-    const q = query(citiesRef, where("category", "==", 'private'));
-    const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
+    const q = this.currentDataService.getPrivates();
+      q.forEach((doc) => {
         let _currentChatUser = this.currentDataService.getChatUsersId();
         _currentChatUser.push(this.userService.getUid())
-      if(JSON.stringify(doc.data()['users'].sort()) === JSON.stringify(_currentChatUser.sort())){
+      if(JSON.stringify(doc['users'].sort()) === JSON.stringify(_currentChatUser.sort())){
         target = true;
-        this.privateId = doc.id.toString();
+        this.privateId = doc.id;
         console.log('privateId', this.privateId);
       }
     });

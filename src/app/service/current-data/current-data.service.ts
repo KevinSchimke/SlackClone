@@ -13,12 +13,17 @@ export class CurrentDataService {
   currentChannel = new Channel();
   users: User[] = [];
   newChatUsers: User[] = [];
+  privates: any[] = [];
 
   constructor() { }
 
   setChatUsers(users: User[]) {
     this.newChatUsers = users;
     // console.log(this.newChatUsers);
+  }
+
+  setPrivates(privates: any[]){
+    this.privates = privates;
   }
 
   setThread(obj: any) {
@@ -68,6 +73,10 @@ export class CurrentDataService {
 
   getUsers() {
     return this.users;
+  }
+
+  getPrivates(){
+   return this.privates;
   }
 
 }
