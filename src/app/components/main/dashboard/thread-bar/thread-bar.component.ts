@@ -28,7 +28,7 @@ export class ThreadBarComponent {
   comments: any[] = [];
   currentUser = new User();
 
-  constructor(public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, private fireService: FirestoreService, private currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, private currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -69,7 +69,7 @@ export class ThreadBarComponent {
     this.collData$.subscribe((comments) => this.setComments(comments));
   }
 
-  setThread(thread: Thread){
+  setThread(thread: Thread) {
     this.thread = thread;
     this.currentDataService.setThread(thread);
   }
@@ -83,7 +83,7 @@ export class ThreadBarComponent {
   }
 
   closeThread() {
-    this.sidenavToggler.threadBar.close();
+    this.childSelector.threadBar.close();
     this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 
