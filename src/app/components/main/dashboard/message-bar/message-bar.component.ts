@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
-import { Firestore } from '@angular/fire/firestore';
+import { doc, Firestore, getDoc } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -31,6 +31,7 @@ export class MessageBarComponent {
   channel = new Channel();
   currentUser: User = new User();
   isFirstLoad = true;
+  channelName: string = '';
 
   getUserNameById$(id: string) {
     return "";
@@ -74,6 +75,16 @@ export class MessageBarComponent {
     this.collPath = 'channels/' + param.id + '/ThreadCollection'
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.convertThreads(threads));
+    this.isFirstLoad = true;
+    this.getChannelName();
+  }
+
+  async getChannelName(){
+   const docRef = doc(this.firestore, "channels", this.channelId);
+   const docSnap = await getDoc(docRef);
+   if (docSnap.exists()) {
+    this.channelName = docSnap.data()['channelName'];
+   } 
   }
 
   convertThreads(threads: []) {
