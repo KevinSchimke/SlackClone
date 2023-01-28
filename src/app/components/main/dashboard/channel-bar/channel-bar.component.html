@@ -7,7 +7,7 @@
     </div>
 </header>
 
-<div class="channel-messages" #scrollMe>
+<div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
     <div class="channel-thread" *ngFor="let thread of threads; let t = index">
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">

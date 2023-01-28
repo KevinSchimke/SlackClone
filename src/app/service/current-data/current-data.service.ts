@@ -52,6 +52,12 @@ export class CurrentDataService {
     return this.newChatUsers;
   }
 
+  getChatUsersId(){
+    let ids: string[] = [];
+    this.newChatUsers.forEach(user => ids.push(user.id));
+    return ids;
+  }
+
   getThread() {
     return this.currentThread;
   }

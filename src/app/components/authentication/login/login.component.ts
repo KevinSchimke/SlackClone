@@ -17,26 +17,37 @@ export class LoginComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
     password: new FormControl('', [Validators.required, Validators.minLength(6)])
   });
+  guest = {
+    email: 'slack@kevin-schimke.de',
+    password: '2Lbt^pHb^^>h+WeQeQXK'
+  }
 
   constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private userService: UserService, private router: Router) { }
 
-  login() {
+  loginAsGuest() {
+    this.login(this.guest.email, this.guest.password);
+  }
+
+  loginAsUser() {
     if (this.user.valid) {
-      const email = this.user.value.email;
-      const password = this.user.value.password;
-      signInWithEmailAndPassword(this.auth, email!, password!)
-        .then((user: UserCredential) => {
-          if (user.user?.emailVerified) {
-            this.router.navigate(['/main']);
-            this.pushupMessage.openPushupMessage('success', 'Login Successfully')
-          } else {
-            this.router.navigate(['/verification']);
-            this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address')
-          }
-        }).catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
+      const email = this.user.value.email!;
+      const password = this.user.value.password!;
+      this.login(email, password);
     }
+  }
+  login(email: string, password: string) {
+    signInWithEmailAndPassword(this.auth, email!, password!)
+      .then((user: UserCredential) => {
+        if (user.user?.emailVerified) {
+          this.router.navigate(['/main']);
+          this.pushupMessage.openPushupMessage('success', 'Login Successfully')
+        } else {
+          this.router.navigate(['/verification']);
+          this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address')
+        }
+      }).catch((error) => {
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+      });
   }
 
   getErrorMessage(formControlName: string) {
