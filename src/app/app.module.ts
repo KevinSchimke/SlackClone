@@ -68,6 +68,7 @@ import { NewMessageComponent } from './components/main/dashboard/new-message/new
 import { TelephonePipe } from './pipes/telephone/telephone.pipe';
 import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe';
 import { PeriodOfTimePipe } from './pipes/date/period-of-time.pipe';
+import { CanClickPipe } from './pipes/canClick/can-click.pipe';
 
 @NgModule({
   declarations: [
@@ -100,6 +101,7 @@ import { PeriodOfTimePipe } from './pipes/date/period-of-time.pipe';
     TelephonePipe,
     MessagePartnerPipe,
     PeriodOfTimePipe,
+    CanClickPipe,
   ],
   imports: [
     BrowserModule,
