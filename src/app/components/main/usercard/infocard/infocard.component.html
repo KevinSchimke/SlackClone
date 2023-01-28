@@ -10,7 +10,7 @@
 <div class="generalContent">
     <div>
         <h2>{{user.name}}</h2>
-        <a *ngIf="userService.currentUser.id == user?.id" (click)="openDialog()">Edit profile</a>
+        <a *ngIf="userService.currentUser.id == user.id" (click)="openDialog()">Edit profile</a>
     </div>
     <div>
         <img *ngIf="userActive" src="assets/img/circle_008000.png">
@@ -18,9 +18,10 @@
         <span *ngIf="userActive">Online</span>
         <span *ngIf="!userActive">Offline</span>
     </div>
-    <div>
+    <div *ngIf="user.status || userService.currentUser.id == user.id">
         <img src="assets/img/pencil_fff.png">
-        <span>Status</span>
+        <span *ngIf="user.status">{{user.status }}</span>
+        <a *ngIf="!user.status && userService.currentUser.id == user.id" (click)="openDialog()">+Add status</a>
     </div>
     <div>
         <img src="assets/img/clock_fff.png">
@@ -31,7 +32,7 @@
 <div class="contactDetails">
     <div>
         <h3>Contact details</h3>
-        <a *ngIf="userService.currentUser.id == user?.id" (click)="openDialog()">Edit profile</a>
+        <a *ngIf="userService.currentUser.id == user.id" (click)="openDialog()">Edit profile</a>
     </div>
     <div>
         <img src="assets/img/mail_fff.png">
@@ -40,12 +41,12 @@
             <a href="mailto:{{user.mail}}">{{user.mail}}</a>
         </div>
     </div>
-    <div *ngIf="user?.phone || userService.currentUser.id == user?.id">
+    <div *ngIf="user.phone || userService.currentUser.id == user.id">
         <img src="assets/img/phone_fff.png">
         <div class="contactItems">
             <span>Phone</span>
-            <a *ngIf="user?.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
-            <a *ngIf="!user?.phone && userService.currentUser.id == user?.id" (click)="openDialog()">+Add phone</a>
+            <a *ngIf="user.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
+            <a *ngIf="!user.phone && userService.currentUser.id == user.id" (click)="openDialog()">+Add phone</a>
         </div>
     </div>
 </div>
