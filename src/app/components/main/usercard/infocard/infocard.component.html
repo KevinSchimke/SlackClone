@@ -4,41 +4,42 @@
 </header>
 
 <div class="header-img">
-    <img [src]="user?.src ? user?.src : 'assets/img/user0.png'">
+    <img [src]="user.src ? user.src : 'assets/img/user0.png'">
 </div>
+
 <div class="generalContent">
-    <div class="d-flex  align-items-center justify-content-between">
-        <h2>{{user?.name}}</h2>
+    <div>
+        <h2>{{user.name}}</h2>
         <a *ngIf="userService.currentUser.id == user?.id" (click)="openDialog()">Edit profile</a>
     </div>
-    <div class="d-flex  align-items-center">
+    <div>
         <img src="assets/img/circle_008000.png">
         <span>Activ</span>
     </div>
-    <div class="d-flex  align-items-center">
+    <div>
         <img src="assets/img/clock_fff.png">
-        <span>10:18 Uhr Local Time</span>
+        <span>{{user.lastLogin | date }} Local Time</span>
     </div>
 </div>
 
-<div>
-    <div class="d-flex align-items-center justify-content-between">
+<div class="contactDetails">
+    <div>
         <h3>Contact details</h3>
         <a *ngIf="userService.currentUser.id == user?.id" (click)="openDialog()">Edit profile</a>
     </div>
-    <div class="d-flex align-items-center">
+    <div>
         <img src="assets/img/mail_fff.png">
-        <div class="column d-flex justify-content-center">
+        <div class="contactItems">
             <span>Mail address</span>
-            <a href="mailto:{{user?.mail}}">{{user?.mail}}</a>
+            <a href="mailto:{{user.mail}}">{{user.mail}}</a>
         </div>
     </div>
-    <div class="d-flex align-items-center">
+    <div *ngIf="user?.phone || userService.currentUser.id == user?.id">
         <img src="assets/img/phone_fff.png">
-        <div class="column d-flex justify-content-center">
-            <span>Telephone</span>
-            <a *ngIf="user?.telephone" href="tel:{{user?.telephone}}">{{user?.telephone}}</a>
-            <a *ngIf="!user?.telephone" (click)="openDialog()">+Add telephone</a>
+        <div class="contactItems">
+            <span>phone</span>
+            <a *ngIf="user?.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
+            <a *ngIf="!user?.phone && userService.currentUser.id == user?.id" (click)="openDialog()">+Add phone</a>
         </div>
     </div>
 </div>

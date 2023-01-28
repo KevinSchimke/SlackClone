@@ -1,22 +1,28 @@
 @import "../../../../../assets/scss/company-colors.scss";
 @import "../dashboard.component.scss";
+
 ul {
     padding: .5rem;
+
     li {
         list-style-type: disc;
         display: flex;
         align-items: center;
         gap: .5rem;
         padding-block: .1rem;
+
         img {
             height: 1.2rem;
             width: 1.2rem;
             display: block;
         }
+
         a {
             display: flex;
             gap: .5rem;
+
             &:hover {
+                text-decoration: none !important;
                 background-color: $bg-color-hover;
             }
         }
@@ -25,6 +31,7 @@ ul {
 
 .bar-header {
     padding: .5rem;
+
     h2 {
         color: $color-main;
     }
@@ -37,9 +44,11 @@ ul {
 
 .btn-add-channel {
     border-radius: .25rem;
+
     &:hover {
         background-color: $bg-color-hover;
     }
+
     img {
         padding: .1rem;
         display: block;
@@ -48,9 +57,11 @@ ul {
 
 .channels-accordion {
     width: 100%;
+
     mat-expansion-panel {
         background-color: unset;
     }
+
     .mat-expansion-panel-header-title {
         width: 100%;
         margin-right: 0;
@@ -59,19 +70,24 @@ ul {
         flex-basis: unset;
         color: $color-main;
     }
+
     .mat-content.mat-content-hide-toggle {
         margin-right: 0;
     }
+
     .mat-expansion-panel-header {
         padding: 0;
         height: auto;
     }
+
     .mat-expansion-panel-header.mat-expanded {
         height: auto;
     }
+
     .mat-expansion-panel:not([class*=mat-elevation-z]) {
         box-shadow: none;
     }
+
     a {
         width: 100%;
         display: block;

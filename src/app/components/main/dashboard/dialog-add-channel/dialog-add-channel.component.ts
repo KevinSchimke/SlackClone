@@ -25,15 +25,13 @@ export class DialogAddChannelComponent {
   }
 
   async createNewChannel() {
-    // let newChannelJSON = {
-    //   channelName: this.channelForm.controls.name.value,
-    //   description: this.channelForm.controls.description.value,
-    //   locked: this.channelForm.controls.locked.value
-    // }
     let channel: Channel = new Channel();
     channel.channelName = this.channelForm.controls.name.value || '';
     channel.description = this.channelForm.controls.description.value || '';
-    channel.locked = this.channelForm.controls.locked.value || false || '';
+    if(this.channelForm.controls.locked.value === '' || this.channelForm.controls.locked.value === null)
+      channel.locked = false;
+    else
+      channel.locked = this.channelForm.controls.locked.value;
     await this.setFirestore.save(channel, 'channels');
     this.dialogRef.close();
   }

@@ -8,6 +8,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { User } from 'src/app/models/user.class';
 import { onSnapshot } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { Channel } from 'src/app/models/channel.class';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -35,8 +36,6 @@ export class WorkspaceBarComponent {
     this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
     onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
-    const q2 = this.firestoreService.getCurrentUserData('privates', 'users', this.userService.getUid());
-    onSnapshot(q2, (querySnapshot: any) => this.snapShotPrivate(querySnapshot));
   }
 
   openDialog(): void {
@@ -47,9 +46,21 @@ export class WorkspaceBarComponent {
 
   snapShotChannel(querySnapshot: any) {
     this.channels = [];
+    this.privates = [];
     let k = 0;
     querySnapshot.forEach((doc: any) => k = this.pushIntoChannel(doc, k));
-    this.sort.sortByName(this.channels);
+    this.privates = this.channels.filter(this.categoryIsPrivate);
+    this.privates = this.sort.sortByName(this.privates);
+    this.channels = this.channels.filter(this.categoryIsChannel);
+    this.channels = this.sort.sortByName(this.channels);
+  }
+
+  categoryIsChannel(channel: Channel){
+    return channel.category == 'channel';
+  }
+
+  categoryIsPrivate(channel: Channel){
+    return channel.category == 'private';
   }
 
   pushIntoChannel(doc: any, k: number) {
@@ -59,39 +70,4 @@ export class WorkspaceBarComponent {
     return k;
   }
 
-  snapShotPrivate(querySnapshot: any) {
-    this.privates = [];
-    let k = 0;
-    querySnapshot.forEach((doc: any) => k = this.pushIntoPrivate(doc, k));
-    this.sort.sortByName(this.privates);
-  }
-
-  pushIntoPrivate(doc: any, k: number) {
-    this.privates.push(doc.data());
-    this.privates[k]['id'] = doc.id;
-    k++;
-    return k;
-  }
 }
-
-// This was in OnInit()
-// this.collChannels$ = this.firestoreService.getCollection('channels');
-    // this.collChannels$.subscribe((channels: any[]) => this.channels = this.sort.sortByName(channels));
-    // this.user$ = this.firestoreService.getUser();
-    // this.user$.subscribe(async (user: User) => {
-    //   const q = this.firestoreService.getCurrentUserData('privates', 'users', this.username);
-    //   const querySnapshot = await getDocs(q);
-    //   this.privates = [];
-    //   querySnapshot.forEach((doc) => {
-    //     this.privates.push(doc.data());
-    //     console.log(doc.id, " => ", doc.data());
-    //   });
-    //   console.log(this.collPrivates$)
-    //   this.collPrivates$.subscribe((privates: any[]) => console.log(privates));
-    // });
-    // console.log('in ', this.currentUser);
-
-    // setTimeout(() => {
-    //   console.log('in ', this.currentUser);
-    //   console.log('in ', this.currentUser.mail);
-    // }, 5000);

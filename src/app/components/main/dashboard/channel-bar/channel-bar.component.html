@@ -1,8 +1,8 @@
 <header class="bar-header">
     <div class="d-flex">
         <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
-        <img src="assets/icons/navbar-48.png" />
-      </button>
+      <img src="assets/icons/navbar-48.png" />
+    </button>
         <h2>Workspace-Header</h2>
     </div>
 </header>
@@ -33,7 +33,7 @@
         <div class="channel-thread-content">
             <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
             <p class="thread-headline">
-                <a (click)="openUserInfoCard(thread)"><b>{{ thread.userId | username }}</b></a>
+                <span class="pointer" (click)="openUserInfoCard(thread)"><b>{{ thread.userId | username }}</b></span>
                 <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>
@@ -48,14 +48,13 @@
             <div *ngIf="thread.comments > 0">
                 <button class="d-flex go-to-thread" (click)="openThread(thread)">
 
-          <div class="d-flex first-comments">
+          <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
             <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-            <img src="assets/img/user0.png" />
+            <img [src]="commentUser | imgSrc" />
           </div>
-
           <span class="channel-thread-comments" *ngIf="thread.comments < 2">{{thread.comments}} reply</span>
           <span class="channel-thread-comments" *ngIf="thread.comments > 1">{{thread.comments}} replies</span>
-          <span class="time-of-last-answer">Last answer {{thread.lastComment | periodOfTime}} ago</span>
+          <span class="time-of-last-answer">Last reply {{thread.lastComment | periodOfTime}} ago</span>
           <span class="show-thread">Show thread</span>
         </button>
             </div>

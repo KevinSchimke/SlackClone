@@ -1,8 +1,8 @@
 @import "./../usercard.component.scss";
+@import "./../../../../../assets/scss/mixin.scss";
 
 .bar-header {
-    display: flex;
-    justify-content: space-between;
+    @include containerPosition(space-between);
     padding: .5rem;
     border-bottom: 1px solid rgba(255, 255, 255, .12);
 
@@ -12,22 +12,16 @@
 }
 
 .close-thread-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include containerPosition(center, center);
+    @include containerSize(2rem, 2rem);
     color: $color-main;
     font-weight: 700;
     font-size: 1.2rem;
-    padding: 0.5rem;
-    border-radius: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    cursor: pointer;
+    padding: .5rem;
+    border-radius: .5rem;
 
     img {
-        width: 1.5rem;
-        height: 1.5rem;
-        object-fit: cover;
+        @include image(cover, 1.5rem, 1.5rem);
     }
 
     &:hover {
@@ -41,14 +35,34 @@
     width: 100%;
 
     img {
+        @include image(cover, 14rem, 14rem);
         display: block;
         border-radius: 8px;
-        object-fit: cover;
-        height: 14rem;
-        width: 14rem;
     }
 }
 
 .generalContent {
     border-bottom: 1px solid rgba(255, 255, 255, .12);
+
+    div {
+        @include containerPosition(unset, center);
+
+        &:first-child {
+            justify-content: space-between;
+        }
+    }
+}
+
+.contactDetails {
+    div {
+        @include containerPosition(unset, center);
+
+        &:first-child {
+            justify-content: space-between;
+        }
+
+        .contactItems {
+            @include containerPosition(center, unset, column);
+        }
+    }
 }

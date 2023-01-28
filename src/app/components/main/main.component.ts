@@ -14,6 +14,7 @@ export class MainComponent {
 
   user$: Observable<any> = EMPTY;
   users$: Observable<any> = EMPTY;
+  updateLastLoginTime: number = 300000; //300000 = 5 min
 
   constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService, private userService: UserService) { }
 
@@ -23,6 +24,14 @@ export class MainComponent {
 
     this.users$ = this.firestoreService.getCollection('users');
     this.users$.subscribe((users) => this.currentDataService.setUsers(users))
+
+    setInterval(() => {
+      this.updateLastLogin();
+    }, this.updateLastLoginTime);
+  }
+
+  updateLastLogin() {
+    this.userService.currentUser.lastLogin = new Date();
+    this.firestoreService.updateUser(this.userService.get().toJson());
   }
 }
-

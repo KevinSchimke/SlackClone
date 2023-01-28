@@ -6,7 +6,6 @@ import { User } from 'src/app/models/user.class';
   providedIn: 'root'
 })
 export class UserService {
-  public userDelete: boolean = false;
   public uid: any;
   public currentUser = new User();
 
@@ -16,13 +15,11 @@ export class UserService {
     this.currentUser.id = obj.id;
     this.currentUser.name = obj.name;
     this.currentUser.mail = obj.mail;
-    this.currentUser.telephone = obj.telephone;
+    this.currentUser.phone = obj.phone;
     this.currentUser.src = obj.src;
     this.currentUser.state = obj.state;
     this.currentUser.status = obj.status;
     this.currentUser.lastLogin = obj.lastLogin;
-    this.currentUser.creationDate = obj.creationDate;
-    this.currentUser.privates = obj.privates;
   }
 
   get() {
