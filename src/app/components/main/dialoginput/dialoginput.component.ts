@@ -130,12 +130,7 @@ export class DialoginputComponent {
     defaultParagraphSeparator: '',
     defaultFontName: '',
     defaultFontSize: '',
-    fonts: [
-      { class: 'arial', name: 'Arial' },
-      { class: 'calibri', name: 'Calibri' },
-      { class: 'comic-sans-ms', name: 'Comic Sans MS' }
-
-    ],
+    fonts: [],
     customClasses: [
       {
         name: 'quote',
@@ -175,6 +170,7 @@ export class DialoginputComponent {
         'justifyCenter',
         'justifyRight',
         'justifyFull',
+        'fontName'
       ],
     ],
   };
