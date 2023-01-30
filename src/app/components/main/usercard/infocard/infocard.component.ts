@@ -62,4 +62,4 @@ export class InfocardComponent {
     this.childSelector.threadBar.close();
     this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
-}
+} 

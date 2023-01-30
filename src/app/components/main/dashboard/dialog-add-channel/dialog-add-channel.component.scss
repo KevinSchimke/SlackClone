@@ -1,4 +1,5 @@
-@import "../../../../../assets/scss/company-colors.scss";
+@import "../../../../../assets/scss/colors.scss";
+
 h2,
 h3,
 h4 {
@@ -14,6 +15,7 @@ h2 {
     padding: 1.6rem;
     background-color: $bg-dialog;
     color: $color-main;
+
     p {
         color: $color-secondary;
     }
@@ -27,6 +29,7 @@ mat-form-field {
     display: grid;
     grid-template-columns: 70% 30%;
     margin-top: 2rem;
+
     mat-slide-toggle {
         display: flex;
         align-items: center;
@@ -39,6 +42,7 @@ mat-form-field {
     top: 1.6rem;
     right: 1.6rem;
     background-color: unset;
+
     img {
         height: 1.5rem;
         width: 1.5rem;

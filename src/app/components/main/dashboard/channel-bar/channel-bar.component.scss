@@ -1,5 +1,4 @@
 @import "../../../../../assets/scss/colors.scss";
-@import "../../../../../assets/scss/company-colors.scss";
 @import "../dashboard.component.scss";
 @import "../../../../../assets/scss/mixin.scss";
 $gap_channel_thread: .5rem;
@@ -117,8 +116,9 @@ $avatar-width: 2.5rem;
 }
 
 .post-image {
-    @include image(cover, 200px, 200px);
-    @include noBorderWithRadius(4px);
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
     cursor: pointer;
 }
 
