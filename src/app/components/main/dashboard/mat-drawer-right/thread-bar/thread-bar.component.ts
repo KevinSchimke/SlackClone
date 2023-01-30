@@ -2,16 +2,16 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { EMPTY, Observable, of, switchMap } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
-import { OpenboxComponent } from 'src/app/components/openbox/openbox.component';
+import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
-import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
+import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 
 @Component({
   selector: 'app-thread-bar',
@@ -106,11 +106,6 @@ export class ThreadBarComponent {
     else if (emojiIndex == -1)
       this.addNewReaction($event, t);
   }
-
-  // test($event: EmojiEvent, comment: Thread, t: number){
-  //   let updatedThread = this.reaction.evaluateThread($event, comment, t, this.channelId);
-
-  // }
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogReactionComponent);

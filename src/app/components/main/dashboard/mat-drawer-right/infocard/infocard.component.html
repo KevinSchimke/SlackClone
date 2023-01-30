@@ -1,0 +1,52 @@
+<header class="bar-header">
+    <h2>Profile</h2>
+    <button (click)="closeThread()" class="btn-unset close-thread-btn"><img src="assets/svg/x.svg"></button>
+</header>
+
+<div class="header-img">
+    <img [src]="user.src ? user.src : 'assets/img/user0.png'">
+</div>
+
+<div class="generalContent">
+    <div>
+        <h2>{{user.name}}</h2>
+        <a *ngIf="userService.currentUser.id == user.id" (click)="openDialog()">Edit profile</a>
+    </div>
+    <div>
+        <img *ngIf="userActive" src="assets/img/circle_008000.png" class="img-info">
+        <img *ngIf="!userActive" src="assets/img/circle_border_008000.png" class="img-info">
+        <span *ngIf="userActive">Online</span>
+        <span *ngIf="!userActive">Offline</span>
+    </div>
+    <div *ngIf="user.status || userService.currentUser.id == user.id">
+        <img src="assets/img/pencil_fff.png" class="img-info">
+        <span *ngIf="user.status">{{user.status }}</span>
+        <a *ngIf="!user.status && userService.currentUser.id == user.id" (click)="openDialog()">+Add status</a>
+    </div>
+    <div>
+        <img src="assets/img/clock_fff.png" class="img-info">
+        <span>{{user.lastLogin | date }} Local Time</span>
+    </div>
+</div>
+
+<div class="contactDetails">
+    <div>
+        <h3>Contact details</h3>
+        <a *ngIf="userService.currentUser.id == user.id" (click)="openDialog()">Edit profile</a>
+    </div>
+    <div>
+        <img src="assets/img/mail_fff.png" class="img-info">
+        <div class="contactItems">
+            <span>Mail address</span>
+            <a href="mailto:{{user.mail}}">{{user.mail}}</a>
+        </div>
+    </div>
+    <div *ngIf="user.phone || userService.currentUser.id == user.id">
+        <img src="assets/img/phone_fff.png" class="img-info">
+        <div class="contactItems">
+            <span>Phone</span>
+            <a *ngIf="user.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
+            <a *ngIf="!user.phone && userService.currentUser.id == user.id" (click)="openDialog()">+Add phone</a>
+        </div>
+    </div>
+</div>

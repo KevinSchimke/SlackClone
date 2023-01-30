@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
-import { DialogAddChannelComponent } from '../dialog-add-channel/dialog-add-channel.component';
+import { DialogAddChannelComponent } from '../../../dialogs/dialog-add-channel/dialog-add-channel.component';
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
 import { SortService } from 'src/app/service/sort/sort.service';
@@ -56,11 +56,11 @@ export class WorkspaceBarComponent {
     this.currentData.setPrivates(this.privates);
   }
 
-  categoryIsChannel(channel: Channel){
+  categoryIsChannel(channel: Channel) {
     return channel.category == 'channel';
   }
 
-  categoryIsPrivate(channel: Channel){
+  categoryIsPrivate(channel: Channel) {
     return channel.category == 'private';
   }
 

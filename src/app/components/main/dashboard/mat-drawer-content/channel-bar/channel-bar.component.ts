@@ -3,18 +3,17 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
-import { collection, doc, docData, Firestore, getDoc } from '@angular/fire/firestore';
+import { Firestore } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
-import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogReactionComponent } from '../dialog-reaction/dialog-reaction.component';
-import { OpenboxComponent } from 'src/app/components/openbox/openbox.component';
+import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { ReactionService } from 'src/app/service/reaction/reaction.service';
+import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 
 @Component({
   selector: 'app-channel-bar',
@@ -52,7 +51,7 @@ export class ChannelBarComponent {
   }
 
   ngAfterViewChecked() {
-    if(this.isFirstLoad){
+    if (this.isFirstLoad) {
       this.scrollToBottom();
     }
   }
@@ -79,11 +78,11 @@ export class ChannelBarComponent {
     this.getChannelName();
   }
 
-  async getChannelName(){
-  this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
-  this.channel$.subscribe((doc: any) => {
-    this.channel = doc;
-  })
+  async getChannelName() {
+    this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
+    this.channel$.subscribe((doc: any) => {
+      this.channel = doc;
+    })
   }
 
   convertThreads(threads: []) {
@@ -156,7 +155,7 @@ export class ChannelBarComponent {
     });
   }
 
-  addToReaction(emojiIndex: number, t: number){
+  addToReaction(emojiIndex: number, t: number) {
     this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
   }
 
@@ -165,7 +164,7 @@ export class ChannelBarComponent {
     dialog.componentInstance.openboxImg = url;
   }
 
-  saveReaction(thread: Thread, t: number){
+  saveReaction(thread: Thread, t: number) {
     let updatedThread = new Thread(this.threads[t]);
     this.fireService.save(updatedThread, 'channels/' + this.channelId + '/ThreadCollection', thread.id);
   }

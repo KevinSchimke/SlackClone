@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialogReactionComponent } from './dialog-reaction.component';
+import { InfocardComponent } from './infocard.component';
 
-describe('DialogReactionComponent', () => {
-  let component: DialogReactionComponent;
-  let fixture: ComponentFixture<DialogReactionComponent>;
+describe('InfocardComponent', () => {
+  let component: InfocardComponent;
+  let fixture: ComponentFixture<InfocardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialogReactionComponent ]
+      declarations: [ InfocardComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DialogReactionComponent);
+    fixture = TestBed.createComponent(InfocardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

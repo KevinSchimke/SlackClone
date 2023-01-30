@@ -1,0 +1,36 @@
+<mat-card id="chatcard">
+    <angular-editor (keyup)="handleKeyUp($event)" [(ngModel)]="message" [config]="editorConfig">
+        <ng-template #customButtons>
+            <ae-toolbar-set>
+                <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
+                </ae-button>
+                <ae-button iconClass="fa fa-sharp fa-image" (buttonClick)="fInput.click()">
+                </ae-button>
+            </ae-toolbar-set>
+        </ng-template>
+    </angular-editor>
+    <input #fInput type="file" style="visibility: hidden;" (change)="upload($event)" accept=".png,.jpg">
+
+    <div class="upload-image-container" *ngIf="imageURL">
+        <div class="position-relative">
+            <img [src]="imageURL" class="upload-img">
+            <i (click)="discardUpload()" class="material-icons">close</i>
+        </div>
+    </div>
+
+    <div class="under">
+        <button (click)="getMessage()" class="send-btn" *ngIf="(message || imageURL)">
+            <mat-icon aria-hidden="false" fontIcon="double_arrow"></mat-icon>
+        </button>
+    </div>
+
+    <mat-menu #emoij="matMenu" xPosition="before">
+        <emoji-mart appClickStopPropagation (emojiSelect)="handleClick($event)" [i18n]="{
+        search: 'Recherche',
+        categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+        </emoji-mart>
+    </mat-menu>
+
+</mat-card>
+
+<!-- https://github.com/kolkov/angular-editor -->

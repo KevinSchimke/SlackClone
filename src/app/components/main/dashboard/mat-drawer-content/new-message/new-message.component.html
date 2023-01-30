@@ -33,5 +33,6 @@
             </div>
         </div>
     </div>
-    <app-dialoginput *ngIf="usersToChat.length > 0" [collectionPath]="this.collPath" [thread]="true"></app-dialoginput>
+    <app-message-editor *ngIf="usersToChat.length > 0" [collectionPath]="this.collPath"
+        [thread]="true"></app-message-editor>
 </div>

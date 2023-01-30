@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Auth, signOut } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { ReauthenticateComponent } from '../../usercard/reauthenticate/reauthenticate.component';
+import { ReauthenticateComponent } from '../../dialogs/reauthenticate/reauthenticate.component';
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 

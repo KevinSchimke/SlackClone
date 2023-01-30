@@ -1,0 +1,85 @@
+@import "./../../../../../../assets/scss/colors.scss";
+@import "./../../../../../../assets/scss/mixin.scss";
+
+.bar-header {
+    @include containerPosition(space-between);
+    padding: .5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+
+    h2 {
+        color: $color-main;
+    }
+}
+
+.close-thread-btn {
+    @include containerPosition(center, center);
+    @include containerSize(2rem, 2rem);
+    color: $color-main;
+    font-weight: 700;
+    font-size: 1.2rem;
+    padding: .5rem;
+    border-radius: .5rem;
+
+    img {
+        @include image(cover, 1.5rem, 1.5rem);
+    }
+
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+}
+
+.header-img {
+    display: flex;
+    justify-content: center;
+    padding: 0.5rem;
+
+    img {
+        @include image(cover, 14rem, 14rem);
+        display: block;
+        border-radius: 8px;
+    }
+}
+
+.generalContent {
+    padding: 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, .12);
+
+    div {
+        @include containerPosition(unset, center);
+        padding: 0.5rem;
+
+        &:first-child {
+            justify-content: space-between;
+        }
+
+        img {
+            padding-right: 0.5rem;
+        }
+    }
+}
+
+.contactDetails {
+    padding: 0.5rem;
+
+    div {
+        @include containerPosition(unset, center);
+        padding: 0.5rem;
+
+        &:first-child {
+            justify-content: space-between;
+        }
+
+        .contactItems {
+            @include containerPosition(center, unset, column);
+        }
+    }
+}
+
+.a {
+    outline: 1px solid green;
+}
+
+.img-info {
+    @include image(unset, 1rem, 1rem);
+}
