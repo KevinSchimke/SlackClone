@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { DialogReactionComponent } from 'src/app/components/main/dashboard/dialog-reaction/dialog-reaction.component';
+import { DialogReactionComponent } from 'src/app/components/main/dialogs/dialog-reaction/dialog-reaction.component';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
 import { FirestoreService } from '../firebase/firestore.service';

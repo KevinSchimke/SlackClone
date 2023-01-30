@@ -27,12 +27,9 @@ import { VerifyuserComponent } from './components/authentication/verifyuser/veri
 
 // Main Components
 import { MainComponent } from './components/main/main.component';
-import { DialoginputComponent } from './components/main/dialoginput/dialoginput.component';
 import { DashboardComponent } from './components/main/dashboard/dashboard.component';
-import { WorkspaceBarComponent } from './components/main/dashboard/workspace-bar/workspace-bar.component';
-import { ThreadBarComponent } from './components/main/dashboard/thread-bar/thread-bar.component';
-import { ChannelBarComponent } from './components/main/dashboard/channel-bar/channel-bar.component';
-import { DialogAddChannelComponent } from './components/main/dashboard/dialog-add-channel/dialog-add-channel.component';
+import { WorkspaceBarComponent } from './components/main/dashboard/mat-drawer-left/workspace-bar/workspace-bar.component';
+import { DialogAddChannelComponent } from './components/main/dialogs/dialog-add-channel/dialog-add-channel.component';
 
 // Ng Material
 import { MatCardModule } from '@angular/material/card';
@@ -55,20 +52,23 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { InfocardComponent } from './components/main/usercard/infocard/infocard.component';
-import { EditsettingcardComponent } from './components/main/usercard/editsettingcard/editsettingcard.component';
+import { EditsettingcardComponent } from './components/main/dialogs/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
-import { ReauthenticateComponent } from './components/main/usercard/reauthenticate/reauthenticate.component';
+import { ReauthenticateComponent } from './components/main/dialogs/reauthenticate/reauthenticate.component';
 import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
 import { UsernamePipe } from './pipes/username/username.pipe';
-import { DialogReactionComponent } from './components/main/dashboard/dialog-reaction/dialog-reaction.component';
+import { DialogReactionComponent } from './components/main/dialogs/dialog-reaction/dialog-reaction.component';
 import { DatePipe } from './pipes/date/date.pipe';
-import { OpenboxComponent } from './components/openbox/openbox.component';
-import { NewMessageComponent } from './components/main/dashboard/new-message/new-message.component';
+import { OpenboxComponent } from './components/main/dialogs/openbox/openbox.component';
 import { TelephonePipe } from './pipes/telephone/telephone.pipe';
 import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe';
 import { PeriodOfTimePipe } from './pipes/date/period-of-time.pipe';
 import { CanClickPipe } from './pipes/canClick/can-click.pipe';
+import { ThreadBarComponent } from './components/main/dashboard/mat-drawer-right/thread-bar/thread-bar.component';
+import { ChannelBarComponent } from './components/main/dashboard/mat-drawer-content/channel-bar/channel-bar.component';
+import { NewMessageComponent } from './components/main/dashboard/mat-drawer-content/new-message/new-message.component';
+import { InfocardComponent } from './components/main/dashboard/mat-drawer-right/infocard/infocard.component';
+import { MessageEditorComponent } from './components/main/dashboard/message-editor/message-editor.component';
 
 @NgModule({
   declarations: [
@@ -81,7 +81,6 @@ import { CanClickPipe } from './pipes/canClick/can-click.pipe';
     VerifyuserComponent,
     ImprintComponent,
     DataprotectionComponent,
-    DialoginputComponent,
     DashboardComponent,
     WorkspaceBarComponent,
     ThreadBarComponent,
@@ -101,7 +100,8 @@ import { CanClickPipe } from './pipes/canClick/can-click.pipe';
     TelephonePipe,
     MessagePartnerPipe,
     PeriodOfTimePipe,
-    CanClickPipe
+    CanClickPipe,
+    MessageEditorComponent
   ],
   imports: [
     BrowserModule,

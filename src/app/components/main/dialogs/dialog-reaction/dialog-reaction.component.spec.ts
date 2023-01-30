@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DialoginputComponent } from './dialoginput.component';
+import { DialogReactionComponent } from './dialog-reaction.component';
 
-describe('DialoginputComponent', () => {
-  let component: DialoginputComponent;
-  let fixture: ComponentFixture<DialoginputComponent>;
+describe('DialogReactionComponent', () => {
+  let component: DialogReactionComponent;
+  let fixture: ComponentFixture<DialogReactionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DialoginputComponent ]
+      declarations: [ DialogReactionComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(DialoginputComponent);
+    fixture = TestBed.createComponent(DialogReactionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
