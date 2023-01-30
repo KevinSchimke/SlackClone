@@ -8,7 +8,6 @@ import { UserService } from '../service/user/user.service';
   providedIn: 'root'
 })
 export class AuthFirebaseGuard implements CanActivate {
-
   constructor(private auth: Auth, private router: Router, private userService: UserService) { }
 
   canActivate(
