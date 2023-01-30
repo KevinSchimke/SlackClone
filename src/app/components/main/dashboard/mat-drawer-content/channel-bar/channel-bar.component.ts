@@ -31,6 +31,7 @@ export class ChannelBarComponent {
   isFirstLoad = true;
   channelName: string = '';
   channel$: Observable<any> = EMPTY;
+  shownUsers: string = '';
 
   getUserNameById$(id: string) {
     return "";
@@ -78,12 +79,15 @@ export class ChannelBarComponent {
     this.getChannelName();
   }
 
-  async getChannelName() {
-    this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
-    this.channel$.subscribe((doc: any) => {
-      this.channel = doc;
-    })
+  getChannelName() {
+    this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
+      if (isLoaded) {
+        this.channel = this.currentDataService.allCategories.find((channel) => (channel.id === this.channelId));
+      }
+    });
   }
+
+  
 
   convertThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);

@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Auth } from '@angular/fire/auth';
 import { BehaviorSubject } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
+import { UserService } from '../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,16 +16,22 @@ export class CurrentDataService {
   users: User[] = [];
   newChatUsers: User[] = [];
   privates: any[] = [];
+  allCategories: any[] = [];
+  channelsAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
 
-  constructor() { }
+  constructor(private user: UserService, private auth: Auth) { }
 
   setChatUsers(users: User[]) {
     this.newChatUsers = users;
-    // console.log(this.newChatUsers);
   }
 
   setPrivates(privates: any[]){
     this.privates = privates;
+  }
+
+  setChannels(channels: any[]){
+    this.allCategories = channels;
+    this.channelsAreLoaded.next(true);
   }
 
   setThread(obj: any) {
@@ -51,6 +59,8 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
+    let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
+    this.user.set(user);
   }
 
   getChatUsers() {
