@@ -1,115 +1,119 @@
-@import "../../../../../assets/scss/company-colors.scss";
 @import "../../../../../assets/scss/mixin.scss";
+@import "../../../../../assets/scss/colors.scss";
 
 .over-container {
-    width: 100%;
-    background-color: $bg-color;
+    @include containerSize(unset, 100%);
     min-height: calc(100vh - 100px);
     padding-bottom: 50px;
-}
+    background-color: $bg-color;
 
-.body-container{
-    position: relative;
-}
+    .header-container {
+        position: relative;
+        padding: 0 15px;
+        background-color: white;
+        border-right: 1px solid lightgrey;
 
-.header-container {
-    position: relative;
-    padding: 0 15px;
-    background-color: white;
-    border-right: 1px solid lightgrey;
-    h2 {
-        padding: 10px 0;
-        margin: 0;
-        color: black;
-    }
-    .search-container {
-        display: flex;
-        align-items: center;
-        padding: 10px 0;
-        color: $bg-dialog;
-        font-size: 16px;
-        // width: 250px;
-        p{
-            padding-right: 5px;
-            margin: 0;
+        h2 {
+            padding: 10px 0;
+            color: black;
         }
-        input{
-            width: 100%;
-            background-color: transparent;
-            outline: none;
-            border: none;
+
+        .search-container {
+            @include containerPosition(unset, center);
+            padding: 10px 0;
+            color: $bg-dialog;
+            font-size: 16px;
+
+            p {
+                padding-right: 5px;
+            }
+
+            input {
+                width: 100%;
+                background-color: transparent;
+                outline: none;
+                border: none;
+            }
         }
     }
 }
 
-.select-user{
+.body-container {
+    position: relative;
+}
+
+
+
+.select-user {
     width: auto;
     @include containerPosition(center, center);
-    background: rgb(232,245,250);
+    background: rgb(232, 245, 250);
     padding: 2px;
     border-radius: 10px;
-    span{
-        display: flex;
-        align-items: center;
+
+    span {
+        @include containerPosition(unset, center);
         margin-right: 15px;
         color: black;
         text-align: center;
-    }    
-
-}
-.select-user-list{
-    margin-left: 10px;
-    margin-right: 10px;
-    display: flex;
-    align-items: center;
-}
-
-.x-icon{
-mat-icon{
-    color: gray;
-    font-size: 20px;
-    font-weight: 200;
-    vertical-align: middle!important;
-    height: auto;
-    width: auto;
-  }
-  &:hover{
-    mat-icon{
-        color: black;
     }
-    background-color: rgb(230,230,230);
-    cursor: pointer;
-}
+
 }
 
-.search-user-list-container{
-    position: absolute;
+.select-user-list {
+    @include containerPosition(unset, center);
+    margin: 0 10px;
+}
+
+.x-icon {
+    mat-icon {
+        color: gray;
+        font-size: 20px;
+        font-weight: 200;
+        vertical-align: middle !important;
+        height: auto;
+        width: auto;
+    }
+
+    &:hover {
+        mat-icon {
+            color: black;
+        }
+
+        background-color: rgb(230, 230, 230);
+        cursor: pointer;
+    }
+}
+
+.search-user-list-container {
+    @include positionAbsolute(-10px, unset, unset, 15px);
+    @include border(1px, solid, black);
     z-index: 10;
-    top: -10px;
-    border: 1px solid black;
-    left: 15px;
 }
 
 
-.search-user-list{
+.search-user-list {
     width: calc(100vw - 340px);
     background-color: rgb(197, 191, 191);
     color: black;
-    &:hover{
-        background-color: rgb(232,245,250);
+
+    &:hover {
+        background-color: rgb(232, 245, 250);
     }
-    div{
+
+    div {
         display: flex;
         align-items: center;
         padding: 5px 0;
-        cursor: pointer; 
+        cursor: pointer;
     }
-    p{
+
+    p {
         margin: 0;
     }
 }
 
-.user-image{
+.user-image {
     @include image(cover, 24px, 24px);
     margin-right: 10px;
     margin-left: 10px;
