@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-dialog-add-channel',
@@ -16,7 +17,7 @@ export class DialogAddChannelComponent {
     locked: new FormControl('')
   });
 
-  constructor(public dialogRef: MatDialogRef<DialogAddChannelComponent>, private setFirestore: FirestoreService) { }
+  constructor(public dialogRef: MatDialogRef<DialogAddChannelComponent>, private setFirestore: FirestoreService, private user: UserService) { }
 
   onSubmit() {
     if (this.channelForm.valid) {
@@ -32,6 +33,8 @@ export class DialogAddChannelComponent {
       channel.locked = false;
     else
       channel.locked = this.channelForm.controls.locked.value;
+    channel.creator = this.user.getUid();
+    channel.users.push(channel.creator);
     await this.setFirestore.save(channel, 'channels');
     this.dialogRef.close();
   }

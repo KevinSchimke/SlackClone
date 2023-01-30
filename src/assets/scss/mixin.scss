@@ -11,6 +11,7 @@
 }
 
 @mixin image($type, $height: auto, $width: auto) {
+    display: block;
     object-fit: $type;
     height: $height;
     width: $width;
