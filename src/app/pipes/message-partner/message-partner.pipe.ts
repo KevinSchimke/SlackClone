@@ -11,7 +11,7 @@ import { UserService } from 'src/app/service/user/user.service';
 export class MessagePartnerPipe implements PipeTransform {
 
   filteredUserIds: string[] = [];
-  
+
   filteredUserNames: string[] = [];
 
   constructor(private user: UserService, private currentData: CurrentDataService) { }
@@ -20,7 +20,7 @@ export class MessagePartnerPipe implements PipeTransform {
     this.filteredUserNames = [];
     this.filteredUserIds = this.getFuids(users);
     this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid, allUsers));
-    console.log('messagepartner pipe rödelt');
+    // console.log('messagepartner pipe rödelt');
     return this.filteredUserNames.join(", ");
   }
 
@@ -31,13 +31,13 @@ export class MessagePartnerPipe implements PipeTransform {
       return users.filter((user) => (user !== this.user.getUid()));
   }
 
-  findFilteredName(fuid: string, allUsers: any[]){
+  findFilteredName(fuid: string, allUsers: any[]) {
     let j = allUsers.findIndex((user: User) => (user.id === fuid));
     if (allUsers[j])
       this.filteredUserNames.push(allUsers[j].name);
   }
 
-  isChatWithMyself(users: string[]){
+  isChatWithMyself(users: string[]) {
     return JSON.stringify(users) === JSON.stringify([this.user.getUid()]);
   }
 }

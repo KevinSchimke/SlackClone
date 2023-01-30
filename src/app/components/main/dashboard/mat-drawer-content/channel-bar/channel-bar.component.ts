@@ -87,7 +87,7 @@ export class ChannelBarComponent {
     });
   }
 
-  
+
 
   convertThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
