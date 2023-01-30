@@ -33,4 +33,17 @@ export class UserService {
   getUid() {
     return this.uid;
   }
+
+  userState(user: User) {
+    let lastLogin = user.lastLogin.toDate().getTime();
+    let currentTime = new Date().getTime();
+    let userActive: boolean;
+
+    if (currentTime - lastLogin < 300000) {
+      userActive = true;
+    } else {
+      userActive = false;
+    }
+    return userActive
+  }
 }

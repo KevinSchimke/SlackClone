@@ -39,19 +39,8 @@ export class InfocardComponent {
     this.user$ = this.firestoreService.getUser(uid);
     this.user$.subscribe((user: User) => {
       this.user = user;
-      this.userState();
+      this.userActive = this.userService.userState(user);
     });
-  }
-
-  userState() {
-    let lastLogin = this.user.lastLogin.toDate().getTime();
-    let currentTime = new Date().getTime();
-
-    if (currentTime - lastLogin < 300000) {
-      this.userActive = true;
-    } else {
-      this.userActive = false;
-    }
   }
 
   openDialog(): void {
