@@ -101,7 +101,7 @@ import { CanClickPipe } from './pipes/canClick/can-click.pipe';
     TelephonePipe,
     MessagePartnerPipe,
     PeriodOfTimePipe,
-    CanClickPipe,
+    CanClickPipe
   ],
   imports: [
     BrowserModule,

@@ -16,11 +16,11 @@ export class MessagePartnerPipe implements PipeTransform {
 
   constructor(private user: UserService, private currentData: CurrentDataService) { }
 
-  transform(users: string[], allUsers: any[]): string[] {
+  transform(users: string[], allUsers: any[]): string {
     this.filteredUserNames = [];
     this.filteredUserIds = this.getFuids(users);
     this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid, allUsers));
-    return this.filteredUserNames;
+    return this.filteredUserNames.join(", ");
   }
 
   getFuids(users: string[]) {
