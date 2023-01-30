@@ -13,13 +13,13 @@ textarea {
 }
 
 #chatcard {
-    background-color: white;
-    color: #000;
-    position: absolute;
-    bottom: 50px;
-    width: 90%;
-    left: 5%;
+    background-color: $bg-color-hover;
+    color: $color-main;
     border-radius: 7px;
+    position: absolute;
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
 }
 
 .material-icons {
@@ -50,4 +50,8 @@ mat-card-content {
 .upload-img {
     max-height: 200px;
     max-width: 200px;
+}
+
+.angular-editor-toolbar {
+    background: unset !important;
 }
