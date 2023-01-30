@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, take } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
@@ -23,7 +23,7 @@ export class MainComponent {
     // this.user$.subscribe((user: User) => this.userService.set(user));
 
     this.users$ = this.firestoreService.getCollection('users');
-    this.users$.subscribe((users) => this.currentDataService.setUsers(users))
+    this.users$.pipe(take(1)).subscribe((users) => this.currentDataService.setUsers(users))
 
     this.updateLastLogin();
 
