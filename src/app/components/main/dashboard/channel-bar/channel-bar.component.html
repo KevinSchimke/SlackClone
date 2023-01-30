@@ -5,8 +5,8 @@
     </button>
         <div>
             <div class="d-flex" *ngIf="channel.category == 'channel'">
-                <span style="font-size: 1.2rem; width: 1.2rem;">#</span>
-                <span>{{channel.channelName}}</span>
+                <h2 style="font-size: 1.2rem; width: 1.2rem;">#</h2>
+                <h2>{{channel.channelName}}</h2>
             </div>
 
             <div class="d-flex" *ngIf="channel.category == 'private'">
@@ -20,6 +20,7 @@
         </div>
     </div>
 </header>
+
 
 <div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
     <div class="channel-thread" *ngFor="let thread of threads; let t = index">
@@ -82,6 +83,8 @@
 
 </div>
 <app-dialoginput [collectionPath]="collPath" [thread]="true"></app-dialoginput>
+
+
 
 <!-- Happy Emoji<a target="_blank" href="https://icons8.com/icon/85774/happy">Happy</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
 <!-- Share <a target="_blank" href="https://icons8.com/icon/90278/share">Share</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
