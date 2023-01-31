@@ -1,6 +1,5 @@
 @import "../../../../../assets/scss/colors.scss";
 @import "node_modules/@ctrl/ngx-emoji-mart/picker.css";
-
 .header {
     background-color: gray;
 }
@@ -21,6 +20,9 @@ textarea {
     bottom: 1rem;
     right: 1rem;
     left: 1rem;
+    input {
+        display: none;
+    }
 }
 
 .material-icons {

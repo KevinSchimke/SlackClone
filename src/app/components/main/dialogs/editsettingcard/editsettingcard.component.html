@@ -94,8 +94,7 @@
                         <mat-label>Enter your password</mat-label>
                         <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
                         <mat-error *ngIf="password.invalid">{{getErrorMessage(password,'password')}}</mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                            [attr.aria-pressed]="hide">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
                     </mat-form-field>
@@ -135,8 +134,7 @@
                     <mat-label>! Enter username ! Danger !</mat-label>
                     <input [(ngModel)]="deletUsername" matInput>
                 </mat-form-field>
-                <button [disabled]="deletUsername !== userService.currentUser.name" (click)="deleteCurrentUser()"
-                    class="deleteButton" mat-raised-button>Delete User</button>
+                <button [disabled]="deletUsername !== userService.currentUser.name" (click)="deleteCurrentUser()" class="deleteButton" mat-raised-button>Delete User</button>
             </mat-expansion-panel>
         </mat-card-content>
     </mat-card>
