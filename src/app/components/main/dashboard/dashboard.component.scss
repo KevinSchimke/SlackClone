@@ -2,6 +2,9 @@
 @import "../../../../assets/scss/mixin.scss";
 $gap_channel_thread: .5rem;
 $header-hight: 2.75rem;
+$gap_channel_thread: .5rem;
+$avatar-width: 2.5rem;
+
 .main-header {
     @include containerPosition(space-between, center);
     height: $header-hight;
@@ -31,9 +34,11 @@ $header-hight: 2.75rem;
     border-bottom: 1px solid rgba(255, 255, 255, .12);
     @include containerPosition(space-between, center);
     padding: .5rem 1rem;
+
     h2 {
         margin: 0;
     }
+
     .d-flex {
         gap: .5rem;
     }
@@ -56,6 +61,7 @@ $header-hight: 2.75rem;
     padding: 2px 4px;
     border-radius: .5rem;
     border: 1px solid transparent;
+
     &:hover {
         $bg-color: $bg-accent;
         border: 1px solid $color-secondary;
@@ -69,6 +75,23 @@ $header-hight: 2.75rem;
 
 .channel-thread-content {
     word-break: break-word;
+}
+
+.channel-thread {
+    display: flex;
+    // display: grid;
+    // grid-template-columns: $avatar-width 1fr;
+    gap: $gap_channel_thread;
+    padding: .5rem 1.5rem;
+    position: relative;
+
+    &:hover {
+        background-color: $bg-color-hover;
+
+        .thread-options {
+            display: flex;
+        }
+    }
 }
 
 .header-headline {
