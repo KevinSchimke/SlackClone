@@ -66,7 +66,7 @@ export class ThreadBarComponent {
     });
     this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
       if (isLoaded) {
-        this.channel = this.currentDataService.allCategories.find((channel) => (channel.id === this.channelId));
+        this.channel = this.currentDataService.allCategories.find((channel: Channel) => (channel.channelId === this.channelId));
       }
     });
   }

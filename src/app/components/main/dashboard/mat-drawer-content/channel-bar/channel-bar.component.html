@@ -15,7 +15,7 @@
                         <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
                     </div>
 
-                    <h2>{{channel.users | messagePartner: currentDataService.users}}</h2>
+                    <h2>{{channel.users | messagePartner}}</h2>
                 </div>
 
             </div>

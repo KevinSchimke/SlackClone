@@ -17,10 +17,10 @@ import { Channel } from 'src/app/models/channel.class';
 })
 export class WorkspaceBarComponent {
   panelOpenState = false;
-  channels: any[] = [];
+  channels: Channel[] = [];
   collChannels$: any = EMPTY;
 
-  privates: any[] = [];
+  privates: Channel[] = [];
   collPrivates$: any = EMPTY;
 
   currentUser: User = new User();
@@ -67,7 +67,7 @@ export class WorkspaceBarComponent {
 
   pushIntoChannel(doc: any, k: number) {
     this.channels.push(doc.data());
-    this.channels[k]['id'] = doc.id;
+    this.channels[k]['channelId'] = doc.id;
     k++;
     return k;
   }

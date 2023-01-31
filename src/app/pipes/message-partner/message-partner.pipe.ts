@@ -16,11 +16,15 @@ export class MessagePartnerPipe implements PipeTransform {
 
   constructor(private user: UserService, private currentData: CurrentDataService) { }
 
-  transform(users: string[], allUsers: any[]): string {
-    this.filteredUserNames = [];
-    this.filteredUserIds = this.getFuids(users);
-    this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid, allUsers));
-    return this.filteredUserNames.join(", ");
+  transform(users: string[]): string {
+    if (this.currentData.usersAreLoaded) {
+      console.log('message-partner pipe rödelt');
+      this.filteredUserNames = [];
+      this.filteredUserIds = this.getFuids(users);
+      this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid));
+      return this.filteredUserNames.join(", ");
+    }
+    else return '';
   }
 
   getFuids(users: string[]) {
@@ -30,13 +34,29 @@ export class MessagePartnerPipe implements PipeTransform {
       return users.filter((user) => (user !== this.user.getUid()));
   }
 
-  findFilteredName(fuid: string, allUsers: any[]) {
-    let j = allUsers.findIndex((user: User) => (user.id === fuid));
-    if (allUsers[j])
-      this.filteredUserNames.push(allUsers[j].name);
+  findFilteredName(fuid: string) {
+    let j = this.currentData.onceSubscribtedUsers.findIndex((user: User) => (user.id === fuid));
+    if (this.currentData.onceSubscribtedUsers[j])
+      this.filteredUserNames.push(this.currentData.onceSubscribtedUsers[j].name);
   }
 
   isChatWithMyself(users: string[]) {
     return JSON.stringify(users) === JSON.stringify([this.user.getUid()]);
   }
+
+
+  // transform(users: string[]): string {
+  //   console.log('Message-partner pipe rödelt');
+  //   this.filteredUserNames = [];
+  //   users.forEach((u: string) => this.pushToUsers(u));
+  //   return this.filteredUserNames.join(', ');
+  // }
+
+  // pushToUsers(u: string) {
+  //   let j = this.currentData.users.findIndex((user: User) => (user.id === u));
+  //   if (j == -1)
+  //     this.filteredUserNames.push('Deleted User');
+  //   else
+  //     this.filteredUserNames.push(this.currentData.users[j].name);
+  // }
 }
