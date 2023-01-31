@@ -18,7 +18,6 @@ export class MessagePartnerPipe implements PipeTransform {
 
   transform(users: string[]): string {
     if (this.currentData.usersAreLoaded) {
-      console.log('message-partner pipe rödelt');
       this.filteredUserNames = [];
       this.filteredUserIds = this.getFuids(users);
       this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid));
