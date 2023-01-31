@@ -17,9 +17,15 @@ export class InfocardComponent {
   user$: Observable<any> = EMPTY;
   user = new User();
   userActive?: boolean;
-  lastLogin: any
+  isLoggedInUser?: boolean;
 
-  constructor(public childSelector: SidenavToggleService, private router: Router, public userService: UserService, private firestoreService: FirestoreService, private dialog: MatDialog, private route: ActivatedRoute) { }
+  constructor(
+    public childSelector: SidenavToggleService,
+    private router: Router,
+    public userService: UserService,
+    private firestoreService: FirestoreService,
+    private dialog: MatDialog,
+    private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => {
@@ -39,8 +45,16 @@ export class InfocardComponent {
     this.user$ = this.firestoreService.getUser(uid);
     this.user$.subscribe((user: User) => {
       this.user = user;
+      this.isLoggedInUser = this.checkIsLoggedInUser(user);
       this.userActive = this.userService.userState(user);
     });
+  }
+
+  checkIsLoggedInUser(user: User) {
+    if (this.userService.currentUser.id === user.id) {
+      return true;
+    }
+    return false;
   }
 
   openDialog(): void {
