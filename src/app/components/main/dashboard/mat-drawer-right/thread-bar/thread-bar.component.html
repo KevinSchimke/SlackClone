@@ -1,7 +1,16 @@
 <header class="bar-header">
     <div class="d-flex align-items-center">
-        <h2>Thread</h2>
-        <span># Channelname</span>
+        <div class="header-headline" *ngIf="channel.category == 'channel'">
+            <h2 class="thread-headline">Thread</h2>
+            <h3 style="font-size: 1.2rem; width: 1.2rem;">#</h3>
+            <h3>{{channel.channelName}}</h3>
+        </div>
+        <div class="d-flex" *ngIf="channel.category == 'private'">
+            <div *ngFor="let user of channel.users" class="private-header-imgs">
+                <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
+            </div>
+        </div>
+
     </div>
     <button (click)="closeThread()" class="btn-unset close-thread-btn"><img src="assets/svg/x.svg"></button>
 </header>

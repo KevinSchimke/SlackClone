@@ -12,6 +12,7 @@ import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-tog
 import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
+import { Channel } from 'src/app/models/channel.class';
 
 @Component({
   selector: 'app-thread-bar',
@@ -22,13 +23,14 @@ export class ThreadBarComponent {
   collData$: Observable<any> = EMPTY;
   docData$: Observable<any> = EMPTY;
   collPath: string = '';
+  channel: Channel = new Channel();
   channelId: string = '';
   thread = new Thread();
   threadId: string = '';
   comments: any[] = [];
   currentUser = new User();
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, private currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -61,6 +63,11 @@ export class ThreadBarComponent {
     this.childSelector.threadBarIsInit.subscribe(isLoaded => {
       if (isLoaded === true)
         this.childSelector.threadBar.open();
+    });
+    this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
+      if (isLoaded) {
+        this.channel = this.currentDataService.allCategories.find((channel) => (channel.id === this.channelId));
+      }
     });
   }
 

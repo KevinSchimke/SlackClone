@@ -1,11 +1,11 @@
 <div style="height:100%;">
     <header class="bar-header">
-        <div class="d-flex">
+        <div class="header-headline">
             <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
                 <img src="assets/icons/navbar-48.png" />
             </button>
             <div>
-                <div class="d-flex" *ngIf="channel.category == 'channel'">
+                <div class="header-headline" *ngIf="channel.category == 'channel'">
                     <h2 style="font-size: 1.2rem; width: 1.2rem;">#</h2>
                     <h2>{{channel.channelName}}</h2>
                 </div>

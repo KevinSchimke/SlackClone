@@ -70,3 +70,8 @@ $header-hight: 2.75rem;
 .channel-thread-content {
     word-break: break-word;
 }
+
+.header-headline {
+    @include containerPosition(unset, center);
+    gap: 0;
+}
