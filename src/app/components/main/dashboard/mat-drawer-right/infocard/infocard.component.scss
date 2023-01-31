@@ -4,17 +4,12 @@
 .bar-header {
     @include containerPosition(space-between);
     padding: .5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, .12);
-
-    h2 {
-        color: $color-main;
-    }
+    border-bottom: 1px solid $border-button-main;
 }
 
 .close-thread-btn {
     @include containerPosition(center, center);
     @include containerSize(2rem, 2rem);
-    color: $color-main;
     font-weight: 700;
     font-size: 1.2rem;
     padding: .5rem;
@@ -30,52 +25,50 @@
 }
 
 .header-img {
-    display: flex;
-    justify-content: center;
-    padding: 0.5rem;
+    @include containerPosition(center);
+    padding: .5rem;
 
     img {
         @include image(cover, 14rem, 14rem);
-        display: block;
-        border-radius: 8px;
+        border-radius: .5rem;
     }
 }
 
 .generalContent {
-    padding: 0.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, .12);
+    padding: .5rem;
+    border-bottom: 1px solid $border-button-main;
 
     div {
         @include containerPosition(unset, center);
-        padding: 0.5rem;
+        padding: .5rem;
 
         &:first-child {
             justify-content: space-between;
         }
 
         img {
-            padding-right: 0.5rem;
+            padding-right: .5rem;
         }
     }
 }
 
 .contactDetails {
-    padding: 0.5rem;
+    padding: .5rem;
 
     div {
         @include containerPosition(unset, center);
-        padding: 0.5rem;
+        padding: .5rem;
 
         &:first-child {
             justify-content: space-between;
+        }
+
+        img {
+            @include image(unset, 1rem, 1rem);
         }
 
         .contactItems {
             @include containerPosition(center, unset, column);
         }
     }
-}
-
-.img-info {
-    @include image(unset, 1rem, 1rem);
 }

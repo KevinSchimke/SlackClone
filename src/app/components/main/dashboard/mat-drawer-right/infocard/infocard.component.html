@@ -35,14 +35,14 @@
         <a *ngIf="isLoggedInUser" (click)="openDialog()">Edit profile</a>
     </div>
     <div>
-        <img src="assets/img/mail_fff.png" class="img-info">
+        <img src="assets/img/mail_fff.png">
         <div class="contactItems">
             <span>Mail address</span>
             <a href="mailto:{{user.mail}}">{{user.mail}}</a>
         </div>
     </div>
     <div *ngIf="user.phone || isLoggedInUser">
-        <img src="assets/img/phone_fff.png" class="img-info">
+        <img src="assets/img/phone_fff.png">
         <div class="contactItems">
             <span>Phone</span>
             <a *ngIf="user.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
