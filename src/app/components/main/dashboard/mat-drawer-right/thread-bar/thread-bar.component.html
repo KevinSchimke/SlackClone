@@ -1,19 +1,19 @@
-<header class="bar-header">
-    <div class="d-flex align-items-center">
-        <h2 class="thread-headline">Thread</h2>
+<header>
+    <div class="bar-header">
+        <h2>Thread</h2>
         <div class="header-headline" *ngIf="channel.category == 'channel'">
-            <h3 style="font-size: 1.2rem; width: 1.2rem;">#</h3>
+            <h3>#</h3>
             <h3>{{channel.channelName}}</h3>
         </div>
-        <div class="d-flex" *ngIf="channel.category == 'private'">
-            <div *ngFor="let user of channel.users" class="private-header-imgs">
-                <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
+        <div class="header-headlin" *ngIf="channel.category == 'private'">
+            <div class="private-header-imgs" *ngFor="let user of channel.users">
+                <img *ngIf="user != currentUser.id" [src]="user | imgSrc" class="img-header-partner" />
             </div>
         </div>
-
     </div>
     <button (click)="closeThread()" class="btn-unset close-thread-btn"><img src="assets/svg/x.svg"></button>
 </header>
+
 <div class="channel-thread">
     <div class="thread-options">
         <button class="btn-unset"><img src="assets/img/emoji_D1D2D3.png"></button>
@@ -22,34 +22,31 @@
     <img [src]="thread.userId | imgSrc" class="channel-thread-img">
 
     <div class="channel-thread-content">
-        <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
-        <p class="thread-headline"><span><b>{{ thread.userId | username }}</b></span><span *ngIf="thread.creationDate"
-                class="span-time">{{
-                thread.creationDate| date }}</span></p>
+        <p class="thread-headline">
+            <span><b>{{ thread.userId | username }}</b></span>
+            <span class="span-time" *ngIf="thread.creationDate">
+                {{ thread.creationDate| date }}</span>
+        </p>
         <p [innerHTML]="thread.message"></p>
-        <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)">
-        <!-- <p class="d-flex">
-            only if reactions already exist
-            <button>:-)</button>
-            <button>:) +</button>
-        </p> -->
+        <img class="post-image" *ngIf="thread.img" [src]="thread.img" (click)="openBox(thread.img)">
     </div>
 </div>
+
 <div class="thread-separator">
-    <div class="thread-flexpane">
-        <span class="thread-flexpane-count">Replies</span>
-        <hr class="separator-line">
+    <div>
+        <span>Replies</span>
+        <hr>
     </div>
 </div>
+
 <div class="channel-thread" *ngFor="let comment of comments; let c = index">
     <div class="thread-options">
         <button class="btn-unset" [matMenuTriggerFor]="emoji">
             <img src="assets/img/emoji_D1D2D3.png" />
             <mat-menu #emoji="matMenu" xPosition="before">
                 <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, comment, c)"
-                    [i18n]="{
-          search: 'Recherche',
-          categories: { search: 'Résultats de recherche', recent: 'Récents' }}">
+                    [i18n]="{search: 'Recherche',categories:
+                    { search: 'Résultats de recherche', recent: 'Récents' }}">
                 </emoji-mart>
             </mat-menu>
         </button>
@@ -60,19 +57,21 @@
     <img [src]="comment.userId | imgSrc" class="channel-thread-img">
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
-        <p class="thread-headline">
+        <div class="thread-headline">
             <span><b>{{ comment.userId | username }}</b></span>
             <span *ngIf="comment.creationDate" class="span-time">{{ comment.creationDate | periodOfTime }} ago</span>
-        </p>
+        </div>
         <p [innerHTML]="comment.message"></p>
-        <img *ngIf="comment.img" [src]="comment.img" alt="" class="post-image" (click)="openBox(comment.img)" />
-        <p class="d-flex" *ngIf="comment.reactions.length > 0">
+        <img *ngIf="comment.img" [src]="comment.img" class="post-image" (click)="openBox(comment.img)" />
+        <p *ngIf="comment.reactions.length > 0">
             <button class="btn-unset btn-current-emoji" *ngFor="let reaction of comment.reactions; let u = index"
                 (click)="evaluateThread(reaction.id, comment, c)">
-                <span>{{reaction.id}}</span><span>{{reaction.users.length}}</span>
+                <span>{{reaction.id}}</span>
+                <span>{{reaction.users.length}}</span>
             </button>
-            <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction"
-                    src="assets/img/emoji_D1D2D3.png"></button>
+            <button class="btn-unset" [matMenuTriggerFor]="emoji">
+                <img class="add-reaction" src="assets/img/emoji_D1D2D3.png">
+            </button>
         </p>
     </div>
 </div>
