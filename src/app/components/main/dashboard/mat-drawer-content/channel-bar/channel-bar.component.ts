@@ -33,11 +33,6 @@ export class ChannelBarComponent {
   channel$: Observable<any> = EMPTY;
   shownUsers: string = '';
 
-  getUserNameById$(id: string) {
-    return "";
-  }
-
-
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
@@ -47,7 +42,8 @@ export class ChannelBarComponent {
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
-    this.route.params.subscribe((param: any) => this.subscribeCurrentChannel(param));
+    this.route.params.subscribe((param: any) => {
+      this.subscribeCurrentChannel(param)});
     this.isFirstLoad = true;
   }
 
@@ -82,7 +78,7 @@ export class ChannelBarComponent {
   getChannelName() {
     this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
       if (isLoaded) {
-        this.channel = this.currentDataService.allCategories.find((channel) => (channel.id === this.channelId));
+        this.channel = this.currentDataService.allCategories.find((channel: Channel) => (channel.channelId === this.channelId));
       }
     });
   }

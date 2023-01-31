@@ -124,3 +124,7 @@
 .private-header-imgs {
     @include containerPosition(unset, center)
 }
+
+.bar-header {
+    color: $color-main;
+}

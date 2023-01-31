@@ -18,6 +18,8 @@ export class CurrentDataService {
   privates: any[] = [];
   allCategories: any[] = [];
   channelsAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  usersAreLoaded: boolean = false;
+  onceSubscribtedUsers: User[] = [];
 
   constructor(private user: UserService, private auth: Auth) { }
 
@@ -61,6 +63,10 @@ export class CurrentDataService {
     this.users = user_arr;
     let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
     this.user.set(user);
+    if (!this.usersAreLoaded) {
+      this.onceSubscribtedUsers = user_arr;
+      this.usersAreLoaded = true;
+    }
   }
 
   getChatUsers() {

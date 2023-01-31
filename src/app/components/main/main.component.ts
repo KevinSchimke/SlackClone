@@ -23,7 +23,10 @@ export class MainComponent {
     // this.user$.subscribe((user: User) => this.userService.set(user));
 
     this.users$ = this.firestoreService.getCollection('users');
-    this.users$.subscribe((users) => this.currentDataService.setUsers(users))
+    this.users$.subscribe((users) => {
+      console.log('User neu subscript');
+      this.currentDataService.setUsers(users)
+    });
 
     this.updateLastLogin();
 

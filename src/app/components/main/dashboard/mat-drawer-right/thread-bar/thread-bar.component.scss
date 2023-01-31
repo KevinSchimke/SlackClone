@@ -1,6 +1,5 @@
 @import "../../dashboard.component.scss";
 @import "../../mat-drawer-content/channel-bar/channel-bar.component.scss";
-
 .channel-thread {
     color: $color-main;
 }
@@ -17,13 +16,11 @@
     width: 2rem;
     height: 2rem;
     cursor: pointer;
-
     img {
         width: 1.5rem;
         height: 1.5rem;
         object-fit: cover;
     }
-
     &:hover {
         background-color: $bg-color-hover;
     }
@@ -62,4 +59,8 @@
     max-height: 200px;
     object-fit: cover;
     cursor: pointer;
+}
+
+.thread-headline {
+    margin-right: 1rem !important;
 }
