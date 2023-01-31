@@ -1,27 +1,11 @@
 @import "./../../../../../../assets/scss/colors.scss";
 @import "./../../../../../../assets/scss/mixin.scss";
+@import "./../../dashboard.component.scss";
 
-.bar-header {
+header {
     @include containerPosition(space-between);
     padding: .5rem;
     border-bottom: 1px solid $border-button-main;
-}
-
-.close-thread-btn {
-    @include containerPosition(center, center);
-    @include containerSize(2rem, 2rem);
-    font-weight: 700;
-    font-size: 1.2rem;
-    padding: .5rem;
-    border-radius: .5rem;
-
-    img {
-        @include image(cover, 1.5rem, 1.5rem);
-    }
-
-    &:hover {
-        background-color: $bg-color-hover;
-    }
 }
 
 .header-img {

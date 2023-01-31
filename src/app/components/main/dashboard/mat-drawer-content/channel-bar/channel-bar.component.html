@@ -1,16 +1,17 @@
 <div style="height:100%;">
-    <header class="bar-header">
-        <div class="header-headline">
+    <header>
+        <!-- <div class="header-headline"> -->
+        <div class="bar-header">
             <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
                 <img src="assets/icons/navbar-48.png" />
             </button>
             <div>
                 <div class="header-headline" *ngIf="channel.category == 'channel'">
-                    <h2 style="font-size: 1.2rem; width: 1.2rem;">#</h2>
+                    <h2>#</h2>
                     <h2>{{channel.channelName}}</h2>
                 </div>
 
-                <div class="d-flex" *ngIf="channel.category == 'private'">
+                <div class="header-headline" *ngIf="channel.category == 'private'">
                     <div *ngFor="let user of channel.users" class="private-header-imgs">
                         <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
                     </div>
@@ -58,8 +59,9 @@
                 </p>
                 <p [innerHTML]="thread.message"></p>
                 <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
-                <p class="d-flex emoji-container" *ngIf="thread.reactions.length > 0">
-                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, thread, t)">
+                <p class="emoji-container" *ngIf="thread.reactions.length > 0">
+                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index"
+                        (click)="evaluateThread(reaction.id, thread, t)">
                         <span>{{reaction.id}}</span><span>{{reaction.users.length}}</span>
                     </button>
                     <button class="btn-unset" [matMenuTriggerFor]="emoji"><img class="add-reaction"

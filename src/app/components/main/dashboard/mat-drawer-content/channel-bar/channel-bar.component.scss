@@ -2,42 +2,8 @@
 @import "../../dashboard.component.scss";
 @import "../../../../../../assets/scss/mixin.scss";
 
-
 .show-thread {
     display: none;
-}
-
-.thread-options {
-    display: none;
-    position: absolute;
-    right: 0;
-    top: -1rem;
-    background-color: $bg-color;
-    border: 1px solid rgba(255, 255, 255, .12);
-    border-radius: .5rem;
-    padding: .3rem 1rem;
-    gap: 1rem;
-
-    button {
-        cursor: pointer;
-
-        img {
-            width: 1.25rem;
-            height: 1.25rem;
-            display: block;
-        }
-    }
-}
-
-
-
-.channel-thread-img {
-    height: $avatar-width;
-    width: $avatar-width;
-    display: block;
-    border-radius: .5rem;
-    object-fit: cover;
-    padding-top: 4px;
 }
 
 .channel-thread-comments {
@@ -83,7 +49,7 @@
     }
 
     &:hover {
-        background-color: $bg-color;
+        background-color: $bg-color-main;
         border: 1px solid rgba(255, 255, 255, .12);
 
         .time-of-last-answer {
@@ -104,27 +70,12 @@
     padding-top: 2rem;
 }
 
-.thread-headline {
-    display: flex;
-    gap: 0.6rem;
-}
-
-.post-image {
-    max-width: 200px;
-    max-height: 200px;
-    object-fit: cover;
-    cursor: pointer;
-}
-
 .img-header-partner {
     @include image(cover, 1.5rem, 1.5rem);
     @include noBorderWithRadius(4px);
 }
 
-.private-header-imgs {
-    @include containerPosition(unset, center)
-}
-
-.bar-header {
-    color: $color-main;
+.emoji-container {
+    display: flex;
+    gap: .3rem;
 }

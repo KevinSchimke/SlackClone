@@ -2,13 +2,14 @@
 @import "./../node_modules/@ctrl/ngx-emoji-mart/picker.css";
 @import "./assets/scss/edit-md.scss";
 @import "./assets/scss/mixin.scss";
+
 * {
     margin: 0;
     // outline: 1px solid green;
 }
 
 body {
-    background-color: $background-main;
+    background-color: $bg-color-main;
     color: $color-main;
     font-family: 'Lato', sans-serif !important;
     cursor: default;
@@ -18,6 +19,7 @@ a {
     color: $color-link;
     text-decoration: none;
     cursor: pointer !important;
+
     &:hover {
         text-decoration: underline 0.5px solid $color-link;
         text-underline-offset: 2px;
@@ -78,7 +80,6 @@ button {
     border: unset;
     background: none;
     padding: 0;
-    cursor: pointer;
 }
 
 .angular-editor-textarea {
