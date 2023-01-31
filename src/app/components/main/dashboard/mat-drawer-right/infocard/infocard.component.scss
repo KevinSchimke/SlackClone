@@ -76,10 +76,6 @@
     }
 }
 
-.a {
-    outline: 1px solid green;
-}
-
 .img-info {
     @include image(unset, 1rem, 1rem);
 }

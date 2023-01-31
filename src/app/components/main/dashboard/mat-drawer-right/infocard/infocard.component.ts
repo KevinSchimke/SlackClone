@@ -28,16 +28,13 @@ export class InfocardComponent {
     private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.route.params.subscribe((params: any) => {
-      this.getUser(params.id);
-    });
+    this.route.params.subscribe((params: any) => this.getUser(params.id));
     this.subscribeThreadbarInit();
   }
 
   subscribeThreadbarInit() {
     this.childSelector.threadBarIsInit.subscribe(isLoaded => {
-      if (isLoaded === true)
-        this.childSelector.threadBar.open();
+      if (isLoaded === true) this.childSelector.threadBar.open();
     });
   }
 
@@ -51,9 +48,7 @@ export class InfocardComponent {
   }
 
   checkIsLoggedInUser(user: User) {
-    if (this.userService.currentUser.id === user.id) {
-      return true;
-    }
+    if (this.userService.currentUser.id === user.id) return true;
     return false;
   }
 
