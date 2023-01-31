@@ -21,7 +21,8 @@ import { Channel } from 'src/app/models/channel.class';
 })
 export class ThreadBarComponent {
   collData$: Observable<any> = EMPTY;
-  docData$: Observable<any> = EMPTY;
+  threadDocData$: Observable<any> = EMPTY;
+  channelDocData$: Observable<any> = EMPTY;
   collPath: string = '';
   channel: Channel = new Channel();
   channelId: string = '';
@@ -56,7 +57,8 @@ export class ThreadBarComponent {
   getCollAndDoc() {
     this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection';
     this.collData$ = this.fireService.getCollection(this.collPath);
-    this.docData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
+    this.threadDocData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
+    this.channelDocData$ = this.fireService.getDocument(this.channelId, 'channels/');
   }
 
   subscribeThreadbarInit() {
@@ -64,16 +66,12 @@ export class ThreadBarComponent {
       if (isLoaded === true)
         this.childSelector.threadBar.open();
     });
-    this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
-      if (isLoaded) {
-        this.channel = this.currentDataService.allCategories.find((channel: Channel) => (channel.channelId === this.channelId));
-      }
-    });
   }
 
   subscribeCollAndDoc() {
-    this.docData$.subscribe((thread) => this.setThread(thread));
+    this.threadDocData$.subscribe((thread) => this.setThread(thread));
     this.collData$.subscribe((comments) => this.setComments(comments));
+    this.channelDocData$.subscribe((channel) => this.channel = channel);
   }
 
   setThread(thread: Thread) {
