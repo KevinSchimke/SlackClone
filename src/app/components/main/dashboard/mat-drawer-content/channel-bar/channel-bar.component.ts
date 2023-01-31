@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
-import { Firestore } from '@angular/fire/firestore';
+import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -32,6 +32,11 @@ export class ChannelBarComponent {
   channelName: string = '';
   channel$: Observable<any> = EMPTY;
   shownUsers: string = '';
+  loastLoadedThread: Thread = new Thread();
+  k: number = 0;
+  l: number = 0;
+  newThreads: any[] = [];
+  testquery$: any;
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
@@ -43,7 +48,8 @@ export class ChannelBarComponent {
   ngOnInit(): void {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => {
-      this.subscribeCurrentChannel(param)});
+      this.subscribeCurrentChannel(param)
+    });
     this.isFirstLoad = true;
   }
 
@@ -68,12 +74,66 @@ export class ChannelBarComponent {
 
   subscribeCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
-    this.collPath = 'channels/' + param.id + '/ThreadCollection'
+    this.threads = [];
+    this.k = 0;
+    this.l = 0;
+    this.collPath = 'channels/' + param.id + '/ThreadCollection';
     this.collData$ = this.fireService.getCollection(this.collPath);
     this.collData$.subscribe((threads) => this.convertThreads(threads));
+    // const collRef = collection(this.firestore, this.collPath);
+    // const q = query(collRef, orderBy('creationDate', "desc"), limit(9));
+
+    // onSnapshot(q, (querySnapshot: any) => {
+    //   querySnapshot.forEach((doc: any) => this.k = this.pushIntoThreads(doc, this.k));
+    //   this.threads = this.sorter.sortByDate(this.threads);
+    //   this.threads.forEach((thread, k) => {
+    //     this.threads[k].reactions = JSON.parse(thread.reactions);
+    //     this.threads[k].creationDate = this.threads[k].creationDate.toDate();
+    //   });
+    //   this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
+    //   console.log("last", this.loastLoadedThread);
+    // });
     this.isFirstLoad = true;
     this.getChannelName();
   }
+
+  nextQuery() {
+    const next = query(collection(this.firestore, this.collPath),
+      orderBy("creationDate", "desc"),
+      startAfter(this.loastLoadedThread),
+      limit(9));
+    onSnapshot(next, (querySnapshot: any) => {
+      querySnapshot.forEach((doc: any) => this.l = this.pushIntoNewThreads(doc, this.l));
+      this.newThreads = this.sorter.sortByDate(this.newThreads);
+      this.newThreads.forEach((thread, k) => {
+        this.newThreads[k].reactions = JSON.parse(thread.reactions);
+        this.newThreads[k].creationDate = this.newThreads[k].creationDate.toDate();
+      });
+      this.threads.push(...this.newThreads);
+      console.log('unsorted threads nach pushen', this.threads);
+      this.threads = this.threads.sort(function (a: any, b: any) {
+        return a.creationDate - b.creationDate;
+      });
+      console.log('sorted threads nach pushen', this.threads);
+      this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
+      console.log("last", this.loastLoadedThread);
+    });
+  }
+
+  pushIntoThreads(doc: any, k: number) {
+    this.threads.push(doc.data());
+    this.threads[k]['id'] = doc.id;
+    k++;
+    return k;
+  }
+
+  pushIntoNewThreads(doc: any, l: number) {
+    this.newThreads.push(doc.data());
+    this.newThreads[l]['id'] = doc.id;
+    l++;
+    return l;
+  }
+
 
   getChannelName() {
     this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
