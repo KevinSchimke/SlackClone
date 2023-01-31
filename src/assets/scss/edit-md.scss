@@ -43,3 +43,47 @@ h2,
 .mat-mdc-menu-panel.mat-mdc-menu-panel {
     max-width: unset !important;
 }
+
+.angular-editor-toolbar,
+.angular-editor-toolbar-set,
+.angular-editor-button {
+    background-color: unset !important;
+    border: unset !important;
+    color: $color-main;
+}
+
+.angular-editor-toolbar {
+    border-radius: 10px;
+}
+
+.angular-editor {
+    display: flex;
+    flex-direction: column-reverse;
+    input {
+        display: none;
+    }
+}
+
+.mat-mdc-card {
+    input {
+        display: none;
+    }
+}
+
+.send-btn {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+
+.angular-editor-textarea:after {
+    content: unset !important;
+    position: unset;
+    bottom: unset;
+    right: unset;
+    display: block;
+    width: unset;
+    height: unset;
+    cursor: unset;
+    background-color: unset;
+}
