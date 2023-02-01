@@ -31,6 +31,7 @@ header {
         }
 
         img {
+            @include image(unset, 1.5rem, 1.5rem);
             padding-right: .5rem;
         }
     }
@@ -48,7 +49,7 @@ header {
         }
 
         img {
-            @include image(unset, 1rem, 1rem);
+            @include image(unset, 1.5rem, 1.5rem);
         }
 
         .contactItems {

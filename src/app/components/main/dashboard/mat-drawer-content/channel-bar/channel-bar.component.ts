@@ -21,6 +21,7 @@ import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog
   styleUrls: ['./channel-bar.component.scss']
 })
 export class ChannelBarComponent {
+  leftSideBar: boolean = false;
   isGoToThreadHovered = false;
   channelId: string = '';
   collData$: Observable<any> = EMPTY;
@@ -53,6 +54,13 @@ export class ChannelBarComponent {
       this.scrollToBottom();
     }
   }
+
+  toggleLeftSidebar() {
+    this.leftSideBar = !this.leftSideBar;
+    this.sidenavToggler.workspaceBar.toggle()
+  }
+
+
 
   scrolled(event: any): void {
     this.isFirstLoad = false;
