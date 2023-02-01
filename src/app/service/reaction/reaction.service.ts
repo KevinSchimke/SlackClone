@@ -19,26 +19,37 @@ export class ReactionService {
   }
 
 
-  evaluateThread($event: EmojiEvent, thread: Thread, t: number, channelId: string) {
-    let userEmojiCount = thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
-    let emojiIndex = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native));
-    let emojiAlreadyByMe = thread.reactions.findIndex((reaction) => (reaction.id === $event.emoji.native && reaction.users.includes(this.currentUser.id))) != -1;
-    let obj = this.evaluateThreadCases($event, thread, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
-    let updatedThread = new Thread(thread);
-    this.fireService.save(updatedThread, 'channels/' + channelId + '/ThreadCollection', thread.id);
-    return obj;
-  }
+  // evaluateThread(emoji: string, thread: Thread, t: number) {
+  //   let userEmojiCount = this.getEmojiCount(thread);
+  //   let emojiIndex = this.getEmojiIndex(emoji, thread);
+  //   let emojiAlreadyByMe = this.isEmojiAlreadyByMe(emoji, thread);
+  //   this.evaluateThreadCases(emoji, thread, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
+  //   this.saveReaction(thread, t);
+  // }
 
-  evaluateThreadCases($event: EmojiEvent, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
-    // if (emojiAlreadyByMe)
-    //   this.removeReaction(thread, t, emojiIndex)
-    // else if (userEmojiCount > 2)
-    //   this.openDialog();
-    // else if (emojiIndex != -1)
-    //   this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
-    // else if (emojiIndex == -1)
-    //   this.addNewReaction($event, t);
-  }
+  // getEmojiCount(thread: Thread) {
+  //   return thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
+  // }
+
+  // getEmojiIndex(emoji: string, thread: Thread) {
+  //   return thread.reactions.findIndex((reaction) => (reaction.id === emoji));
+  // }
+
+  // isEmojiAlreadyByMe(emoji: string, thread: Thread) {
+  //   return thread.reactions.findIndex((reaction) => (reaction.id === emoji && reaction.users.includes(this.currentUser.id))) != -1;
+  // }
+
+  // evaluateThreadCases(emoji: string, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
+  //   if (emojiAlreadyByMe)
+  //     this.removeReaction(thread, t, emojiIndex);
+  //   else if (userEmojiCount > 2)
+  //     this.openDialog();
+  //   else if (emojiIndex != -1)
+  //     this.addToReaction(emojiIndex, t);
+  //   else if (emojiIndex == -1)
+  //     this.addNewReaction(emoji, t);
+  // }
+
 
   // openDialog(): void {
   //   const dialogRef = this.dialog.open(DialogReactionComponent);
@@ -52,10 +63,19 @@ export class ReactionService {
   //   }
   // }
 
-  // addNewReaction($event: EmojiEvent, t: number) {
+  // addNewReaction(emoji: string, t: number) {
   //   this.threads[t].reactions.push({
-  //     id: $event.emoji.native,
+  //     id: emoji,
   //     users: [this.currentUser.id]
   //   });
+  // }
+
+  // addToReaction(emojiIndex: number, t: number) {
+  //   this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
+  // }
+
+  // saveReaction(thread: Thread, t: number) {
+  //   let updatedThread = new Thread(this.threads[t]);
+  //   this.fireService.save(updatedThread, 'channels/' + this.channelId + '/ThreadCollection', thread.id);
   // }
 }

@@ -161,28 +161,28 @@ export class ChannelBarComponent {
   }
 
   evaluateThread(emoji: string, thread: Thread, t: number) {
-    let userEmojiCount = this.getEmojiCount(thread);
-    let emojiIndex = this.getEmojiIndex(emoji, thread);
-    let emojiAlreadyByMe = this.isEmojiAlreadyByMe(emoji, thread);
-    this.evaluateThreadCases(emoji, thread, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
-    this.saveReaction(thread, t);
+    let userEmojiCount = this.getEmojiCount(t);
+    let emojiIndex = this.getEmojiIndex(emoji, t);
+    let emojiAlreadyByMe = this.isEmojiAlreadyByMe(emoji, t);
+    this.evaluateThreadCases(emoji, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
+    this.saveReaction(t);
   }
 
-  getEmojiCount(thread: Thread) {
-    return thread.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
+  getEmojiCount(t: number) {
+    return this.threads[t].reactions.filter((reaction: any) => (reaction.users.includes(this.currentUser.id))).length;
   }
 
-  getEmojiIndex(emoji: string, thread: Thread) {
-    return thread.reactions.findIndex((reaction) => (reaction.id === emoji));
+  getEmojiIndex(emoji: string, t: number) {
+    return this.threads[t].reactions.findIndex((reaction: any) => (reaction.id === emoji));
   }
 
-  isEmojiAlreadyByMe(emoji: string, thread: Thread) {
-    return thread.reactions.findIndex((reaction) => (reaction.id === emoji && reaction.users.includes(this.currentUser.id))) != -1;
+  isEmojiAlreadyByMe(emoji: string, t: number) {
+    return this.threads[t].reactions.findIndex((reaction: any) => (reaction.id === emoji && reaction.users.includes(this.currentUser.id))) != -1;
   }
 
-  evaluateThreadCases(emoji: string, thread: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
+  evaluateThreadCases(emoji: string, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
     if (emojiAlreadyByMe)
-      this.removeReaction(thread, t, emojiIndex);
+      this.removeReaction(t, emojiIndex);
     else if (userEmojiCount > 2)
       this.openDialog();
     else if (emojiIndex != -1)
@@ -197,8 +197,9 @@ export class ChannelBarComponent {
     dialogRef.afterClosed().subscribe();
   }
 
-  removeReaction(thread: Thread, t: number, emojiIndex: number) {
-    this.threads[t].reactions[emojiIndex].users.splice(thread.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
+  removeReaction(t: number, emojiIndex: number) {
+    let index = this.threads[t].reactions[emojiIndex].users.indexOf(this.currentUser.id);
+    this.threads[t].reactions[emojiIndex].users.splice(index, 1);
     if (this.threads[t].reactions[emojiIndex].users.length == 0) {
       this.threads[t].reactions.splice(emojiIndex, 1);
     }
@@ -220,8 +221,8 @@ export class ChannelBarComponent {
     dialog.componentInstance.openboxImg = url;
   }
 
-  saveReaction(thread: Thread, t: number) {
-    let updatedThread = new Thread(this.threads[t]);
-    this.fireService.save(updatedThread, 'channels/' + this.channelId + '/ThreadCollection', thread.id);
+  saveReaction(t: number) {
+    let overwrittenThread = new Thread(this.threads[t]);
+    this.fireService.save(overwrittenThread, 'channels/' + this.channelId + '/ThreadCollection', overwrittenThread.id);
   }
 }
