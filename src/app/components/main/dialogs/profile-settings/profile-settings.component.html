@@ -10,14 +10,15 @@
             </div>
         </mat-card-header>
         <mat-card-content>
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 0" (click)="setStep(0)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>account_circle</mat-icon>
+                        <mat-icon><img src="assets/svg/color_d1d2d3/account.svg"></mat-icon>
                         Username
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 0"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 0"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form (ngSubmit)="updateUserName()" [formGroup]="username">
@@ -31,14 +32,15 @@
                 </form>
             </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 1" (click)="setStep(1)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>rate_review</mat-icon>
+                        <mat-icon><img src="assets/svg/color_d1d2d3/rate_review.svg"></mat-icon>
                         Status
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 1"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 1"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="inputStatus">
@@ -59,14 +61,15 @@
                 <button (click)="updateStatus()" class="actionButton" mat-raised-button>Save status</button>
             </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 2" (click)="setStep(2)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>phone_android</mat-icon>
+                        <mat-icon><img src="assets/svg/color_d1d2d3/phone.svg"></mat-icon>
                         Phone
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 2"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 2"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="fill">
