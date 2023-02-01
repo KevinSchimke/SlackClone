@@ -2,8 +2,9 @@
     <header>
         <!-- <div class="header-headline"> -->
         <div class="bar-header">
-            <button (click)="sidenavToggler.workspaceBar.toggle()" class="workspace-btn">
-                <img src="assets/icons/navbar-48.png" />
+            <button (click)="toggleLeftSidebar()" class="workspace-btn">
+                <img *ngIf="leftSideBar" src="assets/svg/color_d1d2d3/left_panel_open.svg">
+                <img *ngIf="!leftSideBar" src="assets/svg/color_d1d2d3/left_panel_close.svg">
             </button>
             <div>
                 <div class="header-headline" *ngIf="channel.category == 'channel'">
@@ -22,22 +23,20 @@
             </div>
         </div>
     </header>
-    <button class="btn-unset" style="color:whitesmoke; border: 1px solid white; border-radius: 5px; padding: 10px;" (click)="nextQuery()">Load More</button>
+    <button class="btn-unset" style="color:whitesmoke; border: 1px solid white; border-radius: 5px; padding: 10px;"
+        (click)="nextQuery()">Load More</button>
 
     <div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
         <div class="channel-thread" *ngFor="let thread of threads; let t = index">
             <div class="thread-options">
                 <button class="btn-unset" [matMenuTriggerFor]="emoji">
-                    <img src="assets/img/emoji_D1D2D3.png" />
+                    <img src="assets/svg/color_d1d2d3/add_reaction.svg" />
                 </button>
                 <button class="btn-unset" (click)="openThread(thread)">
-                    <img src="assets/img/threads_D1D2D3.png" />
+                    <img src="assets/svg/color_d1d2d3/threads.svg" />
                 </button>
                 <button class="btn-unset">
-                    <img src="assets/img/share_D1D2D3.png" />
-                </button>
-                <button class="btn-unset">
-                    <img src="assets/img/bookmark_D1D2D3.png" />
+                    <img src="assets/svg/color_d1d2d3/bookmark.svg" />
                 </button>
             </div>
             <mat-menu #emoji="matMenu" xPosition="before">
@@ -60,12 +59,13 @@
                 <p [innerHTML]="thread.message"></p>
                 <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
                 <p class="emoji-container" *ngIf="thread.reactions.length > 0">
-                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, t)">
+                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index"
+                        (click)="evaluateThread(reaction.id, t)">
                         <span>{{reaction.id}}</span>
                         <span>{{reaction.users.length}}</span>
                     </button>
                     <button class="btn-unset" [matMenuTriggerFor]="emoji">
-                        <img class="add-reaction" src="assets/img/emoji_D1D2D3.png"></button>
+                        <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
                 </p>
                 <div *ngIf="thread.comments > 0">
                     <button class="d-flex go-to-thread" (click)="openThread(thread)">
