@@ -10,6 +10,7 @@ export class ImgSrcPipe implements PipeTransform {
   constructor(private currentData: CurrentDataService){}
 
   transform(userId: string): string {
+    console.log('imgSrc Pipe rödelt');
     let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
     if (j == -1) {
       return 'assets/img/user0.png';

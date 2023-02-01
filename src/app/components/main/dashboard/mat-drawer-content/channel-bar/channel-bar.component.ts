@@ -2,7 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
-import { EMPTY, Observable } from 'rxjs';
+import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
 import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
@@ -68,17 +68,27 @@ export class ChannelBarComponent {
 
 
   setCurrentChannel(param: { id: string }) {
+    this.threads = [];
+    console.log('mach was und threads leer bevor neue kommen');
     this.channelId = param.id;
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
-    // this.collData$ = this.fireService.getCollection(this.collPath);
-    // this.collData$.subscribe((threads) => this.convertThreads(threads));
-    this.currentDataService.usersAreLoaded$.subscribe(areLoaded => this.firstQuery(areLoaded));
+    this.collData$ = this.fireService.getCollection(this.collPath);
+    this.collData$.subscribe((threads) => this.convertThreads(threads));
+    // this.snapShotThreadCollection();
+    
     this.isFirstLoad = true;
     this.getChannelName();
   }
 
+  snapShotThreadCollection(){
+    this.currentDataService.usersAreLoaded$.pipe(takeWhile((loaded) => this.currentDataService.usersAreLoaded)).subscribe(areLoaded => {
+      this.firstQuery(areLoaded)
+    });
+  }
+
   firstQuery(areLoaded: boolean) {
     if (areLoaded === true) {
+      this.threads = [];
       const collRef = collection(this.firestore, this.collPath);
       const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
       this.snapQuery(q);
