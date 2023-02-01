@@ -168,18 +168,25 @@ export class MessageEditorComponent {
 
   async getMessage() {
     let comment: Thread = this.setComment();
-    if (this.collectionPath) {
-      this.fireservice.save(comment, this.collectionPath);
-      this.setThreadData();
-    } else {
-      if (await this.isChatAlreadyExisting()) {
-        this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
-      } else {
-        let channelId = await this.createNewChannel();
-        this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
-      }
-    }
+    if (this.collectionPath)
+      this.messageToCollPath(comment);
+    else
+      this.messageFromNewMsgComp(comment);
     this.imageURL = '';
+  }
+
+  messageToCollPath(comment: Thread) {
+    this.fireservice.save(comment, this.collectionPath);
+    this.setThreadData();
+  }
+
+  async messageFromNewMsgComp(comment: Thread) {
+    if (await this.isChatAlreadyExisting()) {
+      this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
+    } else {
+      let channelId = await this.createNewChannel();
+      this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
+    }
   }
 
   setComment() {
