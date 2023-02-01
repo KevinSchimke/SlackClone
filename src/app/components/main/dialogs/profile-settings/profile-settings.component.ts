@@ -10,27 +10,18 @@ import { PushupMessageService } from 'src/app/service/pushup-message/pushup-mess
 import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
-  selector: 'app-editsettingcard',
-  templateUrl: './editsettingcard.component.html',
-  styleUrls: ['./editsettingcard.component.scss']
+  selector: 'app-profile-settings',
+  templateUrl: './profile-settings.component.html',
+  styleUrls: ['./profile-settings.component.scss']
 })
-export class EditsettingcardComponent {
+export class ProfileSettingsComponent {
 
   @ViewChild('phone') phone?: ElementRef
   username = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
   });
-  email = new FormGroup({
-    email: new FormControl('', [Validators.required, Validators.email])
-  });
-  password = new FormGroup({
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
-  });
-
-  deletUsername: string = '';
 
   step = -1;
-  hide = true;
 
   public statusValue: any = '';
 
@@ -44,7 +35,7 @@ export class EditsettingcardComponent {
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
     private fireStorage: Storage,
-    private dialogRef: MatDialogRef<EditsettingcardComponent>,
+    private dialogRef: MatDialogRef<ProfileSettingsComponent>,
     public userService: UserService) {
     this.statusValue = this.userService.currentUser.status;
   }
@@ -78,52 +69,6 @@ export class EditsettingcardComponent {
   updateStatus() {
     this.userService.currentUser.status = this.statusValue;
     this.updateUserData();
-  }
-
-  updateUserEmail() {
-    if (this.email.valid) {
-      let email = this.email.value.email!;
-      updateEmail(this.auth.currentUser!, email)
-        .then(() => {
-          this.userService.currentUser.mail = email!;
-          this.updateUserData();
-          sendEmailVerification(this.auth.currentUser!)
-          this.pushupMessage.openPushupMessage('success', 'Please verify your new email')
-          this.closeDialog();
-          this.logout();
-        }).catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
-    }
-  }
-
-  updateUserPassword() {
-    if (this.password.valid) {
-      let password = this.password.value.password!;
-      updatePassword(this.auth.currentUser!, password)
-        .then(() => {
-          this.pushupMessage.openPushupMessage('success', 'Update password successfully')
-          this.closeDialog();
-        }).catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
-    }
-  }
-
-  async deleteCurrentUser() {
-    await this.firestoreService.deleteUser();
-    await deleteUser(this.auth.currentUser!)
-    location.reload();
-  }
-
-  logout() {
-    signOut(this.auth)
-      .then(() => {
-        location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
   }
 
   handleClick($event: EmojiEvent) {
@@ -167,6 +112,4 @@ export class EditsettingcardComponent {
         });
       });
   }
-
-
 }
