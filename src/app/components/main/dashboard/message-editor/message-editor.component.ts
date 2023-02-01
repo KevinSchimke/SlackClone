@@ -41,6 +41,7 @@ export class MessageEditorComponent {
   chatChannels: any[] = [];
   isAlready: boolean = false;
   privateId: string = '';
+  target: boolean = false;
 
   async ngOnInit() {
     this.currentUser = this.userService.get();
@@ -48,21 +49,6 @@ export class MessageEditorComponent {
     if (!this.thread) {
       this.editorConfig.toolbarHiddenButtons?.push(this.small);
     }
-  }
-
-  async isChatAlreadyExists() {
-    let target = false;
-    const q = this.currentDataService.getPrivates();
-    q.forEach((doc) => {
-      let _currentChatUser = this.currentDataService.getChatUsersId();
-      _currentChatUser.push(this.userService.getUid())
-      if (JSON.stringify(doc['users'].sort()) === JSON.stringify(_currentChatUser.sort())) {
-        target = true;
-        this.privateId = doc.id;
-        console.log('privateId', this.privateId);
-      }
-    });
-    return target;
   }
 
   getIdFromUrl(param: { id: string }) {
@@ -186,7 +172,7 @@ export class MessageEditorComponent {
       this.fireservice.save(comment, this.collectionPath);
       this.setThreadData();
     } else {
-      if (await this.isChatAlreadyExists()) {
+      if (await this.isChatAlreadyExisting()) {
         this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
       } else {
         let channelId = await this.createNewChannel();
@@ -214,6 +200,29 @@ export class MessageEditorComponent {
       }
       this.fireservice.updateThread(users_arr, this.collectionPath.replace("/commentCollection", ""));
     }
+  }
+
+  async isChatAlreadyExisting() {
+    this.target = false;
+    const directMessages = this.currentDataService.getPrivates();
+    directMessages.forEach((dm: Channel) => this.checkDirectMessage(dm));
+    return this.target;
+  }
+
+  checkDirectMessage(dm: Channel) {
+    let currentChatUsers = this.currentDataService.getChatUsersId();
+    currentChatUsers.push(this.userService.getUid());
+    if (this.usersAreSame(dm, currentChatUsers))
+      this.setTargetAndPrivateId(dm);
+  }
+
+  setTargetAndPrivateId(dm: Channel) {
+    this.target = true;
+    this.privateId = dm.channelId;
+  }
+
+  usersAreSame(dm: Channel, currentChatUsers: string[]) {
+    return JSON.stringify(dm['users'].sort()) === JSON.stringify(currentChatUsers.sort());
   }
 
   isNotCommentedByCurrentUser() {
