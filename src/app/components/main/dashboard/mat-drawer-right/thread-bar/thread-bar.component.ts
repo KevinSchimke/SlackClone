@@ -61,7 +61,6 @@ export class ThreadBarComponent {
 
   getCollAndDoc() {
     this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection';
-    // this.collData$ = this.fireService.getCollection(this.collPath);
     this.threadDocData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
     this.channelDocData$ = this.fireService.getDocument(this.channelId, 'channels/');
   }
@@ -75,7 +74,6 @@ export class ThreadBarComponent {
 
   subscribeCollAndDoc() {
     this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    // this.collData$.subscribe((comments) => this.setComments(comments));
     this.channelDocData$.subscribe((channel) => this.channel = channel);
     this.snapShotThreadCollection();
   }
@@ -127,14 +125,6 @@ export class ThreadBarComponent {
 
   getThreadIndex(elemT: Thread) {
     return this.unsortedComments.findIndex((thread: Thread) => thread.id === elemT.id);
-  }
-
-  setComments(comments: any[]) {
-    this.comments = this.sorter.sortByDate(comments);
-    this.comments.forEach((comment: any, k) => {
-      this.comments[k].reactions = JSON.parse(comment.reactions);
-      // this.comments[k].creationDate = this.comments[k].creationDate.toDate();
-    });
   }
 
   closeThread() {

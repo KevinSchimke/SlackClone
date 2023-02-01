@@ -72,10 +72,7 @@ export class ChannelBarComponent {
     this.unsortedThreads = [];
     this.channelId = param.id;
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
-    // this.collData$ = this.fireService.getCollection(this.collPath);
-    // this.collData$.subscribe((threads) => this.convertThreads(threads));
     this.snapShotThreadCollection();
-
     this.isFirstLoad = true;
     this.getChannelName();
   }
@@ -138,14 +135,6 @@ export class ChannelBarComponent {
       if (isLoaded) {
         this.channel = this.currentDataService.allCategories.find((channel: Channel) => (channel.channelId === this.channelId));
       }
-    });
-  }
-
-  convertThreads(threads: []) {
-    this.threads = this.sorter.sortByDate(threads);
-    this.threads.forEach((thread: any, k) => {
-      this.threads[k].reactions = JSON.parse(thread.reactions);
-      // this.threads[k].creationDate = this.threads[k].creationDate.toDate();
     });
   }
 
