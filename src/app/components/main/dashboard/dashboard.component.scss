@@ -1,6 +1,5 @@
 @import "../../../../assets/scss/colors.scss";
 @import "../../../../assets/scss/mixin.scss";
-
 //for dashboard
 .main-header {
     @include containerPosition(space-between, center);
@@ -27,36 +26,28 @@
 }
 
 // for thread-bar and channel-bar
-
 header {
     border-bottom: 1px solid $border-button-main;
     @include containerPosition(space-between, center);
     padding: .5rem 1rem;
-
     .bar-header {
         @include containerPosition(unset, center);
-
         .header-headline {
             @include containerPosition(unset, center);
         }
-
         h2 {
             margin-right: 1rem !important
         }
-
         h3 {
             margin-right: 0.5rem !important;
             font-size: 0.85rem;
         }
     }
-
     .close-thread-btn {
         border-radius: .5rem;
-
         img {
             @include image(cover, 1.5rem, 1.5rem);
         }
-
         &:hover {
             background-color: $bg-color-hover;
         }
@@ -75,15 +66,12 @@ header {
     display: flex;
     gap: .5rem;
     padding: .5rem 1.5rem;
-
     &:hover {
         background-color: $bg-color-hover;
-
         .thread-options {
             display: flex;
         }
     }
-
     .thread-options {
         @include positionAbsolute(-1rem, 0);
         @include border(1px, solid, $border-button-main, 0.5rem);
@@ -91,48 +79,46 @@ header {
         background-color: $bg-color-main;
         padding: .3rem 1rem;
         gap: 1rem;
-
         button {
             img {
                 @include image(cover, 1.25rem, 1.25rem);
             }
         }
     }
-
     .channel-thread-img {
         @include image(cover, 2.5rem, 2.5rem);
         border-radius: .5rem;
     }
-
     .channel-thread-content {
         word-break: break-word;
-
+        width: 100%;
         .thread-headline {
             display: flex;
             gap: 0.6rem;
-
             .span-time {
                 color: $color-secondary;
                 font-size: .725rem;
             }
         }
-
         .btn-current-emoji {
             background-color: $bg-color-light;
             color: $color-main;
             padding: 2px 4px;
             border-radius: .5rem;
             border: 1px solid transparent;
-
             &:hover {
                 $bg-color: $bg-accent;
                 border: 1px solid $color-secondary;
             }
         }
-
         .add-reaction {
             @include containerSize(1rem, 1rem);
             display: block;
         }
     }
+}
+
+.emoji-container {
+    display: flex;
+    gap: .3rem;
 }

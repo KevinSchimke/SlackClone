@@ -23,8 +23,7 @@
             </div>
         </div>
     </header>
-    <button class="btn-unset" style="color:whitesmoke; border: 1px solid white; border-radius: 5px; padding: 10px;"
-        (click)="nextQuery()">Load More</button>
+    <button class="btn-unset" style="color:whitesmoke; border: 1px solid white; border-radius: 5px; padding: 10px;" (click)="nextQuery()">Load More</button>
 
     <div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
         <div class="channel-thread" *ngFor="let thread of threads; let t = index">
@@ -59,12 +58,11 @@
                 <p [innerHTML]="thread.message"></p>
                 <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
                 <p class="emoji-container" *ngIf="thread.reactions.length > 0">
-                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index"
-                        (click)="evaluateThread(reaction.id, t)">
+                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, t)">
                         <span>{{reaction.id}}</span>
                         <span>{{reaction.users.length}}</span>
                     </button>
-                    <button class="btn-unset" [matMenuTriggerFor]="emoji">
+                    <button class="btn-unset btn-current-emoji" [matMenuTriggerFor]="emoji">
                         <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
                 </p>
                 <div *ngIf="thread.comments > 0">
