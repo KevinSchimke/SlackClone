@@ -7,7 +7,7 @@
         </div>
         <div class="header-headlin" *ngIf="channel.category == 'private'">
             <div class="private-header-imgs" *ngFor="let user of channel.users">
-                <img *ngIf="user != currentUser.id" [src]="user | imgSrc" class="img-header-partner" />
+                <img *ngIf="user != currentUser.id" [src]="user | imgSrc" class="img-header-partner">
             </div>
         </div>
     </div>
@@ -16,8 +16,8 @@
 
 <div class="channel-thread">
     <div class="thread-options">
-        <button class="btn-unset"><img src="assets/img/emoji_D1D2D3.png"></button>
-        <button class="btn-unset"><img src="assets/img/bookmark_D1D2D3.png"></button>
+        <button class="btn-unset"><img src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
+        <button class="btn-unset"><img src="assets/svg/color_d1d2d3/bookmark.svg"></button>
     </div>
     <img [src]="thread.userId | imgSrc" class="channel-thread-img">
 
@@ -42,16 +42,15 @@
 <div class="channel-thread" *ngFor="let comment of comments; let c = index">
     <div class="thread-options">
         <button class="btn-unset" [matMenuTriggerFor]="emoji">
-            <img src="assets/img/emoji_D1D2D3.png" />
+            <img src="assets/svg/color_d1d2d3/add_reaction.svg">
             <mat-menu #emoji="matMenu" xPosition="before">
-                <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)"
-                    [i18n]="{search: 'Recherche',categories:
+                <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)" [i18n]="{search: 'Recherche',categories:
                     { search: 'Résultats de recherche', recent: 'Récents' }}">
                 </emoji-mart>
             </mat-menu>
         </button>
         <button class="btn-unset">
-            <img src="assets/img/bookmark_D1D2D3.png" />
+            <img src="assets/svg/color_d1d2d3/bookmark.svg" />
         </button>
     </div>
     <img [src]="comment.userId | imgSrc" class="channel-thread-img">
@@ -64,12 +63,13 @@
         <p [innerHTML]="comment.message"></p>
         <img *ngIf="comment.img" [src]="comment.img" class="post-image" (click)="openBox(comment.img)" />
         <p *ngIf="comment.reactions.length > 0">
-            <button class="btn-unset btn-current-emoji" *ngFor="let reaction of comment.reactions; let u = index" (click)="evaluateThread(reaction.id, c)">
+            <button class="btn-unset btn-current-emoji" *ngFor="let reaction of comment.reactions; let u = index"
+                (click)="evaluateThread(reaction.id, c)">
                 <span>{{reaction.id}}</span>
                 <span>{{reaction.users.length}}</span>
             </button>
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
-                <img class="add-reaction" src="assets/img/emoji_D1D2D3.png">
+                <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg">
             </button>
         </p>
     </div>
