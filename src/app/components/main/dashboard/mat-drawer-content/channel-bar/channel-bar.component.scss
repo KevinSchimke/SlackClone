@@ -10,22 +10,6 @@
     font-weight: 700;
 }
 
-.workspace-btn {
-    background: none;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    img {
-        display: block;
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-    &:hover {
-        background-color: $bg-color-hover;
-    }
-    margin-right: 1rem;
-}
-
 .go-to-thread {
     width: 100%;
     cursor: pointer;

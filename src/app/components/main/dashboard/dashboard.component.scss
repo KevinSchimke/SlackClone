@@ -122,3 +122,20 @@ header {
     display: flex;
     gap: .3rem;
 }
+
+.workspace-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    color: $color-main;
+    cursor: pointer;
+    img {
+        display: block;
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+    &:hover {
+        background-color: $bg-color-hover;
+    }
+    margin-right: 1rem;
+}

@@ -82,23 +82,23 @@ export class ChannelBarComponent {
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
     this.snapShotThreadCollection();
     this.isFirstLoad = true;
-    this.getChannelName();
   }
 
   snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
-      this.firstQuery(areLoaded)
+      if (areLoaded === true) {
+        this.getChannelName();
+        this.firstQuery(areLoaded);
+      }
     });
   }
 
   firstQuery(areLoaded: boolean) {
-    if (areLoaded === true) {
-      this.threads = [];
-      this.unsortedThreads = [];
-      const collRef = collection(this.firestore, this.collPath);
-      const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
-      this.snapQuery(q);
-    }
+    this.threads = [];
+    this.unsortedThreads = [];
+    const collRef = collection(this.firestore, this.collPath);
+    const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
+    this.snapQuery(q);
   }
 
   nextQuery() {

@@ -7,10 +7,11 @@
                 <img *ngIf="!leftSideBar" src="assets/svg/color_d1d2d3/left_panel_close.svg">
             </button>
             <div>
-                <div class="header-headline" *ngIf="channel.category == 'channel'">
-                    <h2>#</h2>
+                <button class="workspace-btn header-headline" *ngIf="channel.category == 'channel'">
+                    <h2 *ngIf="!channel.locked">#</h2>
+                    <div *ngIf="channel.locked"><img src="assets/svg/color_939295/lock.svg"></div>
                     <h2>{{channel.channelName}}</h2>
-                </div>
+                </button>
 
                 <div class="header-headline" *ngIf="channel.category == 'private'">
                     <div *ngFor="let user of channel.users" class="private-header-imgs">
