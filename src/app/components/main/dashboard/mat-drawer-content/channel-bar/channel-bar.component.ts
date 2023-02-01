@@ -25,7 +25,7 @@ export class ChannelBarComponent {
   channelId: string = '';
   collData$: Observable<any> = EMPTY;
   collPath: string = '';
-  threads: any[] = [];
+  threads: Thread[] = [];
   channel = new Channel();
   currentUser: User = new User();
   isFirstLoad = true;
@@ -80,7 +80,7 @@ export class ChannelBarComponent {
     this.getChannelName();
   }
 
-  snapShotThreadCollection(){
+  snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
       this.firstQuery(areLoaded)
     });
@@ -113,7 +113,7 @@ export class ChannelBarComponent {
   }
 
   pushIntoThreads(doc: any) {
-    let elemT: Thread = this.setThreadFromDoc(doc);
+    let elemT = new Thread(this.setThreadFromDoc(doc));
     let i = this.getThreadIndex(elemT);
     if (i != -1)
       this.unsortedThreads.splice(i, 1, elemT);
@@ -121,7 +121,7 @@ export class ChannelBarComponent {
       this.unsortedThreads.push(elemT);
   }
 
-  setThreadFromDoc(doc: any){
+  setThreadFromDoc(doc: any) {
     let elemT: any = doc.data();
     elemT.id = doc.id;
     elemT.reactions = JSON.parse(elemT.reactions);
@@ -143,9 +143,9 @@ export class ChannelBarComponent {
 
   convertThreads(threads: []) {
     this.threads = this.sorter.sortByDate(threads);
-    this.threads.forEach((thread, k) => {
+    this.threads.forEach((thread: any, k) => {
       this.threads[k].reactions = JSON.parse(thread.reactions);
-      this.threads[k].creationDate = this.threads[k].creationDate.toDate();
+      // this.threads[k].creationDate = this.threads[k].creationDate.toDate();
     });
   }
 
@@ -160,60 +160,17 @@ export class ChannelBarComponent {
     this.router.navigate([{ outlets: { right: [this.channelId, thread.id] } }], { relativeTo: this.route.parent });
   }
 
-  evaluateThread(emoji: string, thread: Thread, t: number) {
-    let userEmojiCount = this.getEmojiCount(t);
-    let emojiIndex = this.getEmojiIndex(emoji, t);
-    let emojiAlreadyByMe = this.isEmojiAlreadyByMe(emoji, t);
-    this.evaluateThreadCases(emoji, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
+  evaluateThread(emoji: string, t: number) {
+    if (this.threads[t].getEmojiCount(this.currentUser.id) > 2 && !this.threads[t].isEmojiAlreadyByMe(emoji, this.currentUser.id))
+      this.openDialog();
+    else
+      this.threads[t].evaluateThreadCases(emoji, this.currentUser.id);
     this.saveReaction(t);
   }
-
-  getEmojiCount(t: number) {
-    return this.threads[t].reactions.filter((reaction: any) => (reaction.users.includes(this.currentUser.id))).length;
-  }
-
-  getEmojiIndex(emoji: string, t: number) {
-    return this.threads[t].reactions.findIndex((reaction: any) => (reaction.id === emoji));
-  }
-
-  isEmojiAlreadyByMe(emoji: string, t: number) {
-    return this.threads[t].reactions.findIndex((reaction: any) => (reaction.id === emoji && reaction.users.includes(this.currentUser.id))) != -1;
-  }
-
-  evaluateThreadCases(emoji: string, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
-    if (emojiAlreadyByMe)
-      this.removeReaction(t, emojiIndex);
-    else if (userEmojiCount > 2)
-      this.openDialog();
-    else if (emojiIndex != -1)
-      this.addToReaction(emojiIndex, t);
-    else if (emojiIndex == -1)
-      this.addNewReaction(emoji, t);
-  }
-
 
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogReactionComponent);
     dialogRef.afterClosed().subscribe();
-  }
-
-  removeReaction(t: number, emojiIndex: number) {
-    let index = this.threads[t].reactions[emojiIndex].users.indexOf(this.currentUser.id);
-    this.threads[t].reactions[emojiIndex].users.splice(index, 1);
-    if (this.threads[t].reactions[emojiIndex].users.length == 0) {
-      this.threads[t].reactions.splice(emojiIndex, 1);
-    }
-  }
-
-  addNewReaction(emoji: string, t: number) {
-    this.threads[t].reactions.push({
-      id: emoji,
-      users: [this.currentUser.id]
-    });
-  }
-
-  addToReaction(emojiIndex: number, t: number) {
-    this.threads[t].reactions[emojiIndex].users.push(this.currentUser.id);
   }
 
   openBox(url: string) {
@@ -222,7 +179,6 @@ export class ChannelBarComponent {
   }
 
   saveReaction(t: number) {
-    let overwrittenThread = new Thread(this.threads[t]);
-    this.fireService.save(overwrittenThread, 'channels/' + this.channelId + '/ThreadCollection', overwrittenThread.id);
+    this.fireService.save(this.threads[t], 'channels/' + this.channelId + '/ThreadCollection', this.threads[t].id);
   }
 }

@@ -42,7 +42,7 @@
             </div>
             <mat-menu #emoji="matMenu" xPosition="before">
                 <ng-template matMenuContent>
-                    <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native,thread,t)" [i18n]="{
+                    <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native,t)" [i18n]="{
                     search: 'Recherche',
                     categories: { search: 'Résultats de recherche', recent: 'Récents' }}"></emoji-mart>
                 </ng-template>
@@ -60,7 +60,7 @@
                 <p [innerHTML]="thread.message"></p>
                 <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image" (click)="openBox(thread.img)" />
                 <p class="emoji-container" *ngIf="thread.reactions.length > 0">
-                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, thread, t)">
+                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, t)">
                         <span>{{reaction.id}}</span>
                         <span>{{reaction.users.length}}</span>
                     </button>

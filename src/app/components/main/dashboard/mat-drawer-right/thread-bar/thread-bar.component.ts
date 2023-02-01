@@ -13,6 +13,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
+import { collection, Firestore, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-thread-bar',
@@ -28,10 +29,12 @@ export class ThreadBarComponent {
   channelId: string = '';
   thread = new Thread();
   threadId: string = '';
-  comments: any[] = [];
+  comments: Thread[] = [];
+  unsortedComments: Thread[] = [];
   currentUser = new User();
+  loastLoadedComment: Thread = new Thread();
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -52,11 +55,13 @@ export class ThreadBarComponent {
   setChannelAndThreadId(params: any) {
     this.channelId = params[0].path;
     this.threadId = params[1].path;
+    this.comments = [];
+    this.unsortedComments = [];
   }
 
   getCollAndDoc() {
     this.collPath = 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection';
-    this.collData$ = this.fireService.getCollection(this.collPath);
+    // this.collData$ = this.fireService.getCollection(this.collPath);
     this.threadDocData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
     this.channelDocData$ = this.fireService.getDocument(this.channelId, 'channels/');
   }
@@ -70,8 +75,9 @@ export class ThreadBarComponent {
 
   subscribeCollAndDoc() {
     this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    this.collData$.subscribe((comments) => this.setComments(comments));
+    // this.collData$.subscribe((comments) => this.setComments(comments));
     this.channelDocData$.subscribe((channel) => this.channel = channel);
+    this.snapShotThreadCollection();
   }
 
   setThread(thread: Thread) {
@@ -79,11 +85,55 @@ export class ThreadBarComponent {
     this.currentDataService.setThread(thread);
   }
 
+  snapShotThreadCollection() {
+    this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
+      this.firstQuery(areLoaded)
+    });
+  }
+
+  firstQuery(areLoaded: boolean) {
+    if (areLoaded === true) {
+      this.comments = [];
+      this.unsortedComments = [];
+      const collRef = collection(this.firestore, this.collPath);
+      const q = query(collRef, orderBy('creationDate', 'desc'), limit(12));
+      this.snapQuery(q);
+    }
+  }
+
+  snapQuery(q: Query) {
+    onSnapshot(q, (querySnapshot: any) => {
+      querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
+      this.comments = this.sorter.sortByDate(this.unsortedComments);
+      this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
+    });
+  }
+
+  pushIntoThreads(doc: any) {
+    let elemT = new Thread(this.setThreadFromDoc(doc));
+    let i = this.getThreadIndex(elemT);
+    if (i != -1)
+      this.unsortedComments.splice(i, 1, elemT);
+    else
+      this.unsortedComments.push(elemT);
+  }
+
+  setThreadFromDoc(doc: any) {
+    let elemT: any = doc.data();
+    elemT.id = doc.id;
+    elemT.reactions = JSON.parse(elemT.reactions);
+    return elemT;
+  }
+
+  getThreadIndex(elemT: Thread) {
+    return this.unsortedComments.findIndex((thread: Thread) => thread.id === elemT.id);
+  }
+
   setComments(comments: any[]) {
     this.comments = this.sorter.sortByDate(comments);
-    this.comments.forEach((comment, k) => {
+    this.comments.forEach((comment: any, k) => {
       this.comments[k].reactions = JSON.parse(comment.reactions);
-      this.comments[k].creationDate = this.comments[k].creationDate.toDate();
+      // this.comments[k].creationDate = this.comments[k].creationDate.toDate();
     });
   }
 
@@ -92,35 +142,12 @@ export class ThreadBarComponent {
     this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 
-  evaluateThread(emoji: string, comment: Thread, t: number) {
-    let userEmojiCount = this.getEmojiCount(comment);
-    let emojiIndex = this.getEmojiIndex(emoji, comment);
-    let emojiAlreadyByMe = this.isEmojiAlreadyByMe(emoji, comment);
-    this.evaluateThreadCases(emoji, comment, t, userEmojiCount, emojiIndex, emojiAlreadyByMe);
-    this.saveReaction(comment, t);
-  }
-
-  getEmojiCount(comment: Thread) {
-    return comment.reactions.filter((reaction) => (reaction.users.includes(this.currentUser.id))).length;
-  }
-
-  getEmojiIndex(emoji: string, comment: Thread) {
-    return comment.reactions.findIndex((reaction) => (reaction.id === emoji));
-  }
-
-  isEmojiAlreadyByMe(emoji: string, comment: Thread) {
-    return comment.reactions.findIndex((reaction) => (reaction.id === emoji && reaction.users.includes(this.currentUser.id))) != -1;
-  }
-
-  evaluateThreadCases(emoji: string, comment: Thread, t: number, userEmojiCount: number, emojiIndex: number, emojiAlreadyByMe: boolean) {
-    if (emojiAlreadyByMe)
-      this.removeReaction(comment, t, emojiIndex);
-    else if (userEmojiCount > 2)
+  evaluateThread(emoji: string, c: number) {
+    if (this.comments[c].getEmojiCount(this.currentUser.id) > 2 && !this.comments[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
       this.openDialog();
-    else if (emojiIndex != -1)
-      this.addToReaction(emojiIndex, t);
-    else if (emojiIndex == -1)
-      this.addNewReaction(emoji, t);
+    else
+      this.comments[c].evaluateThreadCases(emoji, this.currentUser.id);
+    this.saveReaction(c);
   }
 
   openDialog(): void {
@@ -128,27 +155,8 @@ export class ThreadBarComponent {
     dialogRef.afterClosed().subscribe();
   }
 
-  removeReaction(comment: Thread, t: number, emojiIndex: number) {
-    this.comments[t].reactions[emojiIndex].users.splice(comment.reactions[emojiIndex].users.indexOf(this.currentUser.id), 1);
-    if (this.comments[t].reactions[emojiIndex].users.length == 0) {
-      this.comments[t].reactions.splice(emojiIndex, 1);
-    }
-  }
-
-  addNewReaction(emoji: string, t: number) {
-    this.comments[t].reactions.push({
-      id: emoji,
-      users: [this.currentUser.id]
-    });
-  }
-
-  addToReaction(emojiIndex: number, t: number) {
-    this.comments[t].reactions[emojiIndex].users.push(this.currentUser.id);
-  }
-
-  saveReaction(comment: Thread, t: number) {
-    let updatedThread = new Thread(this.comments[t]);
-    this.fireService.save(updatedThread, 'channels/' + this.channelId + '/ThreadCollection/'+ this.threadId + '/commentCollection', comment.id);
+  saveReaction(c: number) {
+    this.fireService.save(this.comments[c], 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection', this.comments[c].id);
   }
 
   openBox(url: string) {
