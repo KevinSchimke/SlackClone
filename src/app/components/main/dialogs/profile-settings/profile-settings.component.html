@@ -62,50 +62,6 @@
             <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>mail</mat-icon>
-                        E-Mail
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <form (ngSubmit)="updateUserEmail()" [formGroup]="email">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Enter new email</mat-label>
-                        <input matInput formControlName="email" required>
-                        <mat-error *ngIf="email.invalid">{{getErrorMessage(email,'email')}}</mat-error>
-                    </mat-form-field>
-                    <button [disabled]="!email.valid" class="actionButton" mat-raised-button>Save new email</button>
-                </form>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon>lock</mat-icon>
-                        Password
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <form (ngSubmit)="updateUserPassword()" [formGroup]="password">
-                    <mat-form-field appearance="fill">
-                        <mat-label>Enter your password</mat-label>
-                        <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" required>
-                        <mat-error *ngIf="password.invalid">{{getErrorMessage(password,'password')}}</mat-error>
-                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                        </button>
-                    </mat-form-field>
-                    <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Save new
-                        password</button>
-                </form>
-            </mat-expansion-panel>
-
-            <mat-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
                         <mat-icon>phone_android</mat-icon>
                         Phone
                     </mat-panel-title>
@@ -120,22 +76,6 @@
                 <button (click)="updatePhone()" class="actionButton" mat-raised-button>Save phone</button>
             </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 5" (opened)="setStep(5)" hideToggle>
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon>person_remove</mat-icon>
-                        Delete User
-                    </mat-panel-title>
-                    <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <mat-form-field appearance="fill">
-                    <mat-label>! Enter username ! Danger !</mat-label>
-                    <input [(ngModel)]="deletUsername" matInput>
-                </mat-form-field>
-                <button [disabled]="deletUsername !== userService.currentUser.name" (click)="deleteCurrentUser()" class="deleteButton" mat-raised-button>Delete User</button>
-            </mat-expansion-panel>
         </mat-card-content>
     </mat-card>
 </div>
