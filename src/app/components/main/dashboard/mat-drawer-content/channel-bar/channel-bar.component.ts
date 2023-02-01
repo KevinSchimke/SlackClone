@@ -69,19 +69,19 @@ export class ChannelBarComponent {
 
   setCurrentChannel(param: { id: string }) {
     this.threads = [];
-    console.log('mach was und threads leer bevor neue kommen');
+    this.unsortedThreads = [];
     this.channelId = param.id;
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
-    this.collData$ = this.fireService.getCollection(this.collPath);
-    this.collData$.subscribe((threads) => this.convertThreads(threads));
-    // this.snapShotThreadCollection();
-    
+    // this.collData$ = this.fireService.getCollection(this.collPath);
+    // this.collData$.subscribe((threads) => this.convertThreads(threads));
+    this.snapShotThreadCollection();
+
     this.isFirstLoad = true;
     this.getChannelName();
   }
 
   snapShotThreadCollection(){
-    this.currentDataService.usersAreLoaded$.pipe(takeWhile((loaded) => this.currentDataService.usersAreLoaded)).subscribe(areLoaded => {
+    this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
       this.firstQuery(areLoaded)
     });
   }
@@ -89,6 +89,7 @@ export class ChannelBarComponent {
   firstQuery(areLoaded: boolean) {
     if (areLoaded === true) {
       this.threads = [];
+      this.unsortedThreads = [];
       const collRef = collection(this.firestore, this.collPath);
       const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
       this.snapQuery(q);

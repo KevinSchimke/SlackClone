@@ -22,7 +22,7 @@
             </div>
         </div>
     </header>
-    <!-- <button class="btn-unset" style="color:whitesmoke;" (click)="nextQuery()">Load More</button> -->
+    <button class="btn-unset" style="color:whitesmoke; border: 1px solid white; border-radius: 5px; padding: 10px;" (click)="nextQuery()">Load More</button>
 
     <div class="channel-messages" #scrollMe (scroll)="scrolled($event)">
         <div class="channel-thread" *ngFor="let thread of threads; let t = index">
