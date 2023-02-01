@@ -52,7 +52,6 @@ import { ClickStopPropagationDirective } from './directives/click-stop-propagati
 
 import { HttpClientModule } from '@angular/common/http';
 import { AngularEditorModule } from '@kolkov/angular-editor';
-import { EditsettingcardComponent } from './components/main/dialogs/editsettingcard/editsettingcard.component';
 import { DashboardHeaderComponent } from './components/main/dashboard/dashboard-header/dashboard-header.component';
 import { ReauthenticateComponent } from './components/main/dialogs/reauthenticate/reauthenticate.component';
 import { ImgSrcPipe } from './pipes/imgSrc/img-src.pipe';
@@ -69,6 +68,8 @@ import { ChannelBarComponent } from './components/main/dashboard/mat-drawer-cont
 import { NewMessageComponent } from './components/main/dashboard/mat-drawer-content/new-message/new-message.component';
 import { InfocardComponent } from './components/main/dashboard/mat-drawer-right/infocard/infocard.component';
 import { MessageEditorComponent } from './components/main/dashboard/message-editor/message-editor.component';
+import { AccountSettingsComponent } from './components/main/dialogs/account-settings/account-settings.component';
+import { ProfileSettingsComponent } from './components/main/dialogs/profile-settings/profile-settings.component';
 
 @NgModule({
   declarations: [
@@ -88,7 +89,6 @@ import { MessageEditorComponent } from './components/main/dashboard/message-edit
     DialogAddChannelComponent,
     ClickStopPropagationDirective,
     InfocardComponent,
-    EditsettingcardComponent,
     DashboardHeaderComponent,
     ReauthenticateComponent,
     ImgSrcPipe,
@@ -101,7 +101,9 @@ import { MessageEditorComponent } from './components/main/dashboard/message-edit
     MessagePartnerPipe,
     PeriodOfTimePipe,
     CanClickPipe,
-    MessageEditorComponent
+    MessageEditorComponent,
+    AccountSettingsComponent,
+    ProfileSettingsComponent
   ],
   imports: [
     BrowserModule,

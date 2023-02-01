@@ -10,14 +10,15 @@
     <img class="help-icon" src="assets/img/help_D1D2D3.png">
     <div class="d-flex">
         <div class="emoji-state"></div>
-        <button [matMenuTriggerFor]="beforeMenu" class="btn-unset avatar"><img [src]="currentUser.src ? currentUser.src : 'assets/img/user0.png'"></button>
+        <button [matMenuTriggerFor]="beforeMenu" class="btn-unset avatar"><img
+                [src]="currentUser.src ? currentUser.src : 'assets/img/user0.png'"></button>
     </div>
 </div>
 
 <mat-menu #beforeMenu="matMenu" xPosition="before">
-    <button mat-menu-item (click)="openDialog()">Edit profile</button>
+    <button mat-menu-item (click)="openProfileSettings()">Profile Settings</button>
+    <button mat-menu-item (click)="openAccountSettings()">Account Settings</button>
     <button mat-menu-item (click)="logout()">Logout</button>
-    <button mat-menu-item>Item 2</button>
 </mat-menu>
 
 <!-- Filter <a target="_blank" href="https://icons8.com/icon/86844/slider">Slider</a> icon by <a target="_blank" href="https://icons8.com">Icons8</a> -->
