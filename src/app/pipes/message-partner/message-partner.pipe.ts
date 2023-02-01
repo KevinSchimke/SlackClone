@@ -19,16 +19,22 @@ export class MessagePartnerPipe implements PipeTransform {
   transform(users: string[]): string {
     if (this.currentData.usersAreLoaded) {
       this.filteredUserNames = [];
+      this.filteredUserIds = [];
       this.filteredUserIds = this.getFuids(users);
       this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid));
-      return this.filteredUserNames.join(", ");
+      if (this.isChatWithMyself(users)) {
+        return this.filteredUserNames.join(", ") + ' (you)';
+      }
+      else
+        return this.filteredUserNames.join(", ");
     }
     else return '';
   }
 
   getFuids(users: string[]) {
-    if (this.isChatWithMyself(users))
+    if (this.isChatWithMyself(users)) {
       return [this.user.getUid()];
+    }
     else
       return users.filter((user) => (user !== this.user.getUid()));
   }
@@ -40,22 +46,7 @@ export class MessagePartnerPipe implements PipeTransform {
   }
 
   isChatWithMyself(users: string[]) {
-    return JSON.stringify(users) === JSON.stringify([this.user.getUid()]);
+    return JSON.stringify(users) === JSON.stringify([this.user.getUid(), this.user.getUid()]);
   }
 
-
-  // transform(users: string[]): string {
-  //   console.log('Message-partner pipe rödelt');
-  //   this.filteredUserNames = [];
-  //   users.forEach((u: string) => this.pushToUsers(u));
-  //   return this.filteredUserNames.join(', ');
-  // }
-
-  // pushToUsers(u: string) {
-  //   let j = this.currentData.users.findIndex((user: User) => (user.id === u));
-  //   if (j == -1)
-  //     this.filteredUserNames.push('Deleted User');
-  //   else
-  //     this.filteredUserNames.push(this.currentData.users[j].name);
-  // }
 }
