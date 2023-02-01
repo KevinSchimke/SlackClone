@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { EMPTY, Observable } from 'rxjs';
-import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, query, startAfter, where } from '@angular/fire/firestore';
+import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -33,10 +33,7 @@ export class ChannelBarComponent {
   channel$: Observable<any> = EMPTY;
   shownUsers: string = '';
   loastLoadedThread: Thread = new Thread();
-  k: number = 0;
-  l: number = 0;
-  newThreads: any[] = [];
-  testquery$: any;
+  unsortedThreads: Thread[] = [];
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
@@ -47,9 +44,7 @@ export class ChannelBarComponent {
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
-    this.route.params.subscribe((param: any) => {
-      this.subscribeCurrentChannel(param)
-    });
+    this.route.params.subscribe((param: any) => this.setCurrentChannel(param));
     this.isFirstLoad = true;
   }
 
@@ -72,29 +67,22 @@ export class ChannelBarComponent {
   }
 
 
-  subscribeCurrentChannel(param: { id: string }) {
+  setCurrentChannel(param: { id: string }) {
     this.channelId = param.id;
-    this.threads = [];
-    this.k = 0;
-    this.l = 0;
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
-    this.collData$ = this.fireService.getCollection(this.collPath);
-    this.collData$.subscribe((threads) => this.convertThreads(threads));
-    // const collRef = collection(this.firestore, this.collPath);
-    // const q = query(collRef, orderBy('creationDate', "desc"), limit(9));
-
-    // onSnapshot(q, (querySnapshot: any) => {
-    //   querySnapshot.forEach((doc: any) => this.k = this.pushIntoThreads(doc, this.k));
-    //   this.threads = this.sorter.sortByDate(this.threads);
-    //   this.threads.forEach((thread, k) => {
-    //     this.threads[k].reactions = JSON.parse(thread.reactions);
-    //     this.threads[k].creationDate = this.threads[k].creationDate.toDate();
-    //   });
-    //   this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
-    //   console.log("last", this.loastLoadedThread);
-    // });
+    // this.collData$ = this.fireService.getCollection(this.collPath);
+    // this.collData$.subscribe((threads) => this.convertThreads(threads));
+    this.currentDataService.usersAreLoaded$.subscribe(areLoaded => this.firstQuery(areLoaded));
     this.isFirstLoad = true;
     this.getChannelName();
+  }
+
+  firstQuery(areLoaded: boolean) {
+    if (areLoaded === true) {
+      const collRef = collection(this.firestore, this.collPath);
+      const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
+      this.snapQuery(q);
+    }
   }
 
   nextQuery() {
@@ -102,36 +90,35 @@ export class ChannelBarComponent {
       orderBy("creationDate", "desc"),
       startAfter(this.loastLoadedThread),
       limit(9));
-    onSnapshot(next, (querySnapshot: any) => {
-      querySnapshot.forEach((doc: any) => this.l = this.pushIntoNewThreads(doc, this.l));
-      this.newThreads = this.sorter.sortByDate(this.newThreads);
-      this.newThreads.forEach((thread, k) => {
-        this.newThreads[k].reactions = JSON.parse(thread.reactions);
-        this.newThreads[k].creationDate = this.newThreads[k].creationDate.toDate();
-      });
-      this.threads.push(...this.newThreads);
-      console.log('unsorted threads nach pushen', this.threads);
-      this.threads = this.threads.sort(function (a: any, b: any) {
-        return a.creationDate - b.creationDate;
-      });
-      console.log('sorted threads nach pushen', this.threads);
+    this.snapQuery(next);
+  }
+
+  snapQuery(q: Query) {
+    onSnapshot(q, (querySnapshot: any) => {
+      querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
+      this.threads = this.sorter.sortByDate(this.unsortedThreads);
       this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
-      console.log("last", this.loastLoadedThread);
     });
   }
 
-  pushIntoThreads(doc: any, k: number) {
-    this.threads.push(doc.data());
-    this.threads[k]['id'] = doc.id;
-    k++;
-    return k;
+  pushIntoThreads(doc: any) {
+    let elemT: Thread = this.setThreadFromDoc(doc);
+    let i = this.getThreadIndex(elemT);
+    if (i != -1)
+      this.unsortedThreads.splice(i, 1, elemT);
+    else
+      this.unsortedThreads.push(elemT);
   }
 
-  pushIntoNewThreads(doc: any, l: number) {
-    this.newThreads.push(doc.data());
-    this.newThreads[l]['id'] = doc.id;
-    l++;
-    return l;
+  setThreadFromDoc(doc: any){
+    let elemT: any = doc.data();
+    elemT.id = doc.id;
+    elemT.reactions = JSON.parse(elemT.reactions);
+    return elemT;
+  }
+
+  getThreadIndex(elemT: Thread) {
+    return this.unsortedThreads.findIndex((thread: Thread) => thread.id === elemT.id);
   }
 
 

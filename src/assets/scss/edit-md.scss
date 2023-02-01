@@ -81,3 +81,8 @@ h2,
     cursor: unset;
     background-color: unset;
 }
+
+.angular-editor-textarea,
+.angular-editor-placeholder {
+    cursor: text;
+}

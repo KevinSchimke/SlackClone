@@ -19,6 +19,7 @@ export class CurrentDataService {
   allCategories: any[] = [];
   channelsAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
   usersAreLoaded: boolean = false;
+  usersAreLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   onceSubscribtedUsers: User[] = [];
 
   constructor(private user: UserService, private auth: Auth) { }
@@ -66,6 +67,7 @@ export class CurrentDataService {
     if (!this.usersAreLoaded) {
       this.onceSubscribtedUsers = user_arr;
       this.usersAreLoaded = true;
+      this.usersAreLoaded$.next(true);
     }
   }
 
