@@ -153,4 +153,9 @@ export class ThreadBarComponent {
     let dialog = this.dialog.open(OpenboxComponent);
     dialog.componentInstance.openboxImg = url;
   }
+
+  openUserInfoCard(thread: any) {
+    this.childSelector.threadBar.open();
+    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
+  }
 }
