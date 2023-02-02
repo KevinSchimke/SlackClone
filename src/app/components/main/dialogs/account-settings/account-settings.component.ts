@@ -37,7 +37,11 @@ export class AccountSettingsComponent {
   }
 
   setStep(index: number) {
-    this.step = index;
+    if (this.step == index) {
+      this.step = -1;
+    } else {
+      this.step = index;
+    }
   }
 
   closeDialog() {

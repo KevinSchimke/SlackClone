@@ -7,14 +7,17 @@
             </div>
         </mat-card-header>
         <mat-card-content>
-            <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 0" (click)="setStep(0)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>mail</mat-icon>
+                        <mat-icon>
+                            <img src="assets/svg/color_d1d2d3/mail.svg">
+                        </mat-icon>
                         E-Mail
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 0"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 0"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form (ngSubmit)="updateUserEmail()" [formGroup]="email">
@@ -27,14 +30,17 @@
                 </form>
             </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 1" (click)="setStep(1)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>lock</mat-icon>
+                        <mat-icon>
+                            <img src="assets/svg/color_d1d2d3/lock.svg">
+                        </mat-icon>
                         Password
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 1"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 1"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form (ngSubmit)="updateUserPassword()" [formGroup]="password">
@@ -44,7 +50,10 @@
                         <mat-error *ngIf="password.invalid">{{getErrorMessage(password,'password')}}</mat-error>
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
-                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                            <mat-icon>
+                                <img *ngIf="hide" src="assets/svg/color_d1d2d3/visibility.svg">
+                                <img *ngIf="!hide" src="assets/svg/color_d1d2d3/visibility_off.svg">
+                            </mat-icon>
                         </button>
                     </mat-form-field>
                     <button [disabled]="!password.valid" class="actionButton" mat-raised-button>Save new
@@ -52,14 +61,17 @@
                 </form>
             </mat-expansion-panel>
 
-            <mat-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle>
+            <mat-expansion-panel [expanded]="step === 2" (click)="setStep(2)" hideToggle>
                 <mat-expansion-panel-header>
                     <mat-panel-title>
-                        <mat-icon>person_remove</mat-icon>
+                        <mat-icon>
+                            <img src="assets/svg/color_d1d2d3/person_remove.svg">
+                        </mat-icon>
                         Delete User
                     </mat-panel-title>
                     <mat-panel-description>
-                        <mat-icon>expand_more</mat-icon>
+                        <mat-icon *ngIf="step !== 2"><img src="assets/svg/color_d1d2d3/expand_more.svg"></mat-icon>
+                        <mat-icon *ngIf="step === 2"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <mat-form-field appearance="fill">
