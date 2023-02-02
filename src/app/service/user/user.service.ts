@@ -17,7 +17,6 @@ export class UserService {
     this.currentUser.mail = obj.mail;
     this.currentUser.phone = obj.phone;
     this.currentUser.src = obj.src;
-    this.currentUser.state = obj.state;
     this.currentUser.status = obj.status;
     this.currentUser.lastLogin = obj.lastLogin;
   }
