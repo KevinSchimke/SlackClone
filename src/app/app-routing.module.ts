@@ -19,6 +19,7 @@ import { NewMessageComponent } from './components/main/dashboard/mat-drawer-cont
 import { ChannelBarComponent } from './components/main/dashboard/mat-drawer-content/channel-bar/channel-bar.component';
 import { InfocardComponent } from './components/main/dashboard/mat-drawer-right/infocard/infocard.component';
 import { ThreadBarComponent } from './components/main/dashboard/mat-drawer-right/thread-bar/thread-bar.component';
+import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
     path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
       { path: 'newMessage', component: NewMessageComponent },
+      { path: 'allChannels', component: AllChannelsComponent },
       { path: ':id', component: ChannelBarComponent },
       { path: 'profile/:id', component: InfocardComponent, outlet: 'right' },
       { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' }

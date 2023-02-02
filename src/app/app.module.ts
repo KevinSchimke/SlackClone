@@ -70,6 +70,7 @@ import { InfocardComponent } from './components/main/dashboard/mat-drawer-right/
 import { MessageEditorComponent } from './components/main/dashboard/message-editor/message-editor.component';
 import { AccountSettingsComponent } from './components/main/dialogs/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './components/main/dialogs/profile-settings/profile-settings.component';
+import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 
 @NgModule({
   declarations: [
@@ -103,7 +104,8 @@ import { ProfileSettingsComponent } from './components/main/dialogs/profile-sett
     CanClickPipe,
     MessageEditorComponent,
     AccountSettingsComponent,
-    ProfileSettingsComponent
+    ProfileSettingsComponent,
+    AllChannelsComponent
   ],
   imports: [
     BrowserModule,
