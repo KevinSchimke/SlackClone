@@ -1,9 +1,11 @@
 <div class="dialog-add-channel relative">
     <div class="d-flex">
         <h2>Create channel</h2>
-        <button (click)="dialogRef.close()" class="btn-unset btn-close-dialog"><img src="assets/svg/x.svg"></button>
+        <button (click)="dialogRef.close()" class="btn-unset btn-close-dialog"><img
+                src="assets/svg/color_d1d2d3/x.svg"></button>
     </div>
-    <p>Channels are used by your team to communicate. Ideally, they should be topic-related - #marketing, for example.</p>
+    <p>Channels are used by your team to communicate. Ideally, they should be topic-related - #marketing, for example.
+    </p>
     <form [formGroup]="channelForm" (ngSubmit)="onSubmit()">
         <h3>Name</h3>
         <mat-form-field>

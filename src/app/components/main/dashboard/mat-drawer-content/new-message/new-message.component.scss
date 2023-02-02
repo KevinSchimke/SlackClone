@@ -1,27 +1,33 @@
 @import "../../../../../../assets/scss/mixin.scss";
 @import "../../../../../../assets/scss/colors.scss";
+
 .over-container {
     @include containerSize(unset, 100%);
     min-height: calc(100vh - 100px);
     padding-bottom: 50px;
     background-color: $bg-color-main;
+
     .header-container {
         position: relative;
-        padding: 0 15px;
+        padding: 15px;
         background-color: white;
         border-right: 1px solid lightgrey;
+
         h2 {
-            padding: 10px 0;
             color: black;
+            padding-bottom: 1rem;
         }
+
         .search-container {
             @include containerPosition(unset, center);
-            padding: 10px 0;
             color: $bg-dialog;
             font-size: 16px;
+
             p {
+                margin: 0;
                 padding-right: 5px;
             }
+
             input {
                 width: 100%;
                 background-color: transparent;
@@ -42,11 +48,15 @@
     background: rgb(232, 245, 250);
     padding: 2px;
     border-radius: 10px;
-    span {
+
+    div {
         @include containerPosition(unset, center);
         margin-right: 15px;
         color: black;
-        text-align: center;
+
+        p {
+            margin: 0
+        }
     }
 }
 
@@ -57,41 +67,43 @@
 
 .x-icon {
     mat-icon {
-        color: gray;
-        font-size: 20px;
-        font-weight: 200;
-        vertical-align: middle !important;
-        height: auto;
-        width: auto;
+        img {
+            height: 100%;
+            width: 100%;
+        }
     }
+
     &:hover {
         mat-icon {
             color: black;
         }
+
         background-color: rgb(230, 230, 230);
         cursor: pointer;
     }
 }
 
 .search-user-list-container {
-    @include positionAbsolute(-10px, unset, unset, 15px);
+    @include positionAbsolute(-10px, 15px, unset, 15px);
     @include border(1px, solid, black);
     z-index: 10;
 }
 
 .search-user-list {
-    width: calc(100vw - 340px);
     background-color: rgb(197, 191, 191);
     color: black;
+
     &:hover {
         background-color: rgb(232, 245, 250);
     }
+
     div {
         display: flex;
         align-items: center;
         padding: 5px 0;
         cursor: pointer;
     }
+
     p {
         margin: 0;
     }
