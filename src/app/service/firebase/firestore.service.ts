@@ -54,6 +54,9 @@ export class FirestoreService {
     });
   }
 
+  // arrayUnion("uid")
+  
+
   updateObj(obj: Thread | Channel, collPath: string) {
     let docRef = doc(this.firestore, collPath);
     updateDoc(docRef, obj.toJson());
