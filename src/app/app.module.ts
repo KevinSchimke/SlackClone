@@ -44,6 +44,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -131,7 +132,8 @@ import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-con
     HttpClientModule,
     AngularEditorModule,
     MatSlideToggleModule,
-    MatButtonModule
+    MatButtonModule,
+    MatCheckboxModule
   ],
   providers: [],
   bootstrap: [AppComponent]
