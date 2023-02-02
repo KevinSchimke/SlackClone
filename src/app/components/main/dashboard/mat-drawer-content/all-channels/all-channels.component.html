@@ -1,19 +1,27 @@
 <div style="height:100%;">
-    <header>
-        <!-- <div class="header-headline"> -->
-        <div class="bar-header">
-            <button (click)="toggleLeftSidebar()" class="workspace-btn">
+    <header class="bar-header">
+        <button (click)="toggleLeftSidebar()" class="workspace-btn">
                 <img *ngIf="leftSideBar" src="assets/svg/color_d1d2d3/left_panel_open.svg">
                 <img *ngIf="!leftSideBar" src="assets/svg/color_d1d2d3/left_panel_close.svg">
             </button>
-            <div class="all-channels-header">
-                <h2>All Channels</h2>
-
-
-
-                <button class="btn-unset btn-create-channel">Create channel</button>
-
-            </div>
+        <div class="all-channels-header">
+            <h2>All Channels</h2>
+            <button class="btn-unset btn-create-channel">Create channel</button>
         </div>
     </header>
+
+    <div class="channel-container" *ngFor="let channel of channels">
+        <div class="channel-info">
+            <h2 *ngIf="!channel.locked">#</h2>
+            <img *ngIf="channel.locked" src="assets/svg/color_d1d2d3/lock.svg">
+            <h2>{{channel.channelName}}</h2>
+        </div>
+        <div class="channel-info">
+            <span>{{channel.users.length}} members</span>
+            <span *ngIf="channel.description">·</span>
+            <span>{{channel.description}}</span>
+        </div>
+        <mat-divider class="divider"></mat-divider>
+    </div>
+
 </div>

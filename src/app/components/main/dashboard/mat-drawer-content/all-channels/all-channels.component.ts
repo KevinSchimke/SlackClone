@@ -4,6 +4,7 @@ import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-tog
 import { UserService } from 'src/app/service/user/user.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { Channel } from 'src/app/models/channel.class';
+import { SortService } from 'src/app/service/sort/sort.service';
 
 @Component({
   selector: 'app-all-channels',
@@ -12,45 +13,42 @@ import { Channel } from 'src/app/models/channel.class';
 })
 export class AllChannelsComponent {
   leftSideBar: boolean = false;
+  preChannelArr: Channel[] = [];
+  channels: Channel[] = [];
 
-  constructor(public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private firestoreService: FirestoreService) { }
+  constructor(public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
 
   async ngOnInit() {
     let channelsRef = collection(this.firestore, 'channels');
     const openChannelsQuery = query(channelsRef, where("locked", "==", false));
-    const joinedChannelsQuery = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
+    const joinedChannelsQuery = query(channelsRef, where("users", "array-contains", this.userService.getUid()), where("category", "==", 'channel'));
     const [isOpenChannels, isJoinedChannels] = await Promise.all([
       await getDocs(openChannelsQuery),
       await getDocs(joinedChannelsQuery)
     ]);
-    console.log('openChannels are ', isOpenChannels);
-    let channelsArray: Channel[] = [];
-    isOpenChannels.forEach((doc) => {
-      let channelElement = new Channel(doc.data());
-      channelElement.channelId = doc.id;
-      channelsArray.push(channelElement);
-    });
-    // const isOpenChannelsArray = isOpenChannels.doc;
-    //     const isJoinedChannelsArray = isJoinedChannels.docs;
-
-    // const channelsArray = isOpenChannelsArray.concat(isJoinedChannelsArray);
+    this.setChannelArr(isOpenChannels,isJoinedChannels);
   }
 
-  // pushIntoChannels(doc: any) {
-  //   let elemT = new Thread(this.setThreadFromDoc(doc));
-  //   let i = this.getThreadIndex(elemT);
-  //   if (i != -1)
-  //     this.unsortedThreads.splice(i, 1, elemT);
-  //   else
-  //     this.unsortedThreads.push(elemT);
-  // }
+  setChannelArr(isOpenChannels: any,isJoinedChannels: any){
+    this.preChannelArr = [];
+    isOpenChannels.forEach((doc: any) => this.addToChannel(doc));
+    isJoinedChannels.forEach((doc: any) => this.addToChannel(doc));
+    this.channels = this.preChannelArr.filter((elem, i) => {
+      return this.preChannelArr.findIndex((channel) => channel.channelId === elem.channelId) === i;
+    });
+    this.channels = this.sorter.sortByDate(this.channels);
+    // console.log(this.preChannelArr);
+    // console.log(this.channels);
+  }
 
-  // setChannelFromDoc(doc: any) {
-  //   let elemT: any = doc.data();
-  //   elemT.id = doc.id;
-  //   elemT.reactions = JSON.parse(elemT.reactions);
-  //   return elemT;
-  // }
+  
+
+
+  addToChannel(doc: any) {
+    let channelElement = new Channel(doc.data());
+    channelElement.channelId = doc.id;
+    this.preChannelArr.push(channelElement);
+  }
 
 
   toggleLeftSidebar() {
