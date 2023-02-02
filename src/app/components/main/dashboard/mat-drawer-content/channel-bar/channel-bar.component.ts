@@ -97,7 +97,7 @@ export class ChannelBarComponent {
     this.threads = [];
     this.unsortedThreads = [];
     const collRef = collection(this.firestore, this.collPath);
-    const q = query(collRef, orderBy('creationDate', 'desc'), limit(9));
+    const q = query(collRef, orderBy('creationDate', 'desc'), limit(20));
     this.snapQuery(q);
   }
 
@@ -105,7 +105,7 @@ export class ChannelBarComponent {
     const next = query(collection(this.firestore, this.collPath),
       orderBy("creationDate", "desc"),
       startAfter(this.loastLoadedThread),
-      limit(9));
+      limit(20));
     this.snapQuery(next);
   }
 
