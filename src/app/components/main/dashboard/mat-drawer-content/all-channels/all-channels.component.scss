@@ -1,0 +1,19 @@
+@import "../../../../../../assets/scss/colors.scss";
+@import "../../dashboard.component.scss";
+@import "../../../../../../assets/scss/mixin.scss";
+.all-channels-header {
+    @include containerPosition(space-between, center);
+    width: 100%;
+}
+
+.btn-create-channel {
+    color: $color-main;
+    font-weight: 700;
+    border: 1px solid $color-secondary;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    &:hover {
+        border: 1px solid $color-main;
+        background-color: $bg-color-hover;
+    }
+}
