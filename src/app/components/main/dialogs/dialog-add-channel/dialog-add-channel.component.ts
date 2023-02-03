@@ -13,9 +13,11 @@ import { UserService } from 'src/app/service/user/user.service';
 export class DialogAddChannelComponent {
   channelForm = new FormGroup({
     name: new FormControl('', Validators.required),
-    description: new FormControl(''),
+    description: new FormControl('',Validators.maxLength(80)),
     locked: new FormControl('')
   });
+  channel: Channel = new Channel();
+  locked = false;
 
   constructor(public dialogRef: MatDialogRef<DialogAddChannelComponent>, private setFirestore: FirestoreService, private user: UserService) { }
 
@@ -26,16 +28,20 @@ export class DialogAddChannelComponent {
   }
 
   async createNewChannel() {
-    let channel: Channel = new Channel();
-    channel.channelName = this.channelForm.controls.name.value || '';
-    channel.description = this.channelForm.controls.description.value || '';
+    this.channel = new Channel();
+    this.channel.channelName = this.channelForm.controls.name.value || '';
+    this.channel.description = this.channelForm.controls.description.value || '';
     if(this.channelForm.controls.locked.value === '' || this.channelForm.controls.locked.value === null)
-      channel.locked = false;
+      this.channel.locked = false;
     else
-      channel.locked = this.channelForm.controls.locked.value;
-    channel.creator = this.user.getUid();
-    channel.users.push(channel.creator);
-    await this.setFirestore.save(channel, 'channels');
+      this.channel.locked = this.channelForm.controls.locked.value;
+    this.channel.creator = this.user.getUid();
+    this.channel.users.push(this.channel.creator);
+    await this.setFirestore.save(this.channel, 'channels');
     this.dialogRef.close();
+  }
+
+  toggleLock(){
+    this.locked = !this.locked;
   }
 }

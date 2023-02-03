@@ -30,6 +30,7 @@ header {
     border-bottom: 1px solid $border-button-main;
     @include containerPosition(space-between, center);
     padding: .5rem 1rem;
+    max-height: 32px;
     .bar-header {
         @include containerPosition(unset, center);
         width: 100%;
