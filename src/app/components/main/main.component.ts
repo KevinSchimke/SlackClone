@@ -22,12 +22,13 @@ export class MainComponent {
     const subscription = this.users$.subscribe((users) => this.currentDataService.setUsers(users));
     this.currentDataService.pushToSubscription(subscription);
 
-    // this.updateLastLogin();
+    this.updateLastLogin();
 
-    // setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
+    const interval = setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
+    this.currentDataService.pushToInterval(interval);
   }
 
-  // updateLastLogin() {
-  //   this.firestoreService.updateLastLogin(new Date())
-  // }
+  updateLastLogin() {
+    this.firestoreService.updateLastLogin(new Date())
+  }
 }
