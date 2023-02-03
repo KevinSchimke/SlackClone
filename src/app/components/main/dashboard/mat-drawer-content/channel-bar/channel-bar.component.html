@@ -70,8 +70,8 @@
                     <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
                 </p>
                 <p [innerHTML]="thread.message"></p>
-                <button class="btn-unset" (click)="openBox(thread.img)">
-                    <img *ngIf="thread.img" [src]="thread.img" alt="" class="post-image">
+                <button class="btn-unset" (click)="openBox(thread.img)" *ngIf="thread.img">
+                    <img [src]="thread.img" alt="" class="post-image">
                 </button>
                 <p class="emoji-container" *ngIf="thread.reactions.length > 0">
                     <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, t)">
