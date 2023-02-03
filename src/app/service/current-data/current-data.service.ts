@@ -13,6 +13,8 @@ import { UserService } from '../user/user.service';
 export class CurrentDataService {
   snapshot_arr: Unsubscribe[] = [];
   subscription_arr: Subscription[] = [];
+  interval_arr: NodeJS.Timer[] = [];
+
   currentThread = new Thread();
   currentChannel = new Channel();
   users: User[] = [];
@@ -24,7 +26,13 @@ export class CurrentDataService {
   usersAreLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   onceSubscribtedUsers: User[] = [];
 
-  constructor(private user: UserService, private auth: Auth) { }
+  constructor(private userService: UserService, private auth: Auth) { }
+
+  clearByLogout() {
+    this.snapshot_arr.forEach((unsub) => unsub());
+    this.subscription_arr.forEach((sub) => sub.unsubscribe());
+    this.interval_arr.forEach((int, i) => window.clearInterval(i));
+  }
 
   pushToSnapshots(snap: Unsubscribe) {
     this.snapshot_arr.push(snap);
@@ -32,6 +40,10 @@ export class CurrentDataService {
 
   pushToSubscription(sub: Subscription) {
     this.subscription_arr.push(sub);
+  }
+
+  pushToInterval(int: NodeJS.Timer) {
+    this.interval_arr.push(int);
   }
 
   setChatUsers(users: User[]) {
@@ -74,7 +86,7 @@ export class CurrentDataService {
     this.users = user_arr;
     let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
     if (user) {
-      this.user.set(user);
+      this.userService.set(user);
     } else {
       console.log('gefunden');
     }
