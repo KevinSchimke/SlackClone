@@ -12,7 +12,6 @@ import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
-import { ReactionService } from 'src/app/service/reaction/reaction.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 
 @Component({
@@ -39,7 +38,7 @@ export class ChannelBarComponent {
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, private reaction: ReactionService) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
 
   }
 
@@ -110,11 +109,13 @@ export class ChannelBarComponent {
   }
 
   snapQuery(q: Query) {
-    onSnapshot(q, (querySnapshot: any) => {
+    const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.threads = this.sorter.sortByDate(this.unsortedThreads);
       this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
+
+    this.currentDataService.pushToSnapshots(resp);
   }
 
   pushIntoThreads(doc: any) {

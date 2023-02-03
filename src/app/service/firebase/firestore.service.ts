@@ -15,14 +15,12 @@ export class FirestoreService {
   constructor(private firestore: Firestore, private userService: UserService) { }
 
   async save(obj: Channel | Thread | Comment | User | Reaction, collPath: string, id?: string) {
-    console.log('path is ', obj, collPath);
     let coll = collection(this.firestore, collPath);
     id ? await setDoc(doc(coll, id), obj.toJson()) : await setDoc(doc(coll), obj.toJson());
   }
 
   async add(obj: Channel) {
     const docRef = await addDoc(collection(this.firestore, "channels"), obj.toJson());
-    console.log("Document written with ID: ", docRef.id);
     return docRef.id;
   }
 
@@ -53,9 +51,6 @@ export class FirestoreService {
       users: users
     });
   }
-
-  // arrayUnion("uid")
-  
 
   updateObj(obj: Thread | Channel, collPath: string) {
     let docRef = doc(this.firestore, collPath);

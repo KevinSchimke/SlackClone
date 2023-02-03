@@ -73,8 +73,10 @@ export class ThreadBarComponent {
   }
 
   subscribeCollAndDoc() {
-    this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    this.channelDocData$.subscribe((channel) => this.channel = channel);
+    const subscription_thread = this.threadDocData$.subscribe((thread) => this.setThread(thread));
+    const subscription_channel = this.channelDocData$.subscribe((channel) => this.channel = channel);
+    this.currentDataService.pushToSubscription(subscription_thread);
+    this.currentDataService.pushToSubscription(subscription_channel);
     this.snapShotThreadCollection();
   }
 
@@ -100,11 +102,12 @@ export class ThreadBarComponent {
   }
 
   snapQuery(q: Query) {
-    onSnapshot(q, (querySnapshot: any) => {
+    const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
+    this.currentDataService.pushToSnapshots(resp);
   }
 
   pushIntoThreads(doc: any) {

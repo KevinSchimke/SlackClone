@@ -19,14 +19,15 @@ export class MainComponent {
 
   ngOnInit(): void {
     this.users$ = this.firestoreService.getCollection('users');
-    this.users$.subscribe((users) => this.currentDataService.setUsers(users));
+    const subscription = this.users$.subscribe((users) => this.currentDataService.setUsers(users));
+    this.currentDataService.pushToSubscription(subscription);
 
-    this.updateLastLogin();
+    // this.updateLastLogin();
 
-    setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
+    // setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
   }
 
-  updateLastLogin() {
-    this.firestoreService.updateLastLogin(new Date())
-  }
+  // updateLastLogin() {
+  //   this.firestoreService.updateLastLogin(new Date())
+  // }
 }

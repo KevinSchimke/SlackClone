@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { Unsubscribe } from '@angular/fire/firestore';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
@@ -10,7 +11,8 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class CurrentDataService {
-
+  snapshot_arr: Unsubscribe[] = [];
+  subscription_arr: Subscription[] = [];
   currentThread = new Thread();
   currentChannel = new Channel();
   users: User[] = [];
@@ -23,6 +25,14 @@ export class CurrentDataService {
   onceSubscribtedUsers: User[] = [];
 
   constructor(private user: UserService, private auth: Auth) { }
+
+  pushToSnapshots(snap: Unsubscribe) {
+    this.snapshot_arr.push(snap);
+  }
+
+  pushToSubscription(sub: Subscription) {
+    this.subscription_arr.push(sub);
+  }
 
   setChatUsers(users: User[]) {
     this.newChatUsers = users;

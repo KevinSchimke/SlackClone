@@ -35,7 +35,8 @@ export class WorkspaceBarComponent {
   ngOnInit() {
     this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
-    onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
+    const resp = onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
+    this.currentData.pushToSnapshots(resp);
   }
 
   openDialog(): void {

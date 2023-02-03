@@ -35,19 +35,41 @@ export class LoginComponent {
       this.login(email, password);
     }
   }
-  login(email: string, password: string) {
-    signInWithEmailAndPassword(this.auth, email!, password!)
-      .then((user: UserCredential) => {
-        if (user.user?.emailVerified) {
-          this.router.navigate(['/main']);
-          this.pushupMessage.openPushupMessage('success', 'Login Successfully')
-        } else {
-          this.router.navigate(['/verification']);
-          this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address')
-        }
-      }).catch((error) => {
-        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-      });
+
+  async login(email: string, password: string) {
+    // signInWithEmailAndPassword(this.auth, email!, password!)
+    //   .then((user: UserCredential) => {
+    //     if (user.user?.emailVerified) {
+    //       this.router.navigate(['/main']);
+    //       this.pushupMessage.openPushupMessage('success', 'Login Successfully')
+    //     } else {
+    //       this.router.navigate(['/verification']);
+    //       this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address')
+    //     }
+    //   }).catch((error) => {
+    //     this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+    //   });
+
+    try {
+      const resp = await signInWithEmailAndPassword(this.auth, email, password);
+      if (resp.user?.emailVerified) {
+        this.navigateToMain();
+        this.pushupMessage.openPushupMessage('success', 'Login Successfully');
+      } else {
+        this.navigateToVerification();
+        this.pushupMessage.openPushupMessage('info', 'Please verify your E-Mail Address');
+      }
+    } catch (error: any) {
+      this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code));
+    }
+  }
+
+  private navigateToMain() {
+    this.router.navigate(['/main']);
+  }
+
+  private navigateToVerification() {
+    this.router.navigate(['/verification']);
   }
 
   getErrorMessage(formControlName: string) {

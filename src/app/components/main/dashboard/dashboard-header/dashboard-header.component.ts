@@ -6,6 +6,7 @@ import { ReauthenticateComponent } from '../../dialogs/reauthenticate/reauthenti
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { ProfileSettingsComponent } from '../../dialogs/profile-settings/profile-settings.component';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -15,7 +16,7 @@ import { ProfileSettingsComponent } from '../../dialogs/profile-settings/profile
 export class DashboardHeaderComponent {
   currentUser = new User();
 
-  constructor(public dialog: MatDialog, private auth: Auth, private router: Router, public userService: UserService) { }
+  constructor(public dialog: MatDialog, private auth: Auth, private router: Router, public userService: UserService, private currentDataService: CurrentDataService) { }
 
   ngOnInit() {
     this.currentUser = this.userService.get();
@@ -30,6 +31,10 @@ export class DashboardHeaderComponent {
   }
 
   logout() {
+    this.currentDataService.snapshot_arr.forEach((unsub) => unsub());
+    this.currentDataService.subscription_arr.forEach((sub) => sub.unsubscribe());
+    for (let i = 1; i < 9999; i++) window.clearInterval(i);
+
     signOut(this.auth)
     // .then(() => {
     //   location.reload();
