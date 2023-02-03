@@ -3,7 +3,9 @@ import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerifi
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { AuthService } from 'src/app/service/firebase/auth.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { UserService } from 'src/app/service/user/user.service';
 
@@ -33,7 +35,9 @@ export class AccountSettingsComponent {
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
     private dialogRef: MatDialogRef<AccountSettingsComponent>,
-    public userService: UserService) {
+    public userService: UserService,
+    private authService: AuthService,
+    private formErrorService: FormErrorService) {
   }
 
   setStep(index: number) {
@@ -48,22 +52,27 @@ export class AccountSettingsComponent {
     this.dialogRef.close();
   }
 
-  updateUserData() {
-    this.firestoreService.updateUser(this.userService.get().toJson());
+  async updateUserData() {
+    await this.firestoreService.updateUser(this.userService.get().toJson());
   }
 
-  updateUserEmail() {
+  async updateUserEmail() {
     if (this.email.valid) {
       let email = this.email.value.email!;
       updateEmail(this.auth.currentUser!, email)
         .then(() => {
           this.userService.currentUser.mail = email!;
           this.updateUserData();
+        })
+        .then(() => {
           sendEmailVerification(this.auth.currentUser!)
           this.pushupMessage.openPushupMessage('success', 'Please verify your new email')
+        })
+        .then(() => {
           this.closeDialog();
-          this.logout();
-        }).catch((error) => {
+          this.authService.logout();
+        })
+        .catch((error) => {
           this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
         });
     }
@@ -92,18 +101,8 @@ export class AccountSettingsComponent {
     }
   }
 
-  logout() {
-    signOut(this.auth)
-      .then(() => {
-        location.reload();
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }
-
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
-    return this.authError.getErrorMessage(formGroup, formControlName)
+    return this.formErrorService.getMessage(formGroup, formControlName)
   }
 }
 

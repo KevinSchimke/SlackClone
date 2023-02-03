@@ -6,6 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { UserService } from 'src/app/service/user/user.service';
 
@@ -36,7 +37,8 @@ export class ProfileSettingsComponent {
     private pushupMessage: PushupMessageService,
     private fireStorage: Storage,
     private dialogRef: MatDialogRef<ProfileSettingsComponent>,
-    public userService: UserService) {
+    public userService: UserService,
+    private formErrorService: FormErrorService) {
     this.statusValue = this.userService.currentUser.status;
   }
 
@@ -80,7 +82,7 @@ export class ProfileSettingsComponent {
   }
 
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
-    return this.authError.getErrorMessage(formGroup, formControlName)
+    return this.formErrorService.getMessage(formGroup, formControlName)
   }
 
   upload = ($event: any) => {

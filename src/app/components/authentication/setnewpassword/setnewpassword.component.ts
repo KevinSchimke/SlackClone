@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, confirmPasswordReset, applyActionCode } from '@angular/fire/auth';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
+import { AuthService } from 'src/app/service/firebase/auth.service';
 
 @Component({
   selector: 'app-setnewpassword',
@@ -17,7 +17,11 @@ export class SetnewpasswordComponent {
   hide = true;
   routeData: any;
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private route: ActivatedRoute, private router: Router) { }
+  constructor(private authService: AuthService,
+    private formErrorService: FormErrorService,
+    private pushupMessage: PushupMessageService,
+    private route: ActivatedRoute,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
@@ -25,7 +29,8 @@ export class SetnewpasswordComponent {
         this.routeData = params;
       }
       if (params['mode'] === 'verifyEmail' || params['mode'] === 'recoverEmail') {
-        applyActionCode(this.auth, params['oobCode'])
+        const oobCode = params['oobCode']
+        this.authService.applyActionCode(oobCode)
         this.router.navigate(['/login']);
         this.pushupMessage.openPushupMessage('success', 'Verification successful')
       }
@@ -34,18 +39,13 @@ export class SetnewpasswordComponent {
 
   setNewPassword() {
     if (this.user.valid) {
-      const password = this.user.value.password;
-      confirmPasswordReset(this.auth, this.routeData['oobCode'], password!)
-        .then(() => {
-          this.router.navigate(['/login']);
-          this.pushupMessage.openPushupMessage('success', 'Password change successful')
-        }).catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
+      const password = this.user.value.password!;
+      const oobCode = this.routeData['oobCode']
+      this.authService.confirmPasswordReset(oobCode, password)
     }
   }
 
   getErrorMessage(formControlName: string) {
-    return this.authError.getErrorMessage(this.user, formControlName)
+    return this.formErrorService.getMessage(this.user, formControlName)
   }
 }

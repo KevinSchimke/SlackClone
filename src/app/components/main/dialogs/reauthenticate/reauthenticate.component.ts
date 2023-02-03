@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { User } from 'src/app/models/user.class';
 import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { AccountSettingsComponent } from '../account-settings/account-settings.component';
@@ -27,6 +28,7 @@ export class ReauthenticateComponent {
     public userService: UserService,
     private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
+    private formErrorService: FormErrorService,
   ) { }
 
   ngOnInit(): void {
@@ -47,7 +49,7 @@ export class ReauthenticateComponent {
   }
 
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
-    return this.authError.getErrorMessage(formGroup, formControlName)
+    return this.formErrorService.getMessage(formGroup, formControlName)
   }
 }
 
