@@ -28,8 +28,8 @@
                 </mat-expansion-panel-header>
                 <li *ngFor="let channel of channels">
                     <a [routerLink]="['/main/' + channel.channelId]">
-                        <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-                        {{ channel.channelName }}
+                        <span *ngIf="!channel.locked">#</span>
+                        <img *ngIf="channel.locked" src="assets/svg/color_939295/lock.svg"> {{ channel.channelName }}
                     </a>
                 </li>
             </mat-expansion-panel>

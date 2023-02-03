@@ -56,10 +56,12 @@ header {
 }
 
 .post-image {
+    @include image(cover);
+    @include border(1px, solid, $border-button-main, 1rem);
     max-width: 200px;
     max-height: 200px;
-    object-fit: cover;
-    cursor: pointer;
+    padding: 0.5rem;
+    display: block;
 }
 
 .channel-thread {
