@@ -24,7 +24,7 @@
 
     <div class="channel-thread-content">
         <p class="thread-headline">
-            <span *ngIf="!(thread.userId | canClick)" (click)="openUserInfoCard(thread)">
+            <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="openUserInfoCard(thread)">
                 <b>{{ thread.userId | username }}</b></span>
             <span class="span-time" *ngIf="thread.creationDate">
                 {{ thread.creationDate| date }}</span>
@@ -61,7 +61,7 @@
     <div class="channel-thread-content">
         <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
         <div class="thread-headline">
-            <span *ngIf="!(comment.userId | canClick)" (click)="openUserInfoCard(comment)">
+            <span class="pointer" *ngIf="!(comment.userId | canClick)" (click)="openUserInfoCard(comment)">
                 <b>{{ comment.userId | username }}</b>
             </span>
             <span *ngIf="comment.creationDate" class="span-time">{{ comment.creationDate | periodOfTime }} ago</span>

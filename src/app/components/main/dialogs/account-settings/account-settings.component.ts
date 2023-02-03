@@ -83,9 +83,13 @@ export class AccountSettingsComponent {
   }
 
   async deleteCurrentUser() {
-    await this.firestoreService.deleteUser();
-    await deleteUser(this.auth.currentUser!)
-    location.reload();
+    try {
+      await this.firestoreService.deleteUser();
+      await deleteUser(this.auth.currentUser!);
+      location.reload();
+    } catch (error) {
+      console.error();
+    }
   }
 
   logout() {

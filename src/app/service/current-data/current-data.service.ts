@@ -28,11 +28,11 @@ export class CurrentDataService {
     this.newChatUsers = users;
   }
 
-  setPrivates(privates: any[]){
+  setPrivates(privates: any[]) {
     this.privates = privates;
   }
 
-  setChannels(channels: any[]){
+  setChannels(channels: any[]) {
     this.allCategories = channels;
     this.channelsAreLoaded.next(true);
   }
@@ -63,7 +63,11 @@ export class CurrentDataService {
   setUsers(user_arr: []) {
     this.users = user_arr;
     let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
-    this.user.set(user);
+    if (user) {
+      this.user.set(user);
+    } else {
+      console.log('gefunden');
+    }
     if (!this.usersAreLoaded) {
       this.onceSubscribtedUsers = user_arr;
       this.usersAreLoaded = true;
@@ -75,7 +79,7 @@ export class CurrentDataService {
     return this.newChatUsers;
   }
 
-  getChatUsersId(){
+  getChatUsersId() {
     let ids: string[] = [];
     this.newChatUsers.forEach(user => ids.push(user.id));
     return ids;
@@ -93,8 +97,8 @@ export class CurrentDataService {
     return this.users;
   }
 
-  getPrivates(){
-   return this.privates;
+  getPrivates() {
+    return this.privates;
   }
 
 }

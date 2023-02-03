@@ -30,10 +30,12 @@ export class DashboardHeaderComponent {
   }
 
   logout() {
-    signOut(this.auth).then(() => {
-      this.router.navigate(['/login']);
-    }).catch((error) => {
-      console.log(error);
-    });
+    signOut(this.auth)
+    // .then(() => {
+    //   location.reload();
+    //   this.router.navigate(['/login']);
+    // }).catch((error) => {
+    //   console.log(error);
+    // });
   }
 }
