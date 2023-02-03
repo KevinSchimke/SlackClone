@@ -1,6 +1,5 @@
 <div style="height:100%;">
     <header>
-        <!-- <div class="header-headline"> -->
         <div class="bar-header">
             <button (click)="toggleLeftSidebar()" class="workspace-btn">
                 <img *ngIf="leftSideBar" src="assets/svg/color_d1d2d3/left_panel_open.svg">
@@ -13,14 +12,28 @@
                     <h2>{{channel.channelName}}</h2>
                 </button>
 
-                <div class="header-headline" *ngIf="channel.category == 'private'">
-                    <div *ngFor="let user of channel.users" class="private-header-imgs">
+                <button class="workspace-btn header-headline" *ngIf="channel.category == 'private'">
+                    <div class="private-header-imgs">
+                        <div *ngFor="let user of channel.users">
+                            <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
+                        </div>
+                        <h2>{{channel.users | messagePartner}}</h2>
+                    </div>
+                </button>
+
+            </div>
+        </div>
+        <div class="header-right">
+            <div class="channel-members" *ngIf="channel.category == 'channel'">
+                <button class="btn-unset btn-members">
+                    <div *ngFor="let user of channel.users.slice(0, 4);">
                         <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
                     </div>
-
-                    <h2>{{channel.users | messagePartner}}</h2>
-                </div>
-
+                    <span>{{channel.users.length}} members</span>
+                </button>
+                <button class="btn-unset btn-add-member">
+                    <img class="img-header-partner" src="assets/svg/color_d1d2d3/add_person.svg"/>
+                </button>
             </div>
         </div>
     </header>
@@ -68,17 +81,20 @@
                 </p>
                 <div *ngIf="thread.comments > 0">
                     <button class="d-flex go-to-thread" (click)="openThread(thread)">
-                        <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
+                            <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
                             <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                             <img [src]="commentUser | imgSrc" />
                         </div>
-                        <span class="channel-thread-comments" *ngIf="thread.comments < 2">{{thread.comments}}
-                            reply</span>
-                        <span class="channel-thread-comments" *ngIf="thread.comments > 1">{{thread.comments}}
-                            replies</span>
-                        <span class="time-of-last-answer"><span *ngIf="thread.comments > 1">Last reply</span>
-                            {{thread.lastComment |
-                            periodOfTime}} ago</span>
+                        <span class="channel-thread-comments" *ngIf="thread.comments < 2">
+                            {{thread.comments}} reply
+                        </span>
+                        <span class="channel-thread-comments" *ngIf="thread.comments > 1">
+                            {{thread.comments}} replies
+                        </span>
+                        <span class="time-of-last-answer">
+                            <span *ngIf="thread.comments > 1">Last reply</span>
+                            {{thread.lastComment | periodOfTime}} ago
+                        </span>
                         <span class="show-thread">Show thread</span>
                     </button>
                 </div>

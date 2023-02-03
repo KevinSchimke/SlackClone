@@ -5,6 +5,8 @@ import { UserService } from 'src/app/service/user/user.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { Channel } from 'src/app/models/channel.class';
 import { SortService } from 'src/app/service/sort/sort.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DialogAddChannelComponent } from '../../../dialogs/dialog-add-channel/dialog-add-channel.component';
 
 @Component({
   selector: 'app-all-channels',
@@ -16,7 +18,7 @@ export class AllChannelsComponent {
   preChannelArr: Channel[] = [];
   channels: Channel[] = [];
 
-  constructor(public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
+  constructor(public dialog: MatDialog,public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
 
   async ngOnInit() {
     let channelsRef = collection(this.firestore, 'channels');
@@ -27,6 +29,10 @@ export class AllChannelsComponent {
       await getDocs(joinedChannelsQuery)
     ]);
     this.setChannelArr(isOpenChannels,isJoinedChannels);
+  }
+
+  openDialog(): void {
+    this.dialog.open(DialogAddChannelComponent);
   }
 
   setChannelArr(isOpenChannels: any,isJoinedChannels: any){
