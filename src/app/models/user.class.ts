@@ -6,7 +6,7 @@ export class User {
     src: string;
     status: string;
     lastLogin: any;
-    pathDefaultImg: string = 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2F2vaxlp928h2?alt=media&token=77a22de9-f29e-45eb-91cd-e61def848038'
+    pathDefaultImg: string = 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2Fjf7fewu5rhi?alt=media&token=32f8b383-e477-4829-9e15-fc4230cab06b'
 
     constructor(obj?: any) {
         this.id = obj ? obj.id : '';
