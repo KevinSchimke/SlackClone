@@ -41,7 +41,7 @@ export class CurrentDataService {
     this.privates = privates;
   }
 
-  setChannels(channels: any[]) {
+  setAllChannels(channels: any[]) {
     this.allCategories = channels;
     this.channelsAreLoaded.next(true);
   }

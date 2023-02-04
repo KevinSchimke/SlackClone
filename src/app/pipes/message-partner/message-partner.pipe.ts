@@ -43,6 +43,9 @@ export class MessagePartnerPipe implements PipeTransform {
     let j = this.currentData.onceSubscribtedUsers.findIndex((user: User) => (user.id === fuid));
     if (this.currentData.onceSubscribtedUsers[j])
       this.filteredUserNames.push(this.currentData.onceSubscribtedUsers[j].name);
+    else if (j === -1)
+      this.filteredUserNames.push('Deleted User');
+
   }
 
   isChatWithMyself(users: string[]) {

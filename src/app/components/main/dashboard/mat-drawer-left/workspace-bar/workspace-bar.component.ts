@@ -50,7 +50,7 @@ export class WorkspaceBarComponent {
     this.privates = [];
     let k = 0;
     querySnapshot.forEach((doc: any) => k = this.pushIntoChannel(doc, k));
-    this.currentData.setChannels(this.channels);
+    this.currentData.setAllChannels(this.channels);
     this.privates = this.channels.filter(this.categoryIsPrivate);
     this.privates = this.sort.sortByName(this.privates);
     this.channels = this.channels.filter(this.categoryIsChannel);
