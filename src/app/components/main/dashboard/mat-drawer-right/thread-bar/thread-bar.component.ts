@@ -99,8 +99,8 @@ export class ThreadBarComponent {
   subscribeCollAndDoc() {
     const subscription_thread = this.threadDocData$.subscribe((thread) => this.setThread(thread));
     const subscription_channel = this.channelDocData$.subscribe((channel) => this.channel = channel);
-    this.currentDataService.pushToSubscription(subscription_thread);
-    this.currentDataService.pushToSubscription(subscription_channel);
+    this.currentDataService.subscription_arr.push(subscription_thread);
+    this.currentDataService.subscription_arr.push(subscription_channel);
     this.snapShotThreadCollection();
   }
 
@@ -131,7 +131,7 @@ export class ThreadBarComponent {
       this.comments = this.sorter.sortByDate(this.unsortedComments);
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
-    this.currentDataService.pushToSnapshots(resp);
+    this.currentDataService.snapshot_arr.push(resp);
   }
 
   pushIntoThreads(doc: any) {

@@ -7,6 +7,7 @@ import { CurrentDataService } from 'src/app/service/current-data/current-data.se
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
+import { ProfileSettingsComponent } from '../../../dialogs/profile-settings/profile-settings.component';
 import { ReauthenticateComponent } from '../../../dialogs/reauthenticate/reauthenticate.component';
 
 @Component({
@@ -55,8 +56,12 @@ export class InfocardComponent {
     return false;
   }
 
-  openDialog(): void {
+  openAccountSettings(): void {
     this.dialog.open(ReauthenticateComponent);
+  }
+
+  openProfileSettings(): void {
+    this.dialog.open(ProfileSettingsComponent);
   }
 
   closeThread() {

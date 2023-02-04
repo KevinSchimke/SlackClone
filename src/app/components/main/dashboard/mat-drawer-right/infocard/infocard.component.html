@@ -11,7 +11,7 @@
 <div class="generalContent">
     <div>
         <h2>{{user.name}}</h2>
-        <a *ngIf="isLoggedInUser" (click)="openDialog()">Edit profile</a>
+        <a *ngIf="isLoggedInUser" (click)="openAccountSettings()">Edit Account Settings</a>
     </div>
     <div>
         <img *ngIf="userActive" src="assets/svg/color_008000/online.svg">
@@ -22,7 +22,7 @@
     <div *ngIf="user.status || isLoggedInUser">
         <img src="assets/svg/color_d1d2d3/pencil.svg">
         <span *ngIf="user.status">{{ user.status }}</span>
-        <a *ngIf="!user.status && isLoggedInUser" (click)="openDialog()">+Add status</a>
+        <a *ngIf="!user.status && isLoggedInUser" (click)="openProfileSettings()">+Add status</a>
     </div>
     <div>
         <img src="assets/svg/color_d1d2d3/clock.svg">
@@ -33,7 +33,7 @@
 <div class="contactDetails">
     <div>
         <h3>Contact details</h3>
-        <a *ngIf="isLoggedInUser" (click)="openDialog()">Edit profile</a>
+        <a *ngIf="isLoggedInUser" (click)="openProfileSettings()">Edit Profile Settings</a>
     </div>
     <div>
         <img src="assets/svg/color_d1d2d3/mail.svg">
@@ -47,7 +47,7 @@
         <div class="contactItems">
             <span>Phone</span>
             <a *ngIf="user.phone" href="tel:{{user.phone}}">{{user.phone}}</a>
-            <a *ngIf="!user.phone && isLoggedInUser" (click)="openDialog()">+Add phone</a>
+            <a *ngIf="!user.phone && isLoggedInUser" (click)="openProfileSettings()">+Add phone</a>
         </div>
     </div>
 </div>
