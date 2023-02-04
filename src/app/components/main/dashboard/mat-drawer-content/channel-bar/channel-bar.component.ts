@@ -211,4 +211,13 @@ export class ChannelBarComponent {
   async deleteBookmark(deleteBookmarkID: string) {
     await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
   }
+
+  isInChannel(){
+    return this.channel.users.indexOf(this.currentUser.id) !== -1;
+  }
+
+  joinChannel(){
+    this.channel.users.push(this.currentUser.id);
+    this.fireService.pushUserToChannel(this.channelId,this.currentUser.id);
+  }
 }
