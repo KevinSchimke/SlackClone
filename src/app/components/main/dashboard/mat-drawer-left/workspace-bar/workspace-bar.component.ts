@@ -55,6 +55,7 @@ export class WorkspaceBarComponent {
     this.channels = this.channels.filter(this.categoryIsChannel);
     this.channels = this.sort.sortByName(this.channels);
     this.currentData.setPrivates(this.privates);
+    this.currentData.setChannels(this.channels);
   }
 
   categoryIsChannel(channel: Channel) {

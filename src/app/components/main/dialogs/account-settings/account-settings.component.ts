@@ -1,7 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
+import { Channel } from 'src/app/models/channel.class';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { AuthService } from 'src/app/service/firebase/auth/auth.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { UserService } from 'src/app/service/user/user.service';
 
@@ -29,7 +32,9 @@ export class AccountSettingsComponent {
     private dialogRef: MatDialogRef<AccountSettingsComponent>,
     public userService: UserService,
     private authService: AuthService,
-    private formErrorService: FormErrorService) {
+    private formErrorService: FormErrorService,
+    private currentDataService: CurrentDataService,
+    private firestoreService: FirestoreService) {
   }
 
   setStep(index: number) {
@@ -65,10 +70,17 @@ export class AccountSettingsComponent {
   }
 
   async deleteCurrentUser() {
+    await this.deleteUserFromChannels();
     await this.authService.deleteUser()
       .then(() => {
         this.closeDialog();
       })
+  }
+
+  async deleteUserFromChannels() {
+    this.currentDataService.channels.forEach((channel: Channel) => {
+      this.firestoreService.removeUserFromChannel(channel.channelId, this.userService.uid);
+    })
   }
 
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
