@@ -6,21 +6,22 @@
     width: 100%;
 }
 
-.btn-create-channel {
-    color: $color-main;
-    font-weight: 700;
-    border: 1px solid $color-secondary;
-    border-radius: 4px;
-    padding: 0.4rem 1rem;
-    &:hover {
-        border: 1px solid $color-main;
-        background-color: $bg-color-hover;
+.bar-header {
+    .btn-create-channel {
+        color: $color-main;
+        font-weight: 700;
+        border: 1px solid $color-secondary;
+        border-radius: 4px;
+        padding: 0.4rem 1rem;
+        &:hover {
+            border: 1px solid $color-main;
+            background-color: $bg-color-hover;
+        }
     }
 }
 
 .channel-container {
     padding-inline: 1.2rem;
-    cursor: pointer;
     .divider {
         margin-top: .75rem;
     }
@@ -39,5 +40,35 @@
     img {
         width: 1.25rem;
         height: 1.25rem;
+    }
+}
+
+a {
+    display: block;
+    text-decoration: none;
+    color: unset;
+}
+
+.channel-joined {
+    @include containerPosition(unset, center);
+    color: $bg-clr-green-accent !important;
+    font-weight: 600;
+    gap: .2rem;
+    img {
+        height: 1rem;
+        width: 1rem;
+    }
+}
+
+.btn-create-channel-2 {
+    color: $color-main;
+    background-color: $bg-clr-green-accent;
+    font-weight: 700;
+    border: 1px solid $color-secondary;
+    border-radius: 4px;
+    padding: 0.4rem 1rem;
+    margin-inline: 50%;
+    &:hover {
+        filter: brightness(1.1);
     }
 }

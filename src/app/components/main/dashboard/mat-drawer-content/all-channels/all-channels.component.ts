@@ -17,13 +17,15 @@ export class AllChannelsComponent {
   leftSideBar: boolean = false;
   preChannelArr: Channel[] = [];
   channels: Channel[] = [];
+  currentUserId: string = '';
 
   constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
 
   async ngOnInit() {
+    this.currentUserId = this.userService.getUid();
     let channelsRef = collection(this.firestore, 'channels');
     const openChannelsQuery = query(channelsRef, where("locked", "==", false));
-    const joinedChannelsQuery = query(channelsRef, where("users", "array-contains", this.userService.getUid()), where("category", "==", 'channel'));
+    const joinedChannelsQuery = query(channelsRef, where("users", "array-contains", this.currentUserId), where("category", "==", 'channel'));
     const [isOpenChannels, isJoinedChannels] = await Promise.all([
       await getDocs(openChannelsQuery),
       await getDocs(joinedChannelsQuery)
@@ -42,13 +44,10 @@ export class AllChannelsComponent {
     this.channels = this.preChannelArr.filter((elem, i) => {
       return this.preChannelArr.findIndex((channel) => channel.channelId === elem.channelId) === i;
     });
-    this.channels = this.sorter.sortByDate(this.channels);
+    this.channels = this.sorter.sortByName(this.channels);
     // console.log(this.preChannelArr);
     // console.log(this.channels);
   }
-
-
-
 
   addToChannel(doc: any) {
     let channelElement = new Channel(doc.data());
@@ -56,9 +55,12 @@ export class AllChannelsComponent {
     this.preChannelArr.push(channelElement);
   }
 
-
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
     this.sidenavToggler.workspaceBar.toggle()
+  }
+
+  isInChannel(channel:Channel){
+    return channel.users.indexOf(this.currentUserId) !== -1;
   }
 }
