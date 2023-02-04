@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signOut, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from '../../current-data/current-data.service';
 import { PushupMessageService } from '../../pushup-message/pushup-message.service';
 import { UserService } from '../../user/user.service';
@@ -67,16 +66,6 @@ export class AuthService {
       });
   }
 
-  // async createUserWithEmailAndPassword(email: string, password: string) {
-  //   try {
-  //     let user = await createUserWithEmailAndPassword(this.auth, email, password);
-  //     return user;
-  //   } catch (error: any) {
-  //     this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code));
-  //   }
-  // }
-
-
   async sendEmailVerification(user: UserCredential) {
     await sendEmailVerification(user.user)
       .then(() => {
@@ -134,6 +123,7 @@ export class AuthService {
   }
 
   async deleteUser() {
+    this.currentDataService.clearByLogout();
     await this.firestoreService.deleteUser();
     await deleteUser(this.auth.currentUser!)
       .then(() => {
