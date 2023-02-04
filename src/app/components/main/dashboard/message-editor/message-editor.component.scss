@@ -58,3 +58,18 @@ mat-card-content {
 .angular-editor-toolbar {
     background: unset !important;
 }
+
+.close{
+    position: absolute;
+    bottom: 10px;
+    left: 5px;
+    font-size: 26px;
+    padding: 4px;
+    background-color: black;
+    border-radius: 50%;
+    &:hover{
+        cursor: pointer;
+        color: black;
+        background-color: white;
+    }
+}

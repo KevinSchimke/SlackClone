@@ -12,9 +12,9 @@
     <input #fInput type="file" style="visibility: hidden;" (change)="upload($event)" accept=".png,.jpg">
 
     <div class="upload-image-container" *ngIf="imageURL">
-        <div class="position-relative">
+        <div>
             <img [src]="imageURL" class="upload-img">
-            <i (click)="discardUpload()" class="material-icons">close</i>
+            <div (click)="discardUpload()" class="close">x</div>
         </div>
     </div>
 
