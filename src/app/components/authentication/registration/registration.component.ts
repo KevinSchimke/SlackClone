@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/service/firebase/auth.service';
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 
 @Component({

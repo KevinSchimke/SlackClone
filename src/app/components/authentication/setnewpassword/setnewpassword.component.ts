@@ -3,7 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
-import { AuthService } from 'src/app/service/firebase/auth.service';
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
 
 @Component({
   selector: 'app-setnewpassword',

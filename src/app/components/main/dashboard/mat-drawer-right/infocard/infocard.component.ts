@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { ReauthenticateComponent } from '../../../dialogs/reauthenticate/reauthenticate.component';

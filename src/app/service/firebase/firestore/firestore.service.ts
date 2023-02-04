@@ -5,7 +5,7 @@ import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../user/user.service';
 
 @Injectable({
   providedIn: 'root'

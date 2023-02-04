@@ -4,7 +4,7 @@ import { ReauthenticateComponent } from '../../dialogs/reauthenticate/reauthenti
 import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { ProfileSettingsComponent } from '../../dialogs/profile-settings/profile-settings.component';
-import { AuthService } from 'src/app/service/firebase/auth.service';
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
 
 @Component({
   selector: 'app-dashboard-header',

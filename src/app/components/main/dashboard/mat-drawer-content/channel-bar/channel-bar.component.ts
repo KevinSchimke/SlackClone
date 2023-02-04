@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
 import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';

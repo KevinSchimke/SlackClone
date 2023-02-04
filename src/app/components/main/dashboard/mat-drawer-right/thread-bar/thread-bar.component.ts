@@ -7,7 +7,7 @@ import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';

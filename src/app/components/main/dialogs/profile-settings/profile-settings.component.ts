@@ -3,7 +3,7 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { UserService } from 'src/app/service/user/user.service';

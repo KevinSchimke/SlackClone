@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel.class';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { UserService } from 'src/app/service/user/user.service';
 export class DialogAddChannelComponent {
   channelForm = new FormGroup({
     name: new FormControl('', Validators.required),
-    description: new FormControl('',Validators.maxLength(80)),
+    description: new FormControl('', Validators.maxLength(80)),
     locked: new FormControl('')
   });
   channel: Channel = new Channel();
@@ -31,7 +31,7 @@ export class DialogAddChannelComponent {
     this.channel = new Channel();
     this.channel.channelName = this.channelForm.controls.name.value || '';
     this.channel.description = this.channelForm.controls.description.value || '';
-    if(this.channelForm.controls.locked.value === '' || this.channelForm.controls.locked.value === null)
+    if (this.channelForm.controls.locked.value === '' || this.channelForm.controls.locked.value === null)
       this.channel.locked = false;
     else
       this.channel.locked = this.channelForm.controls.locked.value;
@@ -41,7 +41,7 @@ export class DialogAddChannelComponent {
     this.dialogRef.close();
   }
 
-  toggleLock(){
+  toggleLock() {
     this.locked = !this.locked;
   }
 }

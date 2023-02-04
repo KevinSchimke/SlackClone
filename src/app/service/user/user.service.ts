@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Auth, UserCredential } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
-import { FirestoreService } from '../firebase/firestore.service';
+import { FirestoreService } from '../firebase/firestore/firestore.service';
 
 @Injectable({
   providedIn: 'root'

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Auth } from '@angular/fire/auth';
 import { EMPTY, Observable } from 'rxjs';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
 
 @Component({

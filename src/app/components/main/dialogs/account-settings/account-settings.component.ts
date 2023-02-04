@@ -1,7 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
-import { AuthService } from 'src/app/service/firebase/auth.service';
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { UserService } from 'src/app/service/user/user.service';
 

@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
 @Component({

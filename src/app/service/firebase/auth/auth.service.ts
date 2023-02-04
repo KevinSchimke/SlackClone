@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser } from '@angular/fire/auth';
+import { Auth, signOut, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser } from '@angular/fire/auth';
 import { Router } from '@angular/router';
-import { signOut, UserCredential } from '@firebase/auth';
 import { User } from 'src/app/models/user.class';
-import { CurrentDataService } from '../current-data/current-data.service';
-import { PushupMessageService } from '../pushup-message/pushup-message.service';
-import { UserService } from '../user/user.service';
+import { CurrentDataService } from '../../current-data/current-data.service';
+import { PushupMessageService } from '../../pushup-message/pushup-message.service';
+import { UserService } from '../../user/user.service';
 import { AuthErrorService } from './auth-error.service';
-import { FirestoreService } from './firestore.service';
+import { FirestoreService } from '../firestore/firestore.service';
 
 @Injectable({
   providedIn: 'root'

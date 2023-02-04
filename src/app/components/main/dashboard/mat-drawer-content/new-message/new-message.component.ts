@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
@@ -26,7 +26,7 @@ export class NewMessageComponent {
         this.allUsers = this.currentDataService.users;
       }
     })
-    
+
   }
 
   deleteUserToChat(user: User) {

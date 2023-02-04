@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { Channel } from 'src/app/models/channel.class';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,7 +18,7 @@ export class AllChannelsComponent {
   preChannelArr: Channel[] = [];
   channels: Channel[] = [];
 
-  constructor(public dialog: MatDialog,public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
 
   async ngOnInit() {
     let channelsRef = collection(this.firestore, 'channels');
@@ -28,14 +28,14 @@ export class AllChannelsComponent {
       await getDocs(openChannelsQuery),
       await getDocs(joinedChannelsQuery)
     ]);
-    this.setChannelArr(isOpenChannels,isJoinedChannels);
+    this.setChannelArr(isOpenChannels, isJoinedChannels);
   }
 
   openDialog(): void {
     this.dialog.open(DialogAddChannelComponent);
   }
 
-  setChannelArr(isOpenChannels: any,isJoinedChannels: any){
+  setChannelArr(isOpenChannels: any, isJoinedChannels: any) {
     this.preChannelArr = [];
     isOpenChannels.forEach((doc: any) => this.addToChannel(doc));
     isJoinedChannels.forEach((doc: any) => this.addToChannel(doc));
@@ -47,7 +47,7 @@ export class AllChannelsComponent {
     // console.log(this.channels);
   }
 
-  
+
 
 
   addToChannel(doc: any) {
