@@ -33,18 +33,6 @@ export class CurrentDataService {
     this.interval_arr.forEach((int, i) => window.clearInterval(i));
   }
 
-  pushToSnapshots(snap: Unsubscribe) {
-    this.snapshot_arr.push(snap);
-  }
-
-  pushToSubscription(sub: Subscription) {
-    this.subscription_arr.push(sub);
-  }
-
-  pushToInterval(int: NodeJS.Timer) {
-    this.interval_arr.push(int);
-  }
-
   setChatUsers(users: User[]) {
     this.newChatUsers = users;
   }

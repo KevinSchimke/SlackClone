@@ -36,7 +36,7 @@ export class WorkspaceBarComponent {
     this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
     const resp = onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
-    this.currentData.pushToSnapshots(resp);
+    this.currentData.snapshot_arr.push(resp);
   }
 
   openDialog(): void {

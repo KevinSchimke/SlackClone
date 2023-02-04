@@ -120,7 +120,7 @@ export class ChannelBarComponent {
       this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
 
-    this.currentDataService.pushToSnapshots(resp);
+    this.currentDataService.snapshot_arr.push(resp);
   }
 
   pushIntoThreads(doc: any) {
@@ -147,7 +147,7 @@ export class ChannelBarComponent {
   getChannelDoc() {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
     const subscription = this.channel$.subscribe((channel: Channel) => this.channel = channel);
-    this.currentDataService.pushToSubscription(subscription);
+    this.currentDataService.subscription_arr.push(subscription);
   }
 
   openUserInfoCard(thread: any) {
@@ -200,7 +200,7 @@ export class ChannelBarComponent {
         this.bookmarks.push(bookmarkData);
       })
     })
-    this.currentDataService.pushToSnapshots(resp);
+    this.currentDataService.snapshot_arr.push(resp);
   }
 
   openBookmarks(channelID: string) {
