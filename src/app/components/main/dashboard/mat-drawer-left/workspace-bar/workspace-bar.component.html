@@ -4,10 +4,19 @@
 
 <ul>
     <li><img src="assets/svg/color_939295/threads.svg" />Threads</li>
-    <li><img src="assets/svg/color_939295/message.svg" />Direct messages</li>
+    <li>
+        <a [routerLink]="['/main/newMessage']"><img src="assets/svg/color_939295/message.svg" />Direct messages</a>
+    </li>
     <li><img src="assets/svg/color_939295/at.svg" />Mentions and reactions</li>
     <li><img src="assets/svg/color_939295/send.svg" />Drafts and sent</li>
-    <li><img src="assets/svg/color_939295/bookmark.svg" />Bookmarks</li>
+
+    <li>
+        <a><img src="assets/svg/color_939295/bookmark.svg" />Bookmarks</a>
+    </li>
+
+    <li>
+        <a [routerLink]="['/main/allChannels']"><img src="assets/svg/color_939295/all-channels.svg" />All channels</a>
+    </li>
 </ul>
 
 <mat-divider></mat-divider>
@@ -53,8 +62,7 @@
                 </mat-expansion-panel-header>
                 <li *ngFor="let private of privates">
                     <a [routerLink]="['/main/' + private.channelId]">
-                        <div style="font-size: 1.2rem; width: 1.2rem">#</div>
-                        {{ private.users | messagePartner}}
+                        <span style="font-size: 1.2rem; width: 1.2rem">#</span> {{ private.users | messagePartner}}
                     </a>
                 </li>
             </mat-expansion-panel>
