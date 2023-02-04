@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, signOut, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser } from '@angular/fire/auth';
+import { Auth, signOut, UserCredential, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser, reauthenticateWithCredential, EmailAuthProvider } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from '../../current-data/current-data.service';
@@ -12,6 +12,8 @@ import { FirestoreService } from '../firestore/firestore.service';
   providedIn: 'root'
 })
 export class AuthService {
+
+  currentUserId?: string;
   newUser = new User();
   usernameNewUser!: string;
 
@@ -24,6 +26,11 @@ export class AuthService {
     private authError: AuthErrorService,
     private firestoreService: FirestoreService
   ) { }
+
+  setUid() {
+    this.currentUserId = this.auth.currentUser?.uid;
+    this.userService.uid = this.auth.currentUser?.uid;
+  }
 
   async login(email: string, password: string) {
     await signInWithEmailAndPassword(this.auth, email, password!)
@@ -123,6 +130,14 @@ export class AuthService {
       .then(() => {
         this.pushupMessage.openPushupMessage('success', 'Your account has been deleted')
       }).catch((error) => {
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+      });
+  }
+
+  async reauthenticate(password: string) {
+    const credential = EmailAuthProvider.credential(this.auth.currentUser!.email!, password!)
+    await reauthenticateWithCredential(this.auth.currentUser!, credential)
+      .catch((error) => {
         this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
       });
   }

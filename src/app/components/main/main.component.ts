@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
 import { EMPTY, Observable } from 'rxjs';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-main',
@@ -15,7 +13,7 @@ export class MainComponent {
   users$: Observable<any> = EMPTY;
   updateLastLoginTime: number = 300000; //300000 = 5 min
 
-  constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService, private userService: UserService, private auth: Auth) { }
+  constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
     this.users$ = this.firestoreService.getCollection('users');

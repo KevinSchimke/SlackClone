@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
 import { Unsubscribe } from '@angular/fire/firestore';
 import { BehaviorSubject, Subscription } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
@@ -26,7 +25,7 @@ export class CurrentDataService {
   usersAreLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   onceSubscribtedUsers: User[] = [];
 
-  constructor(private userService: UserService, private auth: Auth) { }
+  constructor(private userService: UserService) { }
 
   clearByLogout() {
     this.snapshot_arr.forEach((unsub) => unsub());
@@ -84,7 +83,7 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
-    let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
+    let user: any = user_arr.find((user: User) => user.id === this.userService.uid);
     if (user) {
       this.userService.set(user);
     } else {
@@ -122,5 +121,4 @@ export class CurrentDataService {
   getPrivates() {
     return this.privates;
   }
-
 }

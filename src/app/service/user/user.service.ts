@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Auth, UserCredential } from '@angular/fire/auth';
 import { User } from 'src/app/models/user.class';
-import { FirestoreService } from '../firebase/firestore/firestore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +8,7 @@ export class UserService {
   public uid: any;
   public currentUser = new User();
 
-  constructor(private auth: Auth) { }
+  constructor() { }
 
   set(obj: User) {
     this.currentUser.id = obj.id;
@@ -24,10 +22,6 @@ export class UserService {
 
   get() {
     return this.currentUser;
-  }
-
-  setUid() {
-    this.uid = this.auth.currentUser?.uid;
   }
 
   getUid() {
