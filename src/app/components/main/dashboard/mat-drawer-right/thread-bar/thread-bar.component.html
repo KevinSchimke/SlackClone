@@ -14,7 +14,8 @@
     </button>
 </header>
 
-<div class="channel-thread">
+<div class="body" #scrollMe (scroll)="scrolled($event)">
+<div class="channel-thread" >
     <div class="thread-options">
         <button class="btn-unset"><img src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
         <button class="btn-unset"><img src="assets/svg/color_d1d2d3/bookmark.svg"></button>
@@ -79,6 +80,7 @@
                 <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg">
             </button>
         </p>
+    </div>
     </div>
 </div>
 <app-message-editor [collectionPath]="this.collPath" [thread]="false"></app-message-editor>

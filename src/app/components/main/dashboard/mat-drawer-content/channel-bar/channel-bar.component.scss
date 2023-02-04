@@ -105,15 +105,14 @@
         }
     }
     img {
-        height: 0.8rem;
-        width: 0.8rem;
+        height: 16px;
+        width: 16px;
     }
 
 }
 
 .bookmark{
-    display: flex;
-    align-items: center;
+    @include containerPosition(flex, center);
     text-decoration: none;
     &:hover {
         background-color: rgb(235, 235, 235);
