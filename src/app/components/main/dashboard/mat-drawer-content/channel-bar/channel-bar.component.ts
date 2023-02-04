@@ -91,7 +91,7 @@ export class ChannelBarComponent {
   snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
       if (areLoaded === true) {
-        this.getChannelName();
+        this.getChannelDoc();
         this.firstQuery(areLoaded);
       }
     });
@@ -144,12 +144,10 @@ export class ChannelBarComponent {
   }
 
 
-  getChannelName() {
-    this.currentDataService.channelsAreLoaded.subscribe(isLoaded => {
-      if (isLoaded) {
-        this.channel = this.currentDataService.allCategories.find((channel: Channel) => (channel.channelId === this.channelId));
-      }
-    });
+  getChannelDoc() {
+    this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
+    const subscription = this.channel$.subscribe((channel: Channel) => this.channel = channel);
+    this.currentDataService.pushToSubscription(subscription);
   }
 
   openUserInfoCard(thread: any) {
