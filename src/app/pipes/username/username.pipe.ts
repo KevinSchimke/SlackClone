@@ -10,15 +10,33 @@ export class UsernamePipe implements PipeTransform {
   constructor(private currentData: CurrentDataService) { }
 
 
-  transform(userId: string): string {
+  transform(userId: string | string[]): string {
     if (this.currentData.usersAreLoaded) {
-      let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
-      if (j == -1) {
-        return 'Deleted User';
+      if (typeof userId == 'string') {
+        return this.convertUidString(userId);
       }
-      return this.currentData.users[j].name;
+      else {
+        return this.convertUidArray(userId);
+      }
     }
     else return 'Member';
+  }
+
+  convertUidString(userId: string) {
+    let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
+    if (j == -1) {
+      return 'Deleted User';
+    }
+    return this.currentData.users[j].name;
+  }
+  
+  convertUidArray(userIds: string[]){
+    let names: string[] = [];
+    userIds.forEach(uid => {
+      let j = this.currentData.users.findIndex((user: User) => (user.id === uid));
+      names.push(this.currentData.users[j].name);
+    });
+    return names.join(', ');
   }
 
 }

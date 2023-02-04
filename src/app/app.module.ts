@@ -73,6 +73,7 @@ import { AccountSettingsComponent } from './components/main/dialogs/account-sett
 import { ProfileSettingsComponent } from './components/main/dialogs/profile-settings/profile-settings.component';
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 import { BookmarksComponent } from './components/main/dashboard/mat-drawer-content/bookmarks/bookmarks.component';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { BookmarksComponent } from './components/main/dashboard/mat-drawer-conte
     AngularEditorModule,
     MatSlideToggleModule,
     MatButtonModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

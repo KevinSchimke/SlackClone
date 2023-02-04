@@ -97,3 +97,7 @@ h2,
     background-color: unset !important;
     border-radius: 1rem !important;
 }
+
+.mdc-tooltip__surface {
+    background-color: $bg-accent !important;
+}
