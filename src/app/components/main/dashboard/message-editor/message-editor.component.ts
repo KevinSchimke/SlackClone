@@ -88,9 +88,7 @@ export class MessageEditorComponent {
     this.imageURL = '';
     const desertRef = ref(this.fireStorage, this.path);
     deleteObject(desertRef).then(() => {
-      // File deleted successfully
     }).catch((error) => {
-      // Uh-oh, an error occurred!
     });
   }
 
@@ -218,7 +216,7 @@ export class MessageEditorComponent {
 
   checkDirectMessage(dm: Channel) {
     let currentChatUsers = this.currentDataService.getChatUsersId();
-    currentChatUsers.push(this.userService.getUid());
+    if(!currentChatUsers.includes(this.userService.getUid())) currentChatUsers.push(this.userService.getUid());
     if (this.usersAreSame(dm, currentChatUsers))
       this.setTargetAndPrivateId(dm);
   }
