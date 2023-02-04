@@ -185,4 +185,8 @@ export class ThreadBarComponent {
     this.childSelector.threadBar.open();
     this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
+
+  isInChannel(){
+    return this.channel.users.indexOf(this.currentUser.id) !== -1;
+  }
 }
