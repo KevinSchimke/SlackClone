@@ -146,8 +146,13 @@ export class ChannelBarComponent {
 
   getChannelDoc() {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
-    const subscription = this.channel$.subscribe((channel: Channel) => this.channel = channel);
+    const subscription = this.channel$.subscribe((channel: any) => this.setChannel(channel));
     this.currentDataService.pushToSubscription(subscription);
+  }
+
+  setChannel(channel: any){
+    this.channel = new Channel(channel);
+    this.channel.channelId = channel.id;
   }
 
   openUserInfoCard(thread: any) {
@@ -210,5 +215,14 @@ export class ChannelBarComponent {
 
   async deleteBookmark(deleteBookmarkID: string) {
     await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
+  }
+
+  isInChannel(){
+    return this.channel.users.indexOf(this.currentUser.id) !== -1;
+  }
+
+  joinChannel(){
+    this.channel.users.push(this.currentUser.id);
+    this.fireService.pushUserToChannel(this.channelId,this.currentUser.id);
   }
 }
