@@ -22,7 +22,7 @@
                     </mat-panel-description>
                 </mat-expansion-panel-header>
                 <form (ngSubmit)="updateUserName()" [formGroup]="username">
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appClickStopPropagation appearance="fill">
                         <mat-label>Enter new username</mat-label>
                         <input matInput formControlName="username" required>
                         <mat-error *ngIf="username.invalid">{{getErrorMessage(username,'username')}}</mat-error>
@@ -43,7 +43,7 @@
                         <mat-icon *ngIf="step === 1"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <div class="inputStatus">
+                <div appClickStopPropagation class="inputStatus">
                     <button class="btn-unset" [matMenuTriggerFor]="emoji">
                         <img src="assets/svg/color_d1d2d3/add_reaction.svg">
                         <mat-menu #emoji="matMenu" xPosition="before">
@@ -53,7 +53,7 @@
                             </emoji-mart>
                         </mat-menu>
                     </button>
-                    <mat-form-field appearance="fill">
+                    <mat-form-field appClickStopPropagation appearance="fill">
                         <mat-label>Enter your status</mat-label>
                         <input matInput #status [(ngModel)]="statusValue">
                     </mat-form-field>
@@ -72,7 +72,7 @@
                         <mat-icon *ngIf="step === 2"><img src="assets/svg/color_d1d2d3/expand_less.svg"></mat-icon>
                     </mat-panel-description>
                 </mat-expansion-panel-header>
-                <mat-form-field appearance="fill">
+                <mat-form-field appClickStopPropagation appearance="fill">
                     <mat-label>Enter your phone number</mat-label>
                     <input #phone type="number" matInput>
                 </mat-form-field>
