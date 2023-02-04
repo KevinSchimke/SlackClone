@@ -1,10 +1,8 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { Auth, deleteUser, updateEmail, updatePassword, signOut, sendEmailVerification } from '@angular/fire/auth';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } from '@angular/fire/storage';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
-import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
@@ -31,9 +29,7 @@ export class ProfileSettingsComponent {
   storageRef!: StorageReference;
 
   constructor(
-    public auth: Auth,
     private firestoreService: FirestoreService,
-    private authError: AuthErrorService,
     private pushupMessage: PushupMessageService,
     private fireStorage: Storage,
     private dialogRef: MatDialogRef<ProfileSettingsComponent>,

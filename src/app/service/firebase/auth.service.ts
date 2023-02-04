@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode } from '@angular/fire/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, sendEmailVerification, sendPasswordResetEmail, confirmPasswordReset, applyActionCode, updateEmail, updatePassword, deleteUser } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { signOut, UserCredential } from '@firebase/auth';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from '../current-data/current-data.service';
 import { PushupMessageService } from '../pushup-message/pushup-message.service';
+import { UserService } from '../user/user.service';
 import { AuthErrorService } from './auth-error.service';
 import { FirestoreService } from './firestore.service';
 
@@ -18,6 +19,7 @@ export class AuthService {
   constructor(
     private auth: Auth,
     private router: Router,
+    private userService: UserService,
     private currentDataService: CurrentDataService,
     private pushupMessage: PushupMessageService,
     private authError: AuthErrorService,
@@ -78,6 +80,7 @@ export class AuthService {
         this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
       });
   }
+
   async confirmPasswordReset(oobCode: string, password: string) {
     await confirmPasswordReset(this.auth, oobCode, password!)
       .then(() => {
@@ -87,8 +90,46 @@ export class AuthService {
         this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
       });
   }
+
   async applyActionCode(oobCode: string) {
     await applyActionCode(this.auth, oobCode)
+  }
+
+  async updateEmail(email: string) {
+    await updateEmail(this.auth.currentUser!, email)
+      .then(() => {
+        this.userService.currentUser.mail = email!;
+        this.updateUserData();
+        sendEmailVerification(this.auth.currentUser!)
+        this.pushupMessage.openPushupMessage('success', 'Please verify your new email')
+        this.logout();
+      })
+      .catch((error) => {
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+      });
+  }
+
+  async updatePassword(password: string) {
+    await updatePassword(this.auth.currentUser!, password)
+      .then(() => {
+        this.pushupMessage.openPushupMessage('success', 'Update password successfully')
+      }).catch((error) => {
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+      });
+  }
+
+  async deleteUser() {
+    await this.firestoreService.deleteUser();
+    await deleteUser(this.auth.currentUser!)
+      .then(() => {
+        this.pushupMessage.openPushupMessage('success', 'Your account has been deleted')
+      }).catch((error) => {
+        this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
+      });
+  }
+
+  async updateUserData() {
+    await this.firestoreService.updateUser(this.userService.get().toJson());
   }
 
   saveNewUser(user: UserCredential) {
