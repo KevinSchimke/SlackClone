@@ -19,10 +19,10 @@
 }
 
 .channel-container {
-    padding: .5rem;
+    padding-inline: 1.2rem;
     cursor: pointer;
     .divider {
-        margin-top: .5rem;
+        margin-top: .75rem;
     }
     &:hover {
         background-color: $bg-color-hover;
@@ -32,6 +32,7 @@
 .channel-info {
     @include containerPosition(unset, center);
     gap: .25rem;
+    padding-top: 0.5rem !important;
     span {
         color: $color-secondary;
     }

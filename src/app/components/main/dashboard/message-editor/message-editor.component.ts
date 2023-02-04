@@ -8,7 +8,7 @@ import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Firestore } from '@angular/fire/firestore';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { ActivatedRoute } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, deleteObject } from '@angular/fire/storage';
 import { UserService } from 'src/app/service/user/user.service';

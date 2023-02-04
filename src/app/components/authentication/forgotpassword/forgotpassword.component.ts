@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, sendPasswordResetEmail } from '@angular/fire/auth';
-import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
-import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
 
 @Component({
   selector: 'app-forgotpassword',
@@ -15,23 +13,16 @@ export class ForgotpasswordComponent {
     email: new FormControl('', [Validators.required, Validators.email]),
   });
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router) { }
+  constructor(private authService: AuthService, private formErrorService: FormErrorService) { }
 
   reset() {
     if (this.user.valid) {
-      const email = this.user.value.email;
-      sendPasswordResetEmail(this.auth, email!)
-        .then(() => {
-          this.router.navigate(['/login']);
-          this.pushupMessage.openPushupMessage('success', 'Check your E-Mail Account');
-        })
-        .catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
+      const email = this.user.value.email!;
+      this.authService.sendPasswordResetEmail(email)
     }
   }
 
   getErrorMessage(formControlName: string) {
-    return this.authError.getErrorMessage(this.user, formControlName)
+    return this.formErrorService.getMessage(this.user, formControlName)
   }
 }

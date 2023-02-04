@@ -1,7 +1,7 @@
 import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
 import { collection, deleteDoc, doc, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
@@ -12,7 +12,6 @@ import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
-import { ReactionService } from 'src/app/service/reaction/reaction.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 
@@ -42,7 +41,7 @@ export class ChannelBarComponent {
   private myScrollContainer!: ElementRef;
 
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, private reaction: ReactionService) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
 
   }
 
@@ -115,11 +114,13 @@ export class ChannelBarComponent {
   }
 
   snapQuery(q: Query) {
-    onSnapshot(q, (querySnapshot: any) => {
+    const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.threads = this.sorter.sortByDate(this.unsortedThreads);
       this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
+
+    this.currentDataService.pushToSnapshots(resp);
   }
 
   pushIntoThreads(doc: any) {

@@ -3,7 +3,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.class';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { ReauthenticateComponent } from '../../../dialogs/reauthenticate/reauthenticate.component';
@@ -25,7 +26,8 @@ export class InfocardComponent {
     public userService: UserService,
     private firestoreService: FirestoreService,
     private dialog: MatDialog,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
     this.route.params.subscribe((params: any) => this.getUser(params.id));
@@ -39,11 +41,12 @@ export class InfocardComponent {
   }
 
   getUser(uid: string) {
-    this.user$ = this.firestoreService.getUser(uid);
-    this.user$.subscribe((user: User) => {
-      this.user = user;
-      this.isLoggedInUser = this.checkIsLoggedInUser(user);
-      this.userActive = this.userService.userState(user);
+    this.currentDataService.usersAreLoaded$.subscribe(isLoaded => {
+      if (isLoaded === true) {
+        this.user = this.currentDataService.users.find((user: User) => user.id === uid)!;
+        this.isLoggedInUser = this.checkIsLoggedInUser(this.user);
+        this.userActive = this.userService.userState(this.user);
+      }
     });
   }
 

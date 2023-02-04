@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { DialogAddChannelComponent } from '../../../dialogs/dialog-add-channel/dialog-add-channel.component';
 import { UserService } from 'src/app/service/user/user.service';
 import { EMPTY } from 'rxjs';
@@ -35,7 +35,8 @@ export class WorkspaceBarComponent {
   ngOnInit() {
     this.currentUser = this.userService.get();
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
-    onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
+    const resp = onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
+    this.currentData.pushToSnapshots(resp);
   }
 
   openDialog(): void {

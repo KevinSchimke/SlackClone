@@ -5,7 +5,7 @@ import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
-import { UserService } from '../user/user.service';
+import { UserService } from '../../user/user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,14 +15,12 @@ export class FirestoreService {
   constructor(private firestore: Firestore, private userService: UserService) { }
 
   async save(obj: Channel | Thread | Comment | User | Reaction, collPath: string, id?: string) {
-    console.log('path is ', obj, collPath);
     let coll = collection(this.firestore, collPath);
     id ? await setDoc(doc(coll, id), obj.toJson()) : await setDoc(doc(coll), obj.toJson());
   }
 
   async add(obj: Channel) {
     const docRef = await addDoc(collection(this.firestore, "channels"), obj.toJson());
-    console.log("Document written with ID: ", docRef.id);
     return docRef.id;
   }
 
@@ -53,9 +51,6 @@ export class FirestoreService {
       users: users
     });
   }
-
-  // arrayUnion("uid")
-  
 
   updateObj(obj: Thread | Channel, collPath: string) {
     let docRef = doc(this.firestore, collPath);

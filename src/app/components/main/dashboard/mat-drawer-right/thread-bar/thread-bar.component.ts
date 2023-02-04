@@ -7,7 +7,7 @@ import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
@@ -73,8 +73,10 @@ export class ThreadBarComponent {
   }
 
   subscribeCollAndDoc() {
-    this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    this.channelDocData$.subscribe((channel) => this.channel = channel);
+    const subscription_thread = this.threadDocData$.subscribe((thread) => this.setThread(thread));
+    const subscription_channel = this.channelDocData$.subscribe((channel) => this.channel = channel);
+    this.currentDataService.pushToSubscription(subscription_thread);
+    this.currentDataService.pushToSubscription(subscription_channel);
     this.snapShotThreadCollection();
   }
 
@@ -100,11 +102,12 @@ export class ThreadBarComponent {
   }
 
   snapQuery(q: Query) {
-    onSnapshot(q, (querySnapshot: any) => {
+    const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
+    this.currentDataService.pushToSnapshots(resp);
   }
 
   pushIntoThreads(doc: any) {
@@ -152,5 +155,10 @@ export class ThreadBarComponent {
   openBox(url: string) {
     let dialog = this.dialog.open(OpenboxComponent);
     dialog.componentInstance.openboxImg = url;
+  }
+
+  openUserInfoCard(thread: any) {
+    this.childSelector.threadBar.open();
+    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
 }

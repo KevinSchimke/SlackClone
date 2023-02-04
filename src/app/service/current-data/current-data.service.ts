@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Auth } from '@angular/fire/auth';
-import { BehaviorSubject } from 'rxjs';
+import { Unsubscribe } from '@angular/fire/firestore';
+import { BehaviorSubject, Subscription } from 'rxjs';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
@@ -10,6 +10,9 @@ import { UserService } from '../user/user.service';
   providedIn: 'root'
 })
 export class CurrentDataService {
+  snapshot_arr: Unsubscribe[] = [];
+  subscription_arr: Subscription[] = [];
+  interval_arr: NodeJS.Timer[] = [];
 
   currentThread = new Thread();
   currentChannel = new Channel();
@@ -22,17 +25,35 @@ export class CurrentDataService {
   usersAreLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   onceSubscribtedUsers: User[] = [];
 
-  constructor(private user: UserService, private auth: Auth) { }
+  constructor(private userService: UserService) { }
+
+  clearByLogout() {
+    this.snapshot_arr.forEach((unsub) => unsub());
+    this.subscription_arr.forEach((sub) => sub.unsubscribe());
+    this.interval_arr.forEach((int, i) => window.clearInterval(i));
+  }
+
+  pushToSnapshots(snap: Unsubscribe) {
+    this.snapshot_arr.push(snap);
+  }
+
+  pushToSubscription(sub: Subscription) {
+    this.subscription_arr.push(sub);
+  }
+
+  pushToInterval(int: NodeJS.Timer) {
+    this.interval_arr.push(int);
+  }
 
   setChatUsers(users: User[]) {
     this.newChatUsers = users;
   }
 
-  setPrivates(privates: any[]){
+  setPrivates(privates: any[]) {
     this.privates = privates;
   }
 
-  setChannels(channels: any[]){
+  setChannels(channels: any[]) {
     this.allCategories = channels;
     this.channelsAreLoaded.next(true);
   }
@@ -62,8 +83,12 @@ export class CurrentDataService {
 
   setUsers(user_arr: []) {
     this.users = user_arr;
-    let user: any = user_arr.find((user: User) => user.id === this.auth.currentUser?.uid);
-    this.user.set(user);
+    let user: any = user_arr.find((user: User) => user.id === this.userService.uid);
+    if (user) {
+      this.userService.set(user);
+    } else {
+      console.log('gefunden');
+    }
     if (!this.usersAreLoaded) {
       this.onceSubscribtedUsers = user_arr;
       this.usersAreLoaded = true;
@@ -75,7 +100,7 @@ export class CurrentDataService {
     return this.newChatUsers;
   }
 
-  getChatUsersId(){
+  getChatUsersId() {
     let ids: string[] = [];
     this.newChatUsers.forEach(user => ids.push(user.id));
     return ids;
@@ -93,8 +118,7 @@ export class CurrentDataService {
     return this.users;
   }
 
-  getPrivates(){
-   return this.privates;
+  getPrivates() {
+    return this.privates;
   }
-
 }

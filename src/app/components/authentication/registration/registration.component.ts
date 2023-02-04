@@ -1,12 +1,7 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Auth, createUserWithEmailAndPassword, sendEmailVerification, UserCredential } from '@angular/fire/auth';
-import { User } from 'src/app/models/user.class';
-import { collection, doc, Firestore, setDoc } from '@angular/fire/firestore';
-import { AuthErrorService } from 'src/app/service/firebase/auth-error.service';
-import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
-
+import { AuthService } from 'src/app/service/firebase/auth/auth.service';
+import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 
 @Component({
   selector: 'app-registration',
@@ -17,46 +12,23 @@ export class RegistrationComponent {
   user = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+    password: new FormControl('', [Validators.required, Validators.minLength(6)]),
+    acceptTerms: new FormControl(false, [Validators.requiredTrue])
   });
   hide = true;
-  userData = new User();
 
-  constructor(private auth: Auth, private authError: AuthErrorService, private pushupMessage: PushupMessageService, private router: Router, private firestore: Firestore) { }
+  constructor(private authService: AuthService, private formErrorService: FormErrorService) { }
 
   register() {
     if (this.user.valid) {
-      const email = this.user.value.email;
-      const password = this.user.value.password;
-      createUserWithEmailAndPassword(this.auth, email!, password!)
-        .then((user: UserCredential) => {
-          this.saveNewUser(user);
-          this.verify(user);
-        })
-        .catch((error) => {
-          this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
-        });
+      const email = this.user.value.email!;
+      const password = this.user.value.password!;
+      this.authService.usernameNewUser = this.user.value.username!;
+      this.authService.createUserWithEmailAndPassword(email, password)
     }
   }
 
-  saveNewUser(user: UserCredential) {
-    this.userData.id = user.user.uid;
-    this.userData.mail = user.user.email!;
-    this.userData.name = this.user.value.username!;
-    this.userData.lastLogin = new Date();
-    let coll = collection(this.firestore, 'users');
-    setDoc(doc(coll, user.user.uid), this.userData.toJson());
-  }
-
-  verify(user: UserCredential) {
-    sendEmailVerification(user.user)
-      .then(() => {
-        this.router.navigate(['/verification']);
-        this.pushupMessage.openPushupMessage('info', 'Check your E-Mail Account')
-      });
-  }
-
   getErrorMessage(formControlName: string) {
-    return this.authError.getErrorMessage(this.user, formControlName)
+    return this.formErrorService.getMessage(this.user, formControlName)
   }
 }

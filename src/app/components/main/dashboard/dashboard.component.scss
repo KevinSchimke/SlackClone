@@ -30,14 +30,14 @@ header {
     border-bottom: 1px solid $border-button-main;
     @include containerPosition(space-between, center);
     padding: .5rem 1rem;
+    max-height: 32px;
     .bar-header {
         @include containerPosition(unset, center);
         width: 100%;
         .header-headline {
             @include containerPosition(unset, center);
-        }
-        h2 {
-            margin-right: 1rem !important
+            @include noBorderWithRadius(.5rem);
+            padding-inline: .5rem;
         }
         h3 {
             margin-right: 0.5rem !important;
@@ -56,10 +56,12 @@ header {
 }
 
 .post-image {
+    @include image(cover);
+    @include border(1px, solid, $border-button-main, 1rem);
     max-width: 200px;
     max-height: 200px;
-    object-fit: cover;
-    cursor: pointer;
+    padding: 0.5rem;
+    display: block;
 }
 
 .channel-thread {
@@ -139,4 +141,16 @@ header {
         background-color: $bg-color-hover;
     }
     margin-right: 1rem;
+}
+
+.private-header-imgs {
+    @include containerPosition(unset, center);
+    h2 {
+        margin-left: .5rem !important;
+    }
+}
+
+.img-header-partner {
+    @include image(cover, 1.5rem, 1.5rem);
+    @include noBorderWithRadius(4px);
 }

@@ -15,7 +15,8 @@
 
 h2,
 .mat-typography h2 {
-    font-size: 1.125rem;
+    font: 500 20px/32px Lato, sans-serif !important;
+    font-size: 1.125rem !important;
 }
 
 .dialog-add-channel {
@@ -90,4 +91,9 @@ h2,
 .mat-drawer-container,
 .mat-drawer {
     color: unset;
+}
+
+.mat-mdc-dialog-container .mdc-dialog__surface {
+    background-color: unset !important;
+    border-radius: 1rem !important;
 }

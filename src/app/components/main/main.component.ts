@@ -1,9 +1,7 @@
 import { Component } from '@angular/core';
-import { EMPTY, Observable, take } from 'rxjs';
-import { User } from 'src/app/models/user.class';
+import { EMPTY, Observable } from 'rxjs';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
-import { FirestoreService } from 'src/app/service/firebase/firestore.service';
-import { UserService } from 'src/app/service/user/user.service';
+import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 
 @Component({
   selector: 'app-main',
@@ -12,25 +10,20 @@ import { UserService } from 'src/app/service/user/user.service';
 })
 export class MainComponent {
 
-  user$: Observable<any> = EMPTY;
   users$: Observable<any> = EMPTY;
   updateLastLoginTime: number = 300000; //300000 = 5 min
 
-  constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService, private userService: UserService) { }
+  constructor(private firestoreService: FirestoreService, private currentDataService: CurrentDataService) { }
 
   ngOnInit(): void {
-    // this.user$ = this.firestoreService.getUser(this.userService.uid);
-    // this.user$.subscribe((user: User) => this.userService.set(user));
-
     this.users$ = this.firestoreService.getCollection('users');
-    this.users$.subscribe((users) => {
-      console.log('User neu subscript');
-      this.currentDataService.setUsers(users)
-    });
+    const subscription = this.users$.subscribe((users) => this.currentDataService.setUsers(users));
+    this.currentDataService.pushToSubscription(subscription);
 
     this.updateLastLogin();
 
-    setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
+    const interval = setInterval(() => this.updateLastLogin(), this.updateLastLoginTime);
+    this.currentDataService.pushToInterval(interval);
   }
 
   updateLastLogin() {
