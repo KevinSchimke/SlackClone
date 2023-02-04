@@ -48,9 +48,8 @@ export class WorkspaceBarComponent {
   snapShotChannel(querySnapshot: any) {
     this.channels = [];
     this.privates = [];
-    let k = 0;
-    querySnapshot.forEach((doc: any) => k = this.pushIntoChannel(doc, k));
-    this.currentData.setChannels(this.channels);
+    querySnapshot.forEach((doc: any) => this.pushIntoChannel(doc));
+    this.currentData.setAllChannels(this.channels);
     this.privates = this.channels.filter(this.categoryIsPrivate);
     this.privates = this.sort.sortByName(this.privates);
     this.channels = this.channels.filter(this.categoryIsChannel);
@@ -66,11 +65,10 @@ export class WorkspaceBarComponent {
     return channel.category == 'private';
   }
 
-  pushIntoChannel(doc: any, k: number) {
-    this.channels.push(doc.data());
-    this.channels[k]['channelId'] = doc.id;
-    k++;
-    return k;
+  pushIntoChannel(doc: any) {
+    let channel = new Channel(doc.data());
+    channel.channelId = doc.id;
+    this.channels.push(channel);
   }
 
 }
