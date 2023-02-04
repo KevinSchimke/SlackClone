@@ -9,7 +9,7 @@ import { Firestore } from '@angular/fire/firestore';
 import { AngularEditorConfig } from '@kolkov/angular-editor';
 import { Observable } from 'rxjs';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference, deleteObject } from '@angular/fire/storage';
 import { UserService } from 'src/app/service/user/user.service';
 import { Thread } from 'src/app/models/thread.class';
@@ -27,7 +27,7 @@ export class MessageEditorComponent {
   @Input() collectionPath = '';
   @Input() thread: boolean = false;
 
-  constructor(private firestore: Firestore, private pushupMessage: PushupMessageService, private currentDataService: CurrentDataService, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
+  constructor(private firestore: Firestore, private router: Router, private pushupMessage: PushupMessageService, private currentDataService: CurrentDataService, public fireservice: FirestoreService, private route: ActivatedRoute, private fireStorage: Storage, private userService: UserService) { }
 
   user: User = Object();
   message: string = '';
@@ -181,9 +181,11 @@ export class MessageEditorComponent {
   async messageFromNewMsgComp(comment: Thread) {
     if (await this.isChatAlreadyExisting()) {
       this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
+      this.router.navigate(['/main/' + this.privateId]);
     } else {
       let channelId = await this.createNewChannel();
       this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
+      this.router.navigate(['/main/' + channelId]);
     }
   }
 
