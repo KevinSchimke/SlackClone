@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
@@ -33,6 +33,11 @@ export class ThreadBarComponent {
   unsortedComments: Thread[] = [];
   currentUser = new User();
   loastLoadedComment: Thread = new Thread();
+  isFirstLoad = true;
+
+  @ViewChild('scrollMe')
+  private myScrollContainer!: ElementRef;
+
 
   constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore) { }
 
@@ -40,6 +45,25 @@ export class ThreadBarComponent {
     this.currentUser = this.userService.get();
     this.subscribeUrl();
     this.subscribeThreadbarInit();
+    this.isFirstLoad = true;
+  }
+
+  scrolled(event: any): void {
+    this.isFirstLoad = false;
+  }
+
+  ngAfterViewChecked() {
+    if (this.isFirstLoad) {
+      this.scrollToBottom();
+    }
+  }
+
+  private scrollToBottom(): void {
+    this.myScrollContainer.nativeElement.scroll({
+      top: this.myScrollContainer.nativeElement.scrollHeight,
+      left: 0,
+      behavior: 'smooth'
+    });
   }
 
   subscribeUrl() {
