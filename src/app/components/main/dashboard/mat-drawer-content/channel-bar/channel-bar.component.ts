@@ -49,7 +49,7 @@ export class ChannelBarComponent {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.setCurrentChannel(param));
     this.isFirstLoad = true;
-    
+
   }
 
   ngAfterViewChecked() {
@@ -186,30 +186,31 @@ export class ChannelBarComponent {
   }
 
 
-    async loadBookmarks() {
-      const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
-      onSnapshot(bookmarksRef, async (bookmarksDocs) => {
-          this.bookmarks = [];
-          bookmarksDocs.forEach((doc: any) => {
-            let bookmarkData = {
-              link: '',
-              name: '',
-              id: '',
-            }
-            bookmarkData.link = doc.data().link;
-            bookmarkData.name = doc.data().name;
-            bookmarkData.id = doc.id;
-            this.bookmarks.push(bookmarkData);
-          })
+  async loadBookmarks() {
+    const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
+    const resp = onSnapshot(bookmarksRef, async (bookmarksDocs) => {
+      this.bookmarks = [];
+      bookmarksDocs.forEach((doc: any) => {
+        let bookmarkData = {
+          link: '',
+          name: '',
+          id: '',
+        }
+        bookmarkData.link = doc.data().link;
+        bookmarkData.name = doc.data().name;
+        bookmarkData.id = doc.id;
+        this.bookmarks.push(bookmarkData);
       })
-    }
+    })
+    this.currentDataService.pushToSnapshots(resp);
+  }
 
-    openBookmarks(channelID: string) {
-      let dialog = this.dialog.open(BookmarksComponent);
-      dialog.componentInstance.currentChatroomID = channelID;
-    }
-  
-    async deleteBookmark(deleteBookmarkID: string) {
-      await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
-    }
+  openBookmarks(channelID: string) {
+    let dialog = this.dialog.open(BookmarksComponent);
+    dialog.componentInstance.currentChatroomID = channelID;
+  }
+
+  async deleteBookmark(deleteBookmarkID: string) {
+    await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
+  }
 }
