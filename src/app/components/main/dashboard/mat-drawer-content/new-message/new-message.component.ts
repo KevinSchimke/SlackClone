@@ -4,6 +4,7 @@ import { CurrentDataService } from 'src/app/service/current-data/current-data.se
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
+import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
   selector: 'app-new-message',
@@ -17,10 +18,12 @@ export class NewMessageComponent {
   mymodel: any;
   searchUsers = '';
   leftSideBar: boolean = false;
+  currentUserId: string = '';
 
-  constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private sidenavToggler: SidenavToggleService) { }
+  constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private sidenavToggler: SidenavToggleService, private user: UserService) { }
 
   async ngOnInit(): Promise<void> {
+    this.currentUserId = this.user.getUid();
     this.currentDataService.usersAreLoaded$.subscribe((areLoaded) => {
       if (areLoaded) {
         this.allUsers = this.currentDataService.users;
@@ -40,19 +43,33 @@ export class NewMessageComponent {
   }
 
   addUser(user: User, input: HTMLInputElement) {
-    if (!this.usersToChat.includes(user)) {
-      this.usersToChat.push(user);
-      this.currentDataService.setChatUsers(this.usersToChat);
-      input.value = '';
-      this.searchUsers = '';
-    } else {
+    if (!this.usersToChat.includes(user))
+      this.validateUser(user, input);
+    else
       this.pushupMessage.openPushupMessage('error', 'User is already in the chat');
-    }
   }
 
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
     this.sidenavToggler.workspaceBar.toggle()
+  }
+
+  isChatWithMeAndOthers(user: User) {
+    return this.usersToChat.length > 0 && user.id === this.currentUserId;
+  }
+
+  validateUser(user: User, input: HTMLInputElement) {
+    if (this.isChatWithMeAndOthers(user))
+      this.pushupMessage.openPushupMessage('error', 'Unfortunately, you cannot talk with someone and yourself');
+    else
+      this.addValidUser(user, input);
+  }
+
+  addValidUser(user: User, input: HTMLInputElement) {
+    this.usersToChat.push(user);
+    this.currentDataService.setChatUsers(this.usersToChat);
+    input.value = '';
+    this.searchUsers = '';
   }
 
 }
