@@ -27,21 +27,24 @@ export class AllChannelsComponent {
     let channelsRef = collection(this.firestore, 'channels');
     const openChannelsQuery = query(channelsRef, where("locked", "==", false));
     const joinedChannelsQuery = query(channelsRef, where("users", "array-contains", this.currentUserId), where("category", "==", 'channel'));
-    const [isOpenChannels, isJoinedChannels] = await Promise.all([
+    const createdChannelsQuery = query(channelsRef, where("creator", "==", this.currentUserId)); //If you accidentally leave your own locked channel, it does not get lost
+    const [isOpenChannels, isJoinedChannels, isCreatorOfChannels] = await Promise.all([
       await getDocs(openChannelsQuery),
-      await getDocs(joinedChannelsQuery)
+      await getDocs(joinedChannelsQuery),
+      await getDocs(createdChannelsQuery)
     ]);
-    this.setChannelArr(isOpenChannels, isJoinedChannels);
+    this.setChannelArr(isOpenChannels, isJoinedChannels, isCreatorOfChannels);
   }
 
   openDialog(): void {
     this.dialog.open(DialogAddChannelComponent);
   }
 
-  setChannelArr(isOpenChannels: any, isJoinedChannels: any) {
+  setChannelArr(isOpenChannels: any, isJoinedChannels: any, isCreatorOfChannels: any) {
     this.preChannelArr = [];
     isOpenChannels.forEach((doc: any) => this.addToChannel(doc));
     isJoinedChannels.forEach((doc: any) => this.addToChannel(doc));
+    isCreatorOfChannels.forEach((doc: any) => this.addToChannel(doc));
     this.channels = this.preChannelArr.filter((elem, i) => {
       return this.preChannelArr.findIndex((channel) => channel.channelId === elem.channelId) === i;
     });
