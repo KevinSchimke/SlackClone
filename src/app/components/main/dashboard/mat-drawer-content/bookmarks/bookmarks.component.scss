@@ -1,42 +1,40 @@
 @import "../../../../../../assets/scss/colors.scss";
 @import "../../dashboard.component.scss";
 @import "../../../../../../assets/scss/mixin.scss";
-
-.bookmarks-container{
-    width:  50vw;
+.bookmarks-container {
+    width: 50vw;
     min-height: 45vh;
     max-height: calc(95vh - 48px);
     display: flex;
     flex-direction: column;
-    background-color: $color-secondary;
-    input{      
+    background-color: $bg-color-main;
+    input {
         outline: none;
         border-radius: 5px;
-        &::placeholder{
+        &::placeholder {
             font-style: italic;
             font-size: 14px;
         }
     }
 }
 
-mat-form-field{
+mat-form-field {
     margin-left: 5%;
     width: 90%;
 }
 
-.header-container{
+.header-container {
     display: flex;
     justify-content: space-between;
     padding: 5px;
     margin: 3px;
 }
 
-mat-form-field-wrapper{
+mat-form-field-wrapper {
     margin: 0;
 }
 
-
-.bookmark-text{
+.bookmark-text {
     background-color: rgb(224, 255, 255);
     padding: 10px;
     border-radius: 5px;
@@ -46,34 +44,34 @@ mat-form-field-wrapper{
     color: black;
 }
 
-.title{
+.title {
     padding: 5px;
 }
 
-.close{
+.close {
     cursor: pointer;
     padding: 5px;
-    &:hover{
+    &:hover {
         background-color: lightgrey;
         border-radius: 5px;
         color: white;
         font-weight: bold;
-    };
+    }
+    ;
 }
 
-button{
+button {
     background-color: green !important;
 }
 
-.button{
+.button {
     margin-right: 5%;
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
 }
 
-
-.header-container{
-    p{
+.header-container {
+    p {
         font-size: 20px;
     }
 }

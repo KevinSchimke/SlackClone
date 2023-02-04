@@ -19,14 +19,14 @@
         </div>
     </div>
     <div class="bottom-container">
-    <div class="d-flex align-items-center mx-0 mx-sm-3 mb-sm-4 mb-2">
-        <div class="bookmark-text">
-            <p class="fw-bold pb-1">Bookmark important links for your team</p>
-            <p>Add bookmarks for links you want to find quickly. All channel members can see the bookmarks you add.</p>
+        <div class="d-flex align-items-center mx-0 mx-sm-3 mb-sm-4 mb-2">
+            <div class="bookmark-text">
+                <p class="fw-bold pb-1">Bookmark important links for your team</p>
+                <p>Add bookmarks for links you want to find quickly. All channel members can see the bookmarks you add.</p>
+            </div>
         </div>
-    </div>
-    <div class="button">
-        <button mat-flat-button [disabled]="link.length == 0 || linkName.length == 0" (click)="addBookmark()">add bookmark</button>
-    </div>
+        <div class="button">
+            <button mat-flat-button [disabled]="link.length == 0 || linkName.length == 0" (click)="addBookmark()">Add bookmark</button>
+        </div>
     </div>
 </form>
