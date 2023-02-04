@@ -28,29 +28,27 @@ export class AllChannelsComponent {
     const openChannelsQuery = query(channelsRef, where("locked", "==", false));
     const joinedChannelsQuery = query(channelsRef, where("users", "array-contains", this.currentUserId), where("category", "==", 'channel'));
     const createdChannelsQuery = query(channelsRef, where("creator", "==", this.currentUserId)); //If you accidentally leave your own locked channel, it does not get lost
-    const [isOpenChannels, isJoinedChannels, isCreatorOfChannels] = await Promise.all([
+    const queries = await Promise.all([
       await getDocs(openChannelsQuery),
       await getDocs(joinedChannelsQuery),
       await getDocs(createdChannelsQuery)
     ]);
-    this.setChannelArr(isOpenChannels, isJoinedChannels, isCreatorOfChannels);
+    this.setChannelArr(queries);
   }
 
   openDialog(): void {
     this.dialog.open(DialogAddChannelComponent);
   }
 
-  setChannelArr(isOpenChannels: any, isJoinedChannels: any, isCreatorOfChannels: any) {
+  setChannelArr(queries: any[]) {
     this.preChannelArr = [];
-    isOpenChannels.forEach((doc: any) => this.addToChannel(doc));
-    isJoinedChannels.forEach((doc: any) => this.addToChannel(doc));
-    isCreatorOfChannels.forEach((doc: any) => this.addToChannel(doc));
-    this.channels = this.preChannelArr.filter((elem, i) => {
-      return this.preChannelArr.findIndex((channel) => channel.channelId === elem.channelId) === i;
-    });
+    queries.forEach(query => query.forEach((doc: any) => this.addToChannel(doc)));
+    this.channels = this.preChannelArr.filter((channelElem: Channel, i: number) => this.firstIndexOfDuplicates(channelElem, i));
     this.channels = this.sorter.sortByName(this.channels);
-    // console.log(this.preChannelArr);
-    // console.log(this.channels);
+  }
+
+  firstIndexOfDuplicates(channelElem: Channel, i: number){
+    return this.preChannelArr.findIndex((channel) => channel.channelId === channelElem.channelId) === i;
   }
 
   addToChannel(doc: any) {
