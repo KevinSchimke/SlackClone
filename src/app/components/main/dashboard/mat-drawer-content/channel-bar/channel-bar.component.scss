@@ -51,3 +51,47 @@
     @include image(cover, 1.5rem, 1.5rem);
     @include noBorderWithRadius(4px);
 }
+
+.add-bookmark-container {
+    background-color: white;
+    border-bottom: 1px solid lightgrey;
+    padding: 5px;
+    padding-left: 10px;
+
+    div {
+
+        &:hover {
+            background-color: rgb(235, 235, 235);
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        p {
+            font-size: 12px;
+            margin: 0;
+            color: darkgray;
+            padding: 5px;
+        }
+    }
+    img {
+        height: 0.8rem;
+        width: 0.8rem;
+    }
+
+}
+
+.bookmark{
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    &:hover {
+        background-color: rgb(235, 235, 235);
+        border-radius: 5px;
+        cursor: pointer;
+    }
+}
+
+.close{
+    margin-left: 10px;
+    margin-right: 3px;
+}

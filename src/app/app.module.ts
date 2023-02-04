@@ -71,6 +71,7 @@ import { MessageEditorComponent } from './components/main/dashboard/message-edit
 import { AccountSettingsComponent } from './components/main/dialogs/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './components/main/dialogs/profile-settings/profile-settings.component';
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
+import { BookmarksComponent } from './components/main/dashboard/mat-drawer-content/bookmarks/bookmarks.component';
 
 @NgModule({
   declarations: [
@@ -105,7 +106,8 @@ import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-con
     MessageEditorComponent,
     AccountSettingsComponent,
     ProfileSettingsComponent,
-    AllChannelsComponent
+    AllChannelsComponent,
+    BookmarksComponent
   ],
   imports: [
     BrowserModule,
