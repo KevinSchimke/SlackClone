@@ -15,6 +15,7 @@ ul {
         a {
             display: flex;
             gap: .5rem;
+            color: $color-secondary;
             &:hover {
                 text-decoration: none !important;
                 background-color: $bg-color-hover;
@@ -75,7 +76,6 @@ ul {
     a {
         width: 100%;
         display: block;
-        color: $color-secondary;
     }
     li {
         span {
