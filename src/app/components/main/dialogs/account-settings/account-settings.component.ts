@@ -64,8 +64,11 @@ export class AccountSettingsComponent {
     }
   }
 
-  deleteCurrentUser() {
-    this.authService.deleteUser();
+  async deleteCurrentUser() {
+    await this.authService.deleteUser()
+      .then(() => {
+        this.closeDialog();
+      })
   }
 
   getErrorMessage(formGroup: FormGroup, formControlName: string) {
