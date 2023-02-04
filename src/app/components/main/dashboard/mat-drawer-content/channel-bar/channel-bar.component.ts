@@ -1,9 +1,9 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
-import { collection, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -13,6 +13,7 @@ import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
+import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 
 @Component({
   selector: 'app-channel-bar',
@@ -34,9 +35,11 @@ export class ChannelBarComponent {
   shownUsers: string = '';
   loastLoadedThread: Thread = new Thread();
   unsortedThreads: Thread[] = [];
+  bookmarks: any[] = [];
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
+
 
   constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
 
@@ -46,6 +49,7 @@ export class ChannelBarComponent {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.setCurrentChannel(param));
     this.isFirstLoad = true;
+    
   }
 
   ngAfterViewChecked() {
@@ -81,6 +85,7 @@ export class ChannelBarComponent {
     this.collPath = 'channels/' + param.id + '/ThreadCollection';
     this.snapShotThreadCollection();
     this.isFirstLoad = true;
+    this.loadBookmarks();
   }
 
   snapShotThreadCollection() {
@@ -179,4 +184,32 @@ export class ChannelBarComponent {
   saveReaction(t: number) {
     this.fireService.save(this.threads[t], 'channels/' + this.channelId + '/ThreadCollection', this.threads[t].id);
   }
+
+
+    async loadBookmarks() {
+      const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
+      onSnapshot(bookmarksRef, async (bookmarksDocs) => {
+          this.bookmarks = [];
+          bookmarksDocs.forEach((doc: any) => {
+            let bookmarkData = {
+              link: '',
+              name: '',
+              id: '',
+            }
+            bookmarkData.link = doc.data().link;
+            bookmarkData.name = doc.data().name;
+            bookmarkData.id = doc.id;
+            this.bookmarks.push(bookmarkData);
+          })
+      })
+    }
+
+    openBookmarks(channelID: string) {
+      let dialog = this.dialog.open(BookmarksComponent);
+      dialog.componentInstance.currentChatroomID = channelID;
+    }
+  
+    async deleteBookmark(deleteBookmarkID: string) {
+      await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
+    }
 }
