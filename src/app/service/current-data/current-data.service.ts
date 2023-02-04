@@ -18,8 +18,11 @@ export class CurrentDataService {
   currentChannel = new Channel();
   users: User[] = [];
   newChatUsers: User[] = [];
-  privates: any[] = [];
+
   allCategories: any[] = [];
+  privates: any[] = [];
+  channels: any[] = [];
+
   channelsAreLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
   usersAreLoaded: boolean = false;
   usersAreLoaded$: BehaviorSubject<boolean> = new BehaviorSubject(false);
@@ -35,6 +38,10 @@ export class CurrentDataService {
 
   setChatUsers(users: User[]) {
     this.newChatUsers = users;
+  }
+
+  setChannels(channels: any[]) {
+    this.channels = channels;
   }
 
   setPrivates(privates: any[]) {

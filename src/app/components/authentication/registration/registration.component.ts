@@ -50,13 +50,12 @@ export class RegistrationComponent {
     this.newUser.mail = user.user.email!;
     this.newUser.name = this.user.value.username!;
     this.newUser.lastLogin = new Date();
-    console.log(this.newUser);
     this.firestoreService.save(this.newUser, 'users', this.newUser.id)
   }
 
   addUserToDefaultChannels(user: UserCredential) {
-    this.channelsForNewUser.forEach((channel) => {
-      this.firestoreService.pushUserToChannel(channel, user.user.uid)
+    this.channelsForNewUser.forEach((channelID) => {
+      this.firestoreService.pushUserToChannel(channelID, user.user.uid)
     })
   }
 
