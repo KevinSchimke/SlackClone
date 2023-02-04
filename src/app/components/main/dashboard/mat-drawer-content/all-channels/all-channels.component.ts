@@ -18,8 +18,9 @@ export class AllChannelsComponent {
   preChannelArr: Channel[] = [];
   channels: Channel[] = [];
   currentUserId: string = '';
+  isActive = true;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService) { }
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService, public firestoreService: FirestoreService) { }
 
   async ngOnInit() {
     this.currentUserId = this.userService.getUid();
@@ -62,5 +63,15 @@ export class AllChannelsComponent {
 
   isInChannel(channel:Channel){
     return channel.users.indexOf(this.currentUserId) !== -1;
+  }
+
+  addUserToChannel(c: number){
+    this.channels[c].users.push(this.currentUserId);
+    this.firestoreService.pushUserToChannel(this.channels[c].channelId,this.currentUserId);
+  }
+
+  removeUserFromChannel(c: number){
+    this.channels[c].users.splice(this.channels[c].users.indexOf(this.currentUserId),1);
+    this.firestoreService.removeUserFromChannel(this.channels[c].channelId,this.currentUserId);
   }
 }
