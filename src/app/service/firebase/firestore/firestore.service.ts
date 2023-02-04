@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Comment } from 'src/app/models/comment.class';
 import { Reaction } from 'src/app/models/reaction.class';
@@ -55,6 +55,16 @@ export class FirestoreService {
   updateObj(obj: Thread | Channel, collPath: string) {
     let docRef = doc(this.firestore, collPath);
     updateDoc(docRef, obj.toJson());
+  }
+
+  async pushUserToChannel(channelId: string, userId: string) {
+    const docRef = doc(this.firestore, "channels/" + channelId + "/");
+    await updateDoc(docRef, { users: arrayUnion(userId) });
+  }
+
+  async removeUserFromChannel(channelId: string, userId: string) {
+    const docRef = doc(this.firestore, "channels/" + channelId + "/");
+    await updateDoc(docRef, { users: arrayRemove(userId) });
   }
 
   getUser(uid: any) {

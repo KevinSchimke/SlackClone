@@ -13,9 +13,8 @@ import { FirestoreService } from '../firestore/firestore.service';
 })
 export class AuthService {
 
+  userCredential!: UserCredential;
   currentUserId?: string;
-  newUser = new User();
-  usernameNewUser!: string;
 
   constructor(
     private auth: Auth,
@@ -60,13 +59,23 @@ export class AuthService {
   async createUserWithEmailAndPassword(email: string, password: string) {
     await createUserWithEmailAndPassword(this.auth, email, password)
       .then((user: UserCredential) => {
-        this.saveNewUser(user);
         this.sendEmailVerification(user);
+        this.userCredential = user;
       })
       .catch((error) => {
         this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code))
       });
   }
+
+  // async createUserWithEmailAndPassword(email: string, password: string) {
+  //   try {
+  //     let user = await createUserWithEmailAndPassword(this.auth, email, password);
+  //     return user;
+  //   } catch (error: any) {
+  //     this.pushupMessage.openPushupMessage('error', this.authError.errorCode(error.code));
+  //   }
+  // }
+
 
   async sendEmailVerification(user: UserCredential) {
     await sendEmailVerification(user.user)
@@ -144,13 +153,5 @@ export class AuthService {
 
   async updateUserData() {
     await this.firestoreService.updateUser(this.userService.get().toJson());
-  }
-
-  saveNewUser(user: UserCredential) {
-    this.newUser.id = user.user.uid;
-    this.newUser.mail = user.user.email!;
-    this.newUser.name = this.usernameNewUser!;
-    this.newUser.lastLogin = new Date();
-    this.firestoreService.save(this.newUser, 'users')
   }
 }
