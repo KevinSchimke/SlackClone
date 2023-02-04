@@ -68,7 +68,9 @@
             <span *ngIf="comment.creationDate" class="span-time">{{ comment.creationDate | periodOfTime }} ago</span>
         </div>
         <p [innerHTML]="comment.message"></p>
-        <img *ngIf="comment.img" [src]="comment.img" class="post-image" (click)="openBox(comment.img)">
+        <button class="btn-unset" (click)="openBox(comment.img)" *ngIf="comment.img">
+            <img [src]="comment.img" alt="" class="post-image">
+        </button>
         <p class="emoji-container" *ngIf="comment.reactions.length > 0">
             <button class="btn-unset btn-current-emoji" *ngFor="let reaction of comment.reactions; let u = index" (click)="evaluateThread(reaction.id, c)">
                 <span>{{reaction.id}}</span>
