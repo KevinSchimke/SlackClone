@@ -74,6 +74,7 @@ import { ProfileSettingsComponent } from './components/main/dialogs/profile-sett
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 import { BookmarksComponent } from './components/main/dashboard/mat-drawer-content/bookmarks/bookmarks.component';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import {MatTooltipModule} from '@angular/material/tooltip';
     AccountSettingsComponent,
     ProfileSettingsComponent,
     AllChannelsComponent,
-    BookmarksComponent
+    BookmarksComponent,
+    UserStatusPipe
   ],
   imports: [
     BrowserModule,

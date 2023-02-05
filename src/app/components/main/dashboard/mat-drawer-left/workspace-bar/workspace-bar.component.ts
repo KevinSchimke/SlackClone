@@ -56,7 +56,7 @@ export class WorkspaceBarComponent {
     this.setChannelsAndPrivates();
   }
 
-  setChannelsAndPrivates(){
+  setChannelsAndPrivates() {
     this.currentData.setAllChannels(this.channels);
     this.privates = this.channels.filter(this.categoryIsPrivate);
     this.privates = this.sort.sortByName(this.privates);
@@ -86,6 +86,21 @@ export class WorkspaceBarComponent {
     let channel = new Channel(doc.data());
     channel.channelId = doc.id;
     this.channels.push(channel);
+  }
+
+  isUserActive(msgUsers: string[], allUsers: User[]) {
+    let user;
+    msgUsers.forEach((uid) => {
+      let foundUser: User | undefined = allUsers.find((user: User) => (user.id === uid && uid !== this.currentUser.id));
+      if (foundUser) {
+        user = foundUser;
+      }
+    });
+    if (user) {
+      return this.userService.userState(user);
+    }
+    else
+      return false;
   }
 
 }
