@@ -20,6 +20,7 @@ import { ChannelBarComponent } from './components/main/dashboard/mat-drawer-cont
 import { InfocardComponent } from './components/main/dashboard/mat-drawer-right/infocard/infocard.component';
 import { ThreadBarComponent } from './components/main/dashboard/mat-drawer-right/thread-bar/thread-bar.component';
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
+import { BookmarksComponent } from './components/main/dashboard/mat-drawer-right/bookmarks/bookmarks.component';
 
 
 const routes: Routes = [
@@ -38,7 +39,8 @@ const routes: Routes = [
       { path: 'allChannels', component: AllChannelsComponent },
       { path: ':id', component: ChannelBarComponent },
       { path: 'profile/:id', component: InfocardComponent, outlet: 'right' },
-      { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' }
+      { path: ':id/:id', component: ThreadBarComponent, outlet: 'right' },
+      { path: 'bookmarks', component: BookmarksComponent, outlet: 'right' }
     ]
   },
   { path: '**', redirectTo: 'login', pathMatch: 'full' }

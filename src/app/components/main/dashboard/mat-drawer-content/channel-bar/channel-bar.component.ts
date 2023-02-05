@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
-import { collection, deleteDoc, doc, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, startAfter, where } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, setDoc, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
+
 
 @Component({
   selector: 'app-channel-bar',
@@ -211,6 +212,14 @@ export class ChannelBarComponent {
   async deleteBookmark(deleteBookmarkID: string) {
     await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
   }
+
+  async addBookmark(thread: Thread){
+    await this.fireService.save(thread, 'users/' + this.userService.getUid() + '/bookmarks');
+    this.sidenavToggler.threadBar.open();
+    this.router.navigate([{ outlets: { right: ['bookmarks'] } }], { relativeTo: this.route.parent });
+
+  }
+ 
 
   isInChannel(){
     return this.channel.users.indexOf(this.currentUser.id) !== -1;
