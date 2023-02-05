@@ -96,6 +96,9 @@ export class WorkspaceBarComponent {
         user = foundUser;
       }
     });
+    if(msgUsers.length == 2 && msgUsers[0] === msgUsers[1]){
+      return this.userService.userState(this.currentUser);
+    }
     if (user) {
       return this.userService.userState(user);
     }
