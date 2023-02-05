@@ -1,7 +1,8 @@
 <!-- main component for content / import dialog input component -->
 <app-dashboard-header class="main-header"></app-dashboard-header>
 <mat-drawer-container class="main-container">
-    <mat-drawer opened mode="side" #workspaceBar class="workspace-bar">
+    <!-- <mat-drawer opened mode="{{ toggleMode() }}" #workspaceBar class="workspace-bar"> -->
+    <mat-drawer opened [mode]="mobileQuery.matches ? 'push' : 'side'" #workspaceBar class="workspace-bar">
         <app-workspace-bar></app-workspace-bar>
     </mat-drawer>
     <mat-drawer closed mode="side" position="end" class="thread-bar" #threadBar>
