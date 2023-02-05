@@ -9,15 +9,12 @@
     .header-container {
         position: relative;
         padding: 15px;
-        background-color: white;
-        border-right: 1px solid lightgrey;
+        border-right: 1px solid $border-button-main;
         h2 {
-            color: black;
             padding-bottom: 1rem;
         }
         .search-container {
             @include containerPosition(unset, center);
-            color: $bg-dialog;
             font-size: 16px;
             p {
                 margin: 0;
@@ -28,6 +25,7 @@
                 background-color: transparent;
                 outline: none;
                 border: none;
+                color: $color-main;
             }
         }
     }
@@ -40,13 +38,12 @@
 .select-user {
     width: auto;
     @include containerPosition(center, center);
-    background: rgb(232, 245, 250);
+    background: $bg-color-hover;
     padding: 2px;
     border-radius: 10px;
     div {
         @include containerPosition(unset, center);
         margin-right: 15px;
-        color: black;
         p {
             margin: 0
         }
@@ -67,24 +64,24 @@
     }
     &:hover {
         mat-icon {
-            color: black;
+            color: $color-main;
         }
-        background-color: rgb(230, 230, 230);
+        background-color: $bg-color-hover;
         cursor: pointer;
     }
 }
 
 .search-user-list-container {
     @include positionAbsolute(-10px, 15px, unset, 15px);
-    @include border(1px, solid, black);
+    @include border(1px, solid, $border-button-main);
+    border-radius: 4px;
     z-index: 10;
+    box-shadow: var(--mdc-dialog-container-elevation, 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14), 0px 9px 46px 8px rgba(0, 0, 0, 0.12));
 }
 
 .search-user-list {
-    background-color: rgb(197, 191, 191);
-    color: black;
     &:hover {
-        background-color: rgb(232, 245, 250);
+        background-color: $bg-color-hover;
     }
     div {
         display: flex;

@@ -33,4 +33,8 @@ export class DashboardComponent {
     let over: MatDrawerMode = 'over'
     return (window.innerWidth >= 1000) ? side : over
   }
+
+  toggleLeftSidebar() {
+    this.workspaceBar.toggle();
+  }
 }

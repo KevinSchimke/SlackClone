@@ -27,6 +27,7 @@ export class MainComponent {
   }
 
   setUsers(users: any) {
+    this.users = [];
     users.forEach((user: any) => {
       user.lastLogin = user.lastLogin.toDate();
       this.users.push(user);

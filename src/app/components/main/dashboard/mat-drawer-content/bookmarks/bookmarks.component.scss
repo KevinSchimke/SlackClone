@@ -2,25 +2,18 @@
 @import "../../dashboard.component.scss";
 @import "../../../../../../assets/scss/mixin.scss";
 .bookmarks-container {
-    width: 50vw;
-    min-height: 45vh;
-    max-height: calc(95vh - 48px);
-    display: flex;
-    flex-direction: column;
     background-color: $bg-color-main;
+    @include containerPosition(center, unset, column);
+    padding: 1rem;
     input {
         outline: none;
         border-radius: 5px;
+        width: 100%;
         &::placeholder {
             font-style: italic;
             font-size: 14px;
         }
     }
-}
-
-mat-form-field {
-    margin-left: 5%;
-    width: 90%;
 }
 
 .header-container {
@@ -35,13 +28,9 @@ mat-form-field-wrapper {
 }
 
 .bookmark-text {
-    background-color: rgb(224, 255, 255);
-    padding: 10px;
-    border-radius: 5px;
-    width: 85%;
-    margin-left: 5%;
-    margin-bottom: 20px;
-    color: black;
+    background-color: $bg-color-hover;
+    margin-bottom: 1rem;
+    padding: 1rem;
 }
 
 .title {
@@ -52,7 +41,7 @@ mat-form-field-wrapper {
     cursor: pointer;
     padding: 5px;
     &:hover {
-        background-color: lightgrey;
+        background-color: $bg-color-hover;
         border-radius: 5px;
         color: white;
         font-weight: bold;
@@ -61,7 +50,7 @@ mat-form-field-wrapper {
 }
 
 button {
-    background-color: green !important;
+    background-color: $bg-clr-green-accent !important;
 }
 
 .button {

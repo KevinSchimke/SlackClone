@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { DialogAddChannelComponent } from '../../../dialogs/dialog-add-channel/dialog-add-channel.component';
@@ -9,6 +9,8 @@ import { User } from 'src/app/models/user.class';
 import { onSnapshot } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { Channel } from 'src/app/models/channel.class';
+import { MediaMatcher } from '@angular/cdk/layout';
+import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -30,8 +32,14 @@ export class WorkspaceBarComponent {
   users: any[] = [];
   userActive = false;
 
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService) { }
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService,changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public sidenav: SidenavToggleService) {
+    this.mobileQuery = media.matchMedia('(max-width: 500px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
+  }
 
   ngOnInit() {
     this.currentUser = this.userService.get();
@@ -104,6 +112,11 @@ export class WorkspaceBarComponent {
     }
     else
       return false;
+  }
+
+  toggleSidenav(){
+    if(this.mobileQuery.matches)
+      this.sidenav.workspaceBar.toggle();
   }
 
 }

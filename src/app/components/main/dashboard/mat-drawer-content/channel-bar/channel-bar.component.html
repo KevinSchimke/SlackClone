@@ -26,7 +26,7 @@
         <div class="header-right">
             <div class="channel-members" *ngIf="channel.category == 'channel'">
                 <button class="btn-unset btn-members">
-                    <div *ngFor="let user of channel.users.slice(0, 4);">
+                    <div *ngFor="let user of channel.users.slice(0, mobileQuery.matches ? 1 : 4);">
                         <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt="" class="img-header-partner" />
                     </div>
                     <span>{{channel.users.length}}</span>

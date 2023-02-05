@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
@@ -14,6 +14,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
+import { MediaMatcher } from '@angular/cdk/layout';
 
 
 @Component({
@@ -40,10 +41,13 @@ export class ChannelBarComponent {
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
+  mobileQuery: MediaQueryList;
+  private _mobileQueryListener: () => void;
 
-
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService) {
-
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef) {
+    this.mobileQuery = media.matchMedia('(max-width: 360px)');
+    this._mobileQueryListener = () => changeDetectorRef.detectChanges();
+    this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngOnInit(): void {

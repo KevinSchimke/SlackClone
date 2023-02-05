@@ -1,6 +1,5 @@
 @import "../../../../assets/scss/colors.scss";
 @import "../../../../assets/scss/mixin.scss";
-
 //for dashboard
 .main-header {
     @include containerPosition(space-between, center);
@@ -32,30 +31,24 @@ header {
     @include containerPosition(space-between, center);
     padding: .5rem 1rem;
     max-height: 32px;
-
     .bar-header {
         @include containerPosition(unset, center);
         width: 100%;
-
         .header-headline {
             @include containerPosition(unset, center);
             @include noBorderWithRadius(.5rem);
             padding-inline: .5rem;
         }
-
         h3 {
             margin-right: 0.5rem !important;
             font-size: 0.85rem;
         }
     }
-
     .close-thread-btn {
         border-radius: .5rem;
-
         img {
             @include image(cover, 1.5rem, 1.5rem);
         }
-
         &:hover {
             background-color: $bg-color-hover;
         }
@@ -76,15 +69,12 @@ header {
     display: flex;
     gap: .5rem;
     padding: .5rem 1.5rem;
-
     &:hover {
         background-color: $bg-color-hover;
-
         .thread-options {
             display: flex;
         }
     }
-
     .thread-options {
         @include positionAbsolute(-1rem, 0);
         @include border(1px, solid, $border-button-main, 0.5rem);
@@ -92,46 +82,38 @@ header {
         background-color: $bg-color-main;
         padding: .3rem 1rem;
         gap: 1rem;
-
         button {
             img {
                 @include image(cover, 1.25rem, 1.25rem);
             }
         }
     }
-
     .channel-thread-img {
         @include image(cover, 2.5rem, 2.5rem);
         border-radius: .5rem;
     }
-
     .channel-thread-content {
         word-break: break-word;
         width: 100%;
-
         .thread-headline {
             display: flex;
             gap: 0.6rem;
-
             .span-time {
                 color: $color-secondary;
                 font-size: .725rem;
             }
         }
-
         .btn-current-emoji {
             background-color: $bg-color-light;
             color: $color-main;
             padding: 2px 4px;
             border-radius: .5rem;
             border: 1px solid transparent;
-
             &:hover {
                 $bg-color: $bg-accent;
                 border: 1px solid $color-secondary;
             }
         }
-
         .add-reaction {
             @include containerSize(1rem, 1rem);
             display: block;
@@ -150,23 +132,19 @@ header {
     padding: 0;
     color: $color-main;
     cursor: pointer;
-
     img {
         display: block;
         height: 1.5rem;
         width: 1.5rem;
     }
-
     &:hover {
         background-color: $bg-color-hover;
     }
-
     margin-right: 1rem;
 }
 
 .private-header-imgs {
     @include containerPosition(unset, center);
-
     h2 {
         margin-left: .5rem !important;
     }
@@ -184,7 +162,6 @@ header {
     border-radius: 4px;
     padding: 0.4rem 1rem;
     background-color: $bg-color-main;
-
     &:hover {
         filter: brightness(1.1);
     }
@@ -194,7 +171,6 @@ header {
     background-color: $bg-clr-green-accent;
     padding: 1rem 4rem;
     font-size: 1.2rem;
-
     &:hover {
         filter: brightness(1.1);
     }
@@ -203,4 +179,29 @@ header {
 .container-main-btn {
     @include containerPosition(center);
     margin-top: 1.5rem;
+}
+
+@media (max-width: 1000px) {
+    .workspace-bar {
+        width: 50%;
+    }
+    .thread-bar {
+        width: 50%;
+    }
+}
+
+@media(max-width: 720px) {
+    .thread-bar {
+        width: 100%;
+    }
+}
+
+@media(max-width: 500px) {
+    .workspace-bar {
+        width: 100%;
+        padding-inline: 1rem;
+    }
+    .btn-header-search {
+        display: none;
+    }
 }
