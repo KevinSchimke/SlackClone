@@ -16,10 +16,10 @@ import { collection, Firestore, limit, onSnapshot, orderBy, Query, query } from 
 
 @Component({
   selector: 'app-bookmarks',
-  templateUrl: './bookmarks.component.html',
-  styleUrls: ['./bookmarks.component.scss']
+  templateUrl: './bookmarks-bar.component.html',
+  styleUrls: ['./bookmarks-bar.component.scss']
 })
-export class BookmarksComponent {
+export class BookmarksBarComponent {
   collData$: Observable<any> = EMPTY;
   threadDocData$: Observable<any> = EMPTY;
   channelDocData$: Observable<any> = EMPTY;
