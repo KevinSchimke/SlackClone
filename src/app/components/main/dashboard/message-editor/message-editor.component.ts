@@ -218,7 +218,7 @@ export class MessageEditorComponent {
 
   checkDirectMessage(dm: Channel) {
     let currentChatUsers = this.currentDataService.getChatUsersId();
-    if(!currentChatUsers.includes(this.userService.getUid())) currentChatUsers.push(this.userService.getUid());
+    currentChatUsers.push(this.userService.getUid());
     if (this.usersAreSame(dm, currentChatUsers))
       this.setTargetAndPrivateId(dm);
   }
