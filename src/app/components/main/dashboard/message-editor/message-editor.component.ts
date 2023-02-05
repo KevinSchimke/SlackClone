@@ -63,33 +63,46 @@ export class MessageEditorComponent {
     }
     const randomId = Math.random().toString(36).substring(2);
     this.path = `images/${randomId}`;
+    console.log('Path nach setzung', this.path);
+
     this.storageRef = ref(this.fireStorage, this.path);
     const uploadTask = uploadBytesResumable(this.storageRef, this.file);
     uploadTask.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
       switch (snapshot.state) {
         case 'canceled':
           this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
           break;
+        case 'running':
+          this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
+          break;
       }
     },
       (error) => {
-        console.log(error.message);
+        this.pushupMessage.openPushupMessage('error', error.message)
       }
       ,
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this.pushupMessage.openPushupMessage('success', 'Upload is success');
+          this.userService.currentUser.src = downloadURL;
           this.imageURL = downloadURL;
+          this.pushupMessage.openPushupMessage('success', 'Upload success')
         });
       });
   }
 
   discardUpload() {
     this.imageURL = '';
+    console.log('Path vor Löschung', this.path);
     const desertRef = ref(this.fireStorage, this.path);
     deleteObject(desertRef).then(() => {
+      console.log('successfully deleted');
     }).catch((error) => {
     });
+    this.path = '';
+    console.log('Path nach löschung', this.path);
+
+
   }
 
   darkMode: undefined | boolean = !!(

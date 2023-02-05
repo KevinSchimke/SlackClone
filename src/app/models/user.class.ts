@@ -5,7 +5,7 @@ export class User {
     phone: number | string;
     src: string;
     status: string;
-    lastLogin: any;
+    lastLogin: Date;
     pathDefaultImg: string = 'https://firebasestorage.googleapis.com/v0/b/slackclone-6519b.appspot.com/o/images%2Fjf7fewu5rhi?alt=media&token=32f8b383-e477-4829-9e15-fc4230cab06b'
 
     constructor(obj?: any) {

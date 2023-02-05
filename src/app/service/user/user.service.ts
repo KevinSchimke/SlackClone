@@ -10,7 +10,7 @@ export class UserService {
 
   constructor() { }
 
-  set(obj: User) {
+  set(obj: any) {
     this.currentUser.id = obj.id;
     this.currentUser.name = obj.name;
     this.currentUser.mail = obj.mail;
@@ -29,7 +29,7 @@ export class UserService {
   }
 
   userState(user: User) {
-    let lastLogin = user.lastLogin.toDate().getTime();
+    let lastLogin = user.lastLogin.getTime();
     let currentTime = new Date().getTime();
     let userActive: boolean;
 

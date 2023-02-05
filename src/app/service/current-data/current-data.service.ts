@@ -76,20 +76,20 @@ export class CurrentDataService {
     this.currentChannel.locked = obj.locked;
   }
 
-  setUsers(user_arr: []) {
+  setUsers(user_arr: User[]) {
     this.users = user_arr;
-    let user: any = user_arr.find((user: User) => user.id === this.userService.uid);
+    let user: User = user_arr.find((user: User) => user.id === this.userService.uid)!;
     if (user) {
       this.userService.set(user);
-    } else {
-      console.log('gefunden');
     }
     if (!this.usersAreLoaded) {
       this.onceSubscribtedUsers = user_arr;
-      this.usersAreLoaded = true;
-      this.usersAreLoaded$.next(true);
     }
+    this.users = user_arr;
+    this.usersAreLoaded = true;
+    this.usersAreLoaded$.next(true);
   }
+
 
   getChatUsers() {
     return this.newChatUsers;

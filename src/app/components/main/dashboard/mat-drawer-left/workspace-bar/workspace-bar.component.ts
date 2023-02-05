@@ -88,18 +88,18 @@ export class WorkspaceBarComponent {
     this.channels.push(channel);
   }
 
-  isUserActive(msgUsers: string[], allUsers: User[]) {
-    let user;
+  isUserActive(msgUsers: string[], allUsers: any[]) {
+    let user: any;
     msgUsers.forEach((uid) => {
-      let foundUser: User | undefined = allUsers.find((user: User) => (user.id === uid && uid !== this.currentUser.id));
+      let foundUser: any = allUsers.find((user: any) => (user.id === uid && uid !== this.currentUser.id));
       if (foundUser) {
         user = foundUser;
       }
     });
-    if(msgUsers.length == 2 && msgUsers[0] === msgUsers[1]){
+    if (msgUsers.length == 2 && msgUsers[0] === msgUsers[1]) {
       return this.userService.userState(this.currentUser);
-    }
-    if (user) {
+    } else if (user) {
+      if (!(user.lastLogin instanceof Date)) user.lastLogin = user.lastLogin.toDate();
       return this.userService.userState(user);
     }
     else

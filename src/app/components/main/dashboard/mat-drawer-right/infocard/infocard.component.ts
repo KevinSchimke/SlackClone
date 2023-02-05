@@ -44,7 +44,7 @@ export class InfocardComponent {
   getUser(uid: string) {
     this.currentDataService.usersAreLoaded$.subscribe(isLoaded => {
       if (isLoaded === true) {
-        this.user = this.currentDataService.users.find((user: User) => user.id === uid)!;
+        this.user = this.currentDataService.users.find((user: any) => user.id === uid)!;
         this.isLoggedInUser = this.checkIsLoggedInUser(this.user);
         this.userActive = this.userService.userState(this.user);
       }
