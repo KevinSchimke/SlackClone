@@ -5,6 +5,8 @@
     display: none;
 }
 
+
+
 .channel-thread-comments {
     color: #1D9BD1;
     font-weight: 700;
@@ -84,15 +86,15 @@
 }
 
 .add-bookmark-container {
-    background-color: white;
-    border-bottom: 1px solid lightgrey;
+    background-color: $bg-color-main;
+    border-bottom: 1px solid $border-button-main;
     padding: 5px;
     padding-left: 10px;
 
     div {
 
         &:hover {
-            background-color: rgb(235, 235, 235);
+            background-color: $bg-color-hover;
             border-radius: 5px;
             cursor: pointer;
         }
@@ -115,7 +117,7 @@
     @include containerPosition(flex, center);
     text-decoration: none;
     &:hover {
-        background-color: rgb(235, 235, 235);
+        background-color: $bg-color-hover;
         border-radius: 5px;
         cursor: pointer;
     }
@@ -124,4 +126,13 @@
 .close{
     margin-left: 10px;
     margin-right: 3px;
+}
+
+@media (max-width: 1000px) {
+    .max-title{
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100px;
+        height: 2rem;
+    }
 }
