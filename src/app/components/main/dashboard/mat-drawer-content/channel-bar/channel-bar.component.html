@@ -15,7 +15,7 @@
                 <button class="workspace-btn header-headline" *ngIf="channel.category == 'private'">
                     <div class="private-header-imgs">
                         <div *ngFor="let user of channel.users">
-                            <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
+                            <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt="" class="img-header-partner" />
                         </div>
                         <h2>{{channel.users | messagePartner}}</h2>
                     </div>
@@ -27,7 +27,7 @@
             <div class="channel-members" *ngIf="channel.category == 'channel'">
                 <button class="btn-unset btn-members">
                     <div *ngFor="let user of channel.users.slice(0, 4);">
-                        <img *ngIf="user != currentUser.id" [src]="user | imgSrc" alt="" class="img-header-partner" />
+                        <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt="" class="img-header-partner" />
                     </div>
                     <span>{{channel.users.length}}</span>
                 </button>
@@ -72,7 +72,7 @@
                     categories: { search: 'Research results', recent: 'Recently' }}"></emoji-mart>
                 </ng-template>
             </mat-menu>
-            <img [src]="thread.userId | imgSrc" class="channel-thread-img" />
+            <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img" />
             <div class="channel-thread-content">
                 <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
                 <p class="thread-headline">
@@ -98,7 +98,7 @@
                     <button class="d-flex go-to-thread" (click)="openThread(thread)">
                             <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
                             <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-                            <img [src]="commentUser | imgSrc" />
+                            <img [src]="commentUser | imgSrc: currentDataService.users"/>
                         </div>
                         <span class="channel-thread-comments" *ngIf="thread.comments < 2">
                             {{thread.comments}} reply

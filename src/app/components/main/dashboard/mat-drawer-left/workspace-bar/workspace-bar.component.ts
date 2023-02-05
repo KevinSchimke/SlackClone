@@ -28,27 +28,35 @@ export class WorkspaceBarComponent {
   user$: any = EMPTY;
 
   users: any[] = [];
+  userActive = false;
 
 
   constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService) { }
 
   ngOnInit() {
     this.currentUser = this.userService.get();
+    this.currentData.usersAreLoaded$.subscribe((areLoaded) => {
+      if (areLoaded) {
+        this.users = this.currentData.users;
+      }
+    })
     const q1 = this.firestoreService.getCurrentUserData('channels', 'users', this.userService.getUid());
     const resp = onSnapshot(q1, (querySnapshot: any) => this.snapShotChannel(querySnapshot));
     this.currentData.snapshot_arr.push(resp);
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddChannelComponent);
-
-    dialogRef.afterClosed().subscribe();
+    this.dialog.open(DialogAddChannelComponent);
   }
 
   snapShotChannel(querySnapshot: any) {
     this.channels = [];
     this.privates = [];
     querySnapshot.forEach((doc: any) => this.pushIntoChannel(doc));
+    this.setChannelsAndPrivates();
+  }
+
+  setChannelsAndPrivates(){
     this.currentData.setAllChannels(this.channels);
     this.privates = this.channels.filter(this.categoryIsPrivate);
     this.privates = this.sort.sortByName(this.privates);
@@ -57,6 +65,14 @@ export class WorkspaceBarComponent {
     this.currentData.setPrivates(this.privates);
     this.currentData.setChannels(this.channels);
   }
+
+  // getUser(uid: string) {
+  //   this.currentData.usersAreLoaded$.subscribe(isLoaded => {
+  //     if (isLoaded === true) {
+  //       this.userActive = this.userService.userState(this.user);
+  //     }
+  //   });
+  // }
 
   categoryIsChannel(channel: Channel) {
     return channel.category == 'channel';
