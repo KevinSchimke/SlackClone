@@ -105,8 +105,6 @@ export class BookmarksBarComponent {
     const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
-      console.log(this.comments);
-
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
     this.currentDataService.snapshot_arr.push(resp);
