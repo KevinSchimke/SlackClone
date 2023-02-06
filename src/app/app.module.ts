@@ -78,6 +78,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
 import {MatTabsModule} from '@angular/material/tabs';
+import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
 
 @NgModule({
   declarations: [
@@ -116,7 +117,8 @@ import {MatTabsModule} from '@angular/material/tabs';
     BookmarksComponent,
     UserStatusPipe,
     BookmarksBarComponent,
-    DialogChannelInfoComponent
+    DialogChannelInfoComponent,
+    DialogEditChannelComponent
   ],
   imports: [
     BrowserModule,

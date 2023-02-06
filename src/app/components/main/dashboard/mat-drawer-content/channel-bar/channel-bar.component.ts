@@ -154,6 +154,7 @@ export class ChannelBarComponent {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
     const subscription = this.channel$.subscribe((channel: any) => {
       channel.creationDate = channel.creationDate.toDate();
+      channel.channelId = channel.id;
       this.channel = channel});
     this.currentDataService.subscription_arr.push(subscription);
   }
@@ -238,8 +239,14 @@ export class ChannelBarComponent {
   }
 
   openDialogChannelInfo(){
-    this.dialog.open(DialogChannelInfoComponent, {
+    const dialogRef = this.dialog.open(DialogChannelInfoComponent, {
       data: this.channel,
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == 'left') {
+        this.router.navigateByUrl('main');
+      }
     });
   }
 }

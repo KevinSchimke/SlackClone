@@ -21,12 +21,19 @@ h2,
 }
 
 .dialog-add-channel,
-.authMain {
+.authMain,
+.edit-channel-container {
     .mdc-text-field--filled:not(.mdc-text-field--disabled) {
         background-color: unset;
     }
     .mat-mdc-form-field-focus-overlay {
         background-color: unset;
+    }
+}
+
+.edit-channel-container {
+    .mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-floating-label {
+        color: $color-main !important;
     }
 }
 
@@ -165,6 +172,22 @@ input:-webkit-autofill:focus {
 .mat-mdc-tab-header-pagination .mat-ripple-element,
 .mat-mdc-tab-link .mat-ripple-element {
     background-color: unset !important;
+}
+
+.dialog-channel-info-container {
+    .mat-mdc-tab-body-content {
+        background: $bg-color-hover !important;
+    }
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+    border-color: $border-button-main !important;
+}
+
+.mdc-text-field--focused {
+    color: blue !important;
 }
 
 @media(max-width: 500px) {
