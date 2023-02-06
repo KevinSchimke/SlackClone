@@ -169,7 +169,6 @@ export class BookmarksBarComponent {
 
   async deleteBookmark(deleteBookmarkID: string) {
     await deleteDoc(doc(this.firestore, 'users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID));
-    console.log(deleteBookmarkID);
   }
 
 
