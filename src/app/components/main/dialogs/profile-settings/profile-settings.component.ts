@@ -17,7 +17,7 @@ import { UserService } from 'src/app/service/user/user.service';
 export class ProfileSettingsComponent {
 
   @ViewChild('phone') phone?: ElementRef
-  
+
 
   step = -1;
 
@@ -42,9 +42,8 @@ export class ProfileSettingsComponent {
     this.statusValue = this.userService.currentUser.status;
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.currentUser = this.userService.currentUser;
-    console.log(this.currentUser);
   }
 
   setStep(index: number) {
@@ -91,36 +90,48 @@ export class ProfileSettingsComponent {
   }
 
   upload = ($event: any) => {
+    if (!this.proofFile($event)) return
+    const uploadTask = this.prepareUpload();
+    uploadTask.on('state_changed', (snapshot) => {
+      this.processUpload(snapshot);
+    },
+      (error) => this.pushupMessage.openPushupMessage('error', error.message),
+      () => this.getDownloadLink(uploadTask));
+  }
+
+  getDownloadLink(uploadTask: any) {
+    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      this.userService.currentUser.src = downloadURL;
+      this.updateUserData();
+      this.pushupMessage.openPushupMessage('success', 'Upload success');
+    });
+  }
+
+  processUpload(snapshot: any) {
+    const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+    switch (snapshot.state) {
+      case 'canceled':
+        this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
+        break;
+      case 'running':
+        this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
+        break;
+    }
+  }
+
+  proofFile($event: any) {
     this.file = $event.target.files[0];
     if (this.file.size > 3000000) {
       this.pushupMessage.openPushupMessage('error', 'Your upload is too large, select a file smaller than 3 MB!');
-      return
+      return false;
     }
+    return true;
+  }
+
+  prepareUpload() {
     const randomId = Math.random().toString(36).substring(2);
     this.path = `images/${randomId}`;
     this.storageRef = ref(this.fireStorage, this.path);
-    const uploadTask = uploadBytesResumable(this.storageRef, this.file);
-    uploadTask.on('state_changed', (snapshot) => {
-      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-      switch (snapshot.state) {
-        case 'canceled':
-          this.pushupMessage.openPushupMessage('error', 'Upload is canceled');
-          break;
-        case 'running':
-          this.pushupMessage.openPushupMessage('info', 'Upload is running' + progress + '%')
-          break;
-      }
-    },
-      (error) => {
-        this.pushupMessage.openPushupMessage('error', error.message)
-      }
-      ,
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          this.userService.currentUser.src = downloadURL;
-          this.updateUserData();
-          this.pushupMessage.openPushupMessage('success', 'Upload success')
-        });
-      });
+    return uploadBytesResumable(this.storageRef, this.file);
   }
 }

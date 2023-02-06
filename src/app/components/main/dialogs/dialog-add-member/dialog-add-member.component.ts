@@ -37,7 +37,6 @@ export class DialogAddMemberComponent {
     this.currentUserId = this.user.getUid();
     this.injected = this.data;
     this.channel = new Channel(this.injected.channel);
-    console.log(this.channel);
     this.currentDataService.usersAreLoaded$.subscribe((areLoaded) => {
       if (areLoaded) {
         this.allUsers = this.currentDataService.users;

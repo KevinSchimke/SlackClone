@@ -282,21 +282,11 @@ export class MessageEditorComponent {
     }
   }
 
-  handleKeyUp($event: any) {
-    //      if($event.keyCode === 13 && !$event.shiftKey){
-    //       $event.preventDefault();
-    //        this.getMessage();
-    //      }
-  }
-
   handleClick($event: EmojiEvent) {
-    console.log($event.emoji);
     this.message += $event.emoji.native;
-    // console.log(this.channelId);
   }
 
   emojiFilter(e: string): boolean {
-    // Can use this to test [emojisToShowFilter]
     if (e && e.indexOf && e.indexOf('1F4') >= 0) {
       return true;
     }

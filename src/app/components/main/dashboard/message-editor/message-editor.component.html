@@ -1,5 +1,5 @@
 <mat-card id="chatcard">
-    <angular-editor (keyup)="handleKeyUp($event)" [(ngModel)]="message" [config]="editorConfig">
+    <angular-editor [(ngModel)]="message" [config]="editorConfig">
         <ng-template #customButtons>
             <ae-toolbar-set>
                 <ae-button iconClass="fa fa-smile-o" title="Emoijs" [matMenuTriggerFor]="emoij">
@@ -32,5 +32,3 @@
     </mat-menu>
 
 </mat-card>
-
-<!-- https://github.com/kolkov/angular-editor -->

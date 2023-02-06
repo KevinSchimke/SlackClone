@@ -31,7 +31,6 @@ export class DialogEditChannelComponent {
     this.currentUserId = this.user.getUid();
     this.injected = this.data;
     this.channel = new Channel(this.injected);
-    console.log(this.channel);
     this.setFormGroup();
   }
 
