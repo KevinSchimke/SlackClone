@@ -176,14 +176,6 @@ export class ThreadBarComponent {
     this.saveReaction(c);
   }
 
-  evalMainThread(emoji: string) {
-    if (this.thread.getEmojiCount(this.currentUser.id) > 2 && !this.thread.isEmojiAlreadyByMe(emoji, this.currentUser.id))
-      this.openDialog();
-    else
-      this.thread.evaluateThreadCases(emoji, this.currentUser.id);
-    this.fireService.save(this.thread, 'channels/' + this.channelId + '/ThreadCollection/', this.threadId);
-  }
-
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogReactionComponent);
     dialogRef.afterClosed().subscribe();
