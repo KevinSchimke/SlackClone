@@ -4,6 +4,7 @@ import { Channel } from 'src/app/models/channel.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
+import { DialogAddMemberComponent } from '../dialog-add-member/dialog-add-member.component';
 import { DialogEditChannelComponent } from '../dialog-edit-channel/dialog-edit-channel.component';
 
 export interface DialogData {
@@ -58,5 +59,13 @@ export class DialogChannelInfoComponent {
 
   showProfile(uid: string){
     this.dialogRef.close(uid);
+  }
+
+  openAddMember(){
+    const dialogRef = this.dialog.open(DialogAddMemberComponent, {
+      data: {
+        channel: this.channel,
+      }
+    });
   }
 }

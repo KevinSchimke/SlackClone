@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
-import { addDoc, collection, deleteDoc, doc, Firestore, limit, limitToLast, onSnapshot, orderBy, Query, query, setDoc, startAfter, where } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, Firestore, getCountFromServer, limit, limitToLast, onSnapshot, orderBy, Query, query, setDoc, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -40,6 +40,7 @@ export class ChannelBarComponent {
   loastLoadedThread: Thread = new Thread();
   unsortedThreads: Thread[] = [];
   bookmarks: any[] = [];
+  moreToLoad = false;
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
@@ -125,6 +126,7 @@ export class ChannelBarComponent {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.threads = this.sorter.sortByDate(this.unsortedThreads);
       this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
+      this.isMoreToLoad();
     });
 
     this.currentDataService.snapshot_arr.push(resp);
@@ -263,11 +265,19 @@ export class ChannelBarComponent {
     }
   }
 
-  openAddMember(){
+  openAddMember() {
     const dialogRef = this.dialog.open(DialogAddMemberComponent, {
       data: {
         channel: this.channel,
       }
     });
+  }
+
+  async isMoreToLoad() {
+    const coll = collection(this.firestore, this.collPath);
+    const snapshot = await getCountFromServer(coll);
+    if (snapshot.data().count > this.threads.length) {
+      this.moreToLoad = true;
+    }
   }
 }

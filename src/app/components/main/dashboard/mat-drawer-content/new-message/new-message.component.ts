@@ -22,14 +22,14 @@ export class NewMessageComponent {
 
   constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private sidenavToggler: SidenavToggleService, private user: UserService) { }
 
-  async ngOnInit(): Promise<void> {
+  ngOnInit() {
+    this.currentDataService.setChatUsers([]);
     this.currentUserId = this.user.getUid();
     this.currentDataService.usersAreLoaded$.subscribe((areLoaded) => {
       if (areLoaded) {
         this.allUsers = this.currentDataService.users;
       }
-    })
-
+    });
   }
 
   deleteUserToChat(user: User) {
