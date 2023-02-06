@@ -221,7 +221,6 @@ export class ChannelBarComponent {
     await this.fireService.save(thread, 'users/' + this.userService.getUid() + '/bookmarks');
     this.sidenavToggler.threadBar.open();
     this.router.navigate([{ outlets: { right: ['bookmarks'] } }], { relativeTo: this.route.parent });
-
   }
  
 
