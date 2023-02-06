@@ -5,7 +5,8 @@
 <ul>
     <li><img src="assets/svg/color_939295/threads.svg" />Threads</li>
     <li>
-        <a (click)="navigateToRoute('/main/newMessage')"><img src="assets/svg/color_939295/message.svg" />Direct messages</a>
+        <a (click)="navigateToRoute('/client/newMessage')"><img src="assets/svg/color_939295/message.svg" />Direct
+            messages</a>
     </li>
     <li><img src="assets/svg/color_939295/at.svg" />Mentions and reactions</li>
     <li><img src="assets/svg/color_939295/send.svg" />Drafts and sent</li>
@@ -15,7 +16,8 @@
     </li>
 
     <li>
-        <a (click)="navigateToRoute('/main/allChannels')"><img src="assets/svg/color_939295/all-channels.svg" />All channels</a>
+        <a (click)="navigateToRoute('/client/allChannels')"><img src="assets/svg/color_939295/all-channels.svg" />All
+            channels</a>
     </li>
 </ul>
 
@@ -35,14 +37,14 @@
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let channel of channels">
-                    <a (click)="navigateToRoute('/main/' + channel.channelId)">
-                        <span *ngIf="!channel.locked">#</span>
-                        <img *ngIf="channel.locked" src="assets/svg/color_939295/lock.svg"> {{ channel.channelName }}
-                    </a>
-                </li>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <li *ngFor="let channel of channels">
+        <a (click)="navigateToRoute('/client/' + channel.channelId)">
+            <span *ngIf="!channel.locked">#</span>
+            <img *ngIf="channel.locked" src="assets/svg/color_939295/lock.svg"> {{ channel.channelName }}
+        </a>
+    </li>
+    </mat-expansion-panel>
+    </mat-accordion>
     </li>
 </ul>
 
@@ -54,22 +56,25 @@
                     <mat-panel-title>
                         <div class="d-flex channels-header-title">
                             <span>Direct Messages</span>
-                            <button appClickStopPropagation class="btn-unset btn-add-channel" (click)="navigateToRoute('/main/newMessage')">
+                            <button appClickStopPropagation class="btn-unset btn-add-channel"
+                                (click)="navigateToRoute('/client/newMessage')">
                                 <img src="assets/svg/color_939295/add.svg" />
                             </button>
                         </div>
                     </mat-panel-title>
                 </mat-expansion-panel-header>
-                <li *ngFor="let private of privates">
-                    <a (click)="navigateToRoute('/main/' + private.channelId)">
-                        <div style="position: relative;">
-                            <img [src]="private.users | imgSrc: currentData.users">
-                            <img *ngIf="private.users.length < 3 && isUserActive(private.users, currentData.users)" src="assets/svg/color_008000/online.svg" class="online-status">
-                            <img *ngIf="private.users.length < 3 && !isUserActive(private.users, currentData.users)" src="assets/svg/color_008000/offline.svg" class="online-status">
-                        </div> {{ private.users | messagePartner}}
-                    </a>
-                </li>
-            </mat-expansion-panel>
-        </mat-accordion>
+    <li *ngFor="let private of privates">
+        <a (click)="navigateToRoute('/client/' + private.channelId)">
+            <div style="position: relative;">
+                <img [src]="private.users | imgSrc: currentData.users">
+                <img *ngIf="private.users.length < 3 && isUserActive(private.users, currentData.users)"
+                    src="assets/svg/color_008000/online.svg" class="online-status">
+                <img *ngIf="private.users.length < 3 && !isUserActive(private.users, currentData.users)"
+                    src="assets/svg/color_008000/offline.svg" class="online-status">
+            </div> {{ private.users | messagePartner}}
+        </a>
+    </li>
+    </mat-expansion-panel>
+    </mat-accordion>
     </li>
 </ul>
