@@ -76,6 +76,8 @@ import { BookmarksComponent } from './components/main/dialogs/bookmarks/bookmark
 import { BookmarksBarComponent } from './components/main/dashboard/mat-drawer-right/bookmarks-bar/bookmarks-bar.component';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
+import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
+import {MatTabsModule} from '@angular/material/tabs';
 
 @NgModule({
   declarations: [
@@ -113,7 +115,8 @@ import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
     AllChannelsComponent,
     BookmarksComponent,
     UserStatusPipe,
-    BookmarksBarComponent
+    BookmarksBarComponent,
+    DialogChannelInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -141,7 +144,8 @@ import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
     MatSlideToggleModule,
     MatButtonModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,0 +1,12 @@
+@import "../../../../../../assets/scss/colors.scss";
+@import "../../../../../../assets/scss/mixin.scss";
+@import "../../../dashboard/dashboard.component.scss";
+.dialog-channel-info-container {
+    background-color: $bg-color-main;
+    min-width: 320px;
+    padding: 1rem;
+}
+
+.channel-info-title {
+    @include containerPosition(unset, center);
+}

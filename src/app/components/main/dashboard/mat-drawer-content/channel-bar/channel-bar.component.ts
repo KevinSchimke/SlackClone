@@ -15,6 +15,7 @@ import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbo
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { BookmarksComponent } from '../../../dialogs/bookmarks/bookmarks.component';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { DialogChannelInfoComponent } from '../../../dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
 
 
 @Component({
@@ -151,7 +152,9 @@ export class ChannelBarComponent {
 
   getChannelDoc() {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
-    const subscription = this.channel$.subscribe((channel: Channel) => this.channel = channel);
+    const subscription = this.channel$.subscribe((channel: any) => {
+      channel.creationDate = channel.creationDate.toDate();
+      this.channel = channel});
     this.currentDataService.subscription_arr.push(subscription);
   }
 
@@ -168,15 +171,14 @@ export class ChannelBarComponent {
 
   evaluateThread(emoji: string, t: number) {
     if (this.threads[t].getEmojiCount(this.currentUser.id) > 2 && !this.threads[t].isEmojiAlreadyByMe(emoji, this.currentUser.id))
-      this.openDialog();
+      this.openTooManyDialog();
     else
       this.threads[t].evaluateThreadCases(emoji, this.currentUser.id);
     this.saveReaction(t);
   }
 
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogReactionComponent);
-    dialogRef.afterClosed().subscribe();
+  openTooManyDialog(): void {
+    this.dialog.open(DialogReactionComponent);
   }
 
   openBox(url: string) {
@@ -191,21 +193,23 @@ export class ChannelBarComponent {
 
   async loadBookmarks() {
     const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
-    const resp = onSnapshot(bookmarksRef, async (bookmarksDocs) => {
-      this.bookmarks = [];
-      bookmarksDocs.forEach((doc: any) => {
-        let bookmarkData = {
-          link: '',
-          name: '',
-          id: '',
-        }
-        bookmarkData.link = doc.data().link;
-        bookmarkData.name = doc.data().name;
-        bookmarkData.id = doc.id;
-        this.bookmarks.push(bookmarkData);
-      })
-    })
+    const resp = onSnapshot(bookmarksRef, async (bookmarksDocs) => this.snapBookmarks(bookmarksDocs));
     this.currentDataService.snapshot_arr.push(resp);
+  }
+
+  snapBookmarks(bookmarksDocs: any) {
+    this.bookmarks = [];
+    bookmarksDocs.forEach((doc: any) => {
+      let bookmarkData = {
+        link: '',
+        name: '',
+        id: '',
+      }
+      bookmarkData.link = doc.data().link;
+      bookmarkData.name = doc.data().name;
+      bookmarkData.id = doc.id;
+      this.bookmarks.push(bookmarkData);
+    })
   }
 
   openBookmarks(channelID: string) {
@@ -231,5 +235,11 @@ export class ChannelBarComponent {
   joinChannel() {
     this.channel.users.push(this.currentUser.id);
     this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
+  }
+
+  openDialogChannelInfo(){
+    this.dialog.open(DialogChannelInfoComponent, {
+      data: this.channel,
+    });
   }
 }

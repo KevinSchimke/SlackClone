@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
+import { addDoc, collection, Firestore } from '@angular/fire/firestore';
 import { MatDialogRef } from '@angular/material/dialog';
-import { addDoc, collection, getFirestore } from '@firebase/firestore';
 
 @Component({
   selector: 'app-bookmarks',
@@ -9,15 +9,15 @@ import { addDoc, collection, getFirestore } from '@firebase/firestore';
 })
 export class BookmarksComponent {
 
-  db = getFirestore();
+  
   link: string = '';
   linkName: string = '';
   currentChatroomID: string = '';
 
-  constructor(public dialogRef: MatDialogRef<BookmarksComponent>) { }
+  constructor(public dialogRef: MatDialogRef<BookmarksComponent>, private firestore: Firestore) { }
 
   async addBookmark(){
-    await addDoc(collection(this.db, "channels", this.currentChatroomID, 'bookmarks' ), {
+    await addDoc(collection(this.firestore, "channels", this.currentChatroomID, 'bookmarks' ), {
       name: this.linkName,
       link: this.link,
     });
