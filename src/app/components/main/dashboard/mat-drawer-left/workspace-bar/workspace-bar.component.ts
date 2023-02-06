@@ -121,7 +121,6 @@ export class WorkspaceBarComponent {
   }
 
   navigateToRoute(url: string) {
-    // this.router.navigateByUrl(url);
     this.router.navigate( [url] , { relativeTo: this.route });
     this.toggleSidenav();
   }
