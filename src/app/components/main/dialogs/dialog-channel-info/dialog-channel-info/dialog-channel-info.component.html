@@ -5,7 +5,7 @@
         <div *ngIf="channel.locked"><img src="assets/svg/color_d1d2d3/lock.svg"></div>
         <h2 class="max-title">{{channel.channelName}}</h2>
     </div>
-    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+    <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" [selectedIndex]="selectNo">
         <mat-tab label="About">
             <div class="dialog-tab">
                 <div class="tab-info">
@@ -36,7 +36,8 @@
             </div>
         </mat-tab>
         <mat-tab label="Members">
-            <div class="dialog-tab">Content 2
+            <div>
+                Content 2
 
             </div>
         </mat-tab>

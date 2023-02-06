@@ -30,6 +30,8 @@ export class DialogAddChannelComponent {
   async createNewChannel() {
     this.channel = new Channel();
     this.channel.channelName = this.channelForm.controls.name.value || '';
+    this.channel.channelName = this.channel.channelName.replace(/ /g, '-');
+    this.channel.channelName = this.channel.channelName.toLocaleLowerCase();
     this.channel.description = this.channelForm.controls.description.value || '';
     if (this.channelForm.controls.locked.value === '' || this.channelForm.controls.locked.value === null)
       this.channel.locked = false;

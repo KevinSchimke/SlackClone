@@ -238,9 +238,12 @@ export class ChannelBarComponent {
     this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
   }
 
-  openDialogChannelInfo(){
+  openDialogChannelInfo(tabNo: number){
     const dialogRef = this.dialog.open(DialogChannelInfoComponent, {
-      data: this.channel,
+      data: {
+        channel: this.channel,
+        tab: tabNo
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {

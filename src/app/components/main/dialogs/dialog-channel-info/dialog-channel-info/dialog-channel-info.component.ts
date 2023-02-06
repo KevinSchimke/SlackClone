@@ -6,7 +6,10 @@ import { UserService } from 'src/app/service/user/user.service';
 import { DialogEditChannelComponent } from '../../dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
 
 export interface DialogData {
-  channel: any
+  data: {
+    channel: any,
+    tab: number
+  }
 }
 
 @Component({
@@ -21,14 +24,15 @@ export class DialogChannelInfoComponent {
   injected: any = {}
   channel: Channel = new Channel();
   currentUserId: string = '';
+  selectNo = 0;
 
   constructor(public dialogRef: MatDialogRef<DialogChannelInfoComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private user: UserService, private firestoreService: FirestoreService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.currentUserId = this.user.getUid();
     this.injected = this.data;
-    this.channel = new Channel(this.injected);
-    console.log(this.channel);
+    this.channel = new Channel(this.injected.channel);
+    this.selectNo = this.injected.tab;
   }
 
   async leaveChannel() {
