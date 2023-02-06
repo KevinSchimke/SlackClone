@@ -1,14 +1,16 @@
-@import "../../../../../../assets/scss/colors.scss";
-@import "../../dashboard.component.scss";
-@import "../../../../../../assets/scss/mixin.scss";
+@import "../../../../../assets/scss/colors.scss";
+@import "../../../../../assets/scss/mixin.scss";
+
 .bookmarks-container {
     background-color: $bg-color-main;
     @include containerPosition(center, unset, column);
     padding: 1rem;
+
     input {
         outline: none;
         border-radius: 5px;
         width: 100%;
+
         &::placeholder {
             font-style: italic;
             font-size: 14px;
@@ -40,12 +42,14 @@ mat-form-field-wrapper {
 .close {
     cursor: pointer;
     padding: 5px;
+
     &:hover {
         background-color: $bg-color-hover;
         border-radius: 5px;
         color: white;
         font-weight: bold;
     }
+
     ;
 }
 

@@ -72,9 +72,9 @@ import { MessageEditorComponent } from './components/main/dashboard/message-edit
 import { AccountSettingsComponent } from './components/main/dialogs/account-settings/account-settings.component';
 import { ProfileSettingsComponent } from './components/main/dialogs/profile-settings/profile-settings.component';
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
-import { BookmarksComponent } from './components/main/dashboard/mat-drawer-content/bookmarks/bookmarks.component';
+import { BookmarksComponent } from './components/main/dialogs/bookmarks/bookmarks.component';
 import { BookmarksBarComponent } from './components/main/dashboard/mat-drawer-right/bookmarks-bar/bookmarks-bar.component';
-import {MatTooltipModule} from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 
 @NgModule({

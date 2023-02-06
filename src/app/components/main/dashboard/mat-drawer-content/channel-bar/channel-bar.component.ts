@@ -13,7 +13,7 @@ import { UserService } from 'src/app/service/user/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
-import { BookmarksComponent } from '../bookmarks/bookmarks.component';
+import { BookmarksComponent } from '../../../dialogs/bookmarks/bookmarks.component';
 import { MediaMatcher } from '@angular/cdk/layout';
 
 
@@ -217,19 +217,19 @@ export class ChannelBarComponent {
     await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
   }
 
-  async addBookmark(thread: Thread){
+  async addBookmark(thread: Thread) {
     await this.fireService.save(thread, 'users/' + this.userService.getUid() + '/bookmarks');
     this.sidenavToggler.threadBar.open();
     this.router.navigate([{ outlets: { right: ['bookmarks'] } }], { relativeTo: this.route.parent });
   }
- 
 
-  isInChannel(){
+
+  isInChannel() {
     return this.channel.users.indexOf(this.currentUser.id) !== -1;
   }
 
-  joinChannel(){
+  joinChannel() {
     this.channel.users.push(this.currentUser.id);
-    this.fireService.pushUserToChannel(this.channelId,this.currentUser.id);
+    this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
   }
 }
