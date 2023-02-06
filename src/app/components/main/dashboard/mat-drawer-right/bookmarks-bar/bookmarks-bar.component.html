@@ -9,7 +9,7 @@
 
 <div class="body" #scrollMe (scroll)="scrolled($event)">
 
-    <div class="channel-thread" style="border-bottom: 1px solid;" *ngFor="let comment of comments; let c = index">
+    <div class="channel-thread" style="border-bottom: 0.1px solid;" *ngFor="let comment of comments; let c = index">
         
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
