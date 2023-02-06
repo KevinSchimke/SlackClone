@@ -101,18 +101,21 @@ export class WorkspaceBarComponent {
     let user: any;
     msgUsers.forEach((uid) => {
       let foundUser: any = allUsers.find((user: any) => (user.id === uid && uid !== this.currentUser.id));
-      if (foundUser) {
+      if (foundUser)
         user = foundUser;
-      }
     });
-    if (msgUsers.length == 2 && msgUsers[0] === msgUsers[1]) {
+    if (msgUsers.length == 2 && msgUsers[0] === msgUsers[1])
       return this.userService.userState(this.currentUser);
-    } else if (user) {
-      if (!(user.lastLogin instanceof Date)) user.lastLogin = user.lastLogin.toDate();
-      return this.userService.userState(user);
-    }
+    else if (user)
+      return this.otherUserState(user);
     else
       return false;
+  }
+
+  otherUserState(user: any) {
+    if (!(user.lastLogin instanceof Date))
+      user.lastLogin = user.lastLogin.toDate();
+    return this.userService.userState(user);
   }
 
   toggleSidenav() {
@@ -121,7 +124,7 @@ export class WorkspaceBarComponent {
   }
 
   navigateToRoute(url: string) {
-    this.router.navigate( [url] , { relativeTo: this.route });
+    this.router.navigate([url], { relativeTo: this.route });
     this.toggleSidenav();
   }
 

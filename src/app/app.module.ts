@@ -78,8 +78,9 @@ import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-con
 import { BookmarksComponent } from './components/main/dialogs/bookmarks/bookmarks.component';
 import { BookmarksBarComponent } from './components/main/dashboard/mat-drawer-right/bookmarks-bar/bookmarks-bar.component';
 import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
-import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
-import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
+import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info.component';
+import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel.component';
+import { DialogAddMemberComponent } from './components/main/dialogs/dialog-add-member/dialog-add-member.component';
 
 
 @NgModule({
@@ -120,7 +121,8 @@ import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edi
     UserStatusPipe,
     BookmarksBarComponent,
     DialogChannelInfoComponent,
-    DialogEditChannelComponent
+    DialogEditChannelComponent,
+    DialogAddMemberComponent
   ],
   imports: [
     BrowserModule,

@@ -15,7 +15,8 @@ import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbo
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { BookmarksComponent } from '../../../dialogs/bookmarks/bookmarks.component';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { DialogChannelInfoComponent } from '../../../dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
+import { DialogChannelInfoComponent } from '../../../dialogs/dialog-channel-info/dialog-channel-info.component';
+import { DialogAddMemberComponent } from '../../../dialogs/dialog-add-member/dialog-add-member.component';
 
 
 @Component({
@@ -260,5 +261,13 @@ export class ChannelBarComponent {
       this.sidenavToggler.threadBar.open();
       this.router.navigate([{ outlets: { right: ['profile', result] } }], { relativeTo: this.route.parent });
     }
+  }
+
+  openAddMember(){
+    const dialogRef = this.dialog.open(DialogAddMemberComponent, {
+      data: {
+        channel: this.channel,
+      }
+    });
   }
 }

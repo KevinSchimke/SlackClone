@@ -4,7 +4,7 @@ import { Channel } from 'src/app/models/channel.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
-import { DialogEditChannelComponent } from '../../dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
+import { DialogEditChannelComponent } from '../dialog-edit-channel/dialog-edit-channel.component';
 
 export interface DialogData {
   data: {
