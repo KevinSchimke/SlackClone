@@ -36,9 +36,17 @@
             </div>
         </mat-tab>
         <mat-tab label="Members">
-            <div>
-                Content 2
-
+            <div class="info-users">
+                <mat-list>
+                    <mat-list-item>
+                        <mat-icon matListItemIcon><img class="img-icon" src="assets/svg/color_d1d2d3/add_person.svg"></mat-icon>
+                        <div matListItemTitle>Add people</div>
+                    </mat-list-item>
+                    <mat-list-item *ngFor="let user of channel.users" (click)="showProfile(user)">
+                        <mat-icon matListItemIcon><img class="img-icon" [src]="user | imgSrc: currentDataService.users"></mat-icon>
+                        <div matListItemTitle>{{user | username}}</div>
+                    </mat-list-item>
+                </mat-list>
             </div>
         </mat-tab>
     </mat-tab-group>

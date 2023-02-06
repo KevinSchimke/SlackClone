@@ -155,7 +155,8 @@ export class ChannelBarComponent {
     const subscription = this.channel$.subscribe((channel: any) => {
       channel.creationDate = channel.creationDate.toDate();
       channel.channelId = channel.id;
-      this.channel = channel});
+      this.channel = channel
+    });
     this.currentDataService.subscription_arr.push(subscription);
   }
 
@@ -238,18 +239,26 @@ export class ChannelBarComponent {
     this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
   }
 
-  openDialogChannelInfo(tabNo: number){
+  openDialogChannelInfo(tabNo: number) {
     const dialogRef = this.dialog.open(DialogChannelInfoComponent, {
       data: {
         channel: this.channel,
         tab: tabNo
       }
     });
-
     dialogRef.afterClosed().subscribe(result => {
-      if (result == 'left') {
-        this.router.navigateByUrl('main');
+      if (result) {
+        this.navigateAfterClosed(result);
       }
     });
+  }
+
+  navigateAfterClosed(result: string) {
+    if (result == 'left')
+      this.router.navigateByUrl('main');
+    else {
+      this.sidenavToggler.threadBar.open();
+      this.router.navigate([{ outlets: { right: ['profile', result] } }], { relativeTo: this.route.parent });
+    }
   }
 }

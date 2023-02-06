@@ -45,6 +45,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import {MatListModule} from '@angular/material/list';
+import {MatTabsModule} from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //Emoijs
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
@@ -74,11 +77,10 @@ import { ProfileSettingsComponent } from './components/main/dialogs/profile-sett
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 import { BookmarksComponent } from './components/main/dialogs/bookmarks/bookmarks.component';
 import { BookmarksBarComponent } from './components/main/dashboard/mat-drawer-right/bookmarks-bar/bookmarks-bar.component';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info/dialog-channel-info.component';
-import {MatTabsModule} from '@angular/material/tabs';
 import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
+
 
 @NgModule({
   declarations: [
@@ -147,7 +149,8 @@ import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edi
     MatButtonModule,
     MatCheckboxModule,
     MatTooltipModule,
-    MatTabsModule
+    MatTabsModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

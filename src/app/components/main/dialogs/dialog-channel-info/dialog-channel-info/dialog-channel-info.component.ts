@@ -1,6 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { Channel } from 'src/app/models/channel.class';
+import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogEditChannelComponent } from '../../dialog-edit-channel/dialog-edit-channel/dialog-edit-channel.component';
@@ -26,7 +27,7 @@ export class DialogChannelInfoComponent {
   currentUserId: string = '';
   selectNo = 0;
 
-  constructor(public dialogRef: MatDialogRef<DialogChannelInfoComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private user: UserService, private firestoreService: FirestoreService, public dialog: MatDialog) { }
+  constructor(public dialogRef: MatDialogRef<DialogChannelInfoComponent>, @Inject(MAT_DIALOG_DATA) public data: DialogData, private user: UserService, private firestoreService: FirestoreService, public dialog: MatDialog, public currentDataService: CurrentDataService) { }
 
   ngOnInit() {
     this.currentUserId = this.user.getUid();
@@ -53,5 +54,9 @@ export class DialogChannelInfoComponent {
       this.channel = result;
       this.firestoreService.save(this.channel, 'channels', this.channel.channelId);
     }
+  }
+
+  showProfile(uid: string){
+    this.dialogRef.close(uid);
   }
 }

@@ -62,3 +62,21 @@
     color: $color-secondary;
     padding: 1rem;
 }
+
+.info-users {
+    @include containerPosition(center, unset, column);
+    padding: 1rem;
+    background-color: $bg-color-main;
+    mat-list-item {
+        cursor: pointer;
+        &:hover {
+            background-color: $bg-color-hover;
+        }
+    }
+}
+
+.img-icon {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
