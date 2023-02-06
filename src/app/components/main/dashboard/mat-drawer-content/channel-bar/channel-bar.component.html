@@ -60,10 +60,10 @@
                 <button class="btn-unset" [matMenuTriggerFor]="emoji">
                     <img src="assets/svg/color_d1d2d3/add_reaction.svg" />
                 </button>
-                <button class="btn-unset" (click)="openThread(thread)">
+                <button class="btn-unset" (click)="openThread(thread)" matTooltip="Open Threads in another bar." matTooltipPosition="above">
                     <img src="assets/svg/color_d1d2d3/threads.svg" />
                 </button>
-                <button class="btn-unset" (click)="addBookmark(thread)">
+                <button class="btn-unset" (click)="addBookmark(thread)" matTooltip="Open Bookmarks in another bar. Not yet implemented." matTooltipPosition="above">
                     <img src="assets/svg/color_d1d2d3/bookmark.svg" />
                 </button>
             </div>

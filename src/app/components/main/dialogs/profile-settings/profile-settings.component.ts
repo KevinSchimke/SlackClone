@@ -3,6 +3,7 @@ import { Storage, ref, uploadBytesResumable, getDownloadURL, StorageReference } 
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
+import { User } from 'src/app/models/user.class';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { FormErrorService } from 'src/app/service/form-error/form-error.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
@@ -16,9 +17,7 @@ import { UserService } from 'src/app/service/user/user.service';
 export class ProfileSettingsComponent {
 
   @ViewChild('phone') phone?: ElementRef
-  username = new FormGroup({
-    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
-  });
+  
 
   step = -1;
 
@@ -27,6 +26,11 @@ export class ProfileSettingsComponent {
   file: any = {};
   path = '';
   storageRef!: StorageReference;
+  currentUser: User = new User();
+
+  username = new FormGroup({
+    username: new FormControl(this.currentUser.name, [Validators.required, Validators.minLength(3)]),
+  });
 
   constructor(
     private firestoreService: FirestoreService,
@@ -36,6 +40,11 @@ export class ProfileSettingsComponent {
     public userService: UserService,
     private formErrorService: FormErrorService) {
     this.statusValue = this.userService.currentUser.status;
+  }
+
+  ngOnInit(){
+    this.currentUser = this.userService.currentUser;
+    console.log(this.currentUser);
   }
 
   setStep(index: number) {

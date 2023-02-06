@@ -198,11 +198,11 @@ export class MessageEditorComponent {
   async messageFromNewMsgComp(comment: Thread) {
     if (await this.isChatAlreadyExisting()) {
       this.fireservice.save(comment, 'channels/' + this.privateId + '/ThreadCollection');
-      this.router.navigate(['/main/' + this.privateId]);
+      this.router.navigate(['/client/' + this.privateId]);
     } else {
       let channelId = await this.createNewChannel();
       this.fireservice.save(comment, 'channels/' + channelId + '/ThreadCollection');
-      this.router.navigate(['/main/' + channelId]);
+      this.router.navigate(['/client/' + channelId]);
     }
   }
 

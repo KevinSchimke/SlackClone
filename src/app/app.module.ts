@@ -81,6 +81,7 @@ import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info.component';
 import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel.component';
 import { DialogAddMemberComponent } from './components/main/dialogs/dialog-add-member/dialog-add-member.component';
+import { DialogNoFunctionComponent } from './components/main/dialogs/dialog-no-function/dialog-no-function.component';
 
 
 @NgModule({
@@ -122,7 +123,8 @@ import { DialogAddMemberComponent } from './components/main/dialogs/dialog-add-m
     BookmarksBarComponent,
     DialogChannelInfoComponent,
     DialogEditChannelComponent,
-    DialogAddMemberComponent
+    DialogAddMemberComponent,
+    DialogNoFunctionComponent
   ],
   imports: [
     BrowserModule,
