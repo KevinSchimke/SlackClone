@@ -282,6 +282,18 @@ header {
     border-radius: 5px;
 }
 
+.div-btn-load-more {
+    @include containerPosition(center);
+    width: 100%;
+    padding-block: .5rem;
+    button {
+        color: #d1d2d3;
+        border: 1px solid $border-button-main;
+        border-radius: 5px;
+        padding: 10px;
+    }
+}
+
 @media (max-width: 1000px) {
     .workspace-bar {
         width: 50%;
