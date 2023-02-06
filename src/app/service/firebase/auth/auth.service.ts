@@ -34,7 +34,7 @@ export class AuthService {
     await signInWithEmailAndPassword(this.auth, email, password!)
       .then((user: UserCredential) => {
         if (user.user?.emailVerified) {
-          this.router.navigate(['/main']);
+          this.router.navigate(['/client']);
           this.pushupMessage.openPushupMessage('success', 'Login Successfully')
         } else {
           this.router.navigate(['/verification']);

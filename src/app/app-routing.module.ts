@@ -33,7 +33,7 @@ const routes: Routes = [
   { path: 'reset', component: ForgotpasswordComponent },
   { path: 'response', component: SetnewpasswordComponent },
   {
-    path: 'main', component: MainComponent, canActivate: [AuthFirebaseGuard],
+    path: 'client', component: MainComponent, canActivate: [AuthFirebaseGuard],
     children: [
       { path: 'newMessage', component: NewMessageComponent },
       { path: 'allChannels', component: AllChannelsComponent },
