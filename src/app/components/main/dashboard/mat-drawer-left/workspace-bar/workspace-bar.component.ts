@@ -12,6 +12,7 @@ import { Channel } from 'src/app/models/channel.class';
 import { MediaMatcher } from '@angular/cdk/layout';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DialogNoFunctionComponent } from '../../../dialogs/dialog-no-function/dialog-no-function.component';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -130,6 +131,10 @@ export class WorkspaceBarComponent {
 
   navigateToBookmarks() {
     this.router.navigate([{ outlets: { right: ['bookmarks'] } }], { relativeTo: this.route });
+  }
+
+  openNoFunction(): void{
+    this.dialog.open(DialogNoFunctionComponent);
   }
 
 }

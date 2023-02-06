@@ -24,7 +24,7 @@
                 <form (ngSubmit)="updateUserName()" [formGroup]="username">
                     <mat-form-field appClickStopPropagation appearance="fill">
                         <mat-label>Enter new username</mat-label>
-                        <input matInput formControlName="username" required>
+                        <input matInput formControlName="username" [(ngModel)]="currentUser.name" required>
                         <mat-error *ngIf="username.invalid">{{getErrorMessage(username,'username')}}</mat-error>
                     </mat-form-field>
                     <button [disabled]="!username.valid" class="actionButton" mat-raised-button>Save new
@@ -74,7 +74,7 @@
                 </mat-expansion-panel-header>
                 <mat-form-field appClickStopPropagation appearance="fill">
                     <mat-label>Enter your phone number</mat-label>
-                    <input #phone type="number" matInput>
+                    <input #phone type="number" [(ngModel)]="currentUser.phone" matInput>
                 </mat-form-field>
                 <button (click)="updatePhone()" class="actionButton" mat-raised-button>Save phone</button>
             </mat-expansion-panel>

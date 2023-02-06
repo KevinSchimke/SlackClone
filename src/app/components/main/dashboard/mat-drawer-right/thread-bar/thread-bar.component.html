@@ -16,18 +16,15 @@
 
 <div class="body" #scrollMe (scroll)="scrolled($event)">
     <div class="channel-thread">
-        <div class="thread-options">
-            <button class="btn-unset"><img src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
-            <button class="btn-unset"><img src="assets/svg/color_d1d2d3/bookmark.svg"></button>
-        </div>
         <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img">
-
         <div class="channel-thread-content">
             <p class="thread-headline">
                 <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="openUserInfoCard(thread)">
-                <b>{{ thread.userId | username }}</b></span>
+                <b>{{ thread.userId | username }}</b>
+                </span>
                 <span class="span-time" *ngIf="thread.creationDate">
-                {{ thread.creationDate| date }}</span>
+                {{ thread.creationDate| date }}
+                </span>
             </p>
             <p [innerHTML]="thread.message"></p>
             <button class="btn-unset" (click)="openBox(thread.img)" *ngIf="thread.img">
@@ -36,6 +33,7 @@
         </div>
     </div>
 
+
     <div class="thread-separator">
         <div>
             <span>Replies</span>
@@ -43,6 +41,9 @@
         </div>
     </div>
 
+    <div class="div-btn-load-more" *ngIf="moreToLoad">
+        <button class="btn-unset" (click)="isMoreToLoad()">Load More</button>
+    </div>
     <div class="channel-thread" *ngFor="let comment of comments; let c = index">
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
@@ -61,7 +62,6 @@
         </div>
         <img [src]="comment.userId | imgSrc: currentDataService.users" class="channel-thread-img">
         <div class="channel-thread-content">
-            <!-- This div gets *ngFor for all comment (load max 12 comment and scroll up for older comment) -->
             <div class="thread-headline">
                 <span class="pointer" *ngIf="!(comment.userId | canClick)" (click)="openUserInfoCard(comment)">
                 <b>{{ comment.userId | username }}</b>

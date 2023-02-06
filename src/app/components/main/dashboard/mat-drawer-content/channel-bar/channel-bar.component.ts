@@ -100,12 +100,12 @@ export class ChannelBarComponent {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
       if (areLoaded === true) {
         this.getChannelDoc();
-        this.firstQuery(areLoaded);
+        this.firstQuery();
       }
     });
   }
 
-  firstQuery(areLoaded: boolean) {
+  firstQuery() {
     this.threads = [];
     this.unsortedThreads = [];
     const collRef = collection(this.firestore, this.collPath);

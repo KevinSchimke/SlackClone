@@ -13,7 +13,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { collection, Firestore, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
+import { collection, Firestore, getCountFromServer, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-thread-bar',
@@ -34,6 +34,7 @@ export class ThreadBarComponent {
   currentUser = new User();
   loastLoadedComment: Thread = new Thread();
   isFirstLoad = true;
+  moreToLoad = false;
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
@@ -98,15 +99,22 @@ export class ThreadBarComponent {
 
   subscribeCollAndDoc() {
     const subscription_thread = this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    const subscription_channel = this.channelDocData$.subscribe((channel) => this.channel = channel);
+    const subscription_channel = this.channelDocData$.subscribe((channel) => { this.setChannel(channel) });
     this.currentDataService.subscription_arr.push(subscription_thread);
     this.currentDataService.subscription_arr.push(subscription_channel);
     this.snapShotThreadCollection();
   }
 
-  setThread(thread: Thread) {
-    this.thread = thread;
+  setThread(thread: any) {
+    thread.creationDate = thread.creationDate.toDate();
+    thread.reactions = JSON.parse(thread.reactions);
+    this.thread = new Thread(thread);
     this.currentDataService.setThread(thread);
+  }
+
+  setChannel(channel: any) {
+    channel.channelId = channel.id;
+    this.channel = channel;
   }
 
   snapShotThreadCollection() {
@@ -130,6 +138,7 @@ export class ThreadBarComponent {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
+      this.isMoreToLoad();
     });
     this.currentDataService.snapshot_arr.push(resp);
   }
@@ -186,7 +195,15 @@ export class ThreadBarComponent {
     this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
 
-  isInChannel(){
+  isInChannel() {
     return this.channel.users.indexOf(this.currentUser.id) !== -1;
+  }
+
+  async isMoreToLoad() {
+    const coll = collection(this.firestore, this.collPath);
+    const snapshot = await getCountFromServer(coll);
+    if (snapshot.data().count > this.comments.length) {
+      this.moreToLoad = true;
+    }
   }
 }

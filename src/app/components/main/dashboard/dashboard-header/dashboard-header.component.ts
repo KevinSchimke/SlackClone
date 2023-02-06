@@ -5,6 +5,7 @@ import { User } from 'src/app/models/user.class';
 import { UserService } from 'src/app/service/user/user.service';
 import { ProfileSettingsComponent } from '../../dialogs/profile-settings/profile-settings.component';
 import { AuthService } from 'src/app/service/firebase/auth/auth.service';
+import { DialogNoFunctionComponent } from '../../dialogs/dialog-no-function/dialog-no-function.component';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -31,6 +32,10 @@ export class DashboardHeaderComponent {
 
   openProfileSettings(): void {
     this.dialog.open(ProfileSettingsComponent);
+  }
+
+  openNoFunction(): void{
+    this.dialog.open(DialogNoFunctionComponent);
   }
 
   async logout() {
