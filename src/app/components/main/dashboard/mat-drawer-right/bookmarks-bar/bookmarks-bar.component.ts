@@ -12,7 +12,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { collection, Firestore, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, Firestore, getDocs, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-bookmarks',
@@ -33,6 +33,8 @@ export class BookmarksBarComponent {
   currentUser = new User();
   loastLoadedComment: Thread = new Thread();
   isFirstLoad = true;
+
+  bookmarks: any[] = [];
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
@@ -70,22 +72,13 @@ export class BookmarksBarComponent {
   }
 
   setCommentCollection(params: any) {
-    this.setChannelAndThreadId(params);
     this.getCollAndDoc();
-    this.subscribeCollAndDoc();
+    this.snapShotThreadCollection();
   }
 
-  setChannelAndThreadId(params: any) {
-    // this.channelId = params[0].path;
-    // this.threadId = params[1].path;
-    this.comments = [];
-    this.unsortedComments = [];
-  }
 
-  getCollAndDoc() {
-    this.collPath = 'users/' + this.userService.getUid() + '/Bookmarks/';
-    // this.threadDocData$ = this.fireService.getDocument(this.threadId, 'channels/' + this.channelId + '/ThreadCollection/');
-    // this.channelDocData$ = this.fireService.getDocument(this.channelId, 'channels/');
+  async getCollAndDoc() {
+    this.collPath = 'users/' + this.userService.getUid() + '/bookmarks';
   }
 
   subscribeThreadbarInit() {
@@ -94,13 +87,6 @@ export class BookmarksBarComponent {
         this.childSelector.threadBar.open();
     });
   }
-
-  subscribeCollAndDoc() {
-    const subscription_channel = this.channelDocData$.subscribe((channel) => this.channel = channel);
-    this.currentDataService.subscription_arr.push(subscription_channel);
-    this.snapShotThreadCollection();
-  }
-
 
   snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
@@ -113,7 +99,7 @@ export class BookmarksBarComponent {
       this.comments = [];
       this.unsortedComments = [];
       const collRef = collection(this.firestore, this.collPath);
-      const q = query(collRef, orderBy('creationDate', 'desc'), limit(12));
+      const q = query(collRef, orderBy('creationDate'), limit(12));
       this.snapQuery(q);
     }
   }
@@ -122,6 +108,8 @@ export class BookmarksBarComponent {
     const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
+      console.log(this.comments);
+
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
     this.currentDataService.snapshot_arr.push(resp);
@@ -174,8 +162,15 @@ export class BookmarksBarComponent {
     dialog.componentInstance.openboxImg = url;
   }
 
-
-  isInChannel(){
-    return this.channel.users.indexOf(this.currentUser.id) !== -1;
+  openUserInfoCard(thread: any) {
+    this.childSelector.threadBar.open();
+    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
+
+  async deleteBookmark(deleteBookmarkID: string) {
+    await deleteDoc(doc(this.firestore, 'users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID));
+    console.log(deleteBookmarkID);
+  }
+
+
 }
