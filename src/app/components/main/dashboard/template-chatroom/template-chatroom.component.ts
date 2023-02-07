@@ -40,12 +40,7 @@ export class TemplateChatroomComponent {
     public navService: NavigationService,
     public route: ActivatedRoute,
     public fireService: FirestoreService,
-    private router: Router,
     public currentDataService: CurrentDataService) { }
-
-  ngOnChanges() {
-    console.log(this.data);
-  }
 
   isInChannel() {
     return !this.data.collPath.includes('commentCollection') ? true : false;
