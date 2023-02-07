@@ -85,7 +85,8 @@
             <div class="channel-thread-content">
                 <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
                 <p class="thread-headline">
-                    <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);">
+                    <span class="pointer" *ngIf="!(thread.userId | canClick)"
+                        (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);">
                         <b>{{thread.userId | username }}</b>
                     </span>
                     <span class="pointer" *ngIf="thread.userId | canClick"><b>{{ thread.userId | username }}</b></span>
@@ -106,8 +107,8 @@
                         <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg"></button>
                 </p>
                 <div *ngIf="thread.comments > 0">
-                    <button class="d-flex go-to-thread" (click)="openThread(thread)">
-                        <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
+                    <button class="go-to-thread" (click)="openThread(thread)">
+                        <div *ngFor="let commentUser of thread.users">
                             <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
                             <img [src]="commentUser | imgSrc: currentDataService.users" />
                         </div>
