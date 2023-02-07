@@ -1,6 +1,6 @@
 @import "../../dashboard.component.scss";
 ul {
-    padding: .5rem;
+    padding: 0;
     li {
         list-style-type: disc;
         display: flex;
@@ -16,10 +16,32 @@ ul {
             display: flex;
             gap: .5rem;
             color: $color-secondary;
+            padding-inline: 1rem;
+            width: 100%;
             &:hover {
                 text-decoration: none !important;
                 background-color: $bg-color-hover;
             }
+        }
+    }
+}
+
+.upper-list {
+    padding-block: .5rem;
+}
+
+mat-panel-title {
+    span {
+        padding-inline: 1rem;
+        &:hover {
+            font-weight: 700;
+        }
+    }
+    button {
+        border-radius: 10px;
+        @include containerPosition(center, center);
+        &:hover {
+            transform: scale(1.2);
         }
     }
 }
@@ -38,12 +60,17 @@ ul {
 
 .btn-add-channel {
     border-radius: .25rem;
+    border-radius: 10px;
+    @include containerPosition(center, center);
     &:hover {
         background-color: $bg-color-hover;
     }
     img {
         padding: .1rem;
         display: block;
+        &:hover {
+            transform: scale(1.25);
+        }
     }
 }
 

@@ -5,8 +5,6 @@
     display: none;
 }
 
-
-
 .channel-thread-comments {
     color: #1D9BD1;
     font-weight: 700;
@@ -28,6 +26,8 @@
     img {
         height: 1.5rem;
         width: 1.5rem;
+        object-fit: cover;
+        border-radius: 0.25rem;
     }
     &:hover {
         background-color: $bg-color-main;
@@ -90,15 +90,12 @@
     border-bottom: 1px solid $border-button-main;
     padding: 5px;
     padding-left: 10px;
-
     div {
-
         &:hover {
             background-color: $bg-color-hover;
             border-radius: 5px;
             cursor: pointer;
         }
-
         p {
             font-size: 12px;
             margin: 0;
@@ -110,10 +107,9 @@
         height: 16px;
         width: 16px;
     }
-
 }
 
-.bookmark{
+.bookmark {
     @include containerPosition(flex, center);
     text-decoration: none;
     &:hover {
@@ -123,13 +119,13 @@
     }
 }
 
-.close{
+.close {
     margin-left: 10px;
     margin-right: 3px;
 }
 
 @media (max-width: 1000px) {
-    .max-title{
+    .max-title {
         text-overflow: ellipsis;
         overflow: hidden;
         max-width: 100px;

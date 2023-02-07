@@ -92,6 +92,12 @@ h2,
     background-color: unset;
 }
 
+.angular-editor .angular-editor-wrapper .angular-editor-placeholder {
+    padding-block: 0.8rem !important;
+    color: $color-secondary !important;
+    padding-inline: 1rem !important;
+}
+
 .angular-editor-textarea,
 .angular-editor-placeholder {
     cursor: text;
