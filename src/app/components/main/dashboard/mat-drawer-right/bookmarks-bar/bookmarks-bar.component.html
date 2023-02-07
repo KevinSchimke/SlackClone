@@ -9,44 +9,50 @@
 
 <div class="body" #scrollMe (scroll)="scrolled($event)">
 
-    <div class="channel-thread" style="border-bottom: 0.1px solid;" *ngFor="let bookmark of bookmarks; let c = index">
+    <div class="channel-thread" *ngFor="let bookmark of bookmarks; let c = index">
 
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
-            <img src="assets/svg/color_d1d2d3/add_reaction.svg" matTooltip="Add reaction" matTooltipPosition="above">
-            <mat-menu #emoji="matMenu" xPosition="before">
-                <ng-template matMenuContent>
-                    <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)" [i18n]="{search: 'Recherche',categories:
+                <img src="assets/svg/color_d1d2d3/add_reaction.svg" matTooltip="Add reaction"
+                    matTooltipPosition="above">
+                <mat-menu #emoji="matMenu" xPosition="before">
+                    <ng-template matMenuContent>
+                        <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)"
+                            [i18n]="{search: 'Recherche',categories:
                     { search: 'Résultats de recherche', recent: 'Récents' }}">
-                    </emoji-mart>
-                </ng-template>
-            </mat-menu>
-        </button>
+                        </emoji-mart>
+                    </ng-template>
+                </mat-menu>
+            </button>
             <button class="btn-unset">
-            <img src="assets/svg/color_d1d2d3/bookmark_full.svg" (click)="deleteBookmark(bookmark.id)" matTooltip="Delete bookmark" matTooltipPosition="above">
-        </button>
+                <img src="assets/svg/color_d1d2d3/bookmark_full.svg" (click)="deleteBookmark(bookmark.id)"
+                    matTooltip="Delete bookmark" matTooltipPosition="above">
+            </button>
         </div>
         <img [src]="bookmark.userId | imgSrc: currentDataService.users" class="channel-thread-img">
         <div class="channel-thread-content">
             <!-- This div gets *ngFor for all bookmark (load max 12 bookmark and scroll up for older bookmark) -->
             <div class="thread-headline">
                 <span class="pointer" *ngIf="!(bookmark.userId | canClick)" (click)="openUserInfoCard(bookmark)">
-                <b>{{ bookmark.userId | username }}</b>
-            </span>
-                <span *ngIf="bookmark.creationDate" class="span-time">{{ bookmark.creationDate | periodOfTime }} ago</span>
+                    <b>{{ bookmark.userId | username }}</b>
+                </span>
+                <span *ngIf="bookmark.creationDate" class="span-time">{{ bookmark.creationDate | periodOfTime }}
+                    ago</span>
             </div>
             <p [innerHTML]="bookmark.message"></p>
             <button class="btn-unset" (click)="openBox(bookmark.img)" *ngIf="bookmark.img">
                 <img [src]="bookmark.img" alt="" class="post-image">
             </button>
             <p class="emoji-container" *ngIf="bookmark.reactions.length > 0">
-                <button class="btn-unset btn-current-emoji" *ngFor="let reaction of bookmark.reactions; let u = index" (click)="evaluateThread(reaction.id, c)" matTooltip="{{reaction.users | username}} reacted like this." matTooltipPosition="above">
-                <span>{{reaction.id}}</span>
-                <span>{{reaction.users.length}}</span>
-            </button>
+                <button class="btn-unset btn-current-emoji" *ngFor="let reaction of bookmark.reactions; let u = index"
+                    (click)="evaluateThread(reaction.id, c)"
+                    matTooltip="{{reaction.users | username}} reacted like this." matTooltipPosition="above">
+                    <span>{{reaction.id}}</span>
+                    <span>{{reaction.users.length}}</span>
+                </button>
                 <button class="btn-unset btn-current-emoji" [matMenuTriggerFor]="emoji">
-                <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg">
-            </button>
+                    <img class="add-reaction" src="assets/svg/color_d1d2d3/add_reaction.svg">
+                </button>
             </p>
         </div>
     </div>

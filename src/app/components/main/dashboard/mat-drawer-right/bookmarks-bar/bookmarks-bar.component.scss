@@ -24,9 +24,13 @@
     }
 }
 
-.body{
+.body {
     overflow-y: scroll;
     overflow-x: hidden;
     height: calc(100% - 200px);
     padding-top: 2rem;
+
+    .channel-thread {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
 }
