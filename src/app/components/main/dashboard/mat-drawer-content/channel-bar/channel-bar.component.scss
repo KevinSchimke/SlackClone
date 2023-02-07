@@ -1,40 +1,40 @@
 @import "../../../../../../assets/scss/colors.scss";
 @import "../../dashboard.component.scss";
 @import "../../../../../../assets/scss/mixin.scss";
+
 .show-thread {
     display: none;
 }
 
 .channel-thread-comments {
-    color: #1D9BD1;
+    color: $color-link;
     font-weight: 700;
 }
 
 .go-to-thread {
+    @include containerPosition(unset, center);
+    @include border(1px, solid, transparent, 0.5rem);
     width: 100%;
     cursor: pointer;
     gap: .5rem;
-    align-items: center;
-    padding: 0;
     background: unset;
-    border: unset;
     padding-block: .2rem;
     padding-inline: 1rem;
-    border: 1px solid transparent;
-    border-radius: .5rem;
     color: $color-main;
+
     img {
-        height: 1.5rem;
-        width: 1.5rem;
-        object-fit: cover;
+        @include image(cover, 1.5rem, 1.5rem);
         border-radius: 0.25rem;
     }
+
     &:hover {
+        @include border(1px, solid, $border-button-main);
         background-color: $bg-color-main;
-        border: 1px solid $border-button-main;
+
         .time-of-last-answer {
             display: none;
         }
+
         .show-thread {
             display: unset;
         }
@@ -42,7 +42,6 @@
 }
 
 .channel-messages {
-    // @include containerPosition(flex-end, unset, column);
     overflow-y: scroll;
     overflow-x: hidden;
     height: calc(100% - 300px);
@@ -52,6 +51,7 @@
 .channel-members {
     @include containerPosition(unset, center);
     @include border(1px, solid, $border-button-main, .5rem);
+
     button {
         &:hover {
             background-color: $bg-color-hover;
@@ -66,10 +66,12 @@
     gap: 1px;
     border-right: 1px solid $border-button-main;
     padding-block: .3rem;
+
     img {
         box-shadow: 0 0 0 2px $bg-color-main;
         margin-right: -0.25rem;
     }
+
     span {
         color: $color-main;
         font-weight: 700;
@@ -86,50 +88,38 @@
 }
 
 .add-bookmark-container {
+    @include containerPosition(unset, center);
     background-color: $bg-color-main;
     border-bottom: 1px solid $border-button-main;
-    padding-block: .3rem;
+    padding-block: .75rem;
     padding-inline: 1rem;
+
+    img {
+        @include image(cover, 1rem, 1rem);
+    }
+
     div {
+        @include containerPosition(unset, center);
+
         &:hover {
             background-color: $bg-color-hover;
             border-radius: 5px;
             cursor: pointer;
         }
+
+        a {
+            @include containerPosition(flex, center);
+
+            img {
+                margin-right: 0.25rem
+            }
+        }
+
         p {
             @include containerPosition(unset, center);
+            margin: 0 !important;
             font-size: 12px;
-            margin: 0;
-            color: darkgray;
-            padding: 5px;
+            color: $color-secondary;
         }
-    }
-    img {
-        height: 16px;
-        width: 16px;
-    }
-}
-
-.bookmark {
-    @include containerPosition(flex, center);
-    text-decoration: none;
-    &:hover {
-        background-color: $bg-color-hover;
-        border-radius: 5px;
-        cursor: pointer;
-    }
-}
-
-.close {
-    margin-left: 10px;
-    margin-right: 3px;
-}
-
-@media (max-width: 1000px) {
-    .max-title {
-        text-overflow: ellipsis;
-        overflow: hidden;
-        max-width: 100px;
-        height: 2rem;
     }
 }
