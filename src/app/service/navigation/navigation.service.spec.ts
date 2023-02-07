@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SidenavToggleService } from './sidenav-toggle.service';
+import { NavigationService } from './navigation.service';
 
-describe('SidenavToggleService', () => {
-  let service: SidenavToggleService;
+describe('NavigationService', () => {
+  let service: NavigationService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SidenavToggleService);
+    service = TestBed.inject(NavigationService);
   });
 
   it('should be created', () => {

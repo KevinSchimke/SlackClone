@@ -1,8 +1,8 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { MediaMatcher } from '@angular/cdk/layout';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,15 +17,15 @@ export class DashboardComponent {
 
   private _mobileQueryListener: () => void;
 
-  constructor(public createChannelService: FirestoreService, public sidenavToggler: SidenavToggleService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
+  constructor(public createChannelService: FirestoreService, public navService: NavigationService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher) {
     this.mobileQuery = media.matchMedia('(max-width: 1000px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
   }
 
   ngAfterViewInit() {
-    this.sidenavToggler.setWorkspaceBar(this.workspaceBar);
-    setTimeout(() => this.sidenavToggler.setThreadBar(this.threadBar), 0);
+    this.navService.setWorkspaceBar(this.workspaceBar);
+    setTimeout(() => this.navService.setThreadBar(this.threadBar), 0);
   }
 
   toggleMode() {
