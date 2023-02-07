@@ -1,17 +1,13 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { EMPTY, Observable } from 'rxjs';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
-import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
-import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, limit, onSnapshot, orderBy, Query, query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { DocumentData, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
 import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
@@ -35,11 +31,8 @@ export class BookmarksBarComponent {
   lastLoadedBookmark!: QueryDocumentSnapshot<DocumentData>;
   isFirstLoad = true;
 
-  @ViewChild('scrollMe')
-  private myScrollContainer!: ElementRef;
+  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, public navService: NavigationService, private userService: UserService, private queryProcessService: QueryProcessService) { }
 
-
-  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, public navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -48,30 +41,10 @@ export class BookmarksBarComponent {
     this.isFirstLoad = true;
   }
 
-  scrolled(event: any): void {
-    this.isFirstLoad = false;
-  }
-
-  ngAfterViewChecked() {
-    if (this.isFirstLoad) {
-      this.scrollToBottom();
-    }
-  }
-
-  private scrollToBottom(): void {
-    this.myScrollContainer.nativeElement.scroll({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-
-
   setCommentCollection() {
     this.getCollAndDoc();
     this.snapShotThreadCollection();
   }
-
 
   async getCollAndDoc() {
     this.collPath = 'users/' + this.userService.getUid() + '/bookmarks';
@@ -105,32 +78,5 @@ export class BookmarksBarComponent {
     });
     this.currentDataService.snapshot_arr.push(resp);
   }
-
-  evaluateThread(emoji: string, c: number) {
-    if (this.bookmarks[c].getEmojiCount(this.currentUser.id) > 2 && !this.bookmarks[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
-      this.openDialog();
-    else
-      this.editReactions(emoji, c);
-  }
-
-  editReactions(emoji: string, c: number){
-    this.bookmarks[c].evaluateThreadCases(emoji, this.currentUser.id);
-    this.fireService.save(this.bookmarks[c], 'users/' + this.userService.getUid() + '/bookmarks', this.bookmarks[c].id);
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogReactionComponent);
-    dialogRef.afterClosed().subscribe();
-  }
-
-  openBox(url: string) {
-    let dialog = this.dialog.open(OpenboxComponent);
-    dialog.componentInstance.openboxImg = url;
-  }
-
-  async deleteBookmark(deleteBookmarkID: string) {
-    this.fireService.deleteDocument('users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID);
-  }
-
 
 }

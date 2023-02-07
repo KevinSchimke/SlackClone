@@ -82,6 +82,7 @@ import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-cha
 import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel.component';
 import { DialogAddMemberComponent } from './components/main/dialogs/dialog-add-member/dialog-add-member.component';
 import { DialogNoFunctionComponent } from './components/main/dialogs/dialog-no-function/dialog-no-function.component';
+import { TemplateChatroomComponent } from './components/main/dashboard/template-chatroom/template-chatroom.component';
 
 
 @NgModule({
@@ -124,7 +125,8 @@ import { DialogNoFunctionComponent } from './components/main/dialogs/dialog-no-f
     DialogChannelInfoComponent,
     DialogEditChannelComponent,
     DialogAddMemberComponent,
-    DialogNoFunctionComponent
+    DialogNoFunctionComponent,
+    TemplateChatroomComponent
   ],
   imports: [
     BrowserModule,

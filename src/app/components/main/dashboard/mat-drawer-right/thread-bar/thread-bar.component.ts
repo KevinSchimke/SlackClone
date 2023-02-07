@@ -37,35 +37,14 @@ export class ThreadBarComponent {
   isFirstLoad = true;
   moreToLoad = false;
 
-  @ViewChild('scrollMe')
-  private myScrollContainer!: ElementRef;
 
-
-  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, public navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private queryProcessService: QueryProcessService) { }
+  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, public navService: NavigationService, private userService: UserService, private dialog: MatDialog, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
     this.subscribeUrl();
     this.subscribeThreadbarInit();
     this.isFirstLoad = true;
-  }
-
-  scrolled(event: any): void {
-    this.isFirstLoad = false;
-  }
-
-  ngAfterViewChecked() {
-    if (this.isFirstLoad) {
-      this.scrollToBottom();
-    }
-  }
-
-  private scrollToBottom(): void {
-    this.myScrollContainer.nativeElement.scroll({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
   }
 
   subscribeUrl() {
@@ -146,31 +125,9 @@ export class ThreadBarComponent {
     this.currentDataService.snapshot_arr.push(resp);
   }
 
-  evaluateThread(emoji: string, c: number) {
-    if (this.comments[c].getEmojiCount(this.currentUser.id) > 2 && !this.comments[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
-      this.openDialog();
-    else
-      this.comments[c].evaluateThreadCases(emoji, this.currentUser.id);
-    this.saveReaction(c);
-  }
-
-  openDialog(): void {
-    const dialogRef = this.dialog.open(DialogReactionComponent);
-    dialogRef.afterClosed().subscribe();
-  }
-
-  saveReaction(c: number) {
-    this.fireService.save(this.comments[c], 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection', this.comments[c].id);
-  }
-
   openBox(url: string) {
     let dialog = this.dialog.open(OpenboxComponent);
     dialog.componentInstance.openboxImg = url;
-  }
-
-  openUserInfoCard(thread: any) {
-    this.navService.threadBar.open();
-    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
 
   isInChannel() {

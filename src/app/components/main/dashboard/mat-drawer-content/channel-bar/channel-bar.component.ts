@@ -42,13 +42,10 @@ export class ChannelBarComponent {
   unsortedThreads: Thread[] = [];
   bookmarks: any[] = [];
   moreToLoad = false;
-
-  @ViewChild('scrollMe')
-  private myScrollContainer!: ElementRef;
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  constructor(public dialog: MatDialog, public navService: NavigationService, public route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, private queryProcessService: QueryProcessService) {
+  constructor(public dialog: MatDialog, public navService: NavigationService, public route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, private queryProcessService: QueryProcessService) {
     this.mobileQuery = media.matchMedia('(max-width: 360px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -57,34 +54,12 @@ export class ChannelBarComponent {
   ngOnInit(): void {
     this.currentUser = this.userService.get();
     this.route.params.subscribe((param: any) => this.setCurrentChannel(param));
-    this.isFirstLoad = true;
-
-  }
-
-  ngAfterViewChecked() {
-    if (this.isFirstLoad) {
-      this.scrollToBottom();
-    }
   }
 
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
     this.navService.workspaceBar.toggle();
-    console.log(this.navService.workspaceBar);
   }
-
-  scrolled(event: any): void {
-    this.isFirstLoad = false;
-  }
-
-  private scrollToBottom(): void {
-    this.myScrollContainer.nativeElement.scroll({
-      top: this.myScrollContainer.nativeElement.scrollHeight,
-      left: 0,
-      behavior: 'smooth'
-    });
-  }
-
 
   setCurrentChannel(param: { id: string }) {
     this.threads = [];
@@ -135,28 +110,6 @@ export class ChannelBarComponent {
     this.currentDataService.subscription_arr.push(subscription);
   }
 
-  openThread(thread: any) {
-    this.currentDataService.setThread(thread);
-    this.navService.navToRightBar(this.channelId + '/' + thread.id, this.route.parent);
-  }
-
-  evaluateThread(emoji: string, t: number) {
-    if (this.threads[t].getEmojiCount(this.currentUser.id) > 2 && !this.threads[t].isEmojiAlreadyByMe(emoji, this.currentUser.id))
-      this.openTooManyDialog();
-    else
-      this.threads[t].evaluateThreadCases(emoji, this.currentUser.id);
-    this.fireService.save(this.threads[t], 'channels/' + this.channelId + '/ThreadCollection', this.threads[t].id);
-  }
-
-  openTooManyDialog(): void {
-    this.dialog.open(DialogReactionComponent);
-  }
-
-  openBox(url: string) {
-    let dialog = this.dialog.open(OpenboxComponent);
-    dialog.componentInstance.openboxImg = url;
-  }
-
   async loadBookmarks() {
     const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
     const resp = onSnapshot(bookmarksRef, async (bookmarksDocs) => this.snapBookmarks(bookmarksDocs));
@@ -185,11 +138,6 @@ export class ChannelBarComponent {
 
   async deleteBookmark(deleteBookmarkID: string) {
     this.fireService.deleteDocument('channels/' + this.channelId + '/bookmarks', deleteBookmarkID);
-  }
-
-  async addBookmark(thread: Thread) {
-    await this.fireService.save(thread, 'users/' + this.userService.getUid() + '/bookmarks');
-    this.navService.navToRightBar('bookmarks', this.route.parent);
   }
 
 

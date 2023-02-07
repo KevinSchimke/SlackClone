@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc, arrayUnion, arrayRemove, getCountFromServer, orderBy, limit, startAfter, QueryDocumentSnapshot, DocumentData } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc, arrayUnion, arrayRemove, getCountFromServer, orderBy, limit, startAfter, QueryDocumentSnapshot, DocumentData, getDocs, getDoc } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
@@ -10,7 +10,7 @@ import { UserService } from '../../user/user.service';
 })
 export class FirestoreService {
 
-  
+
 
   constructor(private firestore: Firestore, private userService: UserService) { }
 
@@ -43,18 +43,24 @@ export class FirestoreService {
     return user$;
   }
 
-  getLimitedQuery(collPath: string){
+  async getDocumentSnap(collPath: string){
+    const docRef = doc(this.firestore, collPath);
+    const docSnap = await getDoc(docRef);
+    return docSnap;
+  }
+
+  getLimitedQuery(collPath: string) {
     const collRef = collection(this.firestore, collPath);
     const q = query(collRef, orderBy('creationDate', 'desc'), limit(20));
     return q;
   }
 
-  getNextLimitedQuery(collPath: string, lastLoadedThread: QueryDocumentSnapshot<DocumentData>){
+  getNextLimitedQuery(collPath: string, lastLoadedThread: QueryDocumentSnapshot<DocumentData>) {
     const next = query(collection(this.firestore, collPath),
       orderBy("creationDate", "desc"),
       startAfter(lastLoadedThread),
       limit(20));
-      return next;
+    return next;
   }
 
   async updateThread(users: string[], collPath: string) {
@@ -91,9 +97,9 @@ export class FirestoreService {
     await updateDoc(docRef, obj);
   }
 
-  async deleteDocument(collPath: string, id: string){
-    let coll = collection(this.firestore,collPath);
-    let docRef = doc(coll,id);
+  async deleteDocument(collPath: string, id: string) {
+    let coll = collection(this.firestore, collPath);
+    let docRef = doc(coll, id);
     await deleteDoc(docRef)
   }
 
