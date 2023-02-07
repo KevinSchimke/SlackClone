@@ -46,11 +46,11 @@
             <img src="assets/svg/color_d1d2d3/x.svg" (click)="deleteBookmark(bookmark.id)" class="close">
         </div>
         <div class="bookmark-under-container d-flex align-items-center ps-1 pe-3 py-1" (click)="openBookmarks(channelId)">
-            <p><img src="assets\svg\color_d1d2d3\add.svg"> Add bookmark</p>
+            <p><img src="assets\svg\color_d1d2d3\add.svg">Add a bookmark</p>
         </div>
     </div>
     <div class="div-btn-load-more" *ngIf="moreToLoad">
-        <button class="btn-unset" (click)="isMoreToLoad()">Load More</button>
+        <button class="btn-unset" (click)="nextQuery()">Load More</button>
     </div>
 
 

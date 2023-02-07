@@ -276,8 +276,14 @@ export class ChannelBarComponent {
   async isMoreToLoad() {
     const coll = collection(this.firestore, this.collPath);
     const snapshot = await getCountFromServer(coll);
+    console.log(snapshot.data().count);
+    console.log(this.threads.length);
+    console.log(snapshot.data().count > this.threads.length);
     if (snapshot.data().count > this.threads.length) {
       this.moreToLoad = true;
+    }
+    else{
+      this.moreToLoad = false;
     }
   }
 }

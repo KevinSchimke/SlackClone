@@ -88,8 +88,8 @@
 .add-bookmark-container {
     background-color: $bg-color-main;
     border-bottom: 1px solid $border-button-main;
-    padding: 5px;
-    padding-left: 10px;
+    padding-block: .3rem;
+    padding-inline: 1rem;
     div {
         &:hover {
             background-color: $bg-color-hover;
@@ -97,6 +97,7 @@
             cursor: pointer;
         }
         p {
+            @include containerPosition(unset, center);
             font-size: 12px;
             margin: 0;
             color: darkgray;
