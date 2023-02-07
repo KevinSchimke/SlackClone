@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class NewMessageComponent {
   leftSideBar: boolean = false;
   currentUserId: string = '';
 
-  constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private sidenavToggler: SidenavToggleService, private user: UserService) { }
+  constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private navService: NavigationService, private user: UserService) { }
 
   ngOnInit() {
     this.currentDataService.setChatUsers([]);
@@ -51,7 +51,7 @@ export class NewMessageComponent {
 
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
-    this.sidenavToggler.workspaceBar.toggle()
+    this.navService.workspaceBar.toggle();
   }
 
   isChatWithMeAndOthers(user: User) {

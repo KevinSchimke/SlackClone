@@ -10,6 +10,8 @@ import { UserService } from '../../user/user.service';
 })
 export class FirestoreService {
 
+  
+
   constructor(private firestore: Firestore, private userService: UserService) { }
 
   async save(obj: Channel | Thread | User, collPath: string, id?: string) {
@@ -79,12 +81,6 @@ export class FirestoreService {
     await updateDoc(docRef, { users: arrayRemove(userId) });
   }
 
-  getUser(uid: any) {
-    let docRef = doc(collection(this.firestore, 'users'), uid);
-    let user = docData(docRef);
-    return user;
-  }
-
   async updateLastLogin(date: Date) {
     let docRef = doc(collection(this.firestore, 'users'), this.userService.uid)
     await updateDoc(docRef, { lastLogin: date });
@@ -95,8 +91,10 @@ export class FirestoreService {
     await updateDoc(docRef, obj);
   }
 
-  async deleteUser() {
-    await deleteDoc(doc(this.firestore, 'users', this.userService.uid));
+  async deleteDocument(collPath: string, id: string){
+    let coll = collection(this.firestore,collPath);
+    let docRef = doc(coll,id);
+    await deleteDoc(docRef)
   }
 
   async isMoreToLoad(collPath: string, threadLength: number) {
