@@ -2,11 +2,11 @@
     <div class="bar-header">
         <h2>Thread</h2>
         <div class="header-headline" *ngIf="channel.category == 'channel'">
-            <h3>#</h3>
-            <h3>{{channel.channelName}}</h3>
+            <h3 class="channel-name">#</h3>
+            <h3 class="channel-name">{{channel.channelName}}</h3>
         </div>
-        <div class="header-headlin" *ngIf="channel.category == 'private'">
-            <h3>{{channel.users | messagePartner }}</h3>
+        <div class="header-headline" *ngIf="channel.category == 'private'">
+            <h3 class="channel-name">{{channel.users | messagePartner }}</h3>
         </div>
     </div>
     <button (click)="navService.closeRightBar(route.parent)" class="btn-unset close-thread-btn">
