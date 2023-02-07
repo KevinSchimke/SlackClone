@@ -39,7 +39,7 @@ export class BookmarksBarComponent {
   private myScrollContainer!: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
+  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, public navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -106,17 +106,16 @@ export class BookmarksBarComponent {
     this.currentDataService.snapshot_arr.push(resp);
   }
 
-  closeThread() {
-    this.navService.threadBar.close();
-    this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
-  }
-
   evaluateThread(emoji: string, c: number) {
     if (this.bookmarks[c].getEmojiCount(this.currentUser.id) > 2 && !this.bookmarks[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
       this.openDialog();
     else
-      this.bookmarks[c].evaluateThreadCases(emoji, this.currentUser.id);
-    this.saveReaction(c);
+      this.editReactions(emoji, c);
+  }
+
+  editReactions(emoji: string, c: number){
+    this.bookmarks[c].evaluateThreadCases(emoji, this.currentUser.id);
+    this.fireService.save(this.bookmarks[c], 'users/' + this.userService.getUid() + '/bookmarks', this.bookmarks[c].id);
   }
 
   openDialog(): void {
@@ -124,23 +123,13 @@ export class BookmarksBarComponent {
     dialogRef.afterClosed().subscribe();
   }
 
-  saveReaction(c: number) {
-    this.fireService.save(this.bookmarks[c], 'users/' + this.userService.getUid() + '/bookmarks', this.bookmarks[c].id);
-  }
-
   openBox(url: string) {
     let dialog = this.dialog.open(OpenboxComponent);
     dialog.componentInstance.openboxImg = url;
   }
 
-  openUserInfoCard(thread: any) {
-    this.navService.threadBar.open();
-    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
-  }
-
   async deleteBookmark(deleteBookmarkID: string) {
-    await deleteDoc(doc(this.firestore, 'users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID));
-    this.setCommentCollection();
+    this.fireService.deleteDocument('users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID);
   }
 
 

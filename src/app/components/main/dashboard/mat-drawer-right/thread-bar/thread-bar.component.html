@@ -9,7 +9,7 @@
             <h3>{{channel.users | messagePartner }}</h3>
         </div>
     </div>
-    <button (click)="closeThread()" class="btn-unset close-thread-btn">
+    <button (click)="navService.closeRightBar(route.parent)" class="btn-unset close-thread-btn">
         <img src="assets/svg/color_d1d2d3/x.svg">
     </button>
 </header>
@@ -47,19 +47,19 @@
     <div class="channel-thread" *ngFor="let comment of comments; let c = index">
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
-            <img src="assets/svg/color_d1d2d3/add_reaction.svg">
-            <mat-menu #emoji="matMenu" xPosition="before">
-                <ng-template matMenuContent>
-                    <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)" [i18n]="{search: 'Recherche',categories:
-                    { search: 'Résultats de recherche', recent: 'Récents' }}">
-                    </emoji-mart>
-                </ng-template>
-            </mat-menu>
-        </button>
+                <img src="assets/svg/color_d1d2d3/add_reaction.svg">
+            </button>
             <button class="btn-unset">
             <img src="assets/svg/color_d1d2d3/bookmark.svg">
-        </button>
+            </button>
         </div>
+        <mat-menu #emoji="matMenu" xPosition="before">
+            <ng-template matMenuContent>
+                <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)" [i18n]="{search: 'Recherche',categories:
+                { search: 'Résultats de recherche', recent: 'Récents' }}">
+                </emoji-mart>
+            </ng-template>
+        </mat-menu>
         <img [src]="comment.userId | imgSrc: currentDataService.users" class="channel-thread-img">
         <div class="channel-thread-content">
             <div class="thread-headline">

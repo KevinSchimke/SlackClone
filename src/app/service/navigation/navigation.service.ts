@@ -27,4 +27,9 @@ export class NavigationService {
     this.threadBar.open();
     this.router.navigate([{ outlets: { right: path } }], { relativeTo: relation });
   }
+
+  closeRightBar(relation: ActivatedRoute | null){
+    this.threadBar.close();
+    this.router.navigate([{ outlets: { right: null } }], { relativeTo: relation });
+  }
 }

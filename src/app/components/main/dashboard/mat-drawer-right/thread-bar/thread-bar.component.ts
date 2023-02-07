@@ -12,7 +12,7 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { DocumentData, Firestore, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { DocumentData, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
 import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
@@ -41,7 +41,7 @@ export class ThreadBarComponent {
   private myScrollContainer!: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private queryProcessService: QueryProcessService) { }
+  constructor(public route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, public navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -100,7 +100,7 @@ export class ThreadBarComponent {
 
   subscribeCollAndDoc() {
     const subscription_thread = this.threadDocData$.subscribe((thread) => this.setThread(thread));
-    const subscription_channel = this.channelDocData$.subscribe((channel) => { this.setChannel(channel) });
+    const subscription_channel = this.channelDocData$.subscribe((channel) => this.setChannel(channel));
     this.currentDataService.subscription_arr.push(subscription_thread);
     this.currentDataService.subscription_arr.push(subscription_channel);
     this.snapShotThreadCollection();
@@ -115,7 +115,7 @@ export class ThreadBarComponent {
 
   setChannel(channel: any) {
     channel.channelId = channel.id;
-    this.channel = channel;
+    this.channel = new Channel(channel);
   }
 
   snapShotThreadCollection() {
@@ -144,11 +144,6 @@ export class ThreadBarComponent {
       this.isMoreToLoad();
     });
     this.currentDataService.snapshot_arr.push(resp);
-  }
-
-  closeThread() {
-    this.navService.threadBar.close();
-    this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 
   evaluateThread(emoji: string, c: number) {
