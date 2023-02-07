@@ -29,10 +29,15 @@ mat-form-field-wrapper {
     margin: 0;
 }
 
-.bookmark-text {
-    background-color: $bg-color-hover;
-    margin-bottom: 1rem;
-    padding: 1rem;
+
+.bootom-container {
+    display: flex;
+
+    .bookmark-text {
+        background-color: $bg-color-hover;
+        margin-bottom: 1rem;
+        padding: 1rem;
+    }
 }
 
 .title {
