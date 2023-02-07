@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc, arrayUnion, arrayRemove } from '@angular/fire/firestore';
+import { collection, collectionData, doc, Firestore, setDoc, docData, updateDoc, where, query, deleteDoc, increment, addDoc, arrayUnion, arrayRemove, getCountFromServer, orderBy, limit, startAfter, QueryDocumentSnapshot, DocumentData } from '@angular/fire/firestore';
 import { Channel } from 'src/app/models/channel.class';
 import { Thread } from 'src/app/models/thread.class';
 import { User } from 'src/app/models/user.class';
@@ -12,7 +12,7 @@ export class FirestoreService {
 
   constructor(private firestore: Firestore, private userService: UserService) { }
 
-  async save(obj: Channel | Thread  | User, collPath: string, id?: string) {
+  async save(obj: Channel | Thread | User, collPath: string, id?: string) {
     let coll = collection(this.firestore, collPath);
     id ? await setDoc(doc(coll, id), obj.toJson()) : await setDoc(doc(coll), obj.toJson());
   }
@@ -39,6 +39,20 @@ export class FirestoreService {
     let docRef = doc(coll, id);
     let user$ = docData(docRef, { idField: 'id' });
     return user$;
+  }
+
+  getLimitedQuery(collPath: string){
+    const collRef = collection(this.firestore, collPath);
+    const q = query(collRef, orderBy('creationDate', 'desc'), limit(20));
+    return q;
+  }
+
+  getNextLimitedQuery(collPath: string, lastLoadedThread: QueryDocumentSnapshot<DocumentData>){
+    const next = query(collection(this.firestore, collPath),
+      orderBy("creationDate", "desc"),
+      startAfter(lastLoadedThread),
+      limit(20));
+      return next;
   }
 
   async updateThread(users: string[], collPath: string) {
@@ -83,5 +97,14 @@ export class FirestoreService {
 
   async deleteUser() {
     await deleteDoc(doc(this.firestore, 'users', this.userService.uid));
+  }
+
+  async isMoreToLoad(collPath: string, threadLength: number) {
+    const coll = collection(this.firestore, collPath);
+    const snapshot = await getCountFromServer(coll);
+    if (snapshot.data().count > threadLength) {
+      return true;
+    }
+    return false;
   }
 }

@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
-import { addDoc, collection, deleteDoc, doc, Firestore, getCountFromServer, limit, limitToLast, onSnapshot, orderBy, Query, query, setDoc, startAfter, where } from '@angular/fire/firestore';
+import { addDoc, collection, deleteDoc, doc, DocumentData, Firestore, getCountFromServer, limit, limitToLast, onSnapshot, orderBy, Query, query, QueryDocumentSnapshot, QuerySnapshot, setDoc, startAfter, where } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -17,6 +17,7 @@ import { BookmarksComponent } from '../../../dialogs/bookmarks/bookmarks.compone
 import { MediaMatcher } from '@angular/cdk/layout';
 import { DialogChannelInfoComponent } from '../../../dialogs/dialog-channel-info/dialog-channel-info.component';
 import { DialogAddMemberComponent } from '../../../dialogs/dialog-add-member/dialog-add-member.component';
+import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
 
 
 @Component({
@@ -37,7 +38,7 @@ export class ChannelBarComponent {
   channelName: string = '';
   channel$: Observable<any> = EMPTY;
   shownUsers: string = '';
-  loastLoadedThread: Thread = new Thread();
+  lastLoadedThread!: QueryDocumentSnapshot<DocumentData>;
   unsortedThreads: Thread[] = [];
   bookmarks: any[] = [];
   moreToLoad = false;
@@ -47,7 +48,7 @@ export class ChannelBarComponent {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef) {
+  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, private queryProcessService: QueryProcessService) {
     this.mobileQuery = media.matchMedia('(max-width: 360px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -70,8 +71,6 @@ export class ChannelBarComponent {
     this.leftSideBar = !this.leftSideBar;
     this.sidenavToggler.workspaceBar.toggle()
   }
-
-
 
   scrolled(event: any): void {
     this.isFirstLoad = false;
@@ -108,50 +107,22 @@ export class ChannelBarComponent {
   firstQuery() {
     this.threads = [];
     this.unsortedThreads = [];
-    const collRef = collection(this.firestore, this.collPath);
-    const q = query(collRef, orderBy('creationDate', 'desc'), limit(20));
+    const q = this.fireService.getLimitedQuery(this.collPath);
     this.snapQuery(q);
   }
 
   nextQuery() {
-    const next = query(collection(this.firestore, this.collPath),
-      orderBy("creationDate", "desc"),
-      startAfter(this.loastLoadedThread),
-      limit(20));
+    const next = this.fireService.getNextLimitedQuery(this.collPath, this.lastLoadedThread);
     this.snapQuery(next);
   }
 
   snapQuery(q: Query) {
-    const resp = onSnapshot(q, (querySnapshot: any) => {
-      querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
-      this.threads = this.sorter.sortByDate(this.unsortedThreads);
-      this.loastLoadedThread = querySnapshot.docs[querySnapshot.docs.length - 1];
+    const resp = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+      [this.threads, this.lastLoadedThread] = this.queryProcessService.processQuery(querySnapshot, this.unsortedThreads);
       this.isMoreToLoad();
     });
-
     this.currentDataService.snapshot_arr.push(resp);
   }
-
-  pushIntoThreads(doc: any) {
-    let elemT = new Thread(this.setThreadFromDoc(doc));
-    let i = this.getThreadIndex(elemT);
-    if (i != -1)
-      this.unsortedThreads.splice(i, 1, elemT);
-    else
-      this.unsortedThreads.push(elemT);
-  }
-
-  setThreadFromDoc(doc: any) {
-    let elemT: any = doc.data();
-    elemT.id = doc.id;
-    elemT.reactions = JSON.parse(elemT.reactions);
-    return elemT;
-  }
-
-  getThreadIndex(elemT: Thread) {
-    return this.unsortedThreads.findIndex((thread: Thread) => thread.id === elemT.id);
-  }
-
 
   getChannelDoc() {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
@@ -266,7 +237,7 @@ export class ChannelBarComponent {
   }
 
   openAddMember() {
-    const dialogRef = this.dialog.open(DialogAddMemberComponent, {
+    this.dialog.open(DialogAddMemberComponent, {
       data: {
         channel: this.channel,
       }
@@ -274,16 +245,8 @@ export class ChannelBarComponent {
   }
 
   async isMoreToLoad() {
-    const coll = collection(this.firestore, this.collPath);
-    const snapshot = await getCountFromServer(coll);
-    console.log(snapshot.data().count);
-    console.log(this.threads.length);
-    console.log(snapshot.data().count > this.threads.length);
-    if (snapshot.data().count > this.threads.length) {
-      this.moreToLoad = true;
-    }
-    else{
-      this.moreToLoad = false;
-    }
+    this.moreToLoad = await this.fireService.isMoreToLoad(this.collPath, this.threads.length);
   }
+
+
 }

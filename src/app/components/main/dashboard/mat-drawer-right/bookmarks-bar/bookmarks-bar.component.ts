@@ -12,7 +12,8 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { collection, deleteDoc, doc, Firestore, getDocs, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
+import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, limit, onSnapshot, orderBy, Query, query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -28,19 +29,17 @@ export class BookmarksBarComponent {
   channelId: string = '';
   thread = new Thread();
   threadId: string = '';
-  comments: Thread[] = [];
-  unsortedComments: Thread[] = [];
+  bookmarks: Thread[] = [];
+  unsortedBookmarks: Thread[] = [];
   currentUser = new User();
-  loastLoadedComment: Thread = new Thread();
+  lastLoadedBookmark!: QueryDocumentSnapshot<DocumentData>;
   isFirstLoad = true;
-
-  bookmarks: any[] = [];
 
   @ViewChild('scrollMe')
   private myScrollContainer!: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -93,41 +92,18 @@ export class BookmarksBarComponent {
 
   firstQuery(areLoaded: boolean) {
     if (areLoaded === true) {
-      this.comments = [];
-      this.unsortedComments = [];
-      const collRef = collection(this.firestore, this.collPath);
-      const q = query(collRef, orderBy('creationDate'), limit(12));
+      this.bookmarks = [];
+      this.unsortedBookmarks = [];
+      const q = this.fireService.getLimitedQuery(this.collPath);
       this.snapQuery(q);
     }
   }
 
   snapQuery(q: Query) {
-    const resp = onSnapshot(q, (querySnapshot: any) => {
-      querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
-      this.comments = this.sorter.sortByDate(this.unsortedComments);
-      this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
+    const resp = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+      [this.bookmarks, this.lastLoadedBookmark] = this.queryProcessService.processQuery(querySnapshot, this.unsortedBookmarks);
     });
     this.currentDataService.snapshot_arr.push(resp);
-  }
-
-  pushIntoThreads(doc: any) {
-    let elemT = new Thread(this.setThreadFromDoc(doc));
-    let i = this.getThreadIndex(elemT);
-    if (i != -1)
-      this.unsortedComments.splice(i, 1, elemT);
-    else
-      this.unsortedComments.push(elemT);
-  }
-
-  setThreadFromDoc(doc: any) {
-    let elemT: any = doc.data();
-    elemT.id = doc.id;
-    elemT.reactions = JSON.parse(elemT.reactions);
-    return elemT;
-  }
-
-  getThreadIndex(elemT: Thread) {
-    return this.unsortedComments.findIndex((thread: Thread) => thread.id === elemT.id);
   }
 
   closeThread() {
@@ -136,10 +112,10 @@ export class BookmarksBarComponent {
   }
 
   evaluateThread(emoji: string, c: number) {
-    if (this.comments[c].getEmojiCount(this.currentUser.id) > 2 && !this.comments[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
+    if (this.bookmarks[c].getEmojiCount(this.currentUser.id) > 2 && !this.bookmarks[c].isEmojiAlreadyByMe(emoji, this.currentUser.id))
       this.openDialog();
     else
-      this.comments[c].evaluateThreadCases(emoji, this.currentUser.id);
+      this.bookmarks[c].evaluateThreadCases(emoji, this.currentUser.id);
     this.saveReaction(c);
   }
 
@@ -149,7 +125,7 @@ export class BookmarksBarComponent {
   }
 
   saveReaction(c: number) {
-    this.fireService.save(this.comments[c], 'users/' + this.userService.getUid() + '/bookmarks', this.comments[c].id);
+    this.fireService.save(this.bookmarks[c], 'users/' + this.userService.getUid() + '/bookmarks', this.bookmarks[c].id);
   }
 
   openBox(url: string) {

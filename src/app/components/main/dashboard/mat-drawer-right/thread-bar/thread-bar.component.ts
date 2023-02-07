@@ -13,7 +13,8 @@ import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
-import { collection, Firestore, getCountFromServer, limit, onSnapshot, orderBy, Query, query } from '@angular/fire/firestore';
+import { DocumentData, Firestore, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
+import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
 
 @Component({
   selector: 'app-thread-bar',
@@ -32,7 +33,7 @@ export class ThreadBarComponent {
   comments: Thread[] = [];
   unsortedComments: Thread[] = [];
   currentUser = new User();
-  loastLoadedComment: Thread = new Thread();
+  lastLoadedComment!: QueryDocumentSnapshot<DocumentData>;
   isFirstLoad = true;
   moreToLoad = false;
 
@@ -40,7 +41,7 @@ export class ThreadBarComponent {
   private myScrollContainer!: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -127,40 +128,22 @@ export class ThreadBarComponent {
     if (areLoaded === true) {
       this.comments = [];
       this.unsortedComments = [];
-      const collRef = collection(this.firestore, this.collPath);
-      const q = query(collRef, orderBy('creationDate', 'desc'), limit(12));
+      const q = this.fireService.getLimitedQuery(this.collPath);
       this.snapQuery(q);
     }
   }
 
+  nextQuery() {
+    const next = this.fireService.getNextLimitedQuery(this.collPath, this.lastLoadedComment);
+    this.snapQuery(next);
+  }
+
   snapQuery(q: Query) {
-    const resp = onSnapshot(q, (querySnapshot: any) => {
-      querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
-      this.comments = this.sorter.sortByDate(this.unsortedComments);
-      this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
+    const resp = onSnapshot(q, (querySnapshot: QuerySnapshot) => {
+      [this.comments, this.lastLoadedComment] = this.queryProcessService.processQuery(querySnapshot, this.unsortedComments);
       this.isMoreToLoad();
     });
     this.currentDataService.snapshot_arr.push(resp);
-  }
-
-  pushIntoThreads(doc: any) {
-    let elemT = new Thread(this.setThreadFromDoc(doc));
-    let i = this.getThreadIndex(elemT);
-    if (i != -1)
-      this.unsortedComments.splice(i, 1, elemT);
-    else
-      this.unsortedComments.push(elemT);
-  }
-
-  setThreadFromDoc(doc: any) {
-    let elemT: any = doc.data();
-    elemT.id = doc.id;
-    elemT.reactions = JSON.parse(elemT.reactions);
-    return elemT;
-  }
-
-  getThreadIndex(elemT: Thread) {
-    return this.unsortedComments.findIndex((thread: Thread) => thread.id === elemT.id);
   }
 
   closeThread() {
@@ -200,10 +183,6 @@ export class ThreadBarComponent {
   }
 
   async isMoreToLoad() {
-    const coll = collection(this.firestore, this.collPath);
-    const snapshot = await getCountFromServer(coll);
-    if (snapshot.data().count > this.comments.length) {
-      this.moreToLoad = true;
-    }
+    this.moreToLoad = await this.fireService.isMoreToLoad(this.collPath, this.comments.length);
   }
 }
