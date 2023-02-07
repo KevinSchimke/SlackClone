@@ -2,7 +2,7 @@
 
 
 
-import { Component, Input } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { EmojiEvent } from '@ctrl/ngx-emoji-mart/ngx-emoji';
 import { Firestore } from '@angular/fire/firestore';
@@ -46,6 +46,8 @@ export class MessageEditorComponent {
     typeof matchMedia === 'function' &&
     matchMedia('(prefers-color-scheme: dark)').matches
   );
+
+  @ViewChild('fInput', {static: false}) input: ElementRef | undefined;
 
   darkestMode: undefined | boolean = undefined;
   set = 'native';
@@ -175,6 +177,7 @@ export class MessageEditorComponent {
 
   discardUpload() {
     this.imageURL = '';
+    if (this.input && this.input.nativeElement) this.input.nativeElement.value = '';
     const desertRef = ref(this.fireStorage, this.path);
     deleteObject(desertRef).then(() => {
     }).catch((error) => {
