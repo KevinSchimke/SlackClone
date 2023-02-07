@@ -6,7 +6,8 @@
                 <img *ngIf="!leftSideBar" src="assets/svg/color_d1d2d3/left_panel_close.svg">
             </button>
             <div>
-                <button class="workspace-btn header-headline" *ngIf="channel.category == 'channel'" (click)="openDialogChannelInfo(0)">
+                <button class="workspace-btn header-headline" *ngIf="channel.category == 'channel'"
+                    (click)="openDialogChannelInfo(0)">
                     <h2 *ngIf="!channel.locked">#</h2>
                     <div *ngIf="channel.locked"><img src="assets/svg/color_d1d2d3/lock.svg"></div>
                     <h2 class="max-title">{{channel.channelName}}</h2>
@@ -15,7 +16,8 @@
                 <button class="workspace-btn header-headline" *ngIf="channel.category == 'private'">
                     <div class="private-header-imgs">
                         <div *ngFor="let user of channel.users">
-                            <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt="" class="img-header-partner" />
+                            <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt=""
+                                class="img-header-partner" />
                         </div>
                         <h2>{{channel.users | messagePartner}}</h2>
                     </div>
@@ -27,28 +29,30 @@
             <div class="channel-members" *ngIf="channel.category == 'channel'">
                 <button class="btn-unset btn-members" (click)="openDialogChannelInfo(1)">
                     <div *ngFor="let user of channel.users.slice(0, mobileQuery.matches ? 1 : 4);">
-                        <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt="" class="img-header-partner" />
+                        <img *ngIf="user != currentUser.id" [src]="user | imgSrc: currentDataService.users" alt=""
+                            class="img-header-partner" />
                     </div>
                     <span>{{channel.users.length}}</span>
                 </button>
                 <button class="btn-unset btn-add-member" (click)="openAddMember()">
-                    <img class="img-header-partner" src="assets/svg/color_d1d2d3/add_person.svg"/>
+                    <img class="img-header-partner" src="assets/svg/color_d1d2d3/add_person.svg" />
                 </button>
             </div>
         </div>
     </header>
 
-    <div class="add-bookmark-container d-flex align-items-center">
-        <div *ngFor="let bookmark of bookmarks" class="d-flex align-items-center ps-2 pe-1 ">
+    <div class="add-bookmark-container">
+        <div *ngFor="let bookmark of bookmarks">
             <a class="bookmark" target="_blank" href="{{bookmark.link}}">
                 <img src="assets/svg/color_d1d2d3/bookmark.svg">{{bookmark.name}}
             </a>
-            <img src="assets/svg/color_d1d2d3/x.svg" (click)="deleteBookmark(bookmark.id)" class="close">
+            <img src="assets/svg/color_d1d2d3/x.svg" (click)="deleteBookmark(bookmark.id)">
         </div>
-        <div class="bookmark-under-container d-flex align-items-center ps-1 pe-3 py-1" (click)="openBookmarks(channelId)">
+        <div (click)="openBookmarks(channelId)">
             <p><img src="assets\svg\color_d1d2d3\add.svg">Add a bookmark</p>
         </div>
     </div>
+
     <div class="div-btn-load-more" *ngIf="moreToLoad">
         <button class="btn-unset" (click)="nextQuery()">Load More</button>
     </div>
@@ -58,12 +62,15 @@
         <div class="channel-thread" *ngFor="let thread of threads; let t = index">
             <div class="thread-options">
                 <button class="btn-unset" [matMenuTriggerFor]="emoji">
-                    <img src="assets/svg/color_d1d2d3/add_reaction.svg" matTooltip="Add reaction" matTooltipPosition="above"/>
+                    <img src="assets/svg/color_d1d2d3/add_reaction.svg" matTooltip="Add reaction"
+                        matTooltipPosition="above" />
                 </button>
-                <button class="btn-unset" (click)="openThread(thread)" matTooltip="Open Threads in another bar." matTooltipPosition="above">
+                <button class="btn-unset" (click)="openThread(thread)" matTooltip="Open Threads in another bar."
+                    matTooltipPosition="above">
                     <img src="assets/svg/color_d1d2d3/threads.svg" />
                 </button>
-                <button class="btn-unset" (click)="addBookmark(thread)" matTooltip="Open Bookmarks in another bar." matTooltipPosition="above">
+                <button class="btn-unset" (click)="addBookmark(thread)" matTooltip="Open Bookmarks in another bar."
+                    matTooltipPosition="above">
                     <img src="assets/svg/color_d1d2d3/bookmark.svg" />
                 </button>
             </div>
@@ -89,7 +96,9 @@
                     <img [src]="thread.img" alt="" class="post-image">
                 </button>
                 <p class="emoji-container" *ngIf="thread.reactions.length > 0">
-                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index" (click)="evaluateThread(reaction.id, t)" matTooltip="{{reaction.users | username}} reacted like this." matTooltipPosition="above">
+                    <button class="btn-unset btn-current-emoji" *ngFor="let reaction of thread.reactions; let u = index"
+                        (click)="evaluateThread(reaction.id, t)"
+                        matTooltip="{{reaction.users | username}} reacted like this." matTooltipPosition="above">
                         <span>{{reaction.id}}</span>
                         <span>{{reaction.users.length}}</span>
                     </button>
@@ -98,9 +107,9 @@
                 </p>
                 <div *ngIf="thread.comments > 0">
                     <button class="d-flex go-to-thread" (click)="openThread(thread)">
-                            <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
+                        <div class="d-flex first-comments" *ngFor="let commentUser of thread.users">
                             <!-- This div gets *ngFor for the first five different users commenting. If more, fifth img will get overlay of "+1" e.g.-->
-                            <img [src]="commentUser | imgSrc: currentDataService.users"/>
+                            <img [src]="commentUser | imgSrc: currentDataService.users" />
                         </div>
                         <span class="channel-thread-comments" *ngIf="thread.comments < 2">
                             {{thread.comments}} reply
