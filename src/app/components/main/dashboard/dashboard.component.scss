@@ -331,6 +331,13 @@ header {
 }
 
 @media (max-width: 1000px) {
+    .max-title {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 100px;
+        height: 2rem;
+    }
+
     .workspace-bar {
         width: 50%;
     }
