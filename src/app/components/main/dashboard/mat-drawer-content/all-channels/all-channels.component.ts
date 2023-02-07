@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { collection, Firestore, getDocs, query, where } from '@angular/fire/firestore';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { Channel } from 'src/app/models/channel.class';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogAddChannelComponent } from '../../../dialogs/dialog-add-channel/dialog-add-channel.component';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
 @Component({
   selector: 'app-all-channels',
@@ -20,7 +20,7 @@ export class AllChannelsComponent {
   currentUserId: string = '';
   isActive = true;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private firestore: Firestore, private userService: UserService, private sorter: SortService, public firestoreService: FirestoreService) { }
+  constructor(public dialog: MatDialog, public navService: NavigationService, private firestore: Firestore, private userService: UserService, private sorter: SortService, public firestoreService: FirestoreService) { }
 
   async ngOnInit() {
     this.currentUserId = this.userService.getUid();
@@ -59,7 +59,7 @@ export class AllChannelsComponent {
 
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
-    this.sidenavToggler.workspaceBar.toggle()
+    this.navService.workspaceBar.toggle();
   }
 
   isInChannel(channel:Channel){

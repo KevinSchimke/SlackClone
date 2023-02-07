@@ -85,7 +85,7 @@
             <div class="channel-thread-content">
                 <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
                 <p class="thread-headline">
-                    <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="openUserInfoCard(thread)">
+                    <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);">
                         <b>{{thread.userId | username }}</b>
                     </span>
                     <span class="pointer" *ngIf="thread.userId | canClick"><b>{{ thread.userId | username }}</b></span>

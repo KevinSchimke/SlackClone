@@ -5,7 +5,7 @@ import { EMPTY, Observable } from 'rxjs';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { ProfileSettingsComponent } from '../../../dialogs/profile-settings/profile-settings.component';
 import { ReauthenticateComponent } from '../../../dialogs/reauthenticate/reauthenticate.component';
@@ -22,7 +22,7 @@ export class InfocardComponent {
   isLoggedInUser?: boolean;
 
   constructor(
-    public childSelector: SidenavToggleService,
+    public navService: NavigationService,
     private router: Router,
     public userService: UserService,
     private firestoreService: FirestoreService,
@@ -36,8 +36,8 @@ export class InfocardComponent {
   }
 
   subscribeThreadbarInit() {
-    this.childSelector.threadBarIsInit.subscribe(isLoaded => {
-      if (isLoaded === true) this.childSelector.threadBar.open();
+    this.navService.threadBarIsInit.subscribe(isLoaded => {
+      if (isLoaded === true) this.navService.threadBar.open();
     });
   }
 
@@ -65,7 +65,7 @@ export class InfocardComponent {
   }
 
   closeThread() {
-    this.childSelector.threadBar.close();
+    this.navService.threadBar.close();
     this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 } 

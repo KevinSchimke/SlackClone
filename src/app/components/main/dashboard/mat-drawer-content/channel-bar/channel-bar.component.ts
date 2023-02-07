@@ -1,9 +1,8 @@
-import { ChangeDetectorRef, Component, ElementRef, Input, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { EMPTY, Observable, takeWhile, takeUntil, take } from 'rxjs';
-import { addDoc, collection, deleteDoc, doc, DocumentData, Firestore, getCountFromServer, limit, limitToLast, onSnapshot, orderBy, Query, query, QueryDocumentSnapshot, QuerySnapshot, setDoc, startAfter, where } from '@angular/fire/firestore';
+import { EMPTY, Observable } from 'rxjs';
+import { collection, deleteDoc, doc, DocumentData, Firestore, onSnapshot, Query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { Channel } from 'src/app/models/channel.class';
@@ -18,6 +17,7 @@ import { MediaMatcher } from '@angular/cdk/layout';
 import { DialogChannelInfoComponent } from '../../../dialogs/dialog-channel-info/dialog-channel-info.component';
 import { DialogAddMemberComponent } from '../../../dialogs/dialog-add-member/dialog-add-member.component';
 import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
 
 @Component({
@@ -48,7 +48,7 @@ export class ChannelBarComponent {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  constructor(public dialog: MatDialog, public sidenavToggler: SidenavToggleService, private route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, private queryProcessService: QueryProcessService) {
+  constructor(public dialog: MatDialog, public navService: NavigationService, public route: ActivatedRoute, public fireService: FirestoreService, private router: Router, public currentDataService: CurrentDataService, private sorter: SortService, private firestore: Firestore, private userService: UserService, media: MediaMatcher, changeDetectorRef: ChangeDetectorRef, private queryProcessService: QueryProcessService) {
     this.mobileQuery = media.matchMedia('(max-width: 360px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -69,7 +69,8 @@ export class ChannelBarComponent {
 
   toggleLeftSidebar() {
     this.leftSideBar = !this.leftSideBar;
-    this.sidenavToggler.workspaceBar.toggle()
+    this.navService.workspaceBar.toggle();
+    console.log(this.navService.workspaceBar);
   }
 
   scrolled(event: any): void {
@@ -134,15 +135,9 @@ export class ChannelBarComponent {
     this.currentDataService.subscription_arr.push(subscription);
   }
 
-  openUserInfoCard(thread: any) {
-    this.sidenavToggler.threadBar.open();
-    this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
-  }
-
   openThread(thread: any) {
-    this.sidenavToggler.threadBar.open();
     this.currentDataService.setThread(thread);
-    this.router.navigate([{ outlets: { right: [this.channelId, thread.id] } }], { relativeTo: this.route.parent });
+    this.navService.navToRightBar(this.channelId + '/' + thread.id, this.route.parent);
   }
 
   evaluateThread(emoji: string, t: number) {
@@ -150,7 +145,7 @@ export class ChannelBarComponent {
       this.openTooManyDialog();
     else
       this.threads[t].evaluateThreadCases(emoji, this.currentUser.id);
-    this.saveReaction(t);
+    this.fireService.save(this.threads[t], 'channels/' + this.channelId + '/ThreadCollection', this.threads[t].id);
   }
 
   openTooManyDialog(): void {
@@ -161,11 +156,6 @@ export class ChannelBarComponent {
     let dialog = this.dialog.open(OpenboxComponent);
     dialog.componentInstance.openboxImg = url;
   }
-
-  saveReaction(t: number) {
-    this.fireService.save(this.threads[t], 'channels/' + this.channelId + '/ThreadCollection', this.threads[t].id);
-  }
-
 
   async loadBookmarks() {
     const bookmarksRef = collection(this.firestore, 'channels/' + this.channelId, 'bookmarks');
@@ -194,13 +184,12 @@ export class ChannelBarComponent {
   }
 
   async deleteBookmark(deleteBookmarkID: string) {
-    await deleteDoc(doc(this.firestore, 'channels/' + this.channelId, 'bookmarks', deleteBookmarkID))
+    this.fireService.deleteDocument('channels/' + this.channelId + '/bookmarks', deleteBookmarkID);
   }
 
   async addBookmark(thread: Thread) {
     await this.fireService.save(thread, 'users/' + this.userService.getUid() + '/bookmarks');
-    this.sidenavToggler.threadBar.open();
-    this.router.navigate([{ outlets: { right: ['bookmarks'] } }], { relativeTo: this.route.parent });
+    this.navService.navToRightBar('bookmarks', this.route.parent);
   }
 
 
@@ -209,8 +198,10 @@ export class ChannelBarComponent {
   }
 
   joinChannel() {
-    this.channel.users.push(this.currentUser.id);
-    this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
+    if (!this.channel.users.includes(this.currentUser.id)) {
+      this.channel.users.push(this.currentUser.id);
+      this.fireService.pushUserToChannel(this.channelId, this.currentUser.id);
+    }
   }
 
   openDialogChannelInfo(tabNo: number) {
@@ -220,20 +211,14 @@ export class ChannelBarComponent {
         tab: tabNo
       }
     });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this.navigateAfterClosed(result);
-      }
-    });
+    dialogRef.afterClosed().subscribe(result => this.navigateAfterClosed(result));
   }
 
   navigateAfterClosed(result: string) {
     if (result == 'left')
       this.router.navigateByUrl('main');
-    else {
-      this.sidenavToggler.threadBar.open();
-      this.router.navigate([{ outlets: { right: ['profile', result] } }], { relativeTo: this.route.parent });
-    }
+    else if (result)
+      this.navService.navToRightBar('profile/' + result, this.route.parent);
   }
 
   openAddMember() {

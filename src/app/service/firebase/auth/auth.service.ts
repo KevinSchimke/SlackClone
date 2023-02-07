@@ -124,7 +124,7 @@ export class AuthService {
 
   async deleteUser() {
     this.currentDataService.clearByLogout();
-    await this.firestoreService.deleteUser();
+    await this.firestoreService.deleteDocument('users', this.currentUserId!);
     await deleteUser(this.auth.currentUser!)
       .then(() => {
         this.pushupMessage.openPushupMessage('success', 'Your account has been deleted')

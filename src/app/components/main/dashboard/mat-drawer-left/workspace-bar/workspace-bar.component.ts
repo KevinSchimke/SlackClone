@@ -10,9 +10,9 @@ import { onSnapshot } from '@angular/fire/firestore';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { Channel } from 'src/app/models/channel.class';
 import { MediaMatcher } from '@angular/cdk/layout';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DialogNoFunctionComponent } from '../../../dialogs/dialog-no-function/dialog-no-function.component';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
 @Component({
   selector: 'app-workspace-bar',
@@ -37,7 +37,7 @@ export class WorkspaceBarComponent {
   mobileQuery: MediaQueryList;
   private _mobileQueryListener: () => void;
 
-  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public sidenav: SidenavToggleService, private router: Router, private route: ActivatedRoute) {
+  constructor(public dialog: MatDialog, public firestoreService: FirestoreService, private sort: SortService, private userService: UserService, public currentData: CurrentDataService, changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public navService: NavigationService, private router: Router, private route: ActivatedRoute) {
     this.mobileQuery = media.matchMedia('(max-width: 500px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
@@ -76,14 +76,6 @@ export class WorkspaceBarComponent {
     this.currentData.setChannels(this.channels);
   }
 
-  // getUser(uid: string) {
-  //   this.currentData.usersAreLoaded$.subscribe(isLoaded => {
-  //     if (isLoaded === true) {
-  //       this.userActive = this.userService.userState(this.user);
-  //     }
-  //   });
-  // }
-
   categoryIsChannel(channel: Channel) {
     return channel.category == 'channel';
   }
@@ -121,7 +113,7 @@ export class WorkspaceBarComponent {
 
   toggleSidenav() {
     if (this.mobileQuery.matches)
-      this.sidenav.workspaceBar.toggle();
+      this.navService.workspaceBar.toggle();
   }
 
   navigateToRoute(url: string) {

@@ -7,13 +7,13 @@ import { User } from 'src/app/models/user.class';
 import { OpenboxComponent } from 'src/app/components/main/dialogs/openbox/openbox.component';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
-import { SidenavToggleService } from 'src/app/service/sidenav-toggle/sidenav-toggle.service';
 import { SortService } from 'src/app/service/sort/sort.service';
 import { UserService } from 'src/app/service/user/user.service';
 import { DialogReactionComponent } from '../../../dialogs/dialog-reaction/dialog-reaction.component';
 import { Channel } from 'src/app/models/channel.class';
 import { collection, deleteDoc, doc, DocumentData, Firestore, getDocs, limit, onSnapshot, orderBy, Query, query, QueryDocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { QueryProcessService } from 'src/app/service/query-process/query-process.service';
+import { NavigationService } from 'src/app/service/navigation/navigation.service';
 
 @Component({
   selector: 'app-bookmarks',
@@ -39,7 +39,7 @@ export class BookmarksBarComponent {
   private myScrollContainer!: ElementRef;
 
 
-  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private childSelector: SidenavToggleService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
+  constructor(private route: ActivatedRoute, private fireService: FirestoreService, public currentDataService: CurrentDataService, private router: Router, private navService: NavigationService, private sorter: SortService, private userService: UserService, private dialog: MatDialog, private firestore: Firestore, private queryProcessService: QueryProcessService) { }
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
@@ -78,9 +78,9 @@ export class BookmarksBarComponent {
   }
 
   subscribeThreadbarInit() {
-    this.childSelector.threadBarIsInit.subscribe(isLoaded => {
+    this.navService.threadBarIsInit.subscribe(isLoaded => {
       if (isLoaded === true)
-        this.childSelector.threadBar.open();
+        this.navService.threadBar.open();
     });
   }
 
@@ -107,7 +107,7 @@ export class BookmarksBarComponent {
   }
 
   closeThread() {
-    this.childSelector.threadBar.close();
+    this.navService.threadBar.close();
     this.router.navigate([{ outlets: { right: null } }], { relativeTo: this.route.parent });
   }
 
@@ -134,7 +134,7 @@ export class BookmarksBarComponent {
   }
 
   openUserInfoCard(thread: any) {
-    this.childSelector.threadBar.open();
+    this.navService.threadBar.open();
     this.router.navigate([{ outlets: { right: ['profile', thread.userId] } }], { relativeTo: this.route.parent });
   }
 
