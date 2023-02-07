@@ -44,7 +44,7 @@ export class BookmarksBarComponent {
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
-    this.subscribeUrl();
+    this.setCommentCollection();
     this.subscribeThreadbarInit();
     this.isFirstLoad = true;
   }
@@ -67,11 +67,8 @@ export class BookmarksBarComponent {
     });
   }
 
-  subscribeUrl() {
-    this.route.url.subscribe((params: any) => this.setCommentCollection(params));
-  }
 
-  setCommentCollection(params: any) {
+  setCommentCollection() {
     this.getCollAndDoc();
     this.snapShotThreadCollection();
   }
@@ -108,8 +105,6 @@ export class BookmarksBarComponent {
     const resp = onSnapshot(q, (querySnapshot: any) => {
       querySnapshot.forEach((doc: any) => this.pushIntoThreads(doc));
       this.comments = this.sorter.sortByDate(this.unsortedComments);
-      console.log(this.comments);
-
       this.loastLoadedComment = querySnapshot.docs[querySnapshot.docs.length - 1];
     });
     this.currentDataService.snapshot_arr.push(resp);
@@ -154,7 +149,7 @@ export class BookmarksBarComponent {
   }
 
   saveReaction(c: number) {
-    this.fireService.save(this.comments[c], 'channels/' + this.channelId + '/ThreadCollection/' + this.threadId + '/commentCollection', this.comments[c].id);
+    this.fireService.save(this.comments[c], 'users/' + this.userService.getUid() + '/bookmarks', this.comments[c].id);
   }
 
   openBox(url: string) {
@@ -169,6 +164,7 @@ export class BookmarksBarComponent {
 
   async deleteBookmark(deleteBookmarkID: string) {
     await deleteDoc(doc(this.firestore, 'users/' + this.userService.getUid() + '/bookmarks', deleteBookmarkID));
+    this.setCommentCollection();
   }
 
 

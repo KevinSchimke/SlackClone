@@ -9,10 +9,11 @@
 
 <div class="body" #scrollMe (scroll)="scrolled($event)">
 
-    <div class="channel-thread" *ngFor="let comment of comments; let c = index">
+    <div class="channel-thread" style="border-bottom: 0.1px solid;" *ngFor="let comment of comments; let c = index">
+        
         <div class="thread-options">
             <button class="btn-unset" [matMenuTriggerFor]="emoji">
-            <img src="assets/svg/color_d1d2d3/add_reaction.svg">
+            <img src="assets/svg/color_d1d2d3/add_reaction.svg" matTooltip="Add reaction" matTooltipPosition="above">
             <mat-menu #emoji="matMenu" xPosition="before">
                 <ng-template matMenuContent>
                     <emoji-mart appClickStopPropagation (emojiSelect)="evaluateThread($event.emoji.native, c)" [i18n]="{search: 'Recherche',categories:
@@ -22,7 +23,7 @@
             </mat-menu>
         </button>
             <button class="btn-unset">
-            <img src="assets/svg/color_d1d2d3/bookmark.svg" (click)="deleteBookmark(comment.id)">
+            <img src="assets/svg/color_d1d2d3/bookmark_full.svg" (click)="deleteBookmark(comment.id)" matTooltip="Delete bookmark" matTooltipPosition="above">
         </button>
         </div>
         <img [src]="comment.userId | imgSrc: currentDataService.users" class="channel-thread-img">
