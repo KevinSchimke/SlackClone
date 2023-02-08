@@ -63,7 +63,6 @@ import { UsernamePipe } from './pipes/username/username.pipe';
 import { DialogReactionComponent } from './components/main/dialogs/dialog-reaction/dialog-reaction.component';
 import { DatePipe } from './pipes/date/date.pipe';
 import { OpenboxComponent } from './components/main/dialogs/openbox/openbox.component';
-import { TelephonePipe } from './pipes/telephone/telephone.pipe';
 import { MessagePartnerPipe } from './pipes/message-partner/message-partner.pipe';
 import { PeriodOfTimePipe } from './pipes/date/period-of-time.pipe';
 import { CanClickPipe } from './pipes/canClick/can-click.pipe';
@@ -77,7 +76,6 @@ import { ProfileSettingsComponent } from './components/main/dialogs/profile-sett
 import { AllChannelsComponent } from './components/main/dashboard/mat-drawer-content/all-channels/all-channels.component';
 import { BookmarksComponent } from './components/main/dialogs/bookmarks/bookmarks.component';
 import { BookmarksBarComponent } from './components/main/dashboard/mat-drawer-right/bookmarks-bar/bookmarks-bar.component';
-import { UserStatusPipe } from './pipes/user-status/user-status.pipe';
 import { DialogChannelInfoComponent } from './components/main/dialogs/dialog-channel-info/dialog-channel-info.component';
 import { DialogEditChannelComponent } from './components/main/dialogs/dialog-edit-channel/dialog-edit-channel.component';
 import { DialogAddMemberComponent } from './components/main/dialogs/dialog-add-member/dialog-add-member.component';
@@ -111,7 +109,6 @@ import { TemplateChatroomComponent } from './components/main/dashboard/template-
     DatePipe,
     OpenboxComponent,
     NewMessageComponent,
-    TelephonePipe,
     MessagePartnerPipe,
     PeriodOfTimePipe,
     CanClickPipe,
@@ -120,7 +117,6 @@ import { TemplateChatroomComponent } from './components/main/dashboard/template-
     ProfileSettingsComponent,
     AllChannelsComponent,
     BookmarksComponent,
-    UserStatusPipe,
     BookmarksBarComponent,
     DialogChannelInfoComponent,
     DialogEditChannelComponent,
