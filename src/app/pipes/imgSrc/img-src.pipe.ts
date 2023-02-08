@@ -48,7 +48,7 @@ export class ImgSrcPipe implements PipeTransform {
     if (srcs.length > 0)
       return srcs[0];
     else
-      return this.allUsers.find((user: User) => (user.id === this.currentUserId))!.src;
+      return this.user.currentUser.src;
   }
 
   pushSrc(uid: string, srcs: string[]) {
