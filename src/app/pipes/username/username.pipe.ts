@@ -11,15 +11,12 @@ export class UsernamePipe implements PipeTransform {
 
 
   transform(userId: string | string[]): string {
-    if (this.currentData.usersAreLoaded) {
-      if (typeof userId == 'string') {
-        return this.convertUidString(userId);
-      }
-      else {
-        return this.convertUidArray(userId);
-      }
-    }
-    else return 'Member';
+    if (!this.currentData.usersAreLoaded)
+      return 'Member';
+    if (typeof userId == 'string')
+      return this.convertUidString(userId);
+    else
+      return this.convertUidArray(userId);
   }
 
   convertUidString(userId: string) {
@@ -29,8 +26,8 @@ export class UsernamePipe implements PipeTransform {
     }
     return this.currentData.users[j].name;
   }
-  
-  convertUidArray(userIds: string[]){
+
+  convertUidArray(userIds: string[]) {
     let names: string[] = [];
     userIds.forEach(uid => {
       let j = this.currentData.users.findIndex((user: User) => (user.id === uid));
