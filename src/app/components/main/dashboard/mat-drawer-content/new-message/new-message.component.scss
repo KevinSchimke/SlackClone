@@ -1,3 +1,8 @@
 @import "../../../../../../assets/scss/colors.scss";
 @import "../../dashboard.component.scss";
 @import "../../../../../../assets/scss/mixin.scss";
+
+.input-Container {
+    display: flex;
+    align-items: center;
+}
