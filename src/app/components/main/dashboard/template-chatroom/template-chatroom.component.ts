@@ -53,7 +53,7 @@ export class TemplateChatroomComponent {
     }
   }
 
-  scrolled(event: any): void {
+  scrolled(): void {
     this.data.isFirstLoaded = false;
   }
 
@@ -76,7 +76,6 @@ export class TemplateChatroomComponent {
     else {
       this.setReaction(emoji, t);
     }
-
   }
 
 
