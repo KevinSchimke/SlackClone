@@ -16,20 +16,28 @@
 
 
 <div class="channel-thread">
-    <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img">
+    <a *ngIf="(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+thread.userId,route.parent)">
+        <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img">
+    </a>
+    <a *ngIf="!(thread.userId | canClick)">
+        <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img">
+    </a>
     <div class="channel-thread-content">
         <p class="thread-headline">
-            <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+thread.userId,route.parent)">
+            <a class="pointer a-name" *ngIf="(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+thread.userId,route.parent)">
                 <b>{{ thread.userId | username }}</b>
-                </span>
+            </a>
+            <a class="pointer a-name" *ngIf="!(thread.userId | canClick)">
+                <b>{{ thread.userId | username }}</b>
+            </a>
             <span class="span-time" *ngIf="thread.creationDate">
                 {{ thread.creationDate| date }}
-                </span>
+            </span>
         </p>
         <p [innerHTML]="thread.message"></p>
         <button class="btn-unset" (click)="openBox(thread.img)" *ngIf="thread.img">
-                <img class="post-image" [src]="thread.img">
-            </button>
+            <img class="post-image" [src]="thread.img">
+        </button>
     </div>
 </div>
 

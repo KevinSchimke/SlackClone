@@ -21,14 +21,15 @@
                 categories: { search: 'Research results', recent: 'Recently' }}"></emoji-mart>
             </ng-template>
         </mat-menu>
-        <img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img" />
+        <a *ngIf="!(thread.userId | canClick)"><img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img" /></a>
+        <a (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);" *ngIf="(thread.userId | canClick)"><img [src]="thread.userId | imgSrc: currentDataService.users" class="channel-thread-img" /></a>
         <div class="channel-thread-content">
             <!-- This div gets *ngFor for all thread (load max 12 thread and scroll up for older thread) -->
             <p class="thread-headline">
-                <span class="pointer" *ngIf="!(thread.userId | canClick)" (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);">
+                <a class="pointer a-name" *ngIf="!(thread.userId | canClick)">
                     <b>{{thread.userId | username }}</b>
-                </span>
-                <span class="pointer" *ngIf="thread.userId | canClick"><b>{{ thread.userId | username }}</b></span>
+                </a>
+                <a class="pointer a-name" *ngIf="thread.userId | canClick" (click)="navService.navToRightBar('profile/'+ thread.userId,route.parent);"><b>{{ thread.userId | username }}</b></a>
                 <span *ngIf="thread.creationDate" class="span-time">{{thread.creationDate | date}}</span>
             </p>
             <p [innerHTML]="thread.message"></p>

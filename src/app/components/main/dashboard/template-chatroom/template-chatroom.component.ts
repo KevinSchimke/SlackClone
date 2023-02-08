@@ -43,7 +43,7 @@ export class TemplateChatroomComponent {
     public currentDataService: CurrentDataService) { }
 
   isInChannel() {
-    return !this.data.collPath.includes('commentCollection') ? true : false;
+    return !this.data.collPath.includes('commentCollection') && !this.data.collPath.includes('bookmarks') ? true : false;
   }
 
 
@@ -111,6 +111,7 @@ export class TemplateChatroomComponent {
   async deleteBookmark(deleteBookmarkID: string) {
     this.data.threads.splice(this.data.threads.findIndex((bookmark) => bookmark.id === deleteBookmarkID), 1);
     this.fireService.deleteDocument('users/' + this.data.currentUser.id + '/bookmarks', deleteBookmarkID);
+    this.navService.navToRightBar('bookmarks', this.route.parent);
   }
 
 }

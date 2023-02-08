@@ -12,9 +12,9 @@ export class CanClickPipe implements PipeTransform {
   transform(userId: string): boolean {
     let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
     if (j == -1) {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 
 }
