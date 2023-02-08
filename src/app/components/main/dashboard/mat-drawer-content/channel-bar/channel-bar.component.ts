@@ -68,7 +68,7 @@ export class ChannelBarComponent {
 
   snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
-      if (areLoaded === true) {
+      if (areLoaded) {
         this.subscribeChannelDoc();
         this.firstQuery();
       }
