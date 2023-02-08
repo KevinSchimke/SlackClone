@@ -9,12 +9,13 @@ export class CanClickPipe implements PipeTransform {
 
   constructor(private currentData: CurrentDataService) { }
 
+
   transform(userId: string): boolean {
-    let j = this.currentData.users.findIndex((user: User) => (user.id === userId));
-    if (j == -1) {
-      return false;
-    }
-    return true;
+    return this.isUserExistent(userId);
+  }
+
+  isUserExistent(userId: string){
+    return this.currentData.users.some((user: User) => (user.id === userId));;
   }
 
 }

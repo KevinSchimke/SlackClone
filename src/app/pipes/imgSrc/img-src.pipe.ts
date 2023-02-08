@@ -6,14 +6,18 @@ import { UserService } from 'src/app/service/user/user.service';
 @Pipe({
   name: 'imgSrc'
 })
+
+/** This pipe is to get the user image source-file by user-id. */
 export class ImgSrcPipe implements PipeTransform {
 
   allUsers: User[] = [];
+  currentUserId: string = '';
 
   constructor(private currentData: CurrentDataService, private user: UserService) { }
 
   transform(userId: string | string[], users: User[]): string {
     this.allUsers = users;
+    this.currentUserId = this.user.getUid();
     if (this.currentData.usersAreLoaded)
       return this.findImgSrc(userId);
     else
@@ -28,11 +32,11 @@ export class ImgSrcPipe implements PipeTransform {
   }
 
   convertUidString(userId: string) {
-    let j = this.allUsers.findIndex((user: User) => (user.id === userId));
-    if (j == -1)
+    let i = this.allUsers.findIndex((user: User) => (user.id === userId));
+    if (i == -1)
       return 'assets/img/user0.png';
     else
-      return this.allUsers[j].src;
+      return this.allUsers[i].src;
   }
 
 
@@ -42,13 +46,14 @@ export class ImgSrcPipe implements PipeTransform {
     if (srcs.length > 0)
       return srcs[0];
     else
-      return this.currentData.users.find((user: User) => (user.id === this.user.getUid()))!.src;
+      return this.currentData.users.find((user: User) => (user.id === this.currentUserId))!.src;
   }
 
   pushSrc(uid: string, srcs: string[]) {
-    let j = this.currentData.users.findIndex((user: User) => (user.id === uid && uid !== this.user.getUid()));
-    if (j !== -1)
-      srcs.push(this.currentData.users[j].src);
+    let i = this.currentData.users.findIndex((user: User) => (user.id === uid && uid !== this.currentUserId));
+    if (i !== -1)
+      srcs.push(this.currentData.users[i].src);
   }
 
+  
 }

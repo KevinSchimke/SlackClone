@@ -7,28 +7,30 @@ import { Timestamp } from '@angular/fire/firestore';
 export class PeriodOfTimePipe implements PipeTransform {
 
   newValue = '';
+  ONE_MINUTE = 60;
+  ONE_HOUR = 60 * this.ONE_MINUTE;
+  ONE_DAY = 24 * this.ONE_HOUR;
 
-  transform(value: Timestamp | Date | string): any {
-    if ((typeof value !== 'string')) {
-      if (!(value instanceof Date)) value = value.toDate();
-      if (value instanceof Date) {
-        this.newValue = this.evaluatePeriod(value.getTime());
+  transform(creationTime: Timestamp | Date | string): any {
+    if ((typeof creationTime !== 'string')) {
+      if (!(creationTime instanceof Date)) creationTime = creationTime.toDate();
+      if (creationTime instanceof Date) {
+        this.newValue = this.evaluatePeriod(creationTime.getTime());
       }
       return this.newValue;
     }
-
   }
 
-  evaluatePeriod(postTime: any) {
+  evaluatePeriod(postCreationTime: any) {
     let currentTime = new Date().getTime();
-    let timeDifference = (currentTime - postTime) / 1000;
-    if (timeDifference < 60)
+    let timeDifference = (currentTime - postCreationTime) / 1000;
+    if (timeDifference < this.ONE_MINUTE)
       return Math.round(timeDifference) + " seconds";
-    else if (timeDifference < 3600)
-      return Math.round(timeDifference / 60) + " minutes";
-    else if (timeDifference < 86400)
-      return Math.round(timeDifference / (60 * 60)) + " hours";
+    else if (timeDifference < this.ONE_HOUR)
+      return Math.round(timeDifference / this.ONE_MINUTE) + " minutes";
+    else if (timeDifference < this.ONE_DAY)
+      return Math.round(timeDifference / this.ONE_HOUR) + " hours";
     else
-      return Math.round(timeDifference / (60 * 60 * 24)) + " days";
+      return Math.round(timeDifference / this.ONE_DAY) + " days";
   }
 }

@@ -30,4 +30,9 @@
 
 .channel-name {
     color: $color-secondary;
+    margin: unset !important;
+}
+
+.header-headline {
+    padding-inline: 1rem;
 }

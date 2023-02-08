@@ -13,6 +13,6 @@ export class AuthErrorService {
     if (code == 'auth/invalid-email') return 'E-Mail address isn\'t valid';
     if (code == 'auth/user-not-found') return 'User not found';
     if (code == 'auth/wrong-password') return 'Password incorrect';
-    return 'Error unknow';
+    return 'Error unknown';
   }
 }

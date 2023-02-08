@@ -7,6 +7,7 @@ import { User } from 'src/app/models/user.class';
 export class UserService {
   public uid: any;
   public currentUser = new User();
+  FIVE_MINUTES = 300000;
 
   constructor() { }
 
@@ -33,7 +34,7 @@ export class UserService {
     let currentTime = new Date().getTime();
     let userActive: boolean;
 
-    if (currentTime - lastLogin < 300000) {
+    if (currentTime - lastLogin < this.FIVE_MINUTES) {
       userActive = true;
     } else {
       userActive = false;

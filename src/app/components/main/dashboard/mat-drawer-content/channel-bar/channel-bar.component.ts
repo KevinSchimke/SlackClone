@@ -53,15 +53,10 @@ export class ChannelBarComponent {
 
   ngOnInit(): void {
     this.currentUser = this.userService.get();
-    this.route.params.subscribe((param: any) => this.setCurrentChannel(param));
+    this.route.params.subscribe((param: any) => this.initParams(param));
   }
 
-  toggleLeftSidebar() {
-    this.leftSideBar = !this.leftSideBar;
-    this.navService.workspaceBar.toggle();
-  }
-
-  setCurrentChannel(param: { id: string }) {
+  initParams(param: { id: string }) {
     this.threads = [];
     this.unsortedThreads = [];
     this.channelId = param.id;
@@ -74,7 +69,7 @@ export class ChannelBarComponent {
   snapShotThreadCollection() {
     this.currentDataService.usersAreLoaded$.subscribe(areLoaded => {
       if (areLoaded === true) {
-        this.getChannelDoc();
+        this.subscribeChannelDoc();
         this.firstQuery();
       }
     });
@@ -100,14 +95,16 @@ export class ChannelBarComponent {
     this.currentDataService.snapshot_arr.push(resp);
   }
 
-  getChannelDoc() {
+  subscribeChannelDoc() {
     this.channel$ = this.fireService.getDocument(this.channelId, 'channels');
-    const subscription = this.channel$.subscribe((channel: any) => {
-      channel.creationDate = channel.creationDate.toDate();
-      channel.channelId = channel.id;
-      this.channel = channel
-    });
+    const subscription = this.channel$.subscribe((channel: any) => this.setChannel(channel));
     this.currentDataService.subscription_arr.push(subscription);
+  }
+
+  setChannel(channel: any) {
+    channel.creationDate = channel.creationDate.toDate();
+    channel.channelId = channel.id;
+    this.channel = new Channel(channel);
   }
 
   async loadBookmarks() {
@@ -162,9 +159,13 @@ export class ChannelBarComponent {
     dialogRef.afterClosed().subscribe(result => this.navigateAfterClosed(result));
   }
 
+  /**
+   * 
+   * @param result: 'left' means that user left Channel. Otherwise result is that user clicked on profile-id of a member to watch profile
+   */
   navigateAfterClosed(result: string) {
     if (result == 'left')
-      this.router.navigateByUrl('main');
+      this.router.navigateByUrl('client');
     else if (result)
       this.navService.navToRightBar('profile/' + result, this.route.parent);
   }
@@ -181,5 +182,8 @@ export class ChannelBarComponent {
     this.moreToLoad = await this.fireService.isMoreToLoad(this.collPath, this.threads.length);
   }
 
-
+  toggleLeftSidebar() {
+    this.leftSideBar = !this.leftSideBar;
+    this.navService.workspaceBar.toggle();
+  }
 }

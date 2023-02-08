@@ -84,9 +84,9 @@ export class CurrentDataService {
     }
     if (!this.usersAreLoaded) {
       this.onceSubscribtedUsers = user_arr;
+      this.usersAreLoaded = true;
+      this.usersAreLoaded$.next(true);
     }
-    this.usersAreLoaded = true;
-    this.usersAreLoaded$.next(true);
   }
 
 

@@ -9,7 +9,12 @@ export class QueryProcessService {
 
   constructor(private sortService: SortService) { }
 
-
+/**
+ * 
+ * @param querySnapshot: QuerySnapshot
+ * @param elemT: threadElement of querySnapshot-Array.
+ * @returns sorted Threads by Date
+ */
   processQuery(querySnapshot: any, unsortedThreads: Thread[]) {
     querySnapshot.forEach((doc: any) => {
       let elemT = new Thread(this.setThreadFromDoc(doc));
