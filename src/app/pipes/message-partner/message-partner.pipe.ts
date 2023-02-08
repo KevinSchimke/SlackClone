@@ -17,24 +17,21 @@ export class MessagePartnerPipe implements PipeTransform {
   constructor(private user: UserService, private currentData: CurrentDataService) { }
 
   transform(users: string[]): string {
-    if (this.currentData.usersAreLoaded) {
-      this.filteredUserNames = [];
-      this.filteredUserIds = [];
-      this.filteredUserIds = this.getFuids(users);
-      this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid));
-      if (this.isChatWithMyself(users)) {
-        return this.filteredUserNames.join(", ") + ' (you)';
-      }
-      else
-        return this.filteredUserNames.join(", ");
-    }
-    else return '';
+    if (!this.currentData.usersAreLoaded)
+      return '';
+    this.filteredUserNames = [];
+    this.filteredUserIds = [];
+    this.filteredUserIds = this.getFuids(users);
+    this.filteredUserIds.forEach((fuid) => this.findFilteredName(fuid));
+    if (this.isChatWithMyself(users))
+      return this.filteredUserNames.join(", ") + ' (you)';
+    else
+      return this.filteredUserNames.join(", ");
   }
 
   getFuids(users: string[]) {
-    if (this.isChatWithMyself(users)) {
+    if (this.isChatWithMyself(users))
       return [this.user.getUid()];
-    }
     else
       return users.filter((user) => (user !== this.user.getUid()));
   }
