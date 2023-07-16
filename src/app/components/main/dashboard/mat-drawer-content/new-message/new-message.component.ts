@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { User } from 'src/app/models/user.class';
 import { CurrentDataService } from 'src/app/service/current-data/current-data.service';
 import { FirestoreService } from 'src/app/service/firebase/firestore/firestore.service';
 import { NavigationService } from 'src/app/service/navigation/navigation.service';
 import { PushupMessageService } from 'src/app/service/pushup-message/pushup-message.service';
 import { UserService } from 'src/app/service/user/user.service';
+import { FocusMonitor } from '@angular/cdk/a11y';
 
 @Component({
   selector: 'app-new-message',
@@ -20,7 +21,9 @@ export class NewMessageComponent {
   leftSideBar: boolean = false;
   currentUserId: string = '';
 
-  constructor(public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private navService: NavigationService, private user: UserService) { }
+  @ViewChild('searchUserField', { static: false }) searchUserField!: ElementRef;
+
+  constructor(public focusMonitor: FocusMonitor, public firestoreService: FirestoreService, private currentDataService: CurrentDataService, private pushupMessage: PushupMessageService, private navService: NavigationService, private user: UserService) { }
 
   ngOnInit() {
     this.currentDataService.setChatUsers([]);
@@ -30,6 +33,10 @@ export class NewMessageComponent {
         this.allUsers = this.currentDataService.users;
       }
     });
+  }
+
+  ngAfterViewInit() {
+    this.focusMonitor.focusVia(this.searchUserField, 'program');
   }
 
   deleteUserToChat(user: User) {
